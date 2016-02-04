@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="48cm" height="49cm" viewBox="-522 -180 952 976" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <ellipse style="fill: #ffffff" cx="-68.9287" cy="328.55" rx="79.4836" ry="33.4363"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="-68.9287" cy="328.55" rx="79.4836" ry="33.4363"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-68.9287" y="324.45">
+      <tspan x="-68.9287" y="324.45">orig A=L_i</tspan>
+      <tspan x="-68.9287" y="340.45">dest B=L_(i+1)</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-68.9287" y1="-25.8483" x2="-68.9287" y2="2.46927"/>
+    <polygon style="fill: #000000" points="-73.9287,2.46927 -68.9287,12.4693 -63.9287,2.46927 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-73.9287,2.46927 -68.9287,12.4693 -63.9287,2.46927 "/>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="-68.9287,13.4693 145.527,67.0831 -68.9287,120.697 -283.384,67.0831 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-68.9287,13.4693 145.527,67.0831 -68.9287,120.697 -283.384,67.0831 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-68.9287" y="62.9831">
+      <tspan x="-68.9287" y="62.9831">Est-ce que le pion à la position L1,</tspan>
+      <tspan x="-68.9287" y="78.9831">s'il existe, appartient au joueur J ?</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-68.9287" y1="169.964" x2="-68.9287" y2="120.697"/>
+    <polygon style="fill: #000000" points="-73.9287,169.964 -68.9287,185.964 -63.9287,169.964 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-73.9287,169.964 -68.9287,185.964 -63.9287,169.964 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-49.4287" y="159.957">oui</text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="-68.9287,394.822 98.0516,436.567 -68.9287,478.312 -235.909,436.567 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-68.9287,394.822 98.0516,436.567 -68.9287,478.312 -235.909,436.567 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-68.9287" y="440.467">
+      <tspan x="-68.9287" y="440.467">A et B sont-elles adjacentes ?</tspan>
+    </text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="-266.907,498.167 -143.551,529.006 -266.907,559.844 -390.262,529.006 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-266.907,498.167 -143.551,529.006 -266.907,559.844 -390.262,529.006 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-266.907" y="532.906">
+      <tspan x="-266.907" y="532.906">B est-elle vide ?</tspan>
+    </text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="180.354,466.017 346.489,529.006 180.354,591.994 14.219,529.006 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="180.354,466.017 346.489,529.006 180.354,591.994 14.219,529.006 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="180.354" y="524.906">
+      <tspan x="180.354" y="524.906">Existe-t-il une case adjacente</tspan>
+      <tspan x="180.354" y="540.906">à A et B occupée ?</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-193.582" y1="501.203" x2="-152.419" y2="457.439"/>
+    <polygon style="fill: #000000" points="-197.224,497.777 -204.544,512.858 -189.94,504.629 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-197.224,497.777 -204.544,512.858 -189.94,504.629 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-170.29" y="499.089">oui</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="81.987" y1="490.1" x2="14.5615" y2="457.439"/>
+    <polygon style="fill: #000000" points="79.8072,494.6 96.3865,497.076 84.1667,485.601 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="79.8072,494.6 96.3865,497.076 84.1667,485.601 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="38.3323" y="491.828">non</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-117.753" y1="617.866" x2="-205.229" y2="544.425"/>
+    <polygon style="fill: #000000" points="-120.968,621.696 -105.499,628.154 -114.538,614.037 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-120.968,621.696 -105.499,628.154 -114.538,614.037 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-172.636" y="600.074">oui</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-18.0648" y1="620.91" x2="97.2865" y2="560.5"/>
+    <polygon style="fill: #000000" points="-20.3845,616.481 -32.2387,628.333 -15.7451,625.34 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-20.3845,616.481 -32.2387,628.333 -15.7451,625.34 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="32.4448" y="613.595">oui</text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="-68.9287" cy="-68.659" rx="121.72" ry="42.8107"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="-68.9287" cy="-68.659" rx="121.72" ry="42.8107"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-68.9287" y="-72.759">
+      <tspan x="-68.9287" y="-72.759">Liste L de points (L1, ..., Ln)</tspan>
+      <tspan x="-68.9287" y="-56.759">Joueur J</tspan>
+    </text>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="-68.9287" y="-68.659">
+    <tspan x="-68.9287" y="-68.659"></tspan>
+  </text>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="-521.895" y="-45.7131">
+    <tspan x="-521.895" y="-45.7131">On suppose n &gt;= 2.</tspan>
+    <tspan x="-521.895" y="-29.7131">Les Li, i=1, n appartiennent au plateau.</tspan>
+    <tspan x="-521.895" y="-13.7131">Le NON est implicite et entraîne la fin de l'algorithme.</tspan>
+  </text>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-68.9287" y1="377.822" x2="-68.9287" y2="361.986"/>
+    <polygon style="fill: #000000" points="-73.9287,377.822 -68.9287,393.822 -63.9287,377.822 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-73.9287,377.822 -68.9287,393.822 -63.9287,377.822 "/>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="-68.9287,604.809 2.67963,652.785 -68.9287,700.762 -140.537,652.785 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-68.9287,604.809 2.67963,652.785 -68.9287,700.762 -140.537,652.785 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-68.9287" y="656.685">
+      <tspan x="-68.9287" y="656.685">i + 1 == n ?</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-68.9287" y1="735.523" x2="-68.9287" y2="700.762"/>
+    <polygon style="fill: #000000" points="-73.9287,735.523 -68.9287,751.523 -63.9287,735.523 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-73.9287,735.523 -68.9287,751.523 -63.9287,735.523 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-86.7403" y="730.951">oui</text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="-68.9287" cy="773.437" rx="44.7865" ry="20.9136"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="-68.9287" cy="773.437" rx="44.7865" ry="20.9136"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-68.9287" y="777.337">
+      <tspan x="-68.9287" y="777.337">OUI</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="318.36" y1="652.785" x2="2.67963" y2="652.785"/>
+    <polygon style="fill: #000000" points="318.36,657.785 334.36,652.785 318.36,647.785 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="318.36,657.785 334.36,652.785 318.36,647.785 "/>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="381.768" cy="652.785" rx="46.4079" ry="23.2039"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="381.768" cy="652.785" rx="46.4079" ry="23.2039"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="381.768" y="656.685">
+      <tspan x="381.768" y="656.685">i = i + 1</tspan>
+    </text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="381.768,629.581 381.768,328.55 21.5549,328.55 "/>
+    <polygon style="fill: #000000" points="21.5549,323.55 11.5549,328.55 21.5549,333.55 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="21.5549,323.55 11.5549,328.55 21.5549,333.55 "/>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="-68.9287" cy="215.009" rx="54.1641" ry="27.0821"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="-68.9287" cy="215.009" rx="54.1641" ry="27.0821"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-68.9287" y="218.909">
+      <tspan x="-68.9287" y="218.909">indice i = 1</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-68.9287" y1="242.091" x2="-68.9287" y2="284.113"/>
+    <polygon style="fill: #000000" points="-73.9287,284.113 -68.9287,294.113 -63.9287,284.113 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-73.9287,284.113 -68.9287,294.113 -63.9287,284.113 "/>
+  </g>
+  <text font-size="19.7553" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="-278.7" y="-161.363">
+    <tspan x="-278.7" y="-161.363">Algorithme de test de déplacement d'un pion.</tspan>
+  </text>
+</svg>
