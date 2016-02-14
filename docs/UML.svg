@@ -4,13 +4,13 @@
   <g>
     <rect style="fill: #ffffff" x="-432.35" y="-4.32202" width="448.9" height="28"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-432.35" y="-4.32202" width="448.9" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:italic;font-weight:700" x="-207.9" y="14.678">Board</text>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:italic;font-weight:700" x="-207.9" y="14.678">AbstractBoard</text>
     <rect style="fill: #ffffff" x="-432.35" y="23.678" width="448.9" height="20"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-432.35" y="23.678" width="448.9" height="20"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-429.35" y="37.678">#board: Square[][]</text>
     <rect style="fill: #ffffff" x="-432.35" y="43.678" width="448.9" height="116"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-432.35" y="43.678" width="448.9" height="116"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-429.35" y="57.678">+Board(board:Square[][])</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-429.35" y="57.678">+AbstractBoard(board:Square[][])</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-429.35" y="73.678">+getPawn(coordinates:Coordinates): Pawn</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-429.35" y="89.678">+setPawn(pawn:Pawn,coordinates:Coordinates): void</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-429.35" y="105.678">+move(orig:Coordinates,dest:Coordinates): void</text>
@@ -56,23 +56,24 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="-143.182">-players: Set&lt;Player&gt;</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="-127.182">-teams: Set&lt;Team&gt;</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="-111.182">-turnCount: int</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="-95.182">-board: Board</text>
-    <rect style="fill: #ffffff" x="51.7974" y="-89.182" width="217.9" height="148"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="51.7974" y="-89.182" width="217.9" height="148"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="-95.182">-board: AbstractBoard</text>
+    <rect style="fill: #ffffff" x="51.7974" y="-89.182" width="217.9" height="164"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="51.7974" y="-89.182" width="217.9" height="164"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="-75.182">+Game()</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="-59.182">+nextTurn(): void</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="-43.182">+isGameOver(): boolean</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="-27.182">+getWinner(): Player</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="-11.182">+getCurrentPlayer(): Player</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="4.818">+getBoard(): Board</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="4.818">+getBoard(): AbstractBoard</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="20.818">+getPlayers(): Set&lt;Player&gt;</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="36.818">+getTeams(): Set&lt;Team&gt;</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="52.818">+addTeam(team:Team): void</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="54.7974" y="68.818">+getTurnCount(): int</text>
   </g>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 43.6223 -71.182 C 11.3357,-71.182 -192.364,-62.3103 -198.69,-5.31048"/>
-    <polygon style="fill: #000000" points="50.7938,-71.182 45.7938,-66.182 40.7938,-71.182 45.7938,-76.182 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="50.7938,-71.182 45.7938,-66.182 40.7938,-71.182 45.7938,-76.182 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 43.6305 -63.182 C 11.344,-63.182 -192.364,-62.31 -198.69,-5.31024"/>
+    <polygon style="fill: #000000" points="50.8021,-63.182 45.8021,-58.182 40.8021,-63.182 45.8021,-68.182 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="50.8021,-63.182 45.8021,-58.182 40.8021,-63.182 45.8021,-68.182 "/>
   </g>
   <g>
     <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 612.498 420.289 C 615.932,504.774 210.607,348.863 73.0044,349.213"/>
@@ -85,9 +86,9 @@
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-155.788,160.683 -148.895,162.259 -150.471,169.152 -157.364,167.576 "/>
   </g>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 429.827 210.769 C 472.039,210.769 577.402,209.282 590.674,263.132"/>
-    <polygon style="fill: #000000" points="422.655,210.769 427.655,205.769 432.655,210.769 427.655,215.769 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="422.655,210.769 427.655,205.769 432.655,210.769 427.655,215.769 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 352.824 210.769 C 395.036,210.769 577.399,209.272 590.671,263.122"/>
+    <polygon style="fill: #000000" points="345.652,210.769 350.652,205.769 355.652,210.769 350.652,215.769 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="345.652,210.769 350.652,205.769 355.652,210.769 350.652,215.769 "/>
   </g>
   <g>
     <rect style="fill: #ffffff" x="-942.248" y="59.2344" width="202.5" height="28"/>
@@ -120,8 +121,8 @@
     <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-246.32" y="-460.228">Le contrôleur</text>
   </g>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" d="M -246.205 -450.256 C -245.691,-383.562 177.65,-267.838 172.39,-206.634"/>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" points="168.073,-214.798 172.198,-204.406 178.036,-213.941 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" d="M -246.205 -450.247 C -245.691,-383.553 178.339,-267.846 173.078,-206.642"/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" points="168.761,-214.806 172.887,-204.414 178.725,-213.949 "/>
   </g>
   <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" d="M -246.743 -450.285 C -249.159,-365.035 -196.868,-45.2573 -200.452,-5.31892"/>
   <g>
@@ -188,31 +189,31 @@
     </text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="72.851" y="128.769" width="348.8" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="72.851" y="128.769" width="348.8" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="247.251" y="147.769">Team</text>
-    <rect style="fill: #ffffff" x="72.851" y="156.769" width="348.8" height="36"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="72.851" y="156.769" width="348.8" height="36"/>
+    <rect style="fill: #ffffff" x="72.851" y="128.769" width="271.8" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="72.851" y="128.769" width="271.8" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="208.751" y="147.769">Team</text>
+    <rect style="fill: #ffffff" x="72.851" y="156.769" width="271.8" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="72.851" y="156.769" width="271.8" height="36"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="75.851" y="170.769">-players: Set&lt;Player&gt;</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="75.851" y="186.769">-opponentTeam: Team</text>
-    <rect style="fill: #ffffff" x="72.851" y="192.769" width="348.8" height="100"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="72.851" y="192.769" width="348.8" height="100"/>
+    <rect style="fill: #ffffff" x="72.851" y="192.769" width="271.8" height="100"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="72.851" y="192.769" width="271.8" height="100"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="75.851" y="206.769">+Team()</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="75.851" y="222.769">+Team(players:Set&lt;Player&gt;,opponentTeam:Team)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="75.851" y="222.769">+Team(players:Set&lt;Player&gt;)</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="75.851" y="238.769">+addPlayer(player:Player): boolean</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="75.851" y="254.769">+getPlayers(): Set&lt;Player&gt;</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="75.851" y="270.769">+setOpponentTeam(team:Team): void</text>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="75.851" y="286.769">+getOpponentTeam(): Team</text>
   </g>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 241.51 127.787 C 239.572,99.7761 198.911,127.201 187.3,66.8435"/>
-    <polygon style="fill: #000000" points="185.945,59.8011 191.8,63.7665 187.834,69.621 181.98,65.6556 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="185.945,59.8011 191.8,63.7665 187.834,69.621 181.98,65.6556 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 203.008 127.771 C 201.07,99.7607 200.454,143.218 188.842,82.8612"/>
+    <polygon style="fill: #000000" points="187.488,75.8187 193.342,79.7841 189.377,85.6387 183.522,81.6732 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="187.488,75.8187 193.342,79.7841 189.377,85.6387 183.522,81.6732 "/>
   </g>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 71.846 210.769 C -75.156,210.769 164.544,77.678 24.7126,77.678"/>
-    <polygon style="fill: #ffffff" points="17.5411,77.678 22.5411,72.678 27.5411,77.678 22.5411,82.678 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="17.5411,77.678 22.5411,72.678 27.5411,77.678 22.5411,82.678 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 71.8459 210.769 C -75.1561,210.769 164.559,77.678 24.7281,77.678"/>
+    <polygon style="fill: #ffffff" points="17.5566,77.678 22.5566,72.678 27.5566,77.678 22.5566,82.678 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="17.5566,77.678 22.5566,72.678 27.5566,77.678 22.5566,82.678 "/>
   </g>
   <g>
     <rect style="fill: #0042ff" x="-1318.46" y="-498.934" width="866.85" height="60.9996"/>
