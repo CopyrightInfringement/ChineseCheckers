@@ -1,7 +1,11 @@
 package org.copinf.cc;
 
-public class Main {
-  public static void main(String[] args) {
-    System.out.println("Hello, world !");
-  }
+public final class Main {
+
+	private Main() {
+	}
+
+	public static void main(final String[] args) {
+		System.out.println("Hello, world !");
+	}
 }
