@@ -1,46 +1,66 @@
 package org.copinf.cc.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.Assume;
 import org.junit.Test;
 
 public class GameTest {
+	private Game makeGame(){
+		Game game = null;
+		try{
+			game = new Game (new DefaultBoard ());
+		}catch (Exception e){
+			Assume.assumeNoException(e);
+		}
+		return game;
+	}
+	
 	@Test
-	public void gameInitializationTest (){
-		Game game = new Game(new DefaultBoard ());
+	public void gameConstructionTest (){
+		AbstractBoard board = null;
+		try{
+			board = new DefaultBoard ();
+		}catch (Exception e){
+			Assume.assumeNoException(e);
+		}
+		try{
+			new Game(board);
+		}catch (Exception e){
+			org.junit.Assert.fail ("Failed construction of the board.");
+		}
+	}
+	
+	@Test
+	public void gameAddTeamsTest (){
+		Game game = makeGame ();
+		
 		Team team1 = new Team (), team2 = new Team ();
 		team1.addPlayer(new Player ("Pierre"));
 		team1.addPlayer(new Player ("Clara"));
 		team2.addPlayer(new Player ("Antonin"));
 		team2.addPlayer(new Player ("Louis"));
 		
-		try{
-			game.nextTurn();
-		}catch (Exception e){
-			throw new Error ("The game can begin without any team registered.");
+		assertTrue (game.addTeam(team1));
+		assertTrue (game.addTeam(team2));
+	}
+	
+	@Test
+	public void gameFirstTurnTest (){
+		Game game = makeGame ();
+		
+		Team[] teams = new Team []{new Team(), new Team()};
+		teams[0].addPlayer(new Player ("Pierre"));
+		teams[0].addPlayer(new Player ("Clara"));
+		teams[1].addPlayer(new Player ("Antonin"));
+		teams[1].addPlayer(new Player ("Louis"));
+		
+		for (Team t : teams){
+			try{
+				game.nextTurn();
+				org.junit.Assert.fail("Calling nextTurn on a game with only " + game.getTeams().size() + " team(s) should throw an exception.");
+			}catch (Exception e){}
+			game.addTeam(t);
 		}
-		
-		game.addTeam(team1);
-		
-		try{
-			game.nextTurn();
-		}catch (Exception e){
-			throw new Error ("The game can begin with only one team registered.");
-		}
-		
-		assertEquals (game.addTeam(team1), false);
-		
-		game.addTeam(team2);
-		
-		try{
-			game.nextTurn();
-		}catch (Exception e){
-			throw new Error ("The game can begin without any team registered.");
-		}
-		
-		if (game.getTurnCount() != 0)
-			throw new Error ("The first turn of the game isn't the 0-th one.");
-		if (game.getCurrentPlayer() == null)
-			throw new Error ("Their isn't any current player.");
 	}
 }

@@ -41,13 +41,13 @@ public class Game {
 	 * @throws RuntimeException If the game cannot begin.
 	 */
 	private void initialize (){
-		if (teams.size() == 0)
-			throw new RuntimeException ("La partie ne peut pas commencer : aucune équipe n'a été enregistrée.");
+		if (teams.size() < 2)
+			throw new RuntimeException ("La partie ne peut pas commencer : aucune Ã©quipe n'a Ã©tÃ© enregistrÃ©e.");
 		
 		board.dispatchZones(teams);
 		
 		if (!board.getPossiblePlayerNumbers().contains(players.size()))
-			throw new RuntimeException ("La partie ne peut pas commencer : le plateau " + board + " ne permet pas de jouer à " + players.size() + ".");
+			throw new RuntimeException ("La partie ne peut pas commencer : le plateau " + board + " ne permet pas de jouer ï¿½ " + players.size() + ".");
 	}
 	
 	/** Prepares the game for the next turn
