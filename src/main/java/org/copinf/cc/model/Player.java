@@ -14,7 +14,14 @@ public class Player {
 	}
 
 	public boolean hasWon() {
-		throw new UnsupportedOperationException();
+		Set<BoardZone> opponentZones = new HashSet<BoardZone> ();
+		for (BoardZone bz : initialZones)
+			opponentZones.add(bz.getOpponentZone());
+		for (BoardZone bz : opponentZones) {
+			if (!bz.isFull(this))
+				return false;
+		}
+		return true;
 	}
 
 	public String getName() {
