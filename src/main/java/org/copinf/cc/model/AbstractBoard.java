@@ -14,13 +14,18 @@ public abstract class AbstractBoard {
 	 * board and should not be accessed.
 	 */
 	protected Square[][] board;
-
+	
+	protected final int BOARD_WIDTH;
+	protected final int BOARD_HEIGHT;
+	
 	/**
 	 * Constructs a new Board.
-	 * @param board this board internal structure and state
 	 */
-	public AbstractBoard(final Square[][] board) {
-		this.board = board;
+	public AbstractBoard(int B_W, int B_H){
+		this.BOARD_HEIGHT = B_H;
+		this.BOARD_WIDTH = B_W;
+		this.board = new Square[BOARD_WIDTH][BOARD_HEIGHT];
+		
 	}
 
 	/**
@@ -29,7 +34,10 @@ public abstract class AbstractBoard {
 	 * @return the pawn
 	 */
 	public Pawn getPawn(final Coordinates coordinates) {
-		throw new UnsupportedOperationException();
+		Square s = board[coordinates.x][coordinates.y];
+		if(s!=null)
+			return s.getPawn();
+		return null;
 	}
 
 	/**
@@ -38,7 +46,7 @@ public abstract class AbstractBoard {
 	 * @param coordinates the pawn's location
 	 */
 	public void setPawn(final Pawn pawn, final Coordinates coordinates) {
-		throw new UnsupportedOperationException();
+		board[coordinates.x][coordinates.y].setPawn(pawn);	
 	}
 
 	/**
@@ -48,7 +56,7 @@ public abstract class AbstractBoard {
 	 * @param dest the destination coordinates
 	 */
 	public void move(final Coordinates orig, final Coordinates dest) {
-		throw new UnsupportedOperationException();
+		board[dest.x][dest.y].setPawn(board[orig.x][orig.y].getPawn());
 	}
 
 	/**

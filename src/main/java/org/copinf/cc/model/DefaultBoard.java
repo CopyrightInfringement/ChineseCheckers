@@ -1,6 +1,8 @@
 package org.copinf.cc.model;
 
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -44,18 +46,28 @@ public class DefaultBoard extends AbstractBoard {
 		{-1, -1, -1, -1, 25, -1, -1, -1, -1, -1, -1, -1, 36, -1, -1, -1, -1}
 	};
 
-	private static final int BOARD_WIDTH = 13;
-	private static final int BOARD_HEIGHT = 17;
-
-	private static Square[][] makeBoard() {
-		return new Square[BOARD_WIDTH][BOARD_HEIGHT];
-	}
+	private List<BoardZone> zones; 
 
 	public DefaultBoard() {
-		super(makeBoard());
-		throw new UnsupportedOperationException();
+		super(13,17);
+		this.zones = new ArrayList<>();
 	}
-
+	
+	/*private void makeBoard(int[][] BOARD_MAP){
+		for(int i=0;i<this.BOARD_WIDTH;i++){
+			for(int j=0;j<this.BOARD_HEIGHT;j++){
+				switch(BOARD_MAP[i][j]){
+					case -1:
+						this.board[i][j]=null;
+						break;
+					case 14:
+						this.board[i][j] = new Square();
+						
+			}
+		}
+	}
+	*/
+	
 	@Override
 	public SortedSet<Integer> getPossiblePlayerNumbers() {
 		final TreeSet<Integer> ts = new TreeSet<>();
