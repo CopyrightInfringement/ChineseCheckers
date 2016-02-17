@@ -25,13 +25,9 @@ public class Player {
 	 * @return true if this player has won
 	 */
 	public boolean hasWon() {
-		final Set<BoardZone> opponentZones = new HashSet<>();
-		for (final BoardZone bz : initialZones)
-			opponentZones.add(bz.getOpponentZone());
-		for (final BoardZone bz : opponentZones) {
-			if (!bz.isFull(this))
+		for (final BoardZone boardZone : initialZones)
+			if (!boardZone.getOpponentZone().isFull(this))
 				return false;
-		}
 		return true;
 	}
 

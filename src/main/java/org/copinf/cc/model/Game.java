@@ -73,13 +73,13 @@ public class Game {
 	}
 
 	/**
-	 * Returns the winner of this game.
-	 * @return winning player or null
+	 * Returns the winning team of this game.
+	 * @return winning team, or null
 	 */
-	public Player getWinner() {
-		for (final Player p : players)
-			if (p.hasWon())
-				return p;
+	public Team getWinner() {
+		for (final Team team : teams)
+			if (team.hasWon())
+				return team;
 		return null;
 	}
 

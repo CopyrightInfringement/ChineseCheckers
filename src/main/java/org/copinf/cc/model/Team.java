@@ -58,4 +58,15 @@ public class Team {
 	public Team getOpponentTeam() {
 		return opponentTeam;
 	}
+
+	/**
+	 * Checks if this team has won, that is if each player in this team has won.
+	 * @return true if this team has won
+	 */
+	public boolean hasWon() {
+		for (final Player player : players)
+			if (!player.hasWon())
+				return false;
+		return true;
+	}
 }
