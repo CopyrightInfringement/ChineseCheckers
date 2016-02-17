@@ -12,20 +12,22 @@ public abstract class AbstractBoard {
 	/**
 	 * Internal data structure for the board. A null Square means that the square is outside of the
 	 * board and should not be accessed.
+	 * The board is accessed with [X][Y] coordinates.
 	 */
 	protected Square[][] board;
-	
-	protected final int BOARD_WIDTH;
-	protected final int BOARD_HEIGHT;
-	
+
+	private final int width;
+	private final int height;
+
 	/**
-	 * Constructs a new Board.
+	 * Constructs a new board.
+	 * @param width width of this board
+	 * @param height height of this board
 	 */
-	public AbstractBoard(int B_W, int B_H){
-		this.BOARD_HEIGHT = B_H;
-		this.BOARD_WIDTH = B_W;
-		this.board = new Square[BOARD_WIDTH][BOARD_HEIGHT];
-		
+	public AbstractBoard(final int width, final int height) {
+		this.width = width;
+		this.height = height;
+		this.board = new Square[width][height];
 	}
 
 	/**
@@ -35,7 +37,7 @@ public abstract class AbstractBoard {
 	 */
 	public Pawn getPawn(final Coordinates coordinates) {
 		Square s = board[coordinates.x][coordinates.y];
-		if(s!=null)
+		if (s != null)
 			return s.getPawn();
 		return null;
 	}
@@ -46,7 +48,7 @@ public abstract class AbstractBoard {
 	 * @param coordinates the pawn's location
 	 */
 	public void setPawn(final Pawn pawn, final Coordinates coordinates) {
-		board[coordinates.x][coordinates.y].setPawn(pawn);	
+		board[coordinates.x][coordinates.y].setPawn(pawn);
 	}
 
 	/**

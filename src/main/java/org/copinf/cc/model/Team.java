@@ -4,56 +4,56 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Team {
-	
-	/** The opponent team */
+
+	/** Opponent team. */
 	private Team opponentTeam;
-	/** The players of the current team */
+
+	/** Players of the current team. */
 	private Set<Player> players;
-	
+
 	/**
-	 * Constructs a new team
+	 * Constructs a new team.
 	 */
 	public Team() {
 		this(new HashSet<>());
 	}
-	
+
 	/**
-	 * Constructs a new team
-	 * @param players The players in the team
+	 * Constructs a new team.
+	 * @param players players in the team
 	 */
 	public Team(final Set<Player> players) {
 		this.players = players;
 	}
-	
+
 	/**
-	 * /**
-	 * Adds a player to players
-	 * @param player The player to add
+	 * Adds a player to this theam.
+	 * @param player player to add
 	 * @return false if the adding process failed
 	 */
 	public boolean addPlayer(final Player player) {
 		return players.add(player);
 	}
-	
+
 	/**
-	 * Returns the players of the current team
-	 * @return the players of the current team
+	 * Returns the players of this team.
+	 * @return players of this team
 	 */
 	public Set<Player> getPlayers() {
 		return players;
 	}
-	
+
 	/**
-	 * Sets the opponent team
-	 * @param team
+	 * Sets the opponent team.
+	 * @param team opponent team
 	 */
 	public void setOpponentTeam(final Team team) {
 		opponentTeam = team;
 	}
-	
+
 	/**
-	 * Returns the opponent team
-	 * @return the opponent team
+	 * Returns the opponent team.
+	 * @return opponent team
 	 */
 	public Team getOpponentTeam() {
 		return opponentTeam;

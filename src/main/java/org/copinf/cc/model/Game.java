@@ -7,74 +7,77 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * The Game class.
- * @author Pierre
+ * Provides a representation of a game, with its teams, players and functions.
  */
-
 public class Game {
 
-	/**The player currently playing*/
+	/** Player currently playing. */
 	private Player currentPlayer;
-	/** The different players playing this game in the order they will play */
+
+	/** Different players playing this game in the order they will play. */
 	private List<Player> players;
-	/** The different teams in which the players are*/
+
+	/** Different teams in which the players are. */
 	private Set<Team> teams;
-	/** The current turn count (-1 before the game starts, and the first turn is the 0-th)*/
+
+	/** Current turn count (-1 before the game starts, and the first turn is the 0-th). */
 	private int turnCount;
-	/** The board used for this game*/
+
+	/** Board used for this game. */
 	private AbstractBoard board;
-	
+
 	/**
-	 * Constructs the game.
-	 * @param board The board used for this game.
+	 * Constructs a game.
+	 * @param board board used for this game.
 	 */
-	public Game(AbstractBoard board) {
-		currentPlayer = null;
-		players = new ArrayList<> ();
-		teams = new HashSet<> ();
+	public Game(final AbstractBoard board) {
+		players = new ArrayList<>();
+		teams = new HashSet<>();
 		turnCount = -1;
 		this.board = board;
 	}
-	
+
 	/**
-	 * Initializes the game.
-	 * @throws RuntimeException If the game cannot begin.
+	 * Initializes this game.
+	 * @throws RuntimeException if this game cannot begin.
 	 */
-	private void initialize (){
-		if (teams.size() < 2)
-			throw new RuntimeException ("La partie ne peut pas commencer : aucune équipe n'a été enregistrée.");
-		
+	private void initialize() {
+		if (teams.isEmpty())
+			throw new RuntimeException("The game cannot begin, no team were registered.");
+
 		board.dispatchZones(teams);
-		
+
 		if (!board.getPossiblePlayerNumbers().contains(players.size()))
-			throw new RuntimeException ("La partie ne peut pas commencer : le plateau " + board + " ne permet pas de jouer � " + players.size() + ".");
+			throw new RuntimeException("The game cannot begin, its board " + board + " doesn't support " + players.size() + " players.");
 	}
-	
-	/** Prepares the game for the next turn
-	 * @throws RuntimeException If the game cannot begin.
+
+	/**
+	 * Prepares this game for the next turn.
+	 * @throws RuntimeException if this game cannot begin
 	 */
-	public void nextTurn() throws RuntimeException {
+	public void nextTurn() {
 		turnCount++;
 
 		if (turnCount == 0)
 			initialize();
-		
+
 		currentPlayer = players.get(turnCount % players.size());
 	}
 
-	/** Indicates whether the game is over or not.
-	 * @return true if the game is over.
+	/**
+	 * Indicates whether this game is over or not.
+	 * @return true if this game is over
 	 */
 	public boolean isGameOver() {
 		return getWinner() != null;
 	}
 
 	/**
-	 * Returns the winner of the game.
-	 * @return the winning player, if there is one.
+	 * Returns the winner of this game.
+	 * @return winning player or null
 	 */
 	public Player getWinner() {
-		for (Player p : players)
+		for (final Player p : players)
 			if (p.hasWon())
 				return p;
 		return null;
@@ -82,15 +85,15 @@ public class Game {
 
 	/**
 	 * Returns the current player.
-	 * @return the current player.
+	 * @return the current player
 	 */
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
-	
+
 	/**
 	 * Returns the board.
-	 * @return the board.
+	 * @return the board
 	 */
 	public AbstractBoard getBoard() {
 		return board;
@@ -98,7 +101,7 @@ public class Game {
 
 	/**
 	 * Returns the players involved in this game.
-	 * @return the players.
+	 * @return the players
 	 */
 	public Collection<Player> getPlayer() {
 		return players;
@@ -106,7 +109,7 @@ public class Game {
 
 	/**
 	 * Returns the teams in which the players are.
-	 * @return the teams.
+	 * @return the teams
 	 */
 	public Set<Team> getTeams() {
 		return teams;
@@ -114,26 +117,26 @@ public class Game {
 
 	/**
 	 * Adds a team and its players to this game.
-	 * @param team The team to add.
-	 * @return false if the adding process failed.
+	 * @param team team to add.
+	 * @return true if the adding process succeded
 	 */
 	public boolean addTeam(final Team team) {
 		if (teams.contains(team))
 			return false;
-		
-		for (Player p : team.getPlayers())
+
+		for (final Player p : team.getPlayers())
 			if (players.contains(p))
 				return false;
-		
+
 		teams.add(team);
 		players.addAll(team.getPlayers());
-		
+
 		return true;
 	}
 
 	/**
 	 * Returns the current turn count.
-	 * @return the current turn count.
+	 * @return current turn count
 	 */
 	public int getTurnCount() {
 		return turnCount;

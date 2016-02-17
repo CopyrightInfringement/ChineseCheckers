@@ -5,16 +5,18 @@ import java.util.Set;
 
 /**
  * The class representing a zone of the board.
- * It represents the starting area of a player, and is associated with the BoardZone he must fill with his pawns in order to win.
- * @author pierre
+ * It represents the starting area of a player, and is associated with the BoardZone he must fill
+ * with his pawns in order to win.
  */
 public class BoardZone {
+
 	private final Set<Square> squares;
-	/** The zone which must be filled with the owner's pawns */
+
+	/** Zone which must be filled with the owner's pawns. */
 	private BoardZone opponentZone;
 
 	/**
-	 * Constructs a new BoardZone
+	 * Constructs a new empty BoardZone.
 	 */
 	public BoardZone() {
 		squares = new HashSet<>();
@@ -31,7 +33,7 @@ public class BoardZone {
 
 	/**
 	 * Returns the BoardZone in which the owner must move his pawns.
-	 * @return The BoardZone opposed.
+	 * @return the opposed BoardZone.
 	 */
 	public BoardZone getOpponentZone() {
 		return opponentZone;
@@ -39,18 +41,18 @@ public class BoardZone {
 
 	/**
 	 * Sets the BoardZone in which the owner must move his pawns.
-	 */	
+	 */
 	public void setOpponentZone(final BoardZone zone) {
 		this.opponentZone = zone;
 	}
 
 	/**
 	 * Indicates whether or not this zone is filled with the pawns of a given player.
-	 * @param player The player whose pawns we want to check the presence.
-	 * @return
+	 * @param player player whose pawns we want to check the presence.
+	 * @return true if the zone is full
 	 */
 	public boolean isFull(final Player player) {
-		for (Square s : squares)
+		for (final Square s : squares)
 			if (s.getPawn() == null || s.getPawn().getOwner() != player)
 				return false;
 		return true;
