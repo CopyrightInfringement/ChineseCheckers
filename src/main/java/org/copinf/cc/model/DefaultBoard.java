@@ -53,21 +53,6 @@ public class DefaultBoard extends AbstractBoard {
 		this.zones = new ArrayList<>();
 	}
 
-	/*private void makeBoard(int[][] BOARD_MAP){
-		for(int i=0;i<this.BOARD_WIDTH;i++){
-			for(int j=0;j<this.BOARD_HEIGHT;j++){
-				switch(BOARD_MAP[i][j]){
-					case -1:
-						this.board[i][j]=null;
-						break;
-					case 14:
-						this.board[i][j] = new Square();
-
-			}
-		}
-	}
-	*/
-
 	@Override
 	public SortedSet<Integer> getPossiblePlayerNumbers() {
 		final TreeSet<Integer> ts = new TreeSet<>();

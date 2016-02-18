@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
-<svg width="105cm" height="54cm" viewBox="-1319 -499 2088 1062" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="105cm" height="57cm" viewBox="-1319 -499 2088 1121" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
     <rect style="fill: #ffffff" x="-432.35" y="-4.32202" width="448.9" height="28"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-432.35" y="-4.32202" width="448.9" height="28"/>
@@ -19,16 +19,16 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:italic;font-weight:700" x="-429.35" y="153.678">+dispatchZones(teams:Set&lt;Team&gt;): void</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="-84.2968" y="307.414" width="156.3" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-84.2968" y="307.414" width="156.3" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-6.1468" y="326.414">Pawn</text>
-    <rect style="fill: #ffffff" x="-84.2968" y="335.414" width="156.3" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-84.2968" y="335.414" width="156.3" height="20"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-81.2968" y="349.414">-owner: Player</text>
-    <rect style="fill: #ffffff" x="-84.2968" y="355.414" width="156.3" height="36"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-84.2968" y="355.414" width="156.3" height="36"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-81.2968" y="369.414">+Pawn(owner:Player)</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-81.2968" y="385.414">+getOwner(): Player</text>
+    <rect style="fill: #ffffff" x="-108.297" y="315.414" width="156.3" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-108.297" y="315.414" width="156.3" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-30.1468" y="334.414">Pawn</text>
+    <rect style="fill: #ffffff" x="-108.297" y="343.414" width="156.3" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-108.297" y="343.414" width="156.3" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-105.297" y="357.414">-owner: Player</text>
+    <rect style="fill: #ffffff" x="-108.297" y="363.414" width="156.3" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-108.297" y="363.414" width="156.3" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-105.297" y="377.414">+Pawn(owner:Player)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-105.297" y="393.414">+getOwner(): Player</text>
   </g>
   <g>
     <rect style="fill: #ffffff" x="450.158" y="264.128" width="318" height="28"/>
@@ -76,19 +76,19 @@
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="50.7928,-63.182 45.7928,-58.182 40.7928,-63.182 45.7928,-68.182 "/>
   </g>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 612.498 420.289 C 615.933,504.773 210.607,348.863 73.0045,349.213"/>
-    <polygon style="fill: #ffffff" points="612.207,413.123 617.406,417.916 612.613,423.115 607.414,418.322 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="612.207,413.123 617.406,417.916 612.613,423.115 607.414,418.322 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 612.498 420.282 C 615.933,504.766 186.546,356.863 48.9436,357.213"/>
+    <polygon style="fill: #ffffff" points="612.207,413.116 617.406,417.909 612.613,423.108 607.414,418.315 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="612.207,413.116 617.406,417.909 612.613,423.108 607.414,418.315 "/>
   </g>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M -151.975 166.756 C -58.9228,314.971 -64.7406,188.958 -21.8522,306.406"/>
-    <polygon style="fill: #000000" points="-155.788,160.683 -148.895,162.259 -150.471,169.152 -157.364,167.576 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-155.788,160.683 -148.895,162.259 -150.471,169.152 -157.364,167.576 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M -151.979 166.75 C -58.9267,314.964 -88.7344,196.974 -45.846,314.422"/>
+    <polygon style="fill: #000000" points="-155.792,160.676 -148.899,162.252 -150.475,169.146 -157.368,167.57 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-155.792,160.676 -148.899,162.252 -150.475,169.146 -157.368,167.57 "/>
   </g>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 352.828 218.769 C 395.04,218.769 577.404,209.29 590.676,263.14"/>
-    <polygon style="fill: #000000" points="345.656,218.769 350.656,213.769 355.656,218.769 350.656,223.769 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="345.656,218.769 350.656,213.769 355.656,218.769 350.656,223.769 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 352.827 218.77 C 395.042,218.77 577.404,209.29 590.676,263.14"/>
+    <polygon style="fill: #000000" points="345.656,218.77 350.656,213.77 355.656,218.77 350.656,223.77 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="345.656,218.77 350.656,213.77 355.656,218.77 350.656,223.77 "/>
   </g>
   <g>
     <rect style="fill: #ffffff" x="-942.248" y="59.2344" width="202.5" height="28"/>
@@ -111,9 +111,9 @@
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-433.358,77.678 -438.358,82.678 -443.358,77.678 -438.358,72.678 "/>
   </g>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M -842.023 199.411 C -844.88,406.142 -319.5,411.563 -85.2891,365.111"/>
-    <polygon style="fill: #ffffff" points="-841.924,192.24 -836.994,197.309 -842.062,202.239 -846.993,197.171 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-841.924,192.24 -836.994,197.309 -842.062,202.239 -846.993,197.171 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M -842.023 199.374 C -844.879,406.104 -343.497,419.562 -109.286,373.11"/>
+    <polygon style="fill: #ffffff" points="-841.923,192.203 -836.993,197.271 -842.062,202.202 -846.992,197.133 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-841.923,192.203 -836.993,197.271 -842.062,202.202 -846.992,197.133 "/>
   </g>
   <g>
     <rect style="fill: #00ff00" x="-311.67" y="-479.228" width="130.7" height="28"/>
@@ -207,14 +207,14 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="75.851" y="302.769">+hasWon(): boolean</text>
   </g>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 202.454 127.761 C 200.516,99.75 223.552,143.211 211.941,82.8536"/>
-    <polygon style="fill: #000000" points="210.586,75.8111 216.441,79.7766 212.475,85.6311 206.621,81.6657 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="210.586,75.8111 216.441,79.7766 212.475,85.6311 206.621,81.6657 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 202.46 127.761 C 200.524,99.7493 223.552,143.211 211.941,82.8539"/>
+    <polygon style="fill: #000000" points="210.586,75.8115 216.441,79.7769 212.475,85.6314 206.621,81.666 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="210.586,75.8115 216.441,79.7769 212.475,85.6314 206.621,81.666 "/>
   </g>
   <g>
-    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 71.8621 218.769 C -75.1389,218.769 164.559,77.678 24.7282,77.678"/>
-    <polygon style="fill: #ffffff" points="17.5566,77.678 22.5566,72.678 27.5566,77.678 22.5566,82.678 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="17.5566,77.678 22.5566,72.678 27.5566,77.678 22.5566,82.678 "/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 71.8613 218.77 C -75.1387,218.77 164.559,77.678 24.7278,77.678"/>
+    <polygon style="fill: #ffffff" points="17.5563,77.678 22.5563,72.678 27.5563,77.678 22.5563,82.678 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="17.5563,77.678 22.5563,72.678 27.5563,77.678 22.5563,82.678 "/>
   </g>
   <g>
     <rect style="fill: #0042ff" x="-1318.46" y="-498.934" width="866.85" height="60.9996"/>
@@ -255,5 +255,22 @@
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="75.4642" y="541.714" width="210.2" height="20"/>
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="78.4642" y="555.714">+main(args:String[]): void</text>
     <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="78.4642" y1="557.314" x2="278.664" y2="557.314"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="-481.5" y="457" width="418.1" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-481.5" y="457" width="418.1" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-272.45" y="476">Coordinates</text>
+    <rect style="fill: #ffffff" x="-481.5" y="485" width="418.1" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-481.5" y="485" width="418.1" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-478.5" y="499">+x: int</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-478.5" y="515">+y: int</text>
+    <rect style="fill: #ffffff" x="-481.5" y="521" width="418.1" height="100"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-481.5" y="521" width="418.1" height="100"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-478.5" y="535">+Coordinates(x:int,y:int)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-478.5" y="551">+hashCode(): int</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-478.5" y="567">+equals(obj:Coordinates): boolean</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-478.5" y="583">+isAdjacentTo(coord:Coordinates): boolean</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-478.5" y="599">+getMiddleCoordinates(coord:Coordinates): Coordinates</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-478.5" y="615">+toString(): String</text>
   </g>
 </svg>

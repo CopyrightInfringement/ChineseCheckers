@@ -101,7 +101,7 @@ public abstract class AbstractBoard {
 
 			if (orig.isAdjacentTo(dest)) return false;
 
-			middle = orig.getMiddleCoordinate(dest);
+			middle = orig.getMiddleCoordinates(dest);
 			if (middle == null || getPawn(middle) == null) return false;
 		}
 

@@ -56,27 +56,36 @@ public class Coordinates {
 	 */
 	public boolean isAdjacentTo(final Coordinates coord) {
 		return (Math.abs(this.x - coord.x) == 1 && this.y == coord.y) ||
-			(Math.abs(this.y - coord.y) == 1 && this.x == coord.x);
+			(Math.abs(this.y - coord.y) == 1 && this.x == coord.x) ||
+			(this.y % 2 == 0 && this.x == coord.x + 1 && Math.abs(this.y - coord.y) == 1) ||
+			(this.y % 2 == 1 && this.x == coord.x - 1 && Math.abs(this.y - coord.y) == 1);
 	}
 
 	/**
-	 * Checks if this Coordinates and a second Coordinates have one Coordinates inbetween and returns
-	 * that Coordinates.
+	 * Checks if this Coordinates and a second Coordinates have one Coordinates inbetween and are
+	 * aligned then returns that Coordinates.
 	 * @param coord a second Coordinates
 	 * @return the Coordinates inbetween or null
 	 */
-	public Coordinates getMiddleCoordinate(final Coordinates coord) {
-		if (x == coord.x + 2 && y == coord.y) {
-			return new Coordinates(x - 1, y);
-		} else if (x == coord.x - 2 && y == coord.y) {
-			return new Coordinates(x + 1, y);
-		} else if (x == coord.x && y == coord.y + 2) {
-			return new Coordinates(x, y - 1);
-		} else if (x == coord.x && y == coord.y - 2) {
-			return new Coordinates(x, y + 1);
-		} else {
-			return null;
+	public Coordinates getMiddleCoordinates(final Coordinates coord) {
+		Coordinates found1 = null;
+		Coordinates found2 = null;
+		for (int x = this.x - 1; x < this.x + 1; x++) {
+			for (int y = this.y - 1; y < this.y + 1; y++) {
+				if (found1 == null) {
+					found1 = new Coordinates(x, y);
+					if (!found1.isAdjacentTo(this) && !found1.isAdjacentTo(coord)) {
+						found1 = null;
+					}
+				} else {
+					found2 = new Coordinates(x, y);
+					if (found2.isAdjacentTo(this) && found2.isAdjacentTo(coord)) {
+						return null;
+					}
+				}
+			}
 		}
+		return found1;
 	}
 
 	@Override
