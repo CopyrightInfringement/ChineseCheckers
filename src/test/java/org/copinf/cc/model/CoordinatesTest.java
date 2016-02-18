@@ -1,7 +1,9 @@
 package org.copinf.cc.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -82,6 +84,21 @@ public class CoordinatesTest {
 		final Coordinates coord2 = new Coordinates(1, 1);
 		if (!coord1.equals(coord2)) {
 			assertNotEquals(coord1.hashCode(), coord2.hashCode());
+		}
+	}
+
+	@Test
+	public void testAdjacencyNotReflexive() {
+		final Coordinates coord = new Coordinates(1, 1);
+		assertFalse(coord.isAdjacentTo(coord));
+	}
+
+	@Test
+	public void testAdjacencySymmetric() {
+		final Coordinates coord1 = new Coordinates(0, 0);
+		final Coordinates coord2 = new Coordinates(0, 1);
+		if (coord1.isAdjacentTo(coord2)) {
+			assertTrue(coord2.isAdjacentTo(coord1));
 		}
 	}
 }

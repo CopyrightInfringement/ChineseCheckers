@@ -1,5 +1,6 @@
 package org.copinf.cc.model;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -16,8 +17,11 @@ public abstract class AbstractBoard {
 	 */
 	protected Square[][] board;
 
-	private final int width;
-	private final int height;
+	/** Width of this board. */
+	protected final int width;
+
+	/** Height of this board. */
+	protected final int height;
 
 	/**
 	 * Constructs a new board.
@@ -36,10 +40,11 @@ public abstract class AbstractBoard {
 	 * @return the pawn
 	 */
 	public Pawn getPawn(final Coordinates coordinates) {
-		Square s = board[coordinates.x][coordinates.y];
-		if (s != null)
-			return s.getPawn();
-		return null;
+		final Square square = board[coordinates.x][coordinates.y];
+		if (square == null) {
+			throw new RuntimeException("Square at " + coordinates + " is outside of the board.");
+		}
+		return square.getPawn();
 	}
 
 	/**
@@ -59,6 +64,7 @@ public abstract class AbstractBoard {
 	 */
 	public void move(final Coordinates orig, final Coordinates dest) {
 		board[dest.x][dest.y].setPawn(board[orig.x][orig.y].getPawn());
+		board[orig.x][orig.y].setPawn(null);
 	}
 
 	/**
@@ -68,9 +74,38 @@ public abstract class AbstractBoard {
 	 * @param path list of movements
 	 * @param player player performing the movements
 	 * @return true if the whole movement is valid.
+	 * @throws NullPointerException if the parameters are null or if the Coordinates list contains a
+	 * 	null
 	 */
 	public boolean checkMove(final List<Coordinates> path, final Player player) {
-		throw new UnsupportedOperationException();
+		if (path.size() < 2 ) {
+			return false;
+		}
+
+		Coordinates orig = path.get(0);
+		Coordinates dest;
+		final Pawn pawn = getPawn(orig);
+		if (pawn == null || pawn.getOwner() != player) {
+			return false;
+		}
+
+		if (path.size() == 2) {
+			dest = path.get(1);
+			return orig.isAdjacentTo(dest) && getPawn(dest) == null;
+		}
+
+		Coordinates middle;
+		for (Iterator<Coordinates> it = path.iterator(); it.hasNext();) {
+			orig = it.next();
+			dest = it.next();
+
+			if (orig.isAdjacentTo(dest)) return false;
+
+			middle = orig.getMiddleCoordinate(dest);
+			if (middle == null || getPawn(middle) == null) return false;
+		}
+
+		return true;
 	}
 
 	/**

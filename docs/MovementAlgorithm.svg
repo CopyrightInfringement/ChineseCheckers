@@ -134,7 +134,7 @@
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-358.185,625.934 -205.283,701.59 -358.185,777.247 -511.088,701.59 "/>
     <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-358.185" y="697.49">
       <tspan x="-358.185" y="697.49">Est-ce que L2 est</tspan>
-      <tspan x="-358.185" y="713.49"> adjacente à L1 et non-vide ?</tspan>
+      <tspan x="-358.185" y="713.49"> adjacente à L1 et vide ?</tspan>
     </text>
   </g>
   <g>
