@@ -23,8 +23,8 @@ public class BoardZone {
 	}
 
 	/**
-	 * Adds a square to the area.
-	 * @param square The square to add.
+	 * Adds a square to this BoardZone.
+	 * @param square square to add.
 	 * @return true if the square has been successfully added.
 	 */
 	public boolean addSquare(final Square square) {
@@ -32,15 +32,16 @@ public class BoardZone {
 	}
 
 	/**
-	 * Returns the BoardZone in which the owner must move his pawns.
-	 * @return the opposed BoardZone.
+	 * Returns the BoardZone in which the owner must move its pawns.
+	 * @return the opposed BoardZone
 	 */
 	public BoardZone getOpponentZone() {
 		return opponentZone;
 	}
 
 	/**
-	 * Sets the BoardZone in which the owner must move his pawns.
+	 * Sets the BoardZone in which the owner must move its pawns.
+	 * @param zone the opposed BoardZone
 	 */
 	public void setOpponentZone(final BoardZone zone) {
 		this.opponentZone = zone;
