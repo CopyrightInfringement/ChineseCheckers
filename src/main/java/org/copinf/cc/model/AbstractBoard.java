@@ -59,7 +59,7 @@ public abstract class AbstractBoard {
 	/**
 	 * Moves a pawn from a square to another square, referenced by their coordinates.
 	 * This method does not perform any checks on the movement validity.
-	 * @param orig the orgigin coordinates
+	 * @param orig the origin coordinates
 	 * @param dest the destination coordinates
 	 */
 	public void move(final Coordinates orig, final Coordinates dest) {
@@ -95,14 +95,15 @@ public abstract class AbstractBoard {
 		}
 
 		Coordinates middle;
-		for (Iterator<Coordinates> it = path.iterator(); it.hasNext();) {
-			orig = it.next();
+		for (Iterator<Coordinates> it = path.subList(1, path.size()).iterator(); it.hasNext();) {
 			dest = it.next();
 
 			if (orig.isAdjacentTo(dest)) return false;
 
 			middle = orig.getMiddleCoordinates(dest);
 			if (middle == null || getPawn(middle) == null) return false;
+			
+			orig = dest;
 		}
 
 		return true;
@@ -117,6 +118,14 @@ public abstract class AbstractBoard {
 	/**
 	 * Assigns to each player a zone on the board, taking in account the teams.
 	 * @param teams the set of teams.
+	 * @param numberOfZones the number of zones per player
 	 */
-	public abstract void dispatchZones(final Set<Team> teams);
+	public abstract void dispatchZones(final Set<Team> teams, int numberOfZones);
+	
+	/**
+	 * Gets the possible number of zones per player.
+	 * @param playerNumber The number of players.
+	 * @return an ascending sorted set of the possible zones numbers per player.
+	 */
+	public abstract SortedSet<Integer> getPossiblesZoneNumber (int playerNumber);
 }

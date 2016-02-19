@@ -26,6 +26,9 @@ public class Game {
 	/** Board used for this game. */
 	private AbstractBoard board;
 
+	/** Number of zones per player. */
+	private int numberOfZones;
+	
 	/**
 	 * Constructs a game.
 	 * @param board board used for this game.
@@ -35,6 +38,7 @@ public class Game {
 		teams = new HashSet<>();
 		turnCount = -1;
 		this.board = board;
+		this.numberOfZones = 0;
 	}
 
 	/**
@@ -45,7 +49,7 @@ public class Game {
 		if (teams.isEmpty())
 			throw new RuntimeException("The game cannot begin, no team were registered.");
 
-		board.dispatchZones(teams);
+		board.dispatchZones(teams, this.numberOfZones);
 
 		if (!board.getPossiblePlayerNumbers().contains(players.size()))
 			throw new RuntimeException("The game cannot begin, its board " + board + " doesn't support " + players.size() + " players.");
@@ -118,7 +122,7 @@ public class Game {
 	/**
 	 * Adds a team and its players to this game.
 	 * @param team team to add.
-	 * @return true if the adding process succeded
+	 * @return true if the adding process succeeded.
 	 */
 	public boolean addTeam(final Team team) {
 		if (teams.contains(team))
@@ -134,6 +138,18 @@ public class Game {
 		return true;
 	}
 
+	/**
+	 * Sets the number of zones per player.
+	 * @param numberOfZones The number of zones per player.
+	 * @return false if the number of zones requested is not compatible with the number of players added so far.
+	 */
+	public boolean setNumberOfZones (int numberOfZones){
+		if (!this.board.getPossiblesZoneNumber(this.players.size()).contains(numberOfZones))
+			return false;
+		this.numberOfZones = numberOfZones;
+		return true;
+	}
+	
 	/**
 	 * Returns the current turn count.
 	 * @return current turn count

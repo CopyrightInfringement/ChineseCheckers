@@ -47,7 +47,7 @@ public class DefaultBoard extends AbstractBoard {
 	};
 
 	private List<BoardZone> zones;
-
+	
 	public DefaultBoard() {
 		super(13,17);
 		this.zones = new ArrayList<>();
@@ -64,7 +64,19 @@ public class DefaultBoard extends AbstractBoard {
 	}
 
 	@Override
-	public void dispatchZones(final Set<Team> teams) {
-		throw new UnsupportedOperationException();
+	public void dispatchZones(final Set<Team> teams, int numberOfZones) {
+		throw new UnsupportedOperationException ();
+	}
+
+	@Override
+	public SortedSet<Integer> getPossiblesZoneNumber(int playerNumber) {
+		if (!getPossiblePlayerNumbers().contains(playerNumber))
+			return null;
+		int nbMax = 6/playerNumber;
+		SortedSet<Integer> ts = new TreeSet<Integer>();
+		for (int i = 1; i <= nbMax; i++) {
+			ts.add(i);
+		}
+		return ts;
 	}
 }
