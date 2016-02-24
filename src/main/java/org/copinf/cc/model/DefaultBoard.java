@@ -64,8 +64,20 @@ public class DefaultBoard extends AbstractBoard {
 	}
 
 	@Override
-	public void dispatchZones(final Set<Team> teams, int numberOfZones) {
-		throw new UnsupportedOperationException ();
+	public void dispatchZones(final Set<Team> teams, int nbOfZones) {
+		List<Player> players = new ArrayList<Player>();
+		for (Team t : teams) {
+			for (Player p : t.getPlayers())
+				players.add(p);
+		}
+		int nbOfPlayers = players.size();
+		if (nbOfPlayers % 2 == 0) {
+			for (int i = 0; i < nbOfPlayers; i+=2) {
+				for (int j = 0; j < nbOfZones; j++) {
+					players.get(i).addInitialZone(new BoardZone ());
+				}
+			}
+		}
 	}
 
 	@Override

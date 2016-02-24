@@ -5,9 +5,6 @@ import java.util.Set;
 
 public class Team {
 
-	/** Opponent team. */
-	private Team opponentTeam;
-
 	/** Players of the current team. */
 	private Set<Player> players;
 
@@ -41,22 +38,6 @@ public class Team {
 	 */
 	public Set<Player> getPlayers() {
 		return players;
-	}
-
-	/**
-	 * Sets the opponent team.
-	 * @param team opponent team
-	 */
-	public void setOpponentTeam(final Team team) {
-		opponentTeam = team;
-	}
-
-	/**
-	 * Returns the opponent team.
-	 * @return opponent team
-	 */
-	public Team getOpponentTeam() {
-		return opponentTeam;
 	}
 
 	/**
