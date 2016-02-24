@@ -110,6 +110,22 @@ public abstract class AbstractBoard {
 	}
 
 	/**
+	 * Gets this board width.
+	 * @return board width
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * Gets this board height.
+	 * @return board height
+	 */
+	 public int getHeight() {
+		 return height;
+	 }
+
+	/**
 	 * Gets the possible number of players on the board.
 	 * @return an ascending sorted set of the possible player numbers.
 	 */
