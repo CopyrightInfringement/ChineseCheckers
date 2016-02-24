@@ -2,8 +2,10 @@ package org.copinf.cc.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 public class DefaultBoard extends AbstractBoard {
@@ -50,7 +52,21 @@ public class DefaultBoard extends AbstractBoard {
 	
 	public DefaultBoard() {
 		super(13,17);
+		Map<Integer,BoardZone> map = new TreeMap<> ();
+		for (int i = 0; i < board.length; i++){
+			for (int j = 0; j < board[i].length; j++){
+				int v = BOARD_MAP[i][j];
+				if (!map.containsKey(v))
+					map.put(v, new BoardZone ());
+				map.get(v).addSquare(new Square (new Coordinates (i, j)));
+			}
+		}
+		
+		List<Integer> list = new ArrayList<> (map.keySet());
+		java.util.Collections.sort(list);
 		this.zones = new ArrayList<>();
+		for (int i = 0; i < 6; i++)
+			zones.add(map.get(i));
 	}
 
 	@Override
@@ -74,7 +90,11 @@ public class DefaultBoard extends AbstractBoard {
 		if (nbOfPlayers % 2 == 0) {
 			for (int i = 0; i < nbOfPlayers; i+=2) {
 				for (int j = 0; j < nbOfZones; j++) {
-					players.get(i).addInitialZone(new BoardZone ());
+					BoardZone zone = zones.get((i * nbOfZones + j) % 6);
+					zone.setOpponentZone(zones.get(((i+1) * nbOfZones + j) % 6));
+
+					players.get(i).addInitialZone(zone);
+					players.get(i+1).addInitialZone(zone.getOpponentZone());
 				}
 			}
 		}

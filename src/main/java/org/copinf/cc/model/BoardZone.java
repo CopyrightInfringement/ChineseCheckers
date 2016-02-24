@@ -40,11 +40,14 @@ public class BoardZone {
 	}
 
 	/**
-	 * Sets the BoardZone in which the owner must move its pawns.
+	 * Sets the BoardZone in which the owner must move its pawns, and reciprocally.
 	 * @param zone the opposed BoardZone
 	 */
 	public void setOpponentZone(final BoardZone zone) {
 		this.opponentZone = zone;
+		if (zone == null)
+			return;
+		zone.opponentZone = this;
 	}
 
 	/**

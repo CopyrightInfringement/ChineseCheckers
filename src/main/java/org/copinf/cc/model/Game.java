@@ -46,8 +46,8 @@ public class Game {
 	 * @throws RuntimeException if this game cannot begin.
 	 */
 	private void initialize() {
-		if (teams.isEmpty())
-			throw new RuntimeException("The game cannot begin, no team were registered.");
+		if (teams.size() < 2)
+			throw new RuntimeException("The game cannot begin, not enough teams were registered (only " + teams.size() + ")");
 
 		board.dispatchZones(teams, this.numberOfZones);
 
@@ -60,11 +60,10 @@ public class Game {
 	 * @throws RuntimeException if this game cannot begin
 	 */
 	public void nextTurn() {
-		turnCount++;
-
-		if (turnCount == 0)
+		if (turnCount == -1)
 			initialize();
-
+		turnCount++;
+		
 		currentPlayer = players.get(turnCount % players.size());
 	}
 
