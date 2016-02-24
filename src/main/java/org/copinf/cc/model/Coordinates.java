@@ -5,10 +5,10 @@ package org.copinf.cc.model;
  */
 public class Coordinates {
 
-	/** x-axis coordinate */
+	/** x-axis coordinate. */
 	public final int x;
 
-	/** y-axis coordinate */
+	/** y-axis coordinate .*/
 	public final int y;
 
 	/**
@@ -55,10 +55,10 @@ public class Coordinates {
 	 * @return true if they are adjacent
 	 */
 	public boolean isAdjacentTo(final Coordinates coord) {
-		return (Math.abs(this.x - coord.x) == 1 && this.y == coord.y) ||
-			(Math.abs(this.y - coord.y) == 1 && this.x == coord.x) ||
-			(this.y % 2 == 0 && this.x == coord.x + 1 && Math.abs(this.y - coord.y) == 1) ||
-			(this.y % 2 == 1 && this.x == coord.x - 1 && Math.abs(this.y - coord.y) == 1);
+		return Math.abs(this.x - coord.x) == 1 && this.y == coord.y
+			|| Math.abs(this.y - coord.y) == 1 && this.x == coord.x
+			|| this.y % 2 == 0 && this.x == coord.x + 1 && Math.abs(this.y - coord.y) == 1
+			|| this.y % 2 != 0 && this.x == coord.x - 1 && Math.abs(this.y - coord.y) == 1;
 	}
 
 	/**

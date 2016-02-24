@@ -24,7 +24,8 @@ public class BoardZoneTest {
 
 	@Test
 	public void setOpponentZoneTest() {
-		BoardZone zone1 = makeZone(), zone2 = makeZone();
+		BoardZone zone1 = makeZone();
+		BoardZone zone2 = makeZone();
 		try {
 			zone1.setOpponentZone(zone2);
 		} catch (Exception e) {

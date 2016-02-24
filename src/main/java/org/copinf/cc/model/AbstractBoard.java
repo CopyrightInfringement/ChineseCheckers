@@ -83,26 +83,26 @@ public abstract class AbstractBoard {
 		}
 
 		Coordinates orig = path.get(0);
-		Coordinates dest;
 		final Pawn pawn = getPawn(orig);
 		if (pawn == null || pawn.getOwner() != player) {
 			return false;
 		}
 
+		Coordinates dest;
 		if (path.size() == 2) {
 			dest = path.get(1);
 			return orig.isAdjacentTo(dest) && getPawn(dest) == null;
 		}
 
 		Coordinates middle;
-		for (Iterator<Coordinates> it = path.subList(1, path.size()).iterator(); it.hasNext();) {
+		for (final Iterator<Coordinates> it = path.subList(1, path.size()).iterator(); it.hasNext();) {
 			dest = it.next();
 
 			if (orig.isAdjacentTo(dest)) return false;
 
 			middle = orig.getMiddleCoordinates(dest);
 			if (middle == null || getPawn(middle) == null) return false;
-			
+
 			orig = dest;
 		}
 
@@ -137,11 +137,11 @@ public abstract class AbstractBoard {
 	 * @param numberOfZones the number of zones per player
 	 */
 	public abstract void dispatchZones(final Set<Team> teams, int numberOfZones);
-	
+
 	/**
 	 * Gets the possible number of zones per player.
 	 * @param playerNumber The number of players.
 	 * @return an ascending sorted set of the possible zones numbers per player.
 	 */
-	public abstract SortedSet<Integer> getPossiblesZoneNumber (int playerNumber);
+	public abstract SortedSet<Integer> getPossiblesZoneNumber(int playerNumber);
 }

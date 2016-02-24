@@ -28,7 +28,7 @@ public class Game {
 
 	/** Number of zones per player. */
 	private int numberOfZones;
-	
+
 	/**
 	 * Constructs a game.
 	 * @param board board used for this game.
@@ -52,7 +52,8 @@ public class Game {
 		board.dispatchZones(teams, this.numberOfZones);
 
 		if (!board.getPossiblePlayerNumbers().contains(players.size()))
-			throw new RuntimeException("The game cannot begin, its board " + board + " doesn't support " + players.size() + " players.");
+			throw new RuntimeException("The game cannot begin, its board " + board + " doesn't support "
+				+ players.size() + " players.");
 	}
 
 	/**
@@ -139,16 +140,17 @@ public class Game {
 
 	/**
 	 * Sets the number of zones per player.
-	 * @param numberOfZones The number of zones per player.
-	 * @return false if the number of zones requested is not compatible with the number of players added so far.
+	 * @param numberOfZones number of zones per player.
+	 * @return false if the number of zones requested is not compatible with the number of players
+	 * added so far.
 	 */
-	public boolean setNumberOfZones (int numberOfZones){
+	public boolean setNumberOfZones(int numberOfZones) {
 		if (!this.board.getPossiblesZoneNumber(this.players.size()).contains(numberOfZones))
 			return false;
 		this.numberOfZones = numberOfZones;
 		return true;
 	}
-	
+
 	/**
 	 * Returns the current turn count.
 	 * @return current turn count

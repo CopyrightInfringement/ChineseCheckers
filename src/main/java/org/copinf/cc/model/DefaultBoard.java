@@ -49,7 +49,7 @@ public class DefaultBoard extends AbstractBoard {
 	};
 
 	private List<BoardZone> zones;
-	
+
 	public DefaultBoard() {
 		super(13,17);
 		Map<Integer,BoardZone> map = new TreeMap<> ();
@@ -104,7 +104,7 @@ public class DefaultBoard extends AbstractBoard {
 	public SortedSet<Integer> getPossiblesZoneNumber(int playerNumber) {
 		if (!getPossiblePlayerNumbers().contains(playerNumber))
 			return null;
-		int nbMax = 6/playerNumber;
+		int nbMax = 6 / playerNumber;
 		SortedSet<Integer> ts = new TreeSet<Integer>();
 		for (int i = 1; i <= nbMax; i++) {
 			ts.add(i);
