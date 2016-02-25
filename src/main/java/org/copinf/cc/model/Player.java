@@ -25,9 +25,11 @@ public class Player {
 	 * @return true if this player has won
 	 */
 	public boolean hasWon() {
-		for (final BoardZone boardZone : initialZones)
-			if (!boardZone.getOpponentZone().isFull(this))
+		for (final BoardZone boardZone : initialZones) {
+			if (!boardZone.getOpponentZone().isFull(this)) {
 				return false;
+			}
+		}
 		return true;
 	}
 

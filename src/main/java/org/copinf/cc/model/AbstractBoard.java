@@ -98,10 +98,14 @@ public abstract class AbstractBoard {
 		for (final Iterator<Coordinates> it = path.subList(1, path.size()).iterator(); it.hasNext();) {
 			dest = it.next();
 
-			if (orig.isAdjacentTo(dest)) return false;
+			if (orig.isAdjacentTo(dest)) {
+				return false;
+			}
 
 			middle = orig.getMiddleCoordinates(dest);
-			if (middle == null || getPawn(middle) == null) return false;
+			if (middle == null || getPawn(middle) == null) {
+				return false;
+			}
 
 			orig = dest;
 		}

@@ -45,8 +45,9 @@ public class BoardZone {
 	 */
 	public void setOpponentZone(final BoardZone zone) {
 		this.opponentZone = zone;
-		if (zone == null)
+		if (zone == null) {
 			return;
+		}
 		zone.opponentZone = this;
 	}
 
@@ -56,9 +57,11 @@ public class BoardZone {
 	 * @return true if the zone is full
 	 */
 	public boolean isFull(final Player player) {
-		for (final Square s : squares)
-			if (s.getPawn() == null || s.getPawn().getOwner() != player)
+		for (final Square s : squares) {
+			if (s.getPawn() == null || s.getPawn().getOwner() != player) {
 				return false;
+			}
+		}
 		return true;
 	}
 }

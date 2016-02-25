@@ -78,7 +78,9 @@ public class BoardView {
 		SquareView square;
 		for (int y = 0; y < board.getHeight(); y++) {
 			for (int x = 0; x < board.getWidth(); x++) {
-				if (x == 0 && y == 0) continue;
+				if (x == 0 && y == 0) {
+					continue;
+				}
 				square = new SquareView(topLeftSquare);
 				if (y % 2 == 0) {
 					square.translate(x * (int) diameter, y * (int) (diameter + radius));
@@ -92,6 +94,7 @@ public class BoardView {
 
 	/**
 	 * Paint this BoardView.
+	 * @param g the Graphics context in which to paint
 	 */
 	public void paint(Graphics2D g) {
 		final Color color = g.getColor();

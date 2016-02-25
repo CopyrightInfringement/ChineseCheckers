@@ -46,14 +46,17 @@ public class Game {
 	 * @throws RuntimeException if this game cannot begin.
 	 */
 	private void initialize() {
-		if (teams.size() < 2)
-			throw new RuntimeException("The game cannot begin, not enough teams were registered (only " + teams.size() + ")");
+		if (teams.size() < 2) {
+			throw new RuntimeException("The game cannot begin, not enough teams were registered (only "
+				+ teams.size() + ")");
+		}
 
 		board.dispatchZones(teams, this.numberOfZones);
 
-		if (!board.getPossiblePlayerNumbers().contains(players.size()))
+		if (!board.getPossiblePlayerNumbers().contains(players.size())) {
 			throw new RuntimeException("The game cannot begin, its board " + board + " doesn't support "
 				+ players.size() + " players.");
+		}
 	}
 
 	/**
@@ -61,10 +64,11 @@ public class Game {
 	 * @throws RuntimeException if this game cannot begin
 	 */
 	public void nextTurn() {
-		if (turnCount == -1)
+		if (turnCount == -1) {
 			initialize();
+		}
 		turnCount++;
-		
+
 		currentPlayer = players.get(turnCount % players.size());
 	}
 
@@ -81,9 +85,11 @@ public class Game {
 	 * @return winning team, or null
 	 */
 	public Team getWinner() {
-		for (final Team team : teams)
-			if (team.hasWon())
+		for (final Team team : teams) {
+			if (team.hasWon()) {
 				return team;
+			}
+		}
 		return null;
 	}
 
@@ -125,12 +131,15 @@ public class Game {
 	 * @return true if the adding process succeeded.
 	 */
 	public boolean addTeam(final Team team) {
-		if (teams.contains(team))
+		if (teams.contains(team)) {
 			return false;
+		}
 
-		for (final Player p : team.getPlayers())
-			if (players.contains(p))
+		for (final Player p : team.getPlayers()) {
+			if (players.contains(p)) {
 				return false;
+			}
+		}
 
 		teams.add(team);
 		players.addAll(team.getPlayers());
@@ -145,8 +154,9 @@ public class Game {
 	 * added so far.
 	 */
 	public boolean setNumberOfZones(int numberOfZones) {
-		if (!this.board.getPossiblesZoneNumber(this.players.size()).contains(numberOfZones))
+		if (!this.board.getPossiblesZoneNumber(this.players.size()).contains(numberOfZones)) {
 			return false;
+		}
 		this.numberOfZones = numberOfZones;
 		return true;
 	}

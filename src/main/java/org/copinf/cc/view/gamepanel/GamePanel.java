@@ -34,26 +34,22 @@ public class GamePanel extends JPanel {
 		this.player = player;
 
 		// UI
-		//setPreferredSize(new Dimension(800, 800));
-		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+		setPreferredSize(new Dimension(800, 800));
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-		/*
 		infoBar = new InfoBar(game, player);
 		infoBar.setPreferredSize(new Dimension(800, 50));
 		infoBar.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(infoBar);
-		*/
 
 		drawZone = new DrawZone(game, player);
 		drawZone.setPreferredSize(new Dimension(800, 700));
 		drawZone.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(drawZone);
 
-		/*
 		actionZone = new ActionZone();
 		actionZone.setPreferredSize(new Dimension(800, 50));
 		actionZone.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(actionZone);
-		*/
 	}
 }

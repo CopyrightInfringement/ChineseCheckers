@@ -18,6 +18,7 @@ public final class Main {
 
 	/**
 	 * Program entry point.
+	 * @param args arguments
 	 */
 	public static void main(final String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {

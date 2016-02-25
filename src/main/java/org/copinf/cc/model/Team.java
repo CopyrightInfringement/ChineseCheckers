@@ -45,9 +45,11 @@ public class Team {
 	 * @return true if this team has won
 	 */
 	public boolean hasWon() {
-		for (final Player player : players)
-			if (!player.hasWon())
+		for (final Player player : players) {
+			if (!player.hasWon()) {
 				return false;
+			}
+		}
 		return true;
 	}
 }
