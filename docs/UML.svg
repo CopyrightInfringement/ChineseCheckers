@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
-<svg width="136cm" height="83cm" viewBox="-1319 -499 2717 1644" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="137cm" height="81cm" viewBox="-1319 -499 2729 1606" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
     <rect style="fill: #ffffff" x="-980.496" y="-232.092" width="1783.64" height="881.86"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-980.496" y="-232.092" width="1783.64" height="881.86"/>
@@ -283,157 +283,181 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-558.506" y="605.584">+toString(): String</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="859.956" y="-227.618" width="537.254" height="877.931"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="859.956" y="-227.618" width="537.254" height="877.931"/>
-    <rect style="fill: #ffffff" x="859.956" y="-247.618" width="40" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="859.956" y="-247.618" width="40" height="20"/>
-    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="861.956" y="-232.618">view</text>
+    <rect style="fill: #ffffff" x="871.485" y="-237.132" width="537.254" height="877.931"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="871.485" y="-237.132" width="537.254" height="877.931"/>
+    <rect style="fill: #ffffff" x="871.485" y="-257.132" width="40" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="871.485" y="-257.132" width="40" height="20"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="873.485" y="-242.132">view</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="923.644" y="-186.532" width="81.8" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="923.644" y="-186.532" width="81.8" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="964.544" y="-167.532">Window</text>
-    <rect style="fill: #ffffff" x="923.644" y="-158.532" width="81.8" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="923.644" y="-158.532" width="81.8" height="8"/>
-    <rect style="fill: #ffffff" x="923.644" y="-150.532" width="81.8" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="923.644" y="-150.532" width="81.8" height="8"/>
+    <rect style="fill: #ffffff" x="935.173" y="-196.046" width="81.8" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="935.173" y="-196.046" width="81.8" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="976.073" y="-177.046">Window</text>
+    <rect style="fill: #ffffff" x="935.173" y="-168.046" width="81.8" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="935.173" y="-168.046" width="81.8" height="8"/>
+    <rect style="fill: #ffffff" x="935.173" y="-160.046" width="81.8" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="935.173" y="-160.046" width="81.8" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="938.173" y="-146.046">+Window()</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="925.808" y="-108.686" width="423.831" height="214.077"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="925.808" y="-108.686" width="423.831" height="214.077"/>
-    <rect style="fill: #ffffff" x="925.808" y="-128.686" width="73.3" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="925.808" y="-128.686" width="73.3" height="20"/>
-    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="927.808" y="-113.686">gamepanel</text>
+    <rect style="fill: #ffffff" x="937.337" y="-118.2" width="423.831" height="309.195"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="937.337" y="-118.2" width="423.831" height="309.195"/>
+    <rect style="fill: #ffffff" x="937.337" y="-138.2" width="73.3" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="937.337" y="-138.2" width="73.3" height="20"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="939.337" y="-123.2">gamepanel</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="927.97" y="302.168" width="220.564" height="201.102"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="927.97" y="302.168" width="220.564" height="201.102"/>
-    <rect style="fill: #ffffff" x="927.97" y="282.168" width="73.3" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="927.97" y="282.168" width="73.3" height="20"/>
-    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="929.97" y="297.168">roompanel</text>
+    <rect style="fill: #ffffff" x="939.499" y="402.061" width="220.564" height="201.102"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="939.499" y="402.061" width="220.564" height="201.102"/>
+    <rect style="fill: #ffffff" x="939.499" y="382.061" width="73.3" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="939.499" y="382.061" width="73.3" height="20"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="941.499" y="397.061">roompanel</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="925.808" y="152.963" width="335.173" height="103.795"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="925.808" y="152.963" width="335.173" height="103.795"/>
-    <rect style="fill: #ffffff" x="925.808" y="132.963" width="73.3" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="925.808" y="132.963" width="73.3" height="20"/>
-    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="927.808" y="147.963">homepanel</text>
+    <rect style="fill: #ffffff" x="939.715" y="248.1" width="335.173" height="103.795"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="939.715" y="248.1" width="335.173" height="103.795"/>
+    <rect style="fill: #ffffff" x="939.715" y="228.1" width="73.3" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="939.715" y="228.1" width="73.3" height="20"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="941.715" y="243.1">homepanel</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="973.38" y="-84.9" width="111.3" height="44"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="973.38" y="-84.9" width="111.3" height="44"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1029.03" y="-68.9">&lt;&lt;JPanel&gt;&gt;</text>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1029.03" y="-49.9">GamePanel</text>
-    <rect style="fill: #ffffff" x="973.38" y="-40.9" width="111.3" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="973.38" y="-40.9" width="111.3" height="8"/>
-    <rect style="fill: #ffffff" x="973.38" y="-32.9" width="111.3" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="973.38" y="-32.9" width="111.3" height="8"/>
+    <rect style="fill: #ffffff" x="956.368" y="-89.6568" width="111.3" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="956.368" y="-89.6568" width="111.3" height="44"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1012.02" y="-73.6568">&lt;&lt;JPanel&gt;&gt;</text>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1012.02" y="-54.6568">GamePanel</text>
+    <rect style="fill: #ffffff" x="956.368" y="-45.6568" width="111.3" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="956.368" y="-45.6568" width="111.3" height="8"/>
+    <rect style="fill: #ffffff" x="956.368" y="-37.6568" width="111.3" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="956.368" y="-37.6568" width="111.3" height="8"/>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="999.328" y="181.074" width="111.75" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="999.328" y="181.074" width="111.75" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1055.2" y="200.074">HomePanel</text>
-    <rect style="fill: #ffffff" x="999.328" y="209.074" width="111.75" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="999.328" y="209.074" width="111.75" height="8"/>
-    <rect style="fill: #ffffff" x="999.328" y="217.074" width="111.75" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="999.328" y="217.074" width="111.75" height="8"/>
+    <rect style="fill: #ffffff" x="1013.24" y="276.211" width="111.75" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1013.24" y="276.211" width="111.75" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1069.11" y="295.211">HomePanel</text>
+    <rect style="fill: #ffffff" x="1013.24" y="304.211" width="111.75" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1013.24" y="304.211" width="111.75" height="8"/>
+    <rect style="fill: #ffffff" x="1013.24" y="312.211" width="111.75" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1013.24" y="312.211" width="111.75" height="8"/>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="958.244" y="384.338" width="110.8" height="44"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="958.244" y="384.338" width="110.8" height="44"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1013.64" y="400.338">&lt;&lt;JPanel&gt;&gt;</text>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1013.64" y="419.338">RoomPanel</text>
-    <rect style="fill: #ffffff" x="958.244" y="428.338" width="110.8" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="958.244" y="428.338" width="110.8" height="8"/>
-    <rect style="fill: #ffffff" x="958.244" y="436.338" width="110.8" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="958.244" y="436.338" width="110.8" height="8"/>
+    <rect style="fill: #ffffff" x="969.773" y="484.231" width="110.8" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="969.773" y="484.231" width="110.8" height="44"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1025.17" y="500.231">&lt;&lt;JPanel&gt;&gt;</text>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1025.17" y="519.231">RoomPanel</text>
+    <rect style="fill: #ffffff" x="969.773" y="528.231" width="110.8" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="969.773" y="528.231" width="110.8" height="8"/>
+    <rect style="fill: #ffffff" x="969.773" y="536.231" width="110.8" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="969.773" y="536.231" width="110.8" height="8"/>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="1198.27" y="12.4077" width="112.3" height="44"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1198.27" y="12.4077" width="112.3" height="44"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1254.42" y="28.4077">&lt;&lt;JPanel&gt;&gt;</text>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1254.42" y="47.4077">ActionZone</text>
-    <rect style="fill: #ffffff" x="1198.27" y="56.4077" width="112.3" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1198.27" y="56.4077" width="112.3" height="8"/>
-    <rect style="fill: #ffffff" x="1198.27" y="64.4077" width="112.3" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1198.27" y="64.4077" width="112.3" height="8"/>
+    <rect style="fill: #ffffff" x="1159.6" y="102.787" width="112.3" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1159.6" y="102.787" width="112.3" height="44"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1215.75" y="118.787">&lt;&lt;JPanel&gt;&gt;</text>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1215.75" y="137.787">ActionZone</text>
+    <rect style="fill: #ffffff" x="1159.6" y="146.787" width="112.3" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1159.6" y="146.787" width="112.3" height="8"/>
+    <rect style="fill: #ffffff" x="1159.6" y="154.787" width="112.3" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1159.6" y="154.787" width="112.3" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1162.6" y="168.787">+ActionZone()</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="1059.88" y="12.4077" width="101.65" height="44"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1059.88" y="12.4077" width="101.65" height="44"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1110.7" y="28.4077">&lt;&lt;JPanel&gt;&gt;</text>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1110.7" y="47.4077">DrawZone</text>
-    <rect style="fill: #ffffff" x="1059.88" y="56.4077" width="101.65" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1059.88" y="56.4077" width="101.65" height="8"/>
-    <rect style="fill: #ffffff" x="1059.88" y="64.4077" width="101.65" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1059.88" y="64.4077" width="101.65" height="8"/>
+    <rect style="fill: #ffffff" x="1079.85" y="-1.86281" width="271.8" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1079.85" y="-1.86281" width="271.8" height="44"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1215.75" y="14.1372">&lt;&lt;JPanel&gt;&gt;</text>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1215.75" y="33.1372">DrawZone</text>
+    <rect style="fill: #ffffff" x="1079.85" y="42.1372" width="271.8" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1079.85" y="42.1372" width="271.8" height="8"/>
+    <rect style="fill: #ffffff" x="1079.85" y="50.1372" width="271.8" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1079.85" y="50.1372" width="271.8" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1082.85" y="64.1372">+DrawZone(game:Game,player:Player)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1082.85" y="80.1372">+paint(g:Graphics): void</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="940.944" y="5.9205" width="87" height="44"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="940.944" y="5.9205" width="87" height="44"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="984.444" y="21.9205">&lt;&lt;JPanel&gt;&gt;</text>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="984.444" y="40.9205">InfoBar</text>
-    <rect style="fill: #ffffff" x="940.944" y="49.9205" width="87" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="940.944" y="49.9205" width="87" height="8"/>
-    <rect style="fill: #ffffff" x="940.944" y="57.9205" width="87" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="940.944" y="57.9205" width="87" height="8"/>
+    <rect style="fill: #ffffff" x="1083.7" y="-103.487" width="264.1" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1083.7" y="-103.487" width="264.1" height="44"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1215.75" y="-87.4866">&lt;&lt;JPanel&gt;&gt;</text>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1215.75" y="-68.4866">InfoBar</text>
+    <rect style="fill: #ffffff" x="1083.7" y="-59.4866" width="264.1" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1083.7" y="-59.4866" width="264.1" height="8"/>
+    <rect style="fill: #ffffff" x="1083.7" y="-51.4866" width="264.1" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1083.7" y="-51.4866" width="264.1" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1086.7" y="-37.4866">+InfoBar(game:Game,player:Player)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1086.7" y="-21.4866">+update(): void</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="-105.384" y="739.512" width="722.369" height="404.169"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-105.384" y="739.512" width="722.369" height="404.169"/>
-    <rect style="fill: #ffffff" x="-105.384" y="719.512" width="81" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-105.384" y="719.512" width="81" height="20"/>
-    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-103.384" y="734.512">controller</text>
+    <rect style="fill: #ffffff" x="-412.2" y="701.457" width="742.505" height="404.169"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-412.2" y="701.457" width="742.505" height="404.169"/>
+    <rect style="fill: #ffffff" x="-412.2" y="681.457" width="81" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-412.2" y="681.457" width="81" height="20"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-410.2" y="696.457">controller</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="164.153" y="986.95" width="151.9" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="164.153" y="986.95" width="151.9" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="240.103" y="1005.95">GameController</text>
-    <rect style="fill: #ffffff" x="164.153" y="1014.95" width="151.9" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="164.153" y="1014.95" width="151.9" height="8"/>
-    <rect style="fill: #ffffff" x="164.153" y="1022.95" width="151.9" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="164.153" y="1022.95" width="151.9" height="8"/>
+    <rect style="fill: #ffffff" x="-219.548" y="985.816" width="318" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-219.548" y="985.816" width="318" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-60.5483" y="1004.82">GameController</text>
+    <rect style="fill: #ffffff" x="-219.548" y="1013.82" width="318" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-219.548" y="1013.82" width="318" height="8"/>
+    <rect style="fill: #ffffff" x="-219.548" y="1021.82" width="318" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-219.548" y="1021.82" width="318" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-216.548" y="1035.82">+GameController(game:Game,player:Player,</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-216.548" y="1051.82">                window:Window,)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-216.548" y="1067.82">+start()</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="-85.9936" y="988.932" width="152.35" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-85.9936" y="988.932" width="152.35" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-9.8186" y="1007.93">HomeController</text>
-    <rect style="fill: #ffffff" x="-85.9936" y="1016.93" width="152.35" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-85.9936" y="1016.93" width="152.35" height="8"/>
-    <rect style="fill: #ffffff" x="-85.9936" y="1024.93" width="152.35" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-85.9936" y="1024.93" width="152.35" height="8"/>
+    <rect style="fill: #ffffff" x="-381.281" y="884.339" width="152.35" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-381.281" y="884.339" width="152.35" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="-305.106" y="903.339">HomeController</text>
+    <rect style="fill: #ffffff" x="-381.281" y="912.339" width="152.35" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-381.281" y="912.339" width="152.35" height="8"/>
+    <rect style="fill: #ffffff" x="-381.281" y="920.339" width="152.35" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-381.281" y="920.339" width="152.35" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-378.281" y="934.339">+HomeController()</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-378.281" y="950.339">+start()</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="398.978" y="986.95" width="151.4" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="398.978" y="986.95" width="151.4" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="474.678" y="1005.95">RoomController</text>
-    <rect style="fill: #ffffff" x="398.978" y="1014.95" width="151.4" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="398.978" y="1014.95" width="151.4" height="8"/>
-    <rect style="fill: #ffffff" x="398.978" y="1022.95" width="151.4" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="398.978" y="1022.95" width="151.4" height="8"/>
+    <rect style="fill: #ffffff" x="132.595" y="884.339" width="151.4" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="132.595" y="884.339" width="151.4" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="208.295" y="903.339">RoomController</text>
+    <rect style="fill: #ffffff" x="132.595" y="912.339" width="151.4" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="132.595" y="912.339" width="151.4" height="8"/>
+    <rect style="fill: #ffffff" x="132.595" y="920.339" width="151.4" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="132.595" y="920.339" width="151.4" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="135.595" y="934.339">+RoomController()</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="135.595" y="950.339">+start()</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="190.319" y="788.214" width="179.2" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="190.319" y="788.214" width="179.2" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:italic;font-weight:700" x="279.919" y="807.214">AbstractController</text>
-    <rect style="fill: #ffffff" x="190.319" y="816.214" width="179.2" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="190.319" y="816.214" width="179.2" height="8"/>
-    <rect style="fill: #ffffff" x="190.319" y="824.214" width="179.2" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="190.319" y="824.214" width="179.2" height="8"/>
+    <rect style="fill: #ffffff" x="-150.148" y="758.539" width="179.2" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-150.148" y="758.539" width="179.2" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:italic;font-weight:700" x="-60.5483" y="777.539">AbstractController</text>
+    <rect style="fill: #ffffff" x="-150.148" y="786.539" width="179.2" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-150.148" y="786.539" width="179.2" height="8"/>
+    <rect style="fill: #ffffff" x="-150.148" y="794.539" width="179.2" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-150.148" y="794.539" width="179.2" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:italic;font-weight:700" x="-147.148" y="808.539">+start(): void</text>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="279.919,851.456 279.919,917.582 240.103,917.582 240.103,985.944 "/>
-    <polygon style="fill: #ffffff" points="287.919,851.456 279.919,835.456 271.919,851.456 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="287.919,851.456 279.919,835.456 271.919,851.456 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-60.5483,833.782 -60.5483,832.546 -60.5483,983.811 -60.5483,984.811 "/>
+    <polygon style="fill: #ffffff" points="-52.5483,833.782 -60.5483,817.782 -68.5483,833.782 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-52.5483,833.782 -60.5483,817.782 -68.5483,833.782 "/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="171.077,810.214 120.34,810.214 120.34,1010.93 67.3658,1010.93 "/>
-    <polygon style="fill: #ffffff" points="171.077,818.214 187.077,810.214 171.077,802.214 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="171.077,818.214 187.077,810.214 171.077,802.214 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-60.5483,833.782 -60.5483,857.438 -305.106,857.438 -305.106,883.33 "/>
+    <polygon style="fill: #ffffff" points="-52.5483,833.782 -60.5483,817.782 -68.5483,833.782 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-52.5483,833.782 -60.5483,817.782 -68.5483,833.782 "/>
   </g>
   <g>
-    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="279.919,851.456 279.919,917.582 474.678,917.582 474.678,985.944 "/>
-    <polygon style="fill: #ffffff" points="287.919,851.456 279.919,835.456 271.919,851.456 "/>
-    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="287.919,851.456 279.919,835.456 271.919,851.456 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-60.5483,833.782 -60.5483,857.438 208.295,857.438 208.295,883.33 "/>
+    <polygon style="fill: #ffffff" points="-52.5483,833.782 -60.5483,817.782 -68.5483,833.782 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-52.5483,833.782 -60.5483,817.782 -68.5483,833.782 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="957.844" y="10.2353" width="106.6" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="957.844" y="10.2353" width="106.6" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1011.14" y="29.2353">BoardView</text>
+    <rect style="fill: #ffffff" x="957.844" y="38.2353" width="106.6" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="957.844" y="38.2353" width="106.6" height="8"/>
+    <rect style="fill: #ffffff" x="957.844" y="46.2353" width="106.6" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="957.844" y="46.2353" width="106.6" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="960.844" y="60.2353">+BoardView()</text>
   </g>
 </svg>
