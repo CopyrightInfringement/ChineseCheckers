@@ -3,7 +3,7 @@ package org.copinf.cc.controller;
 /**
  * Controls the game creation panel.
  */
-public class RoomController extends Controller {
+public class RoomController extends AbstractController {
 
 	/**
 	 * Constructs a new RoomController.

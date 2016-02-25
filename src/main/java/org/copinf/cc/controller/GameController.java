@@ -8,7 +8,7 @@ import org.copinf.cc.view.gamepanel.GamePanel;
 /**
  * Controls the game state.
  */
-public class GameController extends Controller {
+public class GameController extends AbstractController {
 
 	private Game game;
 	private Window window;

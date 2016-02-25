@@ -6,7 +6,7 @@ import org.copinf.cc.view.homepanel.HomePanel;
 /**
  * Controls the home panel.
  */
-public class HomeController extends Controller {
+public class HomeController extends AbstractController {
 
 	private Window view;
 	private HomePanel panel;

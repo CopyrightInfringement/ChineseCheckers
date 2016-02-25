@@ -3,7 +3,7 @@ package org.copinf.cc.controller;
 /**
  * An abstract class for controllers.
  */
-public abstract class Controller {
+public abstract class AbstractController {
 
 	/**
 	 * Starts this controller.

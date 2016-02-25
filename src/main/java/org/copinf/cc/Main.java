@@ -1,6 +1,6 @@
 package org.copinf.cc;
 
-import org.copinf.cc.controller.Controller;
+import org.copinf.cc.controller.AbstractController;
 import org.copinf.cc.controller.GameController;
 import org.copinf.cc.controller.HomeController;
 import org.copinf.cc.model.*;
@@ -28,7 +28,7 @@ public final class Main {
 				Game game = new Game(board);
 				Window window = new Window();
 				Player player = new Player("Name");
-				Controller gameController = new GameController(game, player, window);
+				AbstractController gameController = new GameController(game, player, window);
 				gameController.start();
 				window.setVisible(true);
 			}
