@@ -45,6 +45,13 @@ findbugsMain {
   }
 }
 
+findbugsTest {
+  reports {
+    xml.enabled = false
+    html.enabled = true
+  }
+}
+
 jdependMain {
   reports {
     xml.enabled = false
