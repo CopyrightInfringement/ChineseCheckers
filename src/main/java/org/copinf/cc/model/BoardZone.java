@@ -1,6 +1,7 @@
 package org.copinf.cc.model;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Set;
  * It represents the starting area of a player, and is associated with the BoardZone he must fill
  * with his pawns in order to win.
  */
-public class BoardZone {
+public class BoardZone implements Iterable<Square> {
 
 	private final Set<Square> squares;
 
@@ -40,15 +41,11 @@ public class BoardZone {
 	}
 
 	/**
-	 * Sets the BoardZone in which the owner must move its pawns, and reciprocally.
+	 * Sets the BoardZone in which the owner must move its pawns.
 	 * @param zone the opposed BoardZone
 	 */
 	public void setOpponentZone(final BoardZone zone) {
 		this.opponentZone = zone;
-		if (zone == null) {
-			return;
-		}
-		zone.opponentZone = this;
 	}
 
 	/**
@@ -57,11 +54,26 @@ public class BoardZone {
 	 * @return true if the zone is full
 	 */
 	public boolean isFull(final Player player) {
-		for (final Square s : squares) {
+		for (Square s : squares) {
 			if (s.getPawn() == null || s.getPawn().getOwner() != player) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Fill this BoardZone with pawns from a specified player. Creates the pawns.
+	 * @param player a player
+	 */
+	public void fill(final Player player) {
+		for (Square s : squares) {
+			s.setPawn(new Pawn(player));
+		}
+	}
+
+	@Override
+	public Iterator<Square> iterator() {
+		return squares.iterator();
 	}
 }

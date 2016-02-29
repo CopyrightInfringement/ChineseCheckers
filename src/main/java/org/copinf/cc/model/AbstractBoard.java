@@ -34,6 +34,10 @@ public abstract class AbstractBoard {
 		this.board = new Square[width][height];
 	}
 
+	public Square getSquare(final Coordinates coordinates) {
+		return board[coordinates.x][coordinates.y];
+	}
+
 	/**
 	 * Gets a pawn at specified coordinates.
 	 * @param coordinates the pawn's location

@@ -47,6 +47,7 @@ public class Player {
 	 * @return false if the adding process failed
 	 */
 	public boolean addInitialZone(final BoardZone zone) {
+		zone.fill(this);
 		return initialZones.add(zone);
 	}
 
