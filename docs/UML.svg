@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
-<svg width="137cm" height="81cm" viewBox="-1319 -499 2729 1606" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="158cm" height="81cm" viewBox="-1319 -499 3155 1606" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <g>
     <rect style="fill: #ffffff" x="-980.496" y="-232.092" width="1783.64" height="881.86"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-980.496" y="-232.092" width="1783.64" height="881.86"/>
@@ -287,28 +287,28 @@
     <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="-558.506" y="605.584">+toString(): String</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="871.484" y="-237.132" width="537.254" height="877.931"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="871.484" y="-237.132" width="537.254" height="877.931"/>
+    <rect style="fill: #ffffff" x="871.484" y="-237.132" width="963.662" height="887.132"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="871.484" y="-237.132" width="963.662" height="887.132"/>
     <rect style="fill: #ffffff" x="871.484" y="-257.132" width="40" height="20"/>
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="871.484" y="-257.132" width="40" height="20"/>
     <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="873.484" y="-242.132">view</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="935.172" y="-196.046" width="81.8" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="935.172" y="-196.046" width="81.8" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="976.072" y="-177.046">Window</text>
-    <rect style="fill: #ffffff" x="935.172" y="-168.046" width="81.8" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="935.172" y="-168.046" width="81.8" height="8"/>
-    <rect style="fill: #ffffff" x="935.172" y="-160.046" width="81.8" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="935.172" y="-160.046" width="81.8" height="20"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="938.172" y="-146.046">+Window()</text>
+    <rect style="fill: #ffffff" x="903.172" y="-210.046" width="81.8" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="903.172" y="-210.046" width="81.8" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="944.072" y="-191.046">Window</text>
+    <rect style="fill: #ffffff" x="903.172" y="-182.046" width="81.8" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="903.172" y="-182.046" width="81.8" height="8"/>
+    <rect style="fill: #ffffff" x="903.172" y="-174.046" width="81.8" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="903.172" y="-174.046" width="81.8" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="906.172" y="-160.046">+Window()</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="937.336" y="-118.2" width="423.831" height="309.195"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="937.336" y="-118.2" width="423.831" height="309.195"/>
-    <rect style="fill: #ffffff" x="937.336" y="-138.2" width="73.3" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="937.336" y="-138.2" width="73.3" height="20"/>
-    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="939.336" y="-123.2">gamepanel</text>
+    <rect style="fill: #ffffff" x="897.336" y="-112.2" width="923.809" height="326.2"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="897.336" y="-112.2" width="923.809" height="326.2"/>
+    <rect style="fill: #ffffff" x="897.336" y="-132.2" width="73.3" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="897.336" y="-132.2" width="73.3" height="20"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="899.336" y="-117.2">gamepanel</text>
   </g>
   <g>
     <rect style="fill: #ffffff" x="939.498" y="402.062" width="220.564" height="201.102"/>
@@ -325,14 +325,14 @@
     <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="941.716" y="243.1">homepanel</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="956.368" y="-89.6568" width="111.3" height="44"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="956.368" y="-89.6568" width="111.3" height="44"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1012.02" y="-73.6568">&lt;&lt;JPanel&gt;&gt;</text>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1012.02" y="-54.6568">GamePanel</text>
-    <rect style="fill: #ffffff" x="956.368" y="-45.6568" width="111.3" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="956.368" y="-45.6568" width="111.3" height="8"/>
-    <rect style="fill: #ffffff" x="956.368" y="-37.6568" width="111.3" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="956.368" y="-37.6568" width="111.3" height="8"/>
+    <rect style="fill: #ffffff" x="916.368" y="-83.6568" width="111.3" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="916.368" y="-83.6568" width="111.3" height="44"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="972.018" y="-67.6568">&lt;&lt;JPanel&gt;&gt;</text>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="972.018" y="-48.6568">GamePanel</text>
+    <rect style="fill: #ffffff" x="916.368" y="-39.6568" width="111.3" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="916.368" y="-39.6568" width="111.3" height="8"/>
+    <rect style="fill: #ffffff" x="916.368" y="-31.6568" width="111.3" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="916.368" y="-31.6568" width="111.3" height="8"/>
   </g>
   <g>
     <rect style="fill: #ffffff" x="1013.24" y="276.21" width="111.75" height="28"/>
@@ -354,39 +354,39 @@
     <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="969.772" y="536.232" width="110.8" height="8"/>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="1159.6" y="102.787" width="112.3" height="44"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1159.6" y="102.787" width="112.3" height="44"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1215.75" y="118.787">&lt;&lt;JPanel&gt;&gt;</text>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1215.75" y="137.787">ActionZone</text>
-    <rect style="fill: #ffffff" x="1159.6" y="146.787" width="112.3" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1159.6" y="146.787" width="112.3" height="8"/>
-    <rect style="fill: #ffffff" x="1159.6" y="154.787" width="112.3" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1159.6" y="154.787" width="112.3" height="20"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1162.6" y="168.787">+ActionZone()</text>
+    <rect style="fill: #ffffff" x="1119.6" y="108.787" width="112.3" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1119.6" y="108.787" width="112.3" height="44"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1175.75" y="124.787">&lt;&lt;JPanel&gt;&gt;</text>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1175.75" y="143.787">ActionZone</text>
+    <rect style="fill: #ffffff" x="1119.6" y="152.787" width="112.3" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1119.6" y="152.787" width="112.3" height="8"/>
+    <rect style="fill: #ffffff" x="1119.6" y="160.787" width="112.3" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1119.6" y="160.787" width="112.3" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1122.6" y="174.787">+ActionZone()</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="1079.85" y="-1.86281" width="271.8" height="44"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1079.85" y="-1.86281" width="271.8" height="44"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1215.75" y="14.1372">&lt;&lt;JPanel&gt;&gt;</text>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1215.75" y="33.1372">DrawZone</text>
-    <rect style="fill: #ffffff" x="1079.85" y="42.1372" width="271.8" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1079.85" y="42.1372" width="271.8" height="8"/>
-    <rect style="fill: #ffffff" x="1079.85" y="50.1372" width="271.8" height="36"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1079.85" y="50.1372" width="271.8" height="36"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1082.85" y="64.1372">+DrawZone(game:Game,player:Player)</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1082.85" y="80.1372">+paint(g:Graphics): void</text>
+    <rect style="fill: #ffffff" x="1039.85" y="4.13718" width="271.8" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1039.85" y="4.13718" width="271.8" height="44"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1175.75" y="20.1372">&lt;&lt;JPanel&gt;&gt;</text>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1175.75" y="39.1372">DrawZone</text>
+    <rect style="fill: #ffffff" x="1039.85" y="48.1372" width="271.8" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1039.85" y="48.1372" width="271.8" height="8"/>
+    <rect style="fill: #ffffff" x="1039.85" y="56.1372" width="271.8" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1039.85" y="56.1372" width="271.8" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1042.85" y="70.1372">+DrawZone(game:Game,player:Player)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1042.85" y="86.1372">+paint(g:Graphics): void</text>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="1083.7" y="-103.487" width="264.1" height="44"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1083.7" y="-103.487" width="264.1" height="44"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1215.75" y="-87.4866">&lt;&lt;JPanel&gt;&gt;</text>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1215.75" y="-68.4866">InfoBar</text>
-    <rect style="fill: #ffffff" x="1083.7" y="-59.4866" width="264.1" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1083.7" y="-59.4866" width="264.1" height="8"/>
-    <rect style="fill: #ffffff" x="1083.7" y="-51.4866" width="264.1" height="36"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1083.7" y="-51.4866" width="264.1" height="36"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1086.7" y="-37.4866">+InfoBar(game:Game,player:Player)</text>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1086.7" y="-21.4866">+update(): void</text>
+    <rect style="fill: #ffffff" x="1043.7" y="-97.4866" width="264.1" height="44"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1043.7" y="-97.4866" width="264.1" height="44"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:monospace;font-style:normal;font-weight:normal" x="1175.75" y="-81.4866">&lt;&lt;JPanel&gt;&gt;</text>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1175.75" y="-62.4866">InfoBar</text>
+    <rect style="fill: #ffffff" x="1043.7" y="-53.4866" width="264.1" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1043.7" y="-53.4866" width="264.1" height="8"/>
+    <rect style="fill: #ffffff" x="1043.7" y="-45.4866" width="264.1" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1043.7" y="-45.4866" width="264.1" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1046.7" y="-31.4866">+InfoBar(game:Game,player:Player)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1046.7" y="-15.4866">+update(): void</text>
   </g>
   <g>
     <rect style="fill: #ffffff" x="-412.2" y="701.458" width="742.505" height="404.169"/>
@@ -455,13 +455,19 @@
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-52.5484,833.783 -60.5484,817.783 -68.5484,833.783 "/>
   </g>
   <g>
-    <rect style="fill: #ffffff" x="957.844" y="10.2353" width="106.6" height="28"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="957.844" y="10.2353" width="106.6" height="28"/>
-    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1011.14" y="29.2353">BoardView</text>
-    <rect style="fill: #ffffff" x="957.844" y="38.2353" width="106.6" height="8"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="957.844" y="38.2353" width="106.6" height="8"/>
-    <rect style="fill: #ffffff" x="957.844" y="46.2353" width="106.6" height="20"/>
-    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="957.844" y="46.2353" width="106.6" height="20"/>
-    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="960.844" y="60.2353">+BoardView()</text>
+    <rect style="fill: #ffffff" x="1332.85" y="-95.7646" width="464.3" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1332.85" y="-95.7646" width="464.3" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="1565" y="-76.7646">BoardView</text>
+    <rect style="fill: #ffffff" x="1332.85" y="-67.7646" width="464.3" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1332.85" y="-67.7646" width="464.3" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1335.85" y="-53.7646">-board: AbstractBoard</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1335.85" y="-37.7646">-hexagon: Shape</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1335.85" y="-21.7646">-size: double</text>
+    <rect style="fill: #ffffff" x="1332.85" y="-15.7646" width="464.3" height="68"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1332.85" y="-15.7646" width="464.3" height="68"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1335.85" y="-1.76457">+BoardView(board:AbstractBoard,width:int,</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1335.85" y="14.2354">           height:int)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1335.85" y="30.2354">-hexagonCorner(center:Point2D.Double,i:int): Point2D.Double</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="1335.85" y="46.2354">+paint(g:Graphics2D): void</text>
   </g>
 </svg>

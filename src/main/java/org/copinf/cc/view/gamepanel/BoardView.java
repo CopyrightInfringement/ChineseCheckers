@@ -4,11 +4,13 @@ import org.copinf.cc.model.AbstractBoard;
 import org.copinf.cc.model.Coordinates;
 import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Player;
+import org.copinf.cc.model.Square;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Polygon;
+import java.awt.Shape;
+import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
 
 /**
  * Provides methods to draw and interact with a board.
@@ -16,42 +18,9 @@ import java.awt.Polygon;
 @SuppressWarnings("serial")
 public class BoardView {
 
-	/**
-	 * Provides methods to draw and interact with a square.
-	 */
-	private static class SquareView extends Polygon {
-
-		private final Coordinates coordinates;
-
-		/**
-		 * Constructs a new SquareView.
-		 * @param coordinates at coordinates
-		 */
-		public SquareView(final Coordinates coordinates) {
-			super();
-			this.coordinates = coordinates;
-		}
-
-		/**
-		 * Constructs a new SquareView.
-		 * @param squareView copy from this squareView
-		 */
-		public SquareView(final SquareView squareView) {
-			super(squareView.xpoints, squareView.ypoints, squareView.npoints);
-			coordinates = squareView.coordinates;
-		}
-
-		/**
-		 * Gets this SquareView coordinates.
-		 * @return this coordinates
-		 */
-		public Coordinates getCoordinates() {
-			return coordinates;
-		}
-	}
-
 	private final AbstractBoard board;
-	private final SquareView[][] squares;
+	private final Shape hexagon;
+	private final double size;
 
 	/**
 	 * Constructs a new BoardView.
@@ -61,51 +30,49 @@ public class BoardView {
 	 */
 	public BoardView(final AbstractBoard board, final int width, final int height) {
 		this.board = board;
-		this.squares = new SquareView[board.getWidth()][board.getHeight()];
+		this.size = Math.min((double) width / (double) board.getWidth(),
+			(double) height / (double) board.getHeight()) / 2.;
 
-		final double diameter = Math.min((double) width / (double) board.getWidth(),
-			(double) height / (double) board.getHeight());
-		final double radius = diameter / 2.0;
-
-		final Point center = new Point((int) radius, (int) radius);
-		final SquareView topLeftSquare = new SquareView(new Coordinates(0, 0));
-		squares[0][0] = topLeftSquare;
-		for (double i = 1; i <= 6.0; i++) {
-			topLeftSquare.addPoint((int) (center.getX() + radius * (Math.cos(i * Math.PI / 3.0 + Math.PI / 6.0))),
-				(int) (center.getY() + radius * (Math.sin(i * Math.PI / 3.0 + Math.PI / 6.0))));
+		final Path2D.Double path = new Path2D.Double();
+		final Point2D.Double center = new Point2D.Double(size, size);
+		Point2D.Double point = hexagonCorner(center, 0);
+		path.moveTo(point.x, point.y);
+		for (int i = 1; i < 6; i++) {
+			point = hexagonCorner(center, i);
+			path.lineTo(point.x, point.y);
 		}
+		path.closePath();
+		this.hexagon = path;
+	}
 
-		SquareView square;
-		for (int y = 0; y < board.getHeight(); y++) {
-			for (int x = 0; x < board.getWidth(); x++) {
-				if (x == 0 && y == 0) {
-					continue;
-				}
-				square = new SquareView(topLeftSquare);
-				if (y % 2 == 0) {
-					square.translate(x * (int) diameter, y * (int) (diameter + radius));
-				} else {
-					square.translate(x * (int) diameter + (int) radius, y * (int) (diameter + radius));
-				}
-				squares[x][y] = square;
-			}
-		}
+	private Point2D.Double hexagonCorner(final Point2D.Double center, final int i) {
+		return new Point2D.Double(
+		center.x + size * Math.cos(Math.PI * i / 3. + Math.PI / 6.),
+		center.y + size * Math.sin(Math.PI * i / 3. + Math.PI / 6.));
 	}
 
 	/**
 	 * Paint this BoardView.
 	 * @param g the Graphics context in which to paint
 	 */
-	public void paint(Graphics2D g) {
-		final Color color = g.getColor();
+	public void paint(final Graphics2D g) {
+		double tx;
+		double ty;
+		Square square;
+		Coordinates coord;
+		g.setColor(Color.BLACK);
 		for (int x = 0; x < board.getWidth(); x++) {
 			for (int y = 0; y < board.getHeight(); y++) {
-				g.setColor(Color.BLACK);
-				g.drawPolygon(squares[x][y]);
-				g.setColor(Color.LIGHT_GRAY);
-				g.fillPolygon(squares[x][y]);
+				coord = new Coordinates(x, y);
+				square = board.getSquare(coord);
+				if (square != null) {
+					tx = (double) x * Math.sqrt(3.) * size + (y % 2 != 0 ? Math.sqrt(3.) * size / 2. : 0.);
+					ty = (double) y * size * 3. / 2.;
+					g.translate(tx, ty);
+					g.draw(hexagon);
+					g.translate(-tx, -ty);
+				}
 			}
 		}
-		g.setColor(color);
 	}
 }
