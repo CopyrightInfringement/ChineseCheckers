@@ -31,15 +31,17 @@ public final class Main {
 
 				DefaultBoard board = new DefaultBoard();
 				Game game = new Game(board);
-				Player player1 = new Player("Player 1");
-				Player player2 = new Player("Player 2");
+				Player player1 = new Player("François");
 				Team team1 = new Team();
-				Team team2 = new Team();
 				team1.addPlayer(player1);
-				team2.addPlayer(player2);
 				game.addTeam(team1);
+				Team team2 = new Team();
+				team2.addPlayer(new Player ("Mathieu"));
 				game.addTeam(team2);
-				game.getBoard().dispatchZones(game.getTeams(), 1);
+				Team team3 = new Team();
+				team3.addPlayer(new Player ("Paul"));
+				game.addTeam(team3);
+				game.getBoard().dispatchZones(game.getTeams(), 2);
 
 				Window window = new Window();
 				AbstractController gameController = new GameController(game, player1, window);

@@ -69,6 +69,12 @@ public class BoardView {
 					tx = (double) x * Math.sqrt(3.) * size + (y % 2 != 0 ? Math.sqrt(3.) * size / 2. : 0.);
 					ty = (double) y * size * 3. / 2.;
 					g.translate(tx, ty);
+					
+					int code = square.isFree() ? 0 : square.getPawn().getOwner().hashCode();
+					g.setColor(new Color (code * code));
+					if (code != 0)
+						g.fill(hexagon);
+					
 					g.draw(hexagon);
 					g.translate(-tx, -ty);
 				}

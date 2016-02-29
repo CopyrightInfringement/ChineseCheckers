@@ -73,7 +73,7 @@ public class DefaultBoard extends AbstractBoard {
 		this.zones = new ArrayList<>();
 		for (Integer i : new TreeSet<Integer>(map.keySet())) {
 			zones.add(map.get(i));
-			map.get(i).setOpponentZone(map.get((i + 3) % 6));
+			map.get(i).setOpponentZone(map.get((i + 2) % 6 + 1));
 		}
 	}
 
@@ -102,23 +102,28 @@ public class DefaultBoard extends AbstractBoard {
 					BoardZone zone = zones.get(i * nbOfZones + j);
 					players.get(i).addInitialZone(zone);
 					players.get(i + 1).addInitialZone(zone.getOpponentZone());
-					for (Square s : zone) {
-						board[s.getCoordinates().x][s.getCoordinates().y] = s;
-					}
-					for (Square s : zone.getOpponentZone()) {
-						board[s.getCoordinates().x][s.getCoordinates().y] = s;
-					}
+					addZone(zone);
+					addZone(zone.getOpponentZone());
 				}
 			}
 		} else {	//	S'il y a 3 joueurs
 			for (int i = 0; i < nbOfPlayers; i++) {
 				for (int j = 0; j < nbOfZones; j++) {
-					players.get(i).addInitialZone(zones.get(i * nbOfZones + j));
+					BoardZone zone = zones.get(i * nbOfZones + j);
+					players.get(i).addInitialZone(zone);
+					addZone(zone);
+					addZone(zone.getOpponentZone());
 				}
 			}
 		}
 	}
 
+	private void addZone (BoardZone zone){
+		for (Square s : zone) {
+			board[s.getCoordinates().x][s.getCoordinates().y] = s;
+		}
+	}
+	
 	@Override
 	public SortedSet<Integer> getPossiblesZoneNumber(int playerNumber) {
 		if (!getPossiblePlayerNumbers().contains(playerNumber)) {
