@@ -11,32 +11,11 @@ import java.util.SortedSet;
 public abstract class AbstractBoard {
 
 	/**
-	 * Internal data structure for the board. A null Square means that the square is outside of the
-	 * board and should not be accessed.
-	 * The board is accessed with [X][Y] coordinates.
+	 * Gets a square at specified coordinates.
+	 * @param coordinates the square's location
+	 * @return the square
 	 */
-	protected Square[][] board;
-
-	/** Width of this board. */
-	protected final int width;
-
-	/** Height of this board. */
-	protected final int height;
-
-	/**
-	 * Constructs a new board.
-	 * @param width width of this board
-	 * @param height height of this board
-	 */
-	public AbstractBoard(final int width, final int height) {
-		this.width = width;
-		this.height = height;
-		this.board = new Square[width][height];
-	}
-
-	public Square getSquare(final Coordinates coordinates) {
-		return board[coordinates.x][coordinates.y];
-	}
+	public abstract Square getSquare(final Coordinates coordinates);
 
 	/**
 	 * Gets a pawn at specified coordinates.
@@ -44,7 +23,7 @@ public abstract class AbstractBoard {
 	 * @return the pawn
 	 */
 	public Pawn getPawn(final Coordinates coordinates) {
-		final Square square = board[coordinates.x][coordinates.y];
+		final Square square = getSquare(coordinates);
 		if (square == null) {
 			throw new RuntimeException("Square at " + coordinates + " is outside of the board.");
 		}
@@ -57,7 +36,7 @@ public abstract class AbstractBoard {
 	 * @param coordinates the pawn's location
 	 */
 	public void setPawn(final Pawn pawn, final Coordinates coordinates) {
-		board[coordinates.x][coordinates.y].setPawn(pawn);
+		getSquare(coordinates).setPawn(pawn);
 	}
 
 	/**
@@ -67,8 +46,7 @@ public abstract class AbstractBoard {
 	 * @param dest the destination coordinates
 	 */
 	public void move(final Coordinates orig, final Coordinates dest) {
-		board[dest.x][dest.y].setPawn(board[orig.x][orig.y].getPawn());
-		board[orig.x][orig.y].setPawn(null);
+		getSquare(dest).setPawn(getSquare(orig).popPawn());
 	}
 
 	/**
@@ -85,35 +63,28 @@ public abstract class AbstractBoard {
 		if (path.size() < 2 ) {
 			return false;
 		}
-
 		Coordinates orig = path.get(0);
 		final Pawn pawn = getPawn(orig);
 		if (pawn == null || pawn.getOwner() != player) {
 			return false;
 		}
-
 		Coordinates dest;
 		if (path.size() == 2) {
 			dest = path.get(1);
 			return orig.isAdjacentTo(dest) && getPawn(dest) == null;
 		}
-
 		Coordinates middle;
 		for (final Iterator<Coordinates> it = path.subList(1, path.size()).iterator(); it.hasNext();) {
 			dest = it.next();
-
 			if (orig.isAdjacentTo(dest)) {
 				return false;
 			}
-
 			middle = orig.getMiddleCoordinates(dest);
 			if (middle == null || getPawn(middle) == null) {
 				return false;
 			}
-
 			orig = dest;
 		}
-
 		return true;
 	}
 
@@ -121,17 +92,19 @@ public abstract class AbstractBoard {
 	 * Gets this board width.
 	 * @return board width
 	 */
-	public int getWidth() {
-		return width;
-	}
+	public abstract int getWidth();
 
 	/**
 	 * Gets this board height.
 	 * @return board height
 	 */
-	 public int getHeight() {
-		 return height;
-	 }
+	public abstract int getHeight();
+
+	/**
+	 * Gets the set of Coordinates pointing to the Squares of this board.
+	 * @return set of Coordinates
+	 */
+	public abstract Set<Coordinates> coordinates();
 
 	/**
 	 * Gets the possible number of players on the board.
