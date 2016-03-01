@@ -34,7 +34,7 @@ public class GamePanel extends JPanel {
 		this.player = player;
 
 		// UI
-		setPreferredSize(new Dimension(800, 800));
+		setPreferredSize(new Dimension(800, 600));
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
 		infoBar = new InfoBar(game, player);
@@ -43,7 +43,7 @@ public class GamePanel extends JPanel {
 		add(infoBar);
 
 		drawZone = new DrawZone(game, player);
-		drawZone.setPreferredSize(new Dimension(800, 700));
+		drawZone.setPreferredSize(new Dimension(800, 500));
 		drawZone.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(drawZone);
 

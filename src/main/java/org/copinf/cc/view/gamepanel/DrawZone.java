@@ -26,14 +26,12 @@ public class DrawZone extends JPanel {
 		super();
 		this.game = game;
 		this.player = player;
-		boardView = new BoardView(game.getBoard(), 700, 700);
+		boardView = new BoardView(game.getBoard(), 800, 500);
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		final Graphics2D g2d = (Graphics2D) g;
-		g2d.translate(100, 0);
 		boardView.paint(g2d);
-		g2d.translate(-100, 0);
 	}
 }
