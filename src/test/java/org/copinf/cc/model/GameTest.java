@@ -12,7 +12,7 @@ public class GameTest {
 	private Game makeGame() {
 		Game game = null;
 		try {
-			game = new Game(new DefaultBoard());
+			game = new Game(new DefaultBoard(4));
 		} catch (Exception e) {
 			Assume.assumeNoException(e);
 		}
@@ -23,7 +23,7 @@ public class GameTest {
 	public void gameConstructionTest() {
 		AbstractBoard board = null;
 		try {
-			board = new DefaultBoard();
+			board = new DefaultBoard(4);
 		} catch (Exception e) {
 			Assume.assumeNoException(e);
 		}

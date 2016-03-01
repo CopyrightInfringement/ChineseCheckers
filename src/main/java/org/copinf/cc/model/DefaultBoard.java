@@ -1,80 +1,106 @@
 package org.copinf.cc.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
+/**
+ * Provides an implementation of the standard Chinese Checkers game board.
+ */
 public class DefaultBoard extends AbstractBoard {
 
-	/*
-	private final static int[] BOARD_MAP = {
-		-1, -1, -1, -1, -1, -1, 14, -1, -1, -1, -1, -1, -1,
-		  -1, -1, -1, -1, -1, 14, 14, -1, -1, -1, -1, -1, -1,
-		-1, -1, -1, -1, -1, 14, 14, 14, -1, -1, -1, -1, -1,
-		  -1, -1, -1, -1, 14, 14, 14, 14, -1, -1, -1, -1, -1,
-		63, 63, 63, 63,  0,  0,  0,  0,  0, 25, 25, 25, 25,
-		  63, 63, 63,  0,  0,  0,  0,  0,  0, 25, 25, 25, -1,
-		-1, 63, 63,  0,  0,  0,  0,  0,  0,  0, 25, 25, -1,
-		  -1, 63,  0,  0,  0,  0,  0,  0,  0,  0, 25, -1, -1,
-		-1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1,
-		  -1, 52,  0,  0,  0,  0,  0,  0,  0,  0, 36, -1, -1,
-		-1, 52, 52,  0,  0,  0,  0,  0,  0,  0, 36, 36, -1,
-		  52, 52, 52,  0,  0,  0,  0,  0,  0, 36, 36, 36, -1,
-		52, 52, 52, 52,  0,  0,  0,  0,  0, 36, 36, 36, 36,
-		  -1, -1, -1, -1, 41, 41, 41, 41, -1, -1, -1, -1, -1,
-		-1, -1, -1, -1, -1, 41, 41, 41, -1, -1, -1, -1, -1,
-		  -1, -1, -1, -1, -1, 41, 41, -1, -1, -1, -1, -1, -1,
-		-1, -1, -1, -1, -1, -1, 41, -1, -1, -1, -1, -1, -1
-	};
-	*/
-
-	private static final int[][] BOARD_MAP = {
-		{-1, -1, -1, -1, 3, 3, -1, -1, -1, -1, -1, 2, 2, -1, -1, -1, -1},
-		{-1, -1, -1, -1, 3, 3, 3, 3, -1, 2, 2, 2, 2, -1, -1, -1, -1},
-		{-1, -1, -1, -1, 3, 3, 3, 0, 0, 0, 2, 2, 2, -1, -1, -1, -1},
-		{-1, -1, -1, -1, 3, 0, 0, 0, 0, 0, 0, 0, 2, -1, -1, -1, -1},
-		{-1, -1, -1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1, -1, -1},
-		{-1, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, -1},
-		{4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1},
-		{-1, -1, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, -1, -1},
-		{-1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1},
-		{-1, -1, -1, -1, 5, 5, 0, 0, 0, 0, 0, 6, 6, -1, -1, -1, -1},
-		{-1, -1, -1, -1, 5, 5, 5, 5, 0, 6, 6, 6, 6, -1, -1, -1, -1},
-		{-1, -1, -1, -1, 5, 5, 5, -1, -1, -1, 6, 6, 6, -1, -1, -1, -1},
-		{-1, -1, -1, -1, 5, -1, -1, -1, -1, -1, -1, -1, 6, -1, -1, -1, -1}
-	};
-
-	private List<BoardZone> zones;
+	private final Map<Coordinates, Square> board;
+	private final List<BoardZone> zones;
+	private final int radius;
 
 	/**
-	 * Constructs a new DefaultBoard. It's the standard ChineseCheckers star board.
+	 * Constructs a new DefaultBoard.
+	 * @param radius radius of this board
 	 */
-	public DefaultBoard() {
-		super(13, 17);
-		Map<Integer, BoardZone> map = new TreeMap<>();
-		for (int i = 0; i < board.length; i++) {
-			for (int j = 0; j < board[i].length; j++) {
-				int v = BOARD_MAP[i][j];
-				if (v == 0) {
-					board[i][j] = new Square(new Coordinates(i, j));
-				} else if (v != -1) {
-					if (!map.containsKey(v)) {
-						map.put(v, new BoardZone());
+	public DefaultBoard(final int radius) {
+		super();
+		this.board = new HashMap<>();
+		this.radius = radius;
+		this.zones = new ArrayList<>();
+
+		// Center of this board
+		int r1;
+		int r2;
+		for (int q = -radius; q <= radius; q++) {
+			r1 = Math.max(-radius, -q - radius);
+			r2 = Math.min(radius, -q + radius);
+			for (int r = r1; r <= r2; r++) {
+				board.put(new Coordinates(q, r, -q - r), new Square());
+			}
+		}
+
+		final Coordinates[] playerOrigin = {
+			new Coordinates(1, -radius - 1, radius),
+			new Coordinates(radius + 1, -radius, -1),
+			new Coordinates(1, radius, -radius - 1),
+			new Coordinates(-radius, radius + 1, -1),
+			new Coordinates(-radius * 2, radius, radius),
+			new Coordinates(-radius, -radius, radius * 2)
+		};
+
+		// Create and populate the BoardZone
+		BoardZone zone;
+		for (int i = 0; i < playerOrigin.length; i++) {
+			zone = new BoardZone();
+			zones.add(zone);
+			int ox = playerOrigin[i].x;
+			int oy = playerOrigin[i].y;
+			if (i % 2 == 0) {
+				for (int q = 0; q < radius; q++) {
+					for (int r = -q; r <= 0; r++) {
+						zone.addSquare(new Coordinates(q + ox, r + oy, -q - r - ox - oy), new Square());
 					}
-					map.get(v).addSquare(new Square(new Coordinates(i, j)));
+				}
+			} else {
+				for (int q = 0; q < radius; q++) {
+					for (int r = 0; r < radius - q; r++) {
+						zone.addSquare(new Coordinates(q + ox, r + oy, -q - r - ox - oy), new Square());
+					}
 				}
 			}
 		}
 
-		this.zones = new ArrayList<>();
-		for (Integer i : new TreeSet<Integer>(map.keySet())) {
-			zones.add(map.get(i));
-			map.get(i).setOpponentZone(map.get((i + 2) % 6 + 1));
+		BoardZone opponentZone;
+		for (int i = 0; i < zones.size() / 2; i++) {
+			zone = zones.get(i);
+			opponentZone = zones.get(i + 3);
+			zone.setOpponentZone(opponentZone);
+			opponentZone.setOpponentZone(zone);
 		}
+	}
+
+	@Override
+	public Square getSquare(final Coordinates coordinates) {
+		return board.get(coordinates);
+	}
+
+	@Override
+	public int getWidth() {
+		return radius * 3 + 1;
+	}
+
+	@Override
+	public int getHeight() {
+		return radius * 4 + 1;
+	}
+
+	@Override
+	public List<BoardZone> getZones() {
+		return zones;
+	}
+
+	@Override
+	public Set<Coordinates> coordinates() {
+		return board.keySet();
 	}
 
 	@Override
@@ -132,9 +158,7 @@ public class DefaultBoard extends AbstractBoard {
 	 * @param zone a BoardZone
 	 */
 	private void addZone(final BoardZone zone) {
-		for (Square s : zone) {
-			board[s.getCoordinates().x][s.getCoordinates().y] = s;
-		}
+		board.putAll(zone.getSquares());
 	}
 
 	@Override

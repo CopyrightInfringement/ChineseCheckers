@@ -1,50 +1,58 @@
 package org.copinf.cc.model;
 
+import java.util.Objects;
+
 /**
- * Provides storage for coordinates on a two-dimensionnal grid.
+ * Provides storage for coordinates in a 3D cube.
  */
 public class Coordinates {
 
 	/** x-axis coordinate. */
 	public final int x;
 
-	/** y-axis coordinate .*/
+	/** y-axis coordinate. */
 	public final int y;
 
+	/** z-axis coordinate. */
+	public final int z;
+
+	/** Pre-defined directions around a Coordinates. */
+	private static final Coordinates[] DIRECTIONS = new Coordinates[] {
+		new Coordinates(+1, -1, 0), new Coordinates(+1, 0, -1), new Coordinates( 0, +1, -1),
+		new Coordinates(-1, +1, 0), new Coordinates(-1, 0, +1), new Coordinates( 0, -1, +1)
+	};
+
 	/**
-	 * Constructs a new Coordinate.
+	 * Constructs a new Coordinates. Calculates z such as x + y + z = 0.
 	 * @param x x-axis coordinate
 	 * @param y y-axis coordinate
 	 */
 	public Coordinates(final int x, final int y) {
+		this(x, y, -x - y);
+	}
+
+	/**
+	 * Constructs a new Coordinates.
+	 * @param x x-axis coordinate
+	 * @param y y-axis coordinate
+	 * @param z z-axis coordinate
+	 */
+	public Coordinates(final int x, final int y, final int z) {
 		this.x = x;
 		this.y = y;
+		this.z = z;
 	}
 
-	/**
-	 * Returns the hashcode for this Coordinates.
-	 * @return a hash code for this Coordinates.
-	 */
 	@Override
 	public int hashCode() {
-		long bits = (long) x;
-		bits ^= (long) y * 31;
-		return ((int) bits) ^ ((int) (bits >> 32));
+		return Objects.hash(x, y, z);
 	}
 
-	/**
-	 * Determines whether or not two coordinates are equal. Two instances of Coordinates are equal if
-	 * the values of their x and y member fields, representing their position in the coordinate space,
-	 * are the same.
-	 * @param obj an object to be compared with this Point2D
-	 * @return true if the object to be compared is an instance of Point2D and has the same values;
-	 * false otherwise.
-	 */
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj instanceof Coordinates) {
 			final Coordinates coord = (Coordinates) obj;
-			return x == coord.x && y == coord.y;
+			return x == coord.x && y == coord.y && z == coord.z;
 		}
 		return false;
 	}
@@ -55,41 +63,64 @@ public class Coordinates {
 	 * @return true if they are adjacent
 	 */
 	public boolean isAdjacentTo(final Coordinates coord) {
-		return Math.abs(this.x - coord.x) == 1 && this.y == coord.y
-			|| Math.abs(this.y - coord.y) == 1 && this.x == coord.x
-			|| this.y % 2 == 0 && this.x == coord.x + 1 && Math.abs(this.y - coord.y) == 1
-			|| this.y % 2 != 0 && this.x == coord.x - 1 && Math.abs(this.y - coord.y) == 1;
+		final Coordinates sum = Coordinates.sub(this, coord);
+		for (int i = 0; i < DIRECTIONS.length; i++) {
+			if (sum.equals(DIRECTIONS[i])) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
-	 * Checks if this Coordinates and a second Coordinates have one Coordinates inbetween and are
-	 * aligned then returns that Coordinates.
+	 * Checks if this Coordinates and a second Coordinates have one Coordinates inbetween
+	 * then returns that Coordinates.
 	 * @param coord a second Coordinates
 	 * @return the Coordinates inbetween or null
 	 */
 	public Coordinates getMiddleCoordinates(final Coordinates coord) {
-		Coordinates found1 = null;
-		Coordinates found2 = null;
-		for (int x = this.x - 1; x < this.x + 1; x++) {
-			for (int y = this.y - 1; y < this.y + 1; y++) {
-				if (found1 == null) {
-					found1 = new Coordinates(x, y);
-					if (!found1.isAdjacentTo(this) && !found1.isAdjacentTo(coord)) {
-						found1 = null;
-					}
-				} else {
-					found2 = new Coordinates(x, y);
-					if (found2.isAdjacentTo(this) && found2.isAdjacentTo(coord)) {
-						return null;
-					}
-				}
+		Coordinates added;
+		for (int i = 0; i < DIRECTIONS.length; i++) {
+			added = add(this, DIRECTIONS[i]);
+			if (added.isAdjacentTo(coord)) {
+				return added;
 			}
 		}
-		return found1;
+		return null;
+	}
+
+	/**
+	 * Makes the addition of two Coordinates.
+	 * @param a first Coordinates
+	 * @param b second Coordinates
+	 * @return resulting Coordinates
+	 */
+	public static Coordinates add(final Coordinates a, final Coordinates b) {
+		return new Coordinates(a.x + b.x, a.y + b.y, a.z + b.z);
+	}
+
+	/**
+	 * Makes the substraction of two Coordinates.
+	 * @param a first Coordinates
+	 * @param b second Coordinates
+	 * @return resulting Coordinates
+	 */
+	public static Coordinates sub(final Coordinates a, final Coordinates b) {
+		return new Coordinates(a.x - b.x, a.y - b.y, a.z - b.z);
+	}
+
+	/**
+	 * Makes the multiplication of a Coordinates and an integer.
+	 * @param a a Coordinates
+	 * @param k and integer
+	 * @return resulting Coordinates
+	 */
+	public static Coordinates mul(final Coordinates a, final int k) {
+		return new Coordinates(a.x * k, a.y * k, a.z * k);
 	}
 
 	@Override
 	public String toString() {
-		return x + " " + y;
+		return x + " " + y + " " + z;
 	}
 }

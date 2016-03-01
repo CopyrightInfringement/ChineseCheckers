@@ -101,6 +101,12 @@ public abstract class AbstractBoard {
 	public abstract int getHeight();
 
 	/**
+	 * Gets the list of BoardZone of this board.
+	 * @return list of BoardZone
+	 */
+	public abstract List<BoardZone> getZones();
+
+	/**
 	 * Gets the set of Coordinates pointing to the Squares of this board.
 	 * @return set of Coordinates
 	 */

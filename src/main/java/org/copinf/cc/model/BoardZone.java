@@ -1,7 +1,7 @@
 package org.copinf.cc.model;
 
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -9,9 +9,9 @@ import java.util.Set;
  * It represents the starting area of a player, and is associated with the BoardZone he must fill
  * with his pawns in order to win.
  */
-public class BoardZone implements Iterable<Square> {
+public class BoardZone {
 
-	private final Set<Square> squares;
+	private final Map<Coordinates, Square> squares;
 
 	/** Zone which must be filled with the owner's pawns. */
 	private BoardZone opponentZone;
@@ -20,16 +20,32 @@ public class BoardZone implements Iterable<Square> {
 	 * Constructs a new empty BoardZone.
 	 */
 	public BoardZone() {
-		squares = new HashSet<>();
+		squares = new HashMap<>();
 	}
 
 	/**
 	 * Adds a square to this BoardZone.
-	 * @param square square to add.
-	 * @return true if the square has been successfully added.
+	 * @param coord Coordinates where to add a Square
+	 * @param square Square to add
 	 */
-	public boolean addSquare(final Square square) {
-		return squares.add(square);
+	public void addSquare(final Coordinates coord, final Square square) {
+		squares.put(coord, square);
+	}
+
+	/**
+	 * Retrieves the map of Coordinates and corresponding Square of this BoardZone.
+	 * @return the map of Coordinates and Square
+	 */
+	public Map<Coordinates, Square> getSquares() {
+		return squares;
+	}
+
+	/**
+	 * Gets the set of Coordinates pointing to the Squares of this BoardZone.
+	 * @return set of Coordinates
+	 */
+	public Set<Coordinates> coordinates() {
+		return squares.keySet();
 	}
 
 	/**
@@ -54,7 +70,7 @@ public class BoardZone implements Iterable<Square> {
 	 * @return true if the zone is full
 	 */
 	public boolean isFull(final Player player) {
-		for (Square s : squares) {
+		for (Square s : squares.values()) {
 			if (s.getPawn() == null || s.getPawn().getOwner() != player) {
 				return false;
 			}
@@ -67,13 +83,8 @@ public class BoardZone implements Iterable<Square> {
 	 * @param player a player
 	 */
 	public void fill(final Player player) {
-		for (Square s : squares) {
+		for (Square s : squares.values()) {
 			s.setPawn(new Pawn(player));
 		}
-	}
-
-	@Override
-	public Iterator<Square> iterator() {
-		return squares.iterator();
 	}
 }

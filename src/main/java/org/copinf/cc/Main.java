@@ -3,6 +3,7 @@ package org.copinf.cc;
 import org.copinf.cc.controller.AbstractController;
 import org.copinf.cc.controller.GameController;
 import org.copinf.cc.controller.HomeController;
+import org.copinf.cc.model.Coordinates;
 import org.copinf.cc.model.DefaultBoard;
 import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Player;
@@ -29,7 +30,7 @@ public final class Main {
 				// Controller homeController = new HomeController();
 				// homeController.start();
 
-				DefaultBoard board = new DefaultBoard();
+				DefaultBoard board = new DefaultBoard(4);
 				Game game = new Game(board);
 				Player player1 = new Player("François");
 				Team team1 = new Team();
