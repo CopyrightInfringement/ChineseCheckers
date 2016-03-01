@@ -88,44 +88,57 @@ public class DefaultBoard extends AbstractBoard {
 	}
 
 	@Override
-	public void dispatchZones(final Set<Team> teams, int nbOfZones) {
-		List<Player> players = new ArrayList<Player>();
+	public void dispatchZones(final Set<Team> teams, final int nbOfZones) {
+		List<Player> players = new ArrayList<>();
 		for (Team t : teams) {
 			for (Player p : t.getPlayers()) {
 				players.add(p);
 			}
 		}
 		int nbOfPlayers = players.size();
+		BoardZone zone;
+		Player player;
+
 		if (nbOfPlayers % 2 == 0) {
+			Player nextPlayer;
 			for (int i = 0; i < nbOfPlayers; i += 2) {
+				player = players.get(i);
+				nextPlayer = players.get(i + 1);
 				for (int j = 0; j < nbOfZones; j++) {
-					BoardZone zone = zones.get(i * nbOfZones + j);
-					players.get(i).addInitialZone(zone);
-					players.get(i + 1).addInitialZone(zone.getOpponentZone());
+					zone = zones.get(i * nbOfZones + j);
+					player.addInitialZone(zone);
+					nextPlayer.addInitialZone(zone.getOpponentZone());
 					addZone(zone);
 					addZone(zone.getOpponentZone());
 				}
 			}
-		} else {	//	S'il y a 3 joueurs
+		} else if (nbOfPlayers == 3) {
 			for (int i = 0; i < nbOfPlayers; i++) {
+				player = players.get(i);
 				for (int j = 0; j < nbOfZones; j++) {
-					BoardZone zone = zones.get(i * nbOfZones + j);
-					players.get(i).addInitialZone(zone);
+					zone = zones.get(i * nbOfZones + j);
+					player.addInitialZone(zone);
 					addZone(zone);
 					addZone(zone.getOpponentZone());
 				}
 			}
+		} else {
+			throw new UnsupportedOperationException();
 		}
 	}
 
-	private void addZone (BoardZone zone){
+	/**
+	 * Adds the Square of a BoardZone to this board.
+	 * @param zone a BoardZone
+	 */
+	private void addZone(final BoardZone zone) {
 		for (Square s : zone) {
 			board[s.getCoordinates().x][s.getCoordinates().y] = s;
 		}
 	}
-	
+
 	@Override
-	public SortedSet<Integer> getPossiblesZoneNumber(int playerNumber) {
+	public SortedSet<Integer> getPossiblesZoneNumber(final int playerNumber) {
 		if (!getPossiblePlayerNumbers().contains(playerNumber)) {
 			return null;
 		}

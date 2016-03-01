@@ -31,15 +31,15 @@ public final class Main {
 
 				DefaultBoard board = new DefaultBoard();
 				Game game = new Game(board);
-				Player player1 = new Player("François");
+				Player player1 = new Player("FranÃ§ois");
 				Team team1 = new Team();
 				team1.addPlayer(player1);
 				game.addTeam(team1);
 				Team team2 = new Team();
-				team2.addPlayer(new Player ("Mathieu"));
+				team2.addPlayer(new Player("Mathieu"));
 				game.addTeam(team2);
 				Team team3 = new Team();
-				team3.addPlayer(new Player ("Paul"));
+				team3.addPlayer(new Player("Paul"));
 				game.addTeam(team3);
 				game.getBoard().dispatchZones(game.getTeams(), 2);
 

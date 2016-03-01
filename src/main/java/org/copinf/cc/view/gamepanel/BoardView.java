@@ -45,6 +45,12 @@ public class BoardView {
 		this.hexagon = path;
 	}
 
+	/**
+	 * Gets the coordinates of i-nth corner of an hexagon.
+	 * @param center center of the hexagon
+	 * @param i corner number
+	 * @return the coordinates
+	 */
 	private Point2D.Double hexagonCorner(final Point2D.Double center, final int i) {
 		return new Point2D.Double(
 		center.x + size * Math.cos(Math.PI * i / 3. + Math.PI / 6.),
@@ -66,15 +72,14 @@ public class BoardView {
 				coord = new Coordinates(x, y);
 				square = board.getSquare(coord);
 				if (square != null) {
-					tx = (double) x * Math.sqrt(3.) * size + (y % 2 != 0 ? Math.sqrt(3.) * size / 2. : 0.);
+					tx = (double) x * Math.sqrt(3.) * size + (y % 2 == 0 ? 0. : Math.sqrt(3.) * size / 2.);
 					ty = (double) y * size * 3. / 2.;
 					g.translate(tx, ty);
-					
-					int code = square.isFree() ? 0 : square.getPawn().getOwner().hashCode();
-					g.setColor(new Color (code * code));
-					if (code != 0)
+					if (!square.isFree()) {
+						g.setColor(new Color(square.getPawn().getOwner().hashCode()));
 						g.fill(hexagon);
-					
+						g.setColor(Color.BLACK);
+					}
 					g.draw(hexagon);
 					g.translate(-tx, -ty);
 				}
