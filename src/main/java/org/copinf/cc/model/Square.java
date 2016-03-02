@@ -43,7 +43,7 @@ public class Square {
 	 * @return the pawn that was located in this square or null if it was empty
 	 */
 	public Pawn popPawn() {
-		Pawn prev = pawn;
+		final Pawn prev = pawn;
 		pawn = null;
 		return prev;
 	}

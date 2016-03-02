@@ -5,7 +5,6 @@ import org.copinf.cc.model.Player;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,14 +18,14 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 
-	private Game game;
-	private Player player;
+	private final Game game;
+	private final Player player;
 
-	private InfoBar infoBar;
-	private DrawZone drawZone;
-	private ActionZone actionZone;
+	private final InfoBar infoBar;
+	private final DrawZone drawZone;
+	private final ActionZone actionZone;
 
-	private Map<Player, PlayerView> playerViews;
+	private final Map<Player, PlayerView> playerViews;
 
 	/**
 	 * Constructs a new GamePanel.
@@ -40,7 +39,7 @@ public class GamePanel extends JPanel {
 
 		this.playerViews = new HashMap<>();
 		int i = 0;
-		for (Player p : game.getPlayers()) {
+		for (final Player p : game.getPlayers()) {
 			playerViews.put(p, new PlayerView(p, i));
 			i++;
 		}

@@ -42,7 +42,7 @@ public class Team {
 	 * @return the size
 	 */
 	public int size() {
-		return players[0] == null ? 0 : (players[1] == null ? 1 : 2);
+		return players[0] == null ? 0 : players[1] == null ? 1 : 2;
 	}
 
 	/**

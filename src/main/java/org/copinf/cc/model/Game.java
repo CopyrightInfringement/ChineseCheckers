@@ -14,16 +14,16 @@ public class Game {
 	private Player currentPlayer;
 
 	/** Different players playing this game in the order they will play. */
-	private List<Player> players;
+	private final List<Player> players;
 
 	/** Different teams in which the players are. */
-	private Set<Team> teams;
+	private final Set<Team> teams;
 
 	/** Current turn count (-1 before the game starts, and the first turn is the 0-th). */
 	private int turnCount;
 
 	/** Board used for this game. */
-	private AbstractBoard board;
+	private final AbstractBoard board;
 
 	/** Number of zones per player. */
 	private int numberOfZones;
@@ -148,8 +148,8 @@ public class Game {
 	 * @return false if the number of zones requested is not compatible with the number of players
 	 * added so far.
 	 */
-	public boolean setNumberOfZones(int numberOfZones) {
-		if (!this.board.getPossiblesZoneNumber(this.players.size()).contains(numberOfZones)) {
+	public boolean setNumberOfZones(final int numberOfZones) {
+		if (!this.board.getPossibleZoneNumbers(this.players.size()).contains(numberOfZones)) {
 			return false;
 		}
 		this.numberOfZones = numberOfZones;

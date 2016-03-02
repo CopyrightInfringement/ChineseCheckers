@@ -10,9 +10,9 @@ import org.copinf.cc.view.gamepanel.GamePanel;
  */
 public class GameController extends AbstractController {
 
-	private Game game;
-	private Window window;
-	private GamePanel gamePanel;
+	private final Game game;
+	private final Window window;
+	private final GamePanel gamePanel;
 
 	/**
 	 * Constructs a new GameController.

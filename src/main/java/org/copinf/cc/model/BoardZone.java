@@ -70,7 +70,7 @@ public class BoardZone {
 	 * @return true if the zone is full
 	 */
 	public boolean isFull(final Player player) {
-		for (Square s : squares.values()) {
+		for (final Square s : squares.values()) {
 			if (s.getPawn() == null || s.getPawn().getOwner() != player) {
 				return false;
 			}
@@ -83,7 +83,7 @@ public class BoardZone {
 	 * @param player a player
 	 */
 	public void fill(final Player player) {
-		for (Square s : squares.values()) {
+		for (final Square s : squares.values()) {
 			s.setPawn(new Pawn(player));
 		}
 	}

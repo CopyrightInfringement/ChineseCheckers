@@ -8,8 +8,8 @@ import org.copinf.cc.view.homepanel.HomePanel;
  */
 public class HomeController extends AbstractController {
 
-	private Window view;
-	private HomePanel panel;
+	private final Window view;
+	private final HomePanel panel;
 
 	/**
 	 * Constructs a new HomeController.

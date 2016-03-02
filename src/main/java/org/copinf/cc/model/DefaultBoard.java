@@ -104,24 +104,14 @@ public class DefaultBoard extends AbstractBoard {
 	}
 
 	@Override
-	public SortedSet<Integer> getPossiblePlayerNumbers() {
-		final TreeSet<Integer> ts = new TreeSet<>();
-		ts.add(2);
-		ts.add(3);
-		ts.add(4);
-		ts.add(6);
-		return ts;
-	}
-
-	@Override
 	public void dispatchZones(final Set<Team> teams, final int nbOfZones) {
-		List<Player> players = new ArrayList<>();
-		for (Team team : teams) {
+		final List<Player> players = new ArrayList<>();
+		for (final Team team : teams) {
 			for (int i = 0; i < team.size(); i++) {
 				players.add(team.get(i));
 			}
 		}
-		int nbOfPlayers = players.size();
+		final int nbOfPlayers = players.size();
 		BoardZone zone;
 		Player player;
 
@@ -162,15 +152,25 @@ public class DefaultBoard extends AbstractBoard {
 	}
 
 	@Override
-	public SortedSet<Integer> getPossiblesZoneNumber(final int playerNumber) {
+	public SortedSet<Integer> getPossiblePlayerNumbers() {
+		final SortedSet<Integer> set = new TreeSet<>();
+		set.add(2);
+		set.add(3);
+		set.add(4);
+		set.add(6);
+		return set;
+	}
+
+	@Override
+	public SortedSet<Integer> getPossibleZoneNumbers(final int playerNumber) {
 		if (!getPossiblePlayerNumbers().contains(playerNumber)) {
 			return null;
 		}
-		int nbMax = 6 / playerNumber;
-		SortedSet<Integer> ts = new TreeSet<>();
+		final int nbMax = 6 / playerNumber;
+		final SortedSet<Integer> set = new TreeSet<>();
 		for (int i = 1; i <= nbMax; i++) {
-			ts.add(i);
+			set.add(i);
 		}
-		return ts;
+		return set;
 	}
 }

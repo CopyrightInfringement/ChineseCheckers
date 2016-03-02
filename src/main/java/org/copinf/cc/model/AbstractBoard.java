@@ -60,7 +60,7 @@ public abstract class AbstractBoard {
 	 * 	null
 	 */
 	public boolean checkMove(final List<Coordinates> path, final Player player) {
-		if (path.size() < 2 ) {
+		if (path.size() < 2) {
 			return false;
 		}
 		Coordinates orig = path.get(0);
@@ -113,22 +113,22 @@ public abstract class AbstractBoard {
 	public abstract Set<Coordinates> coordinates();
 
 	/**
+	 * Assigns to each player a zone on the board, taking in account the teams.
+	 * @param teams the set of teams.
+	 * @param numberOfZones the number of zones per player
+	 */
+	public abstract void dispatchZones(final Set<Team> teams, final int numberOfZones);
+
+	/**
 	 * Gets the possible number of players on the board.
 	 * @return an ascending sorted set of the possible player numbers.
 	 */
 	public abstract SortedSet<Integer> getPossiblePlayerNumbers();
 
 	/**
-	 * Assigns to each player a zone on the board, taking in account the teams.
-	 * @param teams the set of teams.
-	 * @param numberOfZones the number of zones per player
-	 */
-	public abstract void dispatchZones(final Set<Team> teams, int numberOfZones);
-
-	/**
 	 * Gets the possible number of zones per player.
 	 * @param playerNumber The number of players.
 	 * @return an ascending sorted set of the possible zones numbers per player.
 	 */
-	public abstract SortedSet<Integer> getPossiblesZoneNumber(int playerNumber);
+	public abstract SortedSet<Integer> getPossibleZoneNumbers(final int playerNumber);
 }

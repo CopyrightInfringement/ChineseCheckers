@@ -9,8 +9,8 @@ import java.awt.Color;
  */
 public class PlayerView {
 
-	private Player player;
-	private Color color;
+	private final Player player;
+	private final Color color;
 
 	// TODO any number of players
 	private static final Color[] COLORS = new Color[] {
@@ -41,7 +41,7 @@ public class PlayerView {
 	 * Gets the player associated with this PlayerView.
 	 * @return a player
 	 */
-	public Player player() {
+	public Player getPlayer() {
 		return player;
 	}
 

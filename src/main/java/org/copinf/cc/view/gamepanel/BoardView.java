@@ -26,7 +26,7 @@ public class BoardView {
 
 	private final AbstractBoard board;
 	private Layout layout;
-	private Map<Player, PlayerView> playerViews;
+	private final Map<Player, PlayerView> playerViews;
 
 	/** Describes the orientation of the board. */
 	public static class Orientation {
@@ -192,22 +192,22 @@ public class BoardView {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
 
-		Stroke defaultStroke = g.getStroke();
-		Color defaultColor = g.getColor();
+		final Stroke defaultStroke = g.getStroke();
+		final Color defaultColor = g.getColor();
 
 		Shape hexagon;
 		Square square;
 		Color color;
 		BasicStroke stroke;
-		for (Coordinates coord : board.coordinates()) {
+		for (final Coordinates coord : board.coordinates()) {
 			hexagon = hexagon(layout, coord);
 			square = board.getSquare(coord);
-			if (!square.isFree()) {
-				color = playerViews.get(square.getPawn().getOwner()).getColor();
-				g.setColor(color);
+			if (square.isFree()) {
+				g.setColor(Color.WHITE);
 				g.fill(hexagon);
 			} else {
-				g.setColor(Color.WHITE);
+				color = playerViews.get(square.getPawn().getOwner()).getColor();
+				g.setColor(color);
 				g.fill(hexagon);
 			}
 			g.setColor(Color.BLACK);
@@ -215,10 +215,10 @@ public class BoardView {
 		}
 
 		stroke = new BasicStroke(2.0f);
-		for (Map.Entry<Player, PlayerView> entry : playerViews.entrySet()) {
+		for (final Map.Entry<Player, PlayerView> entry : playerViews.entrySet()) {
 			color = entry.getValue().getColor();
-			for (BoardZone zone : entry.getKey().getInitialZones()) {
-				for (Coordinates coord : zone.coordinates()) {
+			for (final BoardZone zone : entry.getKey().getInitialZones()) {
+				for (final Coordinates coord : zone.coordinates()) {
 					hexagon = hexagon(layout, coord);
 					g.setColor(color);
 					g.draw(hexagon);

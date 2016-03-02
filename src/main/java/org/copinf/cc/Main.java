@@ -3,7 +3,6 @@ package org.copinf.cc;
 import org.copinf.cc.controller.AbstractController;
 import org.copinf.cc.controller.GameController;
 import org.copinf.cc.controller.HomeController;
-import org.copinf.cc.model.Coordinates;
 import org.copinf.cc.model.DefaultBoard;
 import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Player;
@@ -42,7 +41,8 @@ public final class Main {
 				Team team3 = new Team();
 				team3.addPlayer(new Player("Paul"));
 				game.addTeam(team3);
-				game.getBoard().dispatchZones(game.getTeams(), 2);
+				game.setNumberOfZones(2);
+				game.nextTurn();
 
 				Window window = new Window();
 				AbstractController gameController = new GameController(game, player1, window);

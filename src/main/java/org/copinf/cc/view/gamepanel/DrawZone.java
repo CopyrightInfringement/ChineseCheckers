@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class DrawZone extends JPanel {
 
-	private Game game;
-	private Player player;
-	private BoardView boardView;
+	private final Game game;
+	private final Player player;
+	private final BoardView boardView;
 
 	/**
 	 * Constructs a new DrawZone.
