@@ -32,7 +32,8 @@ public class DrawZone extends JPanel {
 	}
 
 	@Override
-	public void paint(Graphics g) {
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		final Graphics2D g2d = (Graphics2D) g;
 		boardView.paint(g2d);
 	}

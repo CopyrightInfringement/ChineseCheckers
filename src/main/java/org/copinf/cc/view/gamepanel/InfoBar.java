@@ -44,7 +44,7 @@ public class InfoBar extends JPanel {
 	/**
 	 * Update this InfoBar.
 	 */
-	public void update() {
+	public void updateLabels() {
 		turnCountLabel.setText("Turn: " + game.getTurnCount());
 	}
 }

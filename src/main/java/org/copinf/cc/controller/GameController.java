@@ -28,7 +28,6 @@ public class GameController extends AbstractController {
 		window.setContentPane(gamePanel);
 		window.validate();
 		window.pack();
-		window.repaint();
 	}
 
 	@Override
