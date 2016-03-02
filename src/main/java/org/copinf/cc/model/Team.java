@@ -1,26 +1,15 @@
 package org.copinf.cc.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class Team {
 
 	/** Players of the current team. */
-	private Set<Player> players;
+	private Player[] players;
 
 	/**
 	 * Constructs a new team.
 	 */
 	public Team() {
-		this(new HashSet<>());
-	}
-
-	/**
-	 * Constructs a new team.
-	 * @param players players in the team
-	 */
-	public Team(final Set<Player> players) {
-		this.players = players;
+		players = new Player[2];
 	}
 
 	/**
@@ -29,15 +18,31 @@ public class Team {
 	 * @return false if the adding process failed
 	 */
 	public boolean addPlayer(final Player player) {
-		return players.add(player);
+		if (players[0] == null) {
+			players[0] = player;
+		} else if (players[1] == null) {
+			players[1] = player;
+		} else {
+			return false;
+		}
+		return true;
 	}
 
 	/**
-	 * Returns the players of this team.
-	 * @return players of this team
+	 * Gets the i-th player of this team.
+	 * @param i index
+	 * @return the i-th player
 	 */
-	public Set<Player> getPlayers() {
-		return players;
+	public Player get(final int i) {
+		return players[i];
+	}
+
+	/**
+	 * Returns the size of this team.
+	 * @return the size
+	 */
+	public int size() {
+		return players[0] == null ? 0 : (players[1] == null ? 1 : 2);
 	}
 
 	/**

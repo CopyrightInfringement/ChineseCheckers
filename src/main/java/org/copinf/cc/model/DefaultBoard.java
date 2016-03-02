@@ -116,9 +116,9 @@ public class DefaultBoard extends AbstractBoard {
 	@Override
 	public void dispatchZones(final Set<Team> teams, final int nbOfZones) {
 		List<Player> players = new ArrayList<>();
-		for (Team t : teams) {
-			for (Player p : t.getPlayers()) {
-				players.add(p);
+		for (Team team : teams) {
+			for (int i = 0; i < team.size(); i++) {
+				players.add(team.get(i));
 			}
 		}
 		int nbOfPlayers = players.size();

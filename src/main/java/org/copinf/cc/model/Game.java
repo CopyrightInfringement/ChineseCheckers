@@ -1,7 +1,6 @@
 package org.copinf.cc.model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -113,7 +112,7 @@ public class Game {
 	 * Returns the players involved in this game.
 	 * @return the players
 	 */
-	public Collection<Player> getPlayer() {
+	public List<Player> getPlayers() {
 		return players;
 	}
 
@@ -129,21 +128,17 @@ public class Game {
 	 * Adds a team and its players to this game.
 	 * @param team team to add.
 	 * @return true if the adding process succeeded.
+	 * TODO: check that each team has the same number of players
 	 */
 	public boolean addTeam(final Team team) {
-		if (teams.contains(team)) {
+		if (teams.contains(team)
+				|| players.contains(team.get(0)) || players.contains(team.get(1))) {
 			return false;
 		}
-
-		for (final Player p : team.getPlayers()) {
-			if (players.contains(p)) {
-				return false;
-			}
-		}
-
 		teams.add(team);
-		players.addAll(team.getPlayers());
-
+		for (int i = 0; i < team.size(); i++) {
+			players.add(i * teams.size(), team.get(i));
+		}
 		return true;
 	}
 
