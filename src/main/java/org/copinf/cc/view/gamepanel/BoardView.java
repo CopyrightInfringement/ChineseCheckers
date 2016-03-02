@@ -1,16 +1,22 @@
 package org.copinf.cc.view.gamepanel;
 
 import org.copinf.cc.model.AbstractBoard;
+import org.copinf.cc.model.BoardZone;
 import org.copinf.cc.model.Coordinates;
+import org.copinf.cc.model.Player;
 import org.copinf.cc.model.Square;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Map;
 
 /**
  * Provides methods to draw and interact with a board.
@@ -20,6 +26,7 @@ public class BoardView {
 
 	private final AbstractBoard board;
 	private Layout layout;
+	private Map<Player, PlayerView> playerViews;
 
 	/** Describes the orientation of the board. */
 	public static class Orientation {
@@ -97,13 +104,15 @@ public class BoardView {
 	 * @param width available width
 	 * @param height available height
 	 */
-	public BoardView(final AbstractBoard board, final int width, final int height) {
+	public BoardView(final AbstractBoard board, final Map<Player, PlayerView> playerViews,
+			final int width, final int height) {
 		this.board = board;
+		this.playerViews = playerViews;
 
 		final double optimalSizeWidth =
-			(double) width / (Math.sqrt(3.0) * ((double) board.getWidth() + 0.25));
+			(double) width / (Math.sqrt(3.0) * ((double) board.getWidth() + 0.5));
 		final double optimalSizeHeight =
-			(double) height / (3.0 / 2.0 * (double) board.getHeight() + 0.25);
+			((double) height  * 2.0) / (3.0 * (double) board.getHeight() + 1);
 		final double size = Math.min(optimalSizeWidth, optimalSizeHeight);
 
 		this.layout = new Layout(Orientation.POINTY,
@@ -178,17 +187,50 @@ public class BoardView {
 	 * @param g the Graphics context in which to paint
 	 */
 	public void paint(final Graphics2D g) {
+		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+			RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+			RenderingHints.VALUE_ANTIALIAS_ON);
+
+		Stroke defaultStroke = g.getStroke();
+		Color defaultColor = g.getColor();
+
 		Shape hexagon;
 		Square square;
+		Color color;
+		BasicStroke stroke;
 		for (Coordinates coord : board.coordinates()) {
 			hexagon = hexagon(layout, coord);
 			square = board.getSquare(coord);
 			if (!square.isFree()) {
-				g.setColor(new Color(square.getPawn().getOwner().hashCode()));
+				color = playerViews.get(square.getPawn().getOwner()).getColor();
+				g.setColor(color);
 				g.fill(hexagon);
-				g.setColor(Color.BLACK);
+			} else {
+				g.setColor(Color.WHITE);
+				g.fill(hexagon);
 			}
+			g.setColor(Color.BLACK);
 			g.draw(hexagon);
 		}
+
+		stroke = new BasicStroke(2.0f);
+		for (Map.Entry<Player, PlayerView> entry : playerViews.entrySet()) {
+			color = entry.getValue().getColor();
+			for (BoardZone zone : entry.getKey().getInitialZones()) {
+				for (Coordinates coord : zone.coordinates()) {
+					hexagon = hexagon(layout, coord);
+					g.setColor(color);
+					g.draw(hexagon);
+					g.setStroke(stroke);
+					g.setColor(color.darker());
+					g.draw(hexagon);
+					g.setStroke(defaultStroke);
+				}
+			}
+		}
+
+		g.setStroke(defaultStroke);
+		g.setColor(defaultColor);
 	}
 }

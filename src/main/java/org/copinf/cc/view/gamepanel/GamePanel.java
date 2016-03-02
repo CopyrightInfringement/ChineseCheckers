@@ -5,6 +5,9 @@ import org.copinf.cc.model.Player;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -23,6 +26,8 @@ public class GamePanel extends JPanel {
 	private DrawZone drawZone;
 	private ActionZone actionZone;
 
+	private Map<Player, PlayerView> playerViews;
+
 	/**
 	 * Constructs a new GamePanel.
 	 * @param game the current game
@@ -33,6 +38,13 @@ public class GamePanel extends JPanel {
 		this.game = game;
 		this.player = player;
 
+		this.playerViews = new HashMap<>();
+		int i = 0;
+		for (Player p : game.getPlayers()) {
+			playerViews.put(p, new PlayerView(p, i));
+			i++;
+		}
+
 		// UI
 		setPreferredSize(new Dimension(800, 600));
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -42,7 +54,7 @@ public class GamePanel extends JPanel {
 		infoBar.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(infoBar);
 
-		drawZone = new DrawZone(game, player);
+		drawZone = new DrawZone(game, player, playerViews);
 		drawZone.setPreferredSize(new Dimension(800, 500));
 		drawZone.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(drawZone);

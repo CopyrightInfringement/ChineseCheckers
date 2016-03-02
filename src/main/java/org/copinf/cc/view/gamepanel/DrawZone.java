@@ -5,6 +5,8 @@ import org.copinf.cc.model.Player;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Map;
+
 import javax.swing.JPanel;
 
 /**
@@ -22,11 +24,11 @@ public class DrawZone extends JPanel {
 	 * @param game the current game
 	 * @param player the playing player
 	 */
-	public DrawZone(final Game game, final Player player) {
+	public DrawZone(final Game game, final Player player, final Map<Player, PlayerView> playerViews) {
 		super();
 		this.game = game;
 		this.player = player;
-		boardView = new BoardView(game.getBoard(), 800, 500);
+		boardView = new BoardView(game.getBoard(), playerViews, 800, 500);
 	}
 
 	@Override
