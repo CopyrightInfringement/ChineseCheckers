@@ -9,6 +9,7 @@ import org.copinf.cc.model.Square;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Shape;
@@ -230,7 +231,48 @@ public class BoardView {
 			}
 		}
 
+		Font defaultFont = g.getFont();
+		Font newFont = new Font(defaultFont.getName(), defaultFont.getStyle(), 8);
+		g.setFont(newFont);
+		g.setColor(Color.BLACK);
+		for (final Coordinates coord : board.coordinates()) {
+			hexagon = hexagon(layout, coord);
+			square = board.getSquare(coord);
+			Rectangle2D rect1 = hexagon.getBounds2D();
+			Rectangle2D.Double rect = (Rectangle2D.Double) rect1;
+			g.drawString(coord.toString(), (int) (rect.x), (int) (rect.y + rect.height / 2));
+		}
+		g.setFont(defaultFont);
+
 		g.setStroke(defaultStroke);
 		g.setColor(defaultColor);
+	}
+
+	public Coordinates hoveredSquare(final Point p) {
+		final Orientation m = layout.orientation;
+		Point2D.Double pt = new Point2D.Double((p.x - layout.origin.x) / layout.size.x,
+			(p.y - layout.origin.y) / layout.size.y);
+
+		final double qq = m.b0 * pt.x + m.b1 * pt.y;
+		final double rr = m.b2 * pt.x + m.b3 * pt.y;
+		final double ss = -qq - rr;
+
+		int q = (int) Math.round(qq);
+		int r = (int) Math.round(rr);
+		int s = (int) Math.round(ss);
+
+		double q_diff = Math.abs(q - qq);
+		double r_diff = Math.abs(r - rr);
+		double s_diff = Math.abs(s - ss);
+		if (q_diff > r_diff && q_diff > s_diff) {
+			q = -r - s;
+		} else if (r_diff > s_diff) {
+			r = -q - s;
+		} else {
+			s = -q - r;
+		}
+
+		Coordinates result = new Coordinates(q, r, s);
+		return board.coordinates().contains(result) ? result : null;
 	}
 }
