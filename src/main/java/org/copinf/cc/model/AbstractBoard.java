@@ -45,8 +45,8 @@ public abstract class AbstractBoard {
 	 * @param orig the origin coordinates
 	 * @param dest the destination coordinates
 	 */
-	public void move(final Coordinates orig, final Coordinates dest) {
-		getSquare(dest).setPawn(getSquare(orig).popPawn());
+	public void move(final Movement movement) {
+		getSquare(movement.getDestination()).setPawn(getSquare(movement.getOrigin()).popPawn());
 	}
 
 	/**
@@ -59,11 +59,11 @@ public abstract class AbstractBoard {
 	 * @throws NullPointerException if the parameters are null or if the Coordinates list contains a
 	 * 	null
 	 */
-	public boolean checkMove(final List<Coordinates> path, final Player player) {
+	public boolean checkMove(final Movement path, final Player player) {
 		if (path.size() < 2) {
 			return false;
 		}
-		Coordinates orig = path.get(0);
+		Coordinates orig = path.getOrigin();
 		final Pawn pawn = getPawn(orig);
 		if (pawn == null || pawn.getOwner() != player) {
 			return false;

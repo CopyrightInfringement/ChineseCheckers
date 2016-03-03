@@ -38,9 +38,9 @@ public final class Main {
 				Team team2 = new Team();
 				team2.addPlayer(new Player("Mathieu"));
 				game.addTeam(team2);
-				Team team3 = new Team();
-				team3.addPlayer(new Player("Paul"));
-				game.addTeam(team3);
+				//Team team3 = new Team();
+				//team3.addPlayer(new Player("Paul"));
+				//game.addTeam(team3);
 				game.setNumberOfZones(2);
 				game.nextTurn();
 
