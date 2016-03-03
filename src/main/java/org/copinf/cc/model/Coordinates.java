@@ -16,10 +16,16 @@ public class Coordinates {
 	/** z-axis coordinate. */
 	public final int z;
 
+	public static final Coordinates EAST = new Coordinates(-1, 0, 1);
+	public static final Coordinates NORTH_EAST = new Coordinates(0, -1, 1);
+	public static final Coordinates NORTH_WEST = new Coordinates(1, -1, 0);
+	public static final Coordinates WEST = new Coordinates(1, 0, -1);
+	public static final Coordinates SOUTH_EAST = new Coordinates(0, 1, -1);
+	public static final Coordinates SOUTH_WEST = new Coordinates(-1, 1, 0);
+
 	/** Pre-defined directions around a Coordinates. */
 	private static final Coordinates[] DIRECTIONS = new Coordinates[] {
-		new Coordinates(+1, -1, 0), new Coordinates(+1, 0, -1), new Coordinates( 0, +1, -1),
-		new Coordinates(-1, +1, 0), new Coordinates(-1, 0, +1), new Coordinates( 0, -1, +1)
+		EAST, NORTH_EAST, NORTH_WEST, WEST, SOUTH_WEST, SOUTH_EAST
 	};
 
 	/**
