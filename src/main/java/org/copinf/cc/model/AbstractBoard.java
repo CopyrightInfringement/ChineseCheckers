@@ -68,11 +68,16 @@ public abstract class AbstractBoard {
 		if (pawn == null || pawn.getOwner() != player) {
 			return false;
 		}
-		Coordinates dest;
+
+		Coordinates dest = path.getDestination();
 		if (path.size() == 2) {
-			dest = path.get(1);
-			return orig.isAdjacentTo(dest) && getPawn(dest) == null;
+			if (orig.isAdjacentTo(dest)) {
+				return getSquare(dest).isFree();
+			}
+			Coordinates middle = orig.getMiddleCoordinates(dest);
+			return middle != null && !getSquare(middle).isFree() && getSquare(dest).isFree();
 		}
+
 		Coordinates middle;
 		for (final Iterator<Coordinates> it = path.subList(1, path.size()).iterator(); it.hasNext();) {
 			dest = it.next();
@@ -80,7 +85,7 @@ public abstract class AbstractBoard {
 				return false;
 			}
 			middle = orig.getMiddleCoordinates(dest);
-			if (middle == null || getPawn(middle) == null) {
+			if (middle == null || getSquare(middle).isFree()) {
 				return false;
 			}
 			orig = dest;
