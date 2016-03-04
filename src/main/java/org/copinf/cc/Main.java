@@ -9,6 +9,9 @@ import org.copinf.cc.model.Player;
 import org.copinf.cc.model.Team;
 import org.copinf.cc.view.Window;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.SwingUtilities;
 
 /**
@@ -24,6 +27,10 @@ public final class Main {
 	 * @param args arguments
 	 */
 	public static void main(final String[] args) {
+
+		Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+		logger.setLevel(Level.ALL);
+
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				// Controller homeController = new HomeController();
