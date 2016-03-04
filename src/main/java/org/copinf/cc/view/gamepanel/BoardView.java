@@ -187,7 +187,7 @@ public class BoardView {
 	 * Paint this BoardView.
 	 * @param g the Graphics context in which to paint
 	 */
-	public void paint(final Graphics2D g) {
+	public void paint(final Graphics2D g, final Point mouse) {
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 			RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -199,7 +199,6 @@ public class BoardView {
 		Shape hexagon;
 		Square square;
 		Color color;
-		BasicStroke stroke;
 		for (final Coordinates coord : board.coordinates()) {
 			hexagon = hexagon(layout, coord);
 			square = board.getSquare(coord);
@@ -215,21 +214,36 @@ public class BoardView {
 			g.draw(hexagon);
 		}
 
-		stroke = new BasicStroke(2.0f);
+		final Stroke hoveredStroke = new BasicStroke(4.0f);
+		final Coordinates hovered = hoveredSquare(mouse);
+		boolean hasHovered = false;
+
+		BasicStroke stroke = new BasicStroke(2.0f);
+		g.setStroke(stroke);
 		for (final Map.Entry<Player, PlayerView> entry : playerViews.entrySet()) {
 			color = entry.getValue().getColor();
+			g.setColor(color.darker());
 			for (final BoardZone zone : entry.getKey().getInitialZones()) {
 				for (final Coordinates coord : zone.coordinates()) {
 					hexagon = hexagon(layout, coord);
-					g.setColor(color);
-					g.draw(hexagon);
-					g.setStroke(stroke);
-					g.setColor(color.darker());
-					g.draw(hexagon);
-					g.setStroke(defaultStroke);
+					if (coord.equals(hovered)) {
+						g.setStroke(hoveredStroke);
+						g.draw(hexagon);
+						g.setStroke(stroke);
+						hasHovered = true;
+					} else {
+						g.draw(hexagon);
+					}
 				}
 			}
 		}
+		if (!hasHovered && hovered != null) {
+			hexagon = hexagon(layout, hovered);
+			g.setColor(Color.BLACK);
+			g.setStroke(stroke);
+			g.draw(hexagon);
+		}
+		g.setStroke(defaultStroke);
 
 		Font defaultFont = g.getFont();
 		Font newFont = new Font(defaultFont.getName(), defaultFont.getStyle(), 8);

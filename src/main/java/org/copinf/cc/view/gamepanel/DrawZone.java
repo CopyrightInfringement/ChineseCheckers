@@ -5,7 +5,11 @@ import org.copinf.cc.model.Player;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
@@ -13,11 +17,14 @@ import javax.swing.JPanel;
  * DrawZone is where the board, the players' icons and the chat is displayed.
  */
 @SuppressWarnings("serial")
-public class DrawZone extends JPanel {
+public class DrawZone extends JPanel implements MouseMotionListener {
+
+	private final static Logger LOGGER = Logger.getLogger(DrawZone.class.getName());
 
 	private final Game game;
 	private final Player player;
 	private final BoardView boardView;
+	private Point mouse;
 
 	/**
 	 * Constructs a new DrawZone.
@@ -29,13 +36,31 @@ public class DrawZone extends JPanel {
 		this.game = game;
 		this.player = player;
 		boardView = new BoardView(game.getBoard(), playerViews, 800, 500);
+
+		this.mouse = new Point(0, 0);
+		addMouseMotionListener(this);
+		LOGGER.setLevel(java.util.logging.Level.OFF);
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		final Graphics2D g2d = (Graphics2D) g;
-		boardView.paint(g2d);
+		boardView.paint(g2d, mouse);
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		LOGGER.entering("DrawZone", "mouseMoved");
+		mouse = e.getPoint();
+		LOGGER.info(mouse.toString());
+		repaint();
+		LOGGER.exiting("DrawZone", "mouseMoved");
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+
 	}
 
 	public BoardView getBoardView() {
