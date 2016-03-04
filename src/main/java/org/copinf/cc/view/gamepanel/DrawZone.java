@@ -37,4 +37,8 @@ public class DrawZone extends JPanel {
 		final Graphics2D g2d = (Graphics2D) g;
 		boardView.paint(g2d);
 	}
+
+	public BoardView getBoardView() {
+		return boardView;
+	}
 }

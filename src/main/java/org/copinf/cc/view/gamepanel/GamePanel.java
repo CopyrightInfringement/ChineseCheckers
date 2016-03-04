@@ -63,4 +63,16 @@ public class GamePanel extends JPanel {
 		actionZone.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(actionZone);
 	}
+
+	public InfoBar getInfoBar() {
+		return infoBar;
+	}
+
+	public DrawZone getDrawZone() {
+		return drawZone;
+	}
+
+	public ActionZone getActionZone() {
+		return actionZone;
+	}
 }

@@ -60,7 +60,7 @@ public abstract class AbstractBoard {
 	 * 	null
 	 */
 	public boolean checkMove(final Movement path, final Player player) {
-		if (path.size() < 2) {
+		if (path.isEmpty()) {
 			return false;
 		}
 		Coordinates orig = path.getOrigin();

@@ -1,5 +1,6 @@
 package org.copinf.cc.view.gamepanel;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -20,12 +21,19 @@ public class ActionZone extends JPanel {
 	*/
 	public ActionZone() {
 		super();
+		BoxLayout layout = new BoxLayout(this, BoxLayout.LINE_AXIS);
+		setLayout(layout);
+		resetButton = new JButton("Reset");
+		add(resetButton);
+		nextButton = new JButton("Next turn");
+		add(nextButton);
 	}
 
-	/**
-	 * Toggle the state of the "next" button.
-	 */
-	public void toggleNextButton() {
+	public JButton getNextButton() {
+		return nextButton;
+	}
 
+	public JButton getResetButton() {
+		return resetButton;
 	}
 }
