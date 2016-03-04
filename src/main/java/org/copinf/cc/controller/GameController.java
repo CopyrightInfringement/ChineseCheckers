@@ -73,7 +73,12 @@ public class GameController extends AbstractController implements ActionListener
 			Coordinates hovered = gamePanel.getDrawZone().getBoardView().hoveredSquare(e.getPoint());
 			LOGGER.info("clicked " + hovered);
 			if (hovered != null) {
-				if (currentMovement.size() > 1) {
+				if (currentMovement.size() == 1) {
+					Movement mvt = new Movement(hovered);
+					if (game.getBoard().checkMove(mvt, game.getCurrentPlayer())) {
+						currentMovement = mvt;
+					}
+				} else if (currentMovement.size() > 1) {
 					game.getBoard().move(currentMovement.getReversedCondensed());
 				}
 				currentMovement.push(hovered);

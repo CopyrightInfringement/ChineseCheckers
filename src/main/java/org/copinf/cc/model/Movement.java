@@ -9,6 +9,11 @@ public class Movement extends Stack<Coordinates> {
 		super();
 	}
 
+	public Movement(final Coordinates coord) {
+		super();
+		push(coord);
+	}
+
 	public Movement(final Coordinates orig, final Coordinates dest) {
 		super();
 		push(orig);
