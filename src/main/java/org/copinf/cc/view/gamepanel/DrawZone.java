@@ -35,7 +35,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		super();
 		this.game = game;
 		this.player = player;
-		boardView = new BoardView(game.getBoard(), playerViews, 800, 500);
+		boardView = new BoardView(game.getBoard(), player, playerViews, 800, 500);
 
 		this.mouse = new Point(0, 0);
 		addMouseMotionListener(this);

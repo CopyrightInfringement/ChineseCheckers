@@ -105,7 +105,8 @@ public class BoardView {
 	 * @param width available width
 	 * @param height available height
 	 */
-	public BoardView(final AbstractBoard board, final Map<Player, PlayerView> playerViews,
+	public BoardView(final AbstractBoard board, final Player player,
+			final Map<Player, PlayerView> playerViews,
 			final int width, final int height) {
 		this.board = board;
 		this.playerViews = playerViews;
@@ -116,7 +117,13 @@ public class BoardView {
 			((double) height  * 2.0) / (3.0 * (double) board.getHeight() + 1);
 		final double size = Math.min(optimalSizeWidth, optimalSizeHeight);
 
-		this.layout = new Layout(Orientation.POINTY,
+		final Orientation orientation;
+		if (player.getInitialZones().size() % 2 == 0) {
+			orientation = Orientation.FLAT;
+		} else {
+			orientation = Orientation.POINTY;
+		}
+		this.layout = new Layout(orientation,
 			new Point2D.Double(size, size),
 			new Point2D.Double((double) width / 2.0, (double) height / 2.0));
 	}
