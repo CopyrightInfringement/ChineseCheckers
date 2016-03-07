@@ -17,6 +17,7 @@ import java.awt.Stroke;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -114,7 +115,7 @@ public class BoardView {
 		final double optimalSizeWidth =
 			(double) width / (Math.sqrt(3.0) * ((double) board.getWidth() + 0.5));
 		final double optimalSizeHeight =
-			((double) height  * 2.0) / (3.0 * (double) board.getHeight() + 1);
+			((double) height * 2.0) / (3.0 * (double) board.getHeight() + 1);
 		final double size = Math.min(optimalSizeWidth, optimalSizeHeight);
 
 		final Orientation orientation;
@@ -142,6 +143,38 @@ public class BoardView {
 	 */
 	public void setLayout(final Layout layout) {
 		this.layout = layout;
+	}
+
+	private static Point2D.Double boardZoneCenter(final Layout layout, final BoardZone zone) {
+		int x = 0, y = 0, z = 0;
+		for (Coordinates coord : zone.coordinates()) {
+			x += coord.x;
+			y += coord.y;
+			z += coord.z;
+		}
+		x /= zone.coordinates().size();
+		y /= zone.coordinates().size();
+		z /= zone.coordinates().size();
+
+		return hexagonCenter(layout, new Coordinates(x,y,z));
+	}
+
+	private static double sgn(double d) {
+		return d == 0.0 ? 0.0 : d > 0.0 ? 1.0 : -1.0;
+	}
+
+	private static double getRotationAngle(final Layout layout, final List<BoardZone> zones) {
+		double x = 0.0, y = 0.0;
+		for (BoardZone zone : zones) {
+			x += boardZoneCenter(layout, zone).x;
+			y += boardZoneCenter(layout, zone).y;
+		}
+		x /= zones.size();
+		y /= zones.size();
+
+		double angle = Math.cos(x / Math.sqrt(x*x+y*y)) * sgn(y);
+
+		return angle;
 	}
 
 	/**
