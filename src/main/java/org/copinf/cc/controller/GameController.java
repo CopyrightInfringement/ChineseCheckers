@@ -101,7 +101,7 @@ public class GameController extends AbstractController implements ActionListener
 			} else {
 
 				currentMovement = new Movement();
-				//game.nextTurn();
+				game.nextTurn();
 			}
 
 		} else if (e.getSource().equals(gamePanel.getActionZone().getResetButton())) {
