@@ -51,7 +51,7 @@ public class Team {
 	 */
 	public boolean hasWon() {
 		for (final Player player : players) {
-			if (!player.hasWon()) {
+			if (player != null && !player.hasWon()) {
 				return false;
 			}
 		}
