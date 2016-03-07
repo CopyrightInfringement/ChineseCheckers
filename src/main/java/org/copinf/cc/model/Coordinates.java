@@ -1,6 +1,8 @@
 package org.copinf.cc.model;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Provides storage for coordinates in a 3D cube.
@@ -84,15 +86,15 @@ public class Coordinates {
 	 * @param coord a second Coordinates
 	 * @return the Coordinates inbetween or null
 	 */
-	public Coordinates getMiddleCoordinates(final Coordinates coord) {
-		Coordinates added;
+	public Set<Coordinates> getMiddleCoordinates(final Coordinates coord) {
+		Set<Coordinates> set = new HashSet<>();
 		for (int i = 0; i < DIRECTIONS.length; i++) {
-			added = add(this, DIRECTIONS[i]);
-			if (added.isAdjacentTo(coord)) {
-				return added;
+			Coordinates middle = add(this, DIRECTIONS[i]);
+			if (middle.isAdjacentTo(coord)) {
+				set.add(middle);
 			}
 		}
-		return null;
+		return set.isEmpty() ? null : set;
 	}
 
 	/**
