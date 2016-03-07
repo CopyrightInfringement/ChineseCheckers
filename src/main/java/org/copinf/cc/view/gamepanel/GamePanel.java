@@ -27,6 +27,8 @@ public class GamePanel extends JPanel {
 
 	private final Map<Player, PlayerView> playerViews;
 
+	private SlidersRotationWindow controlSlidersFrame;
+
 	/**
 	 * Constructs a new GamePanel.
 	 * @param game the current game
@@ -62,6 +64,8 @@ public class GamePanel extends JPanel {
 		actionZone.setPreferredSize(new Dimension(800, 50));
 		actionZone.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(actionZone);
+
+		controlSlidersFrame = new SlidersRotationWindow(drawZone);
 	}
 
 	public InfoBar getInfoBar() {

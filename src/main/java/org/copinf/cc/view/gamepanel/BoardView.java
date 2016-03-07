@@ -32,15 +32,15 @@ public class BoardView {
 
 	/** Describes the orientation of the board. */
 	public static class Orientation {
-		private final double f0;
-		private final double f1;
-		private final double f2;
-		private final double f3;
-		private final double b0;
-		private final double b1;
-		private final double b2;
-		private final double b3;
-		private final double startAngle; // in multiples of 60°
+		public double f0;
+		public double f1;
+		public double f2;
+		public double f3;
+		public double b0;
+		public double b1;
+		public double b2;
+		public double b3;
+		public double startAngle; // in multiples of 60°
 
 		/** Default orientation with a corner at the top. */
 		public static final Orientation POINTY = new Orientation(
@@ -97,6 +97,10 @@ public class BoardView {
 			this.orientation = orientation;
 			this.size = size;
 			this.origin = origin;
+		}
+
+		public Orientation getOrientation() {
+			return orientation;
 		}
 	}
 
