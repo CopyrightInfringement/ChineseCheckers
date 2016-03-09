@@ -33,8 +33,10 @@ public final class Main {
 
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				// Controller homeController = new HomeController();
-				// homeController.start();
+				/*
+				AbstractController homeController = new HomeController();
+				homeController.start();
+				*/
 
 				DefaultBoard board = new DefaultBoard(4);
 				Game game = new Game(board);
