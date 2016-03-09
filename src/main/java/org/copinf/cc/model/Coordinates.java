@@ -81,20 +81,24 @@ public class Coordinates {
 	}
 
 	/**
-	 * Checks if this Coordinates and a second Coordinates have one Coordinates inbetween
-	 * then returns that Coordinates.
+	 * Checks if this Coordinates and a second Coordinates have Coordinates inbetween
+	 * and returns these Coordinates.
 	 * @param coord a second Coordinates
-	 * @return the Coordinates inbetween or null
+	 * @return the Coordinates inbetween or an empty set
 	 */
-	public Set<Coordinates> getMiddleCoordinates(final Coordinates coord) {
-		Set<Coordinates> set = new HashSet<>();
+	public Coordinates getMiddleCoordinates(final Coordinates coord) {
+		Coordinates result = null;
 		for (int i = 0; i < DIRECTIONS.length; i++) {
 			Coordinates middle = add(this, DIRECTIONS[i]);
 			if (middle.isAdjacentTo(coord)) {
-				set.add(middle);
+				if (result == null) {
+					result = middle;
+				} else {
+					return null;
+				}
 			}
 		}
-		return set.isEmpty() ? null : set;
+		return result;
 	}
 
 	/**

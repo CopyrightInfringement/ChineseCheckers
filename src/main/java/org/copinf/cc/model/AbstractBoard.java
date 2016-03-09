@@ -74,12 +74,8 @@ public abstract class AbstractBoard {
 			if (orig.isAdjacentTo(dest)) {
 				return getSquare(dest).isFree();
 			}
-			for (final Coordinates middle : orig.getMiddleCoordinates(dest)) {
-				if (!getSquare(middle).isFree() && getSquare(dest).isFree()) {
-					return true;
-				}
-			}
-			return false;
+			final Coordinates middle = orig.getMiddleCoordinates(dest);
+			return middle != null && !getSquare(middle).isFree() && getSquare(dest).isFree();
 		}
 
 		for (final Iterator<Coordinates> it = path.subList(1, path.size()).iterator(); it.hasNext();) {
@@ -87,13 +83,8 @@ public abstract class AbstractBoard {
 			if (orig.isAdjacentTo(dest)) {
 				return false;
 			}
-			boolean hasMiddle = false;
-			for (final Coordinates middle : orig.getMiddleCoordinates(dest)) {
-				if (!getSquare(middle).isFree()) {
-					hasMiddle = true;
-				}
-			}
-			if (!hasMiddle) {
+			final Coordinates middle = orig.getMiddleCoordinates(dest);
+			if (middle == null || getSquare(middle).isFree()) {
 				return false;
 			}
 			orig = dest;

@@ -96,7 +96,7 @@ public class GameController extends AbstractController implements ActionListener
 
 		} else if (e.getSource().equals(gamePanel.getActionZone().getNextButton())) {
 			LOGGER.info("nextButton");
-			if (currentMovement.isEmpty()) {
+			if (currentMovement.isEmpty() || currentMovement.size() == 1) {
 				LOGGER.info("No movement");
 			} else {
 
