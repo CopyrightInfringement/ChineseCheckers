@@ -50,17 +50,14 @@ public class GamePanel extends JPanel {
 
 		infoBar = new InfoBar(game, player);
 		infoBar.setPreferredSize(new Dimension(800, 50));
-		infoBar.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(infoBar);
 
 		drawZone = new DrawZone(game, player, playerViews);
 		drawZone.setPreferredSize(new Dimension(800, 500));
-		drawZone.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(drawZone);
 
 		actionZone = new ActionZone();
 		actionZone.setPreferredSize(new Dimension(800, 50));
-		actionZone.setBorder(BorderFactory.createLineBorder(Color.black));
 		add(actionZone);
 	}
 
