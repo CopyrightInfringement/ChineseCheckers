@@ -43,7 +43,7 @@ class Request {
   Rejoindre une partie.
 
 - `server.lobby.join`, `Boolean`  
-  Renvoie `true` si la partie a bien été rejointe, sinon `false`.
+  Contient `true` si la partie a bien été rejointe, sinon `false`.
 
 ### Game
 #### Préparation de la partie
