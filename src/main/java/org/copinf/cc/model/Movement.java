@@ -1,9 +1,11 @@
 package org.copinf.cc.model;
 
+import java.io.Serializable;
 import java.util.Stack;
 
-@SuppressWarnings("serial")
-public class Movement extends Stack<Coordinates> {
+public class Movement extends Stack<Coordinates> implements Serializable {
+
+	private static final long serialVersionUID = 42L;
 
 	public Movement() {
 		super();

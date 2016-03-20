@@ -1,5 +1,6 @@
 package org.copinf.cc.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -7,7 +8,9 @@ import java.util.Set;
 /**
  * Provides storage for coordinates in a 3D cube.
  */
-public class Coordinates {
+public class Coordinates implements Serializable {
+
+	private static final long serialVersionUID = 42L;
 
 	/** x-axis coordinate. */
 	public final int x;
