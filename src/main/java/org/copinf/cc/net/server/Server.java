@@ -35,7 +35,10 @@ public class Server implements Runnable {
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
 			ServerAcceptThread acceptThread = new ServerAcceptThread(serverSocket, this);
 			acceptThread.start();
-		} catch (IOException e) {
+
+			// Prevent the socket from closing. Do something later.
+			synchronized(this) { wait(); }
+		} catch (IOException | InterruptedException e) {
 			System.err.println(e.getMessage());
 			System.exit(-1);
 		}
@@ -44,4 +47,13 @@ public class Server implements Runnable {
 	//	If the request is about a game, this method transmits it to
 	//	the corresponding GameThread gt through gt.processRequest(client, r)
 	private void processRequest(final ClientThread client, final Request req) {}
+
+	public static void main(final String[] args) {
+		if (args.length != 1) {
+			System.err.println("Usage: java Server <port number>");
+			System.exit(1);
+		}
+		new Server(Integer.parseInt(args[0])).run();
+
+	}
 }
