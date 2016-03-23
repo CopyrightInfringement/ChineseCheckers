@@ -4,7 +4,6 @@ import org.copinf.cc.model.Coordinates;
 import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Movement;
 import org.copinf.cc.model.Player;
-import org.copinf.cc.view.Window;
 import org.copinf.cc.view.gamepanel.GamePanel;
 
 import java.awt.event.ActionEvent;
@@ -12,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.logging.Logger;
+
+import javax.swing.JPanel;
 
 /**
  * Controls the game state.
@@ -21,9 +22,8 @@ public class GameController extends AbstractController implements ActionListener
 	private final static Logger LOGGER = Logger.getLogger(GameController.class.getName());
 
 	private final Game game;
-	private final Window window;
-	private final GamePanel gamePanel;
 	private Movement currentMovement;
+	private final GamePanel gamePanel;
 
 	/**
 	 * Constructs a new GameController.
@@ -31,14 +31,10 @@ public class GameController extends AbstractController implements ActionListener
 	 * @param player the playing player
 	 * @param window the window to display the game on
 	 */
-	public GameController(final Game game, final Player player, final Window window) {
-		super();
+	public GameController(final MainController mainController, final Game game, final Player player) {
+		super(mainController);
 		this.game = game;
-		this.window = window;
 		this.gamePanel = new GamePanel(game, player);
-		window.setContentPane(gamePanel);
-		window.validate();
-		window.pack();
 
 		gamePanel.addMouseListener(this);
 		gamePanel.getDrawZone().addMouseListener(this);
@@ -50,8 +46,8 @@ public class GameController extends AbstractController implements ActionListener
 	}
 
 	@Override
-	public void start() {
-
+	public JPanel start() {
+		return gamePanel;
 	}
 
 	@Override
@@ -112,7 +108,7 @@ public class GameController extends AbstractController implements ActionListener
 
 				game.getBoard().move(currentMovement.getReversedCondensed());
 				currentMovement = new Movement();
-				window.repaint();
+				gamePanel.repaint();
 			}
 		}
 
