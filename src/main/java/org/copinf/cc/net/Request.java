@@ -44,4 +44,8 @@ public class Request implements Serializable {
 	private Object readResolve() throws java.io.ObjectStreamException {
 		return new Request(identifier, content);
 	}
+
+	public String toString() {
+		return identifier + '\n' + content;
+	}
 }

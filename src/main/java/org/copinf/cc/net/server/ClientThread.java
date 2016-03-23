@@ -4,6 +4,7 @@ import org.copinf.cc.model.Player;
 import org.copinf.cc.net.Request;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -26,17 +27,24 @@ public class ClientThread extends Thread {
 		out = null;
 	}
 
+	private static ObjectOutputStream getObjectOutputStream(final OutputStream os)
+			throws IOException {
+		ObjectOutputStream out = new ObjectOutputStream(os);
+		out.flush();
+		return out;
+	}
+
 	@Override
 	public void run() {
 		try (
+			ObjectOutputStream out = getObjectOutputStream(client.getOutputStream());
 			ObjectInputStream  in  = new ObjectInputStream(client.getInputStream());
-			ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream());
 		) {
 			this.in = in;
 			this.out = out;
 			Request req;
 			while ((req = receive()) != null) {
-				// do something
+				server.processRequest(this, req);
 			}
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
