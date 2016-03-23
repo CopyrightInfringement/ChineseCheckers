@@ -46,7 +46,7 @@ public class Server implements Runnable {
 
 	//	If the request is about a game, this method transmits it to
 	//	the corresponding GameThread gt through gt.processRequest(client, r)
-	private void processRequest(final ClientThread client, final Request req) {}
+	public void processRequest(final ClientThread client, final Request req) {}
 
 	public static void main(final String[] args) {
 		if (args.length != 1) {
@@ -54,6 +54,5 @@ public class Server implements Runnable {
 			System.exit(1);
 		}
 		new Server(Integer.parseInt(args[0])).run();
-
 	}
 }
