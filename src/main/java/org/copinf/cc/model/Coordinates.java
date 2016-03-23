@@ -1,9 +1,7 @@
 package org.copinf.cc.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * Provides storage for coordinates in a 3D cube.

@@ -14,92 +14,28 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
-import java.awt.geom.Path2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
+import java.util.Collection;
 import java.util.Map;
+
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  * Provides methods to draw and interact with a board.
  */
-@SuppressWarnings("serial")
 public class BoardView {
 
 	private final AbstractBoard board;
-	private Layout layout;
 	private final Map<Player, PlayerView> playerViews;
-
-	/** Describes the orientation of the board. */
-	public static class Orientation {
-		private final double f0;
-		private final double f1;
-		private final double f2;
-		private final double f3;
-		private final double b0;
-		private final double b1;
-		private final double b2;
-		private final double b3;
-		private final double startAngle; // in multiples of 60°
-
-		/** Default orientation with a corner at the top. */
-		public static final Orientation POINTY = new Orientation(
-			Math.sqrt(3.0), Math.sqrt(3.0) / 2.0, 0.0, 3.0 / 2.0,
-			Math.sqrt(3.0) / 3.0, -1.0 / 3.0, 0.0, 2.0 / 3.0,
-			0.5);
-		/** Orientation with a side at the top. */
-		public static final Orientation FLAT = new Orientation(
-			3.0 / 2.0, 0.0, Math.sqrt(3.0) / 2.0, Math.sqrt(3.0),
-			2.0 / 3.0, 0.0, -1.0 / 3.0, Math.sqrt(3.0) / 3.0,
-			0.0);
-
-		/**
-		 * Constructs a new Orientation.
-		 * @param f0 a coefficient of the 2×2 forward matrix
-		 * @param f1 a coefficient of the 2×2 forward matrix
-		 * @param f2 a coefficient of the 2×2 forward matrix
-		 * @param f3 a coefficient of the 2×2 forward matrix
-		 * @param b0 a coefficient of the 2x2 inverse matrix
-		 * @param b1 a coefficient of the 2x2 inverse matrix
-		 * @param b2 a coefficient of the 2x2 inverse matrix
-		 * @param b3 a coefficient of the 2x2 inverse matrix
-		 * @param startAngle the starting angle
-		 */
-		public Orientation(final double f0, final double f1, final double f2, final double f3,
-				final double b0, final double b1, final double b2, final double b3,
-				final double startAngle) {
-			this.f0 = f0;
-			this.f1 = f1;
-			this.f2 = f2;
-			this.f3 = f3;
-			this.b0 = b0;
-			this.b1 = b1;
-			this.b2 = b2;
-			this.b3 = b3;
-			this.startAngle = startAngle;
-		}
-	}
-
-	/** Board layout. */
-	public static class Layout {
-		private final Orientation orientation;
-		private final Point2D.Double size;
-		private final Point2D.Double origin;
-
-		/**
-		 * Constructs a new Layout.
-		 * @param orientation board orientation
-		 * @param size size of an hexagon
-		 * @param origin origin of the board
-		 */
-		public Layout(final Orientation orientation, final Point2D.Double size,
-				final Point2D.Double origin) {
-			this.orientation = orientation;
-			this.size = size;
-			this.origin = origin;
-		}
-	}
-
+	private final int width;
+	private final int height;
+	
+	private DisplayManager displayManager;
+	
 	/**
 	 * Constructs a new BoardView.
 	 * @param board a board to display
@@ -111,118 +47,96 @@ public class BoardView {
 			final int width, final int height) {
 		this.board = board;
 		this.playerViews = playerViews;
-
+		
+		this.width = width;
+		this.height = height;
+		
 		final double optimalSizeWidth =
-			(double) width / (Math.sqrt(3.0) * ((double) board.getWidth() + 0.5));
-		final double optimalSizeHeight =
-			((double) height * 2.0) / (3.0 * (double) board.getHeight() + 1);
-		final double size = Math.min(optimalSizeWidth, optimalSizeHeight);
+				(double) width / (Math.sqrt(3.0) * ((double) board.getWidth() + 0.5));
+			final double optimalSizeHeight =
+				((double) height * 2.0) / (3.0 * (double) board.getHeight() + 1);
+			final double size = Math.min(optimalSizeWidth, optimalSizeHeight);
+		
+		this.displayManager = new DisplayManager(size, 1.0, 1, 0, width/2, height/2, board);
+		displayManager.setAngle(getPlayerAngle(player, width/2, height));
+	}
 
-		final Orientation orientation;
-		if (player.getInitialZones().size() % 2 == 0) {
-			orientation = Orientation.FLAT;
-		} else {
-			orientation = Orientation.POINTY;
+	public DisplayManager getDisplayManager(){
+		return displayManager;
+	}
+
+	private Point2D.Double getBoardZoneCenter(BoardZone zone){
+		double x = 0;
+		double y = 0;
+		for (Coordinates c : zone.coordinates()){
+			Point2D.Double p = displayManager.squareToScreen(c);
+			x += p.x;
+			y += p.y;
 		}
-		this.layout = new Layout(orientation,
-			new Point2D.Double(size, size),
-			new Point2D.Double((double) width / 2.0, (double) height / 2.0));
+		x /= (double)zone.coordinates().size();
+		y /= (double)zone.coordinates().size();
+		return new Point2D.Double(x,y);
 	}
 
-	/**
-	 * Gets current layout.
-	 * @return current layout
-	 */
-	public Layout getLayout() {
-		return layout;
-	}
-
-	/**
-	 * Sets a new layout.
-	 * @param layout a new layout
-	 */
-	public void setLayout(final Layout layout) {
-		this.layout = layout;
-	}
-
-	private static Point2D.Double boardZoneCenter(final Layout layout, final BoardZone zone) {
-		int x = 0, y = 0, z = 0;
-		for (Coordinates coord : zone.coordinates()) {
-			x += coord.x;
-			y += coord.y;
-			z += coord.z;
+	private Point2D.Double getBoardZonesCenter(Collection<BoardZone> zones){
+		double x = 0;
+		double y = 0;
+		for (BoardZone z : zones){
+			Point2D.Double p = getBoardZoneCenter(z);
+			x += p.x;
+			y += p.y;
 		}
-		x /= zone.coordinates().size();
-		y /= zone.coordinates().size();
-		z /= zone.coordinates().size();
-
-		return hexagonCenter(layout, new Coordinates(x,y,z));
+		x /= (double)zones.size();
+		y /= (double)zones.size();
+		return new Point2D.Double(x,y);
 	}
-
-	private static double sgn(double d) {
-		return d == 0.0 ? 0.0 : d > 0.0 ? 1.0 : -1.0;
+	
+	private double interpolation(double a, double b, double t){
+		return (b-a) * Math.sin(t*Math.PI/2.0) + a;
 	}
-
-	private static double getRotationAngle(final Layout layout, final List<BoardZone> zones) {
-		double x = 0.0, y = 0.0;
-		for (BoardZone zone : zones) {
-			x += boardZoneCenter(layout, zone).x;
-			y += boardZoneCenter(layout, zone).y;
-		}
-		x /= zones.size();
-		y /= zones.size();
-
-		double angle = Math.cos(x / Math.sqrt(x*x+y*y)) * sgn(y);
-
-		return angle;
+	
+	private double getPlayerAngle(final Player player, double x, double y){
+		Point2D.Double O = displayManager.getOrigin();
+		Point2D.Double P = getBoardZonesCenter(player.getInitialZones());
+		
+		Point2D.Double OPn = new Point2D.Double((O.getX() - P.getX()) / O.distance(P), (O.getY() - P.getY()) / O.distance(P));
+		Point2D.Double OCn = new Point2D.Double((O.getX() - x)/O.distance(x,y), (O.getY() - y)/O.distance(x,y));
+		
+		double dot = OPn.x * OCn.x + OPn.y * OCn.y;
+		double det = OPn.x * OCn.y - OPn.y * OCn.x;
+		
+		double angle = Math.acos(dot) * (det < 0.0 ? -1 : 1);
+		return (displayManager.getAngle() + angle) % (2 * Math.PI);
 	}
+	
+	public void movePlayerTo(final Player player, final double x, final double y, final int duration, JPanel panel){
+		int interval = 33;
 
-	/**
-	 * Finds the center of an hexagon given its coordinates and a layout.
-	 * @param layout a layout
-	 * @param h coordinates of an hexagon
-	 * @return center of this hexagon
-	 */
-	private static Point2D.Double hexagonCenter(final Layout layout, final Coordinates h) {
-		final Orientation m = layout.orientation;
-		final double x = (m.f0 * h.x + m.f1 * h.y) * layout.size.x;
-		final double y = (m.f2 * h.x + m.f3 * h.y) * layout.size.y;
-		return new Point2D.Double(x + layout.origin.x, y + layout.origin.y);
+		double previous = displayManager.getAngle();
+		double next = getPlayerAngle(player, x, y);
+		
+		Timer timer = new Timer(interval, new ActionListener(){
+			double t = 0.0;
+			public void actionPerformed(ActionEvent e) {
+				if (t >= 1)
+					t = 1;
+				displayManager.setAngle(interpolation(previous, next, t));
+				
+				panel.repaint();
+				
+				if (t >= 1)
+					((Timer)e.getSource()).stop();
+				else
+					t += ((double)interval) / (double)duration;
+			}
+		});
+		timer.start();
 	}
-
-	/**
-	 * Finds the corners of and hexagon given a layout.
-	 * @param layout a layout
-	 * @param corner i-th corner
-	 * @return location of the corner
-	 */
-	private static Point2D.Double hexagonCornerOffset(final Layout layout, final int corner) {
-		final Point2D.Double size = layout.size;
-		final double angle = 2.0 * Math.PI * (corner + layout.orientation.startAngle) / 6.0;
-		return new Point2D.Double(size.x * Math.cos(angle), size.y * Math.sin(angle));
+	
+	public void movePlayerToBottom(final Player player, final int duration, JPanel panel){
+		movePlayerTo(player, displayManager.getOrigin().getX(), height, duration, panel);
 	}
-
-	/**
-	 * Constructs the Shape of an hexagon given its coordinates and a layout.
-	 * @param layout a layout
-	 * @param h coordinates of an hexagon
-	 * @return the shape of this hexagon
-	 */
-	private static Path2D.Double hexagon(final Layout layout, final Coordinates h) {
-		final Path2D.Double path = new Path2D.Double();
-		final Point2D.Double center = hexagonCenter(layout, h);
-		Point2D.Double offset = hexagonCornerOffset(layout, 0);
-		Point2D.Double point = new Point2D.Double(center.x + offset.x, center.y + offset.y);
-		path.moveTo(point.x, point.y);
-		for (int i = 1; i < 6; i++) {
-			offset = hexagonCornerOffset(layout, i);
-			point = new Point2D.Double(center.x + offset.x, center.y + offset.y);
-			path.lineTo(point.x, point.y);
-		}
-		path.closePath();
-		return path;
-	}
-
+	
 	/**
 	 * Paint this BoardView.
 	 * @param g the Graphics context in which to paint
@@ -240,7 +154,7 @@ public class BoardView {
 		Square square;
 		Color color;
 		for (final Coordinates coord : board.coordinates()) {
-			hexagon = hexagon(layout, coord);
+			hexagon = displayManager.hexagon(coord);
 			square = board.getSquare(coord);
 			if (square.isFree()) {
 				g.setColor(Color.WHITE);
@@ -255,7 +169,7 @@ public class BoardView {
 		}
 
 		final Stroke hoveredStroke = new BasicStroke(4.0f);
-		final Coordinates hovered = hoveredSquare(mouse);
+		final Coordinates hovered = displayManager.screenToSquare(mouse.getX(), mouse.getY());
 		boolean hasHovered = false;
 
 		BasicStroke stroke = new BasicStroke(2.0f);
@@ -265,7 +179,7 @@ public class BoardView {
 			g.setColor(color.darker());
 			for (final BoardZone zone : entry.getKey().getInitialZones()) {
 				for (final Coordinates coord : zone.coordinates()) {
-					hexagon = hexagon(layout, coord);
+					hexagon = displayManager.hexagon(coord);
 					if (coord.equals(hovered)) {
 						g.setStroke(hoveredStroke);
 						g.draw(hexagon);
@@ -278,7 +192,7 @@ public class BoardView {
 			}
 		}
 		if (!hasHovered && hovered != null) {
-			hexagon = hexagon(layout, hovered);
+			hexagon = displayManager.hexagon(hovered);
 			g.setColor(Color.BLACK);
 			g.setStroke(stroke);
 			g.draw(hexagon);
@@ -290,7 +204,7 @@ public class BoardView {
 		g.setFont(newFont);
 		g.setColor(Color.BLACK);
 		for (final Coordinates coord : board.coordinates()) {
-			hexagon = hexagon(layout, coord);
+			hexagon = displayManager.hexagon(coord);
 			square = board.getSquare(coord);
 			Rectangle2D rect1 = hexagon.getBounds2D();
 			Rectangle2D.Double rect = (Rectangle2D.Double) rect1;
@@ -300,33 +214,5 @@ public class BoardView {
 
 		g.setStroke(defaultStroke);
 		g.setColor(defaultColor);
-	}
-
-	public Coordinates hoveredSquare(final Point p) {
-		final Orientation m = layout.orientation;
-		Point2D.Double pt = new Point2D.Double((p.x - layout.origin.x) / layout.size.x,
-			(p.y - layout.origin.y) / layout.size.y);
-
-		final double qq = m.b0 * pt.x + m.b1 * pt.y;
-		final double rr = m.b2 * pt.x + m.b3 * pt.y;
-		final double ss = -qq - rr;
-
-		int q = (int) Math.round(qq);
-		int r = (int) Math.round(rr);
-		int s = (int) Math.round(ss);
-
-		double q_diff = Math.abs(q - qq);
-		double r_diff = Math.abs(r - rr);
-		double s_diff = Math.abs(s - ss);
-		if (q_diff > r_diff && q_diff > s_diff) {
-			q = -r - s;
-		} else if (r_diff > s_diff) {
-			r = -q - s;
-		} else {
-			s = -q - r;
-		}
-
-		Coordinates result = new Coordinates(q, r, s);
-		return board.coordinates().contains(result) ? result : null;
 	}
 }

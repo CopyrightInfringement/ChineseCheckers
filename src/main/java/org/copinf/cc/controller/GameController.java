@@ -70,7 +70,7 @@ public class GameController extends AbstractController implements ActionListener
 		} else if (e.getSource().equals(gamePanel.getDrawZone())) {
 			LOGGER.info("drawZone");
 
-			Coordinates hovered = gamePanel.getDrawZone().getBoardView().hoveredSquare(e.getPoint());
+			Coordinates hovered = gamePanel.getDrawZone().getBoardView().getDisplayManager().screenToSquare(e.getPoint());
 			LOGGER.info("clicked " + hovered);
 			if (hovered != null) {
 				if (currentMovement.size() == 1) {
@@ -102,6 +102,7 @@ public class GameController extends AbstractController implements ActionListener
 
 				currentMovement = new Movement();
 				game.nextTurn();
+				gamePanel.getDrawZone().getBoardView().movePlayerToBottom(game.getCurrentPlayer(), 500, gamePanel);
 			}
 
 		} else if (e.getSource().equals(gamePanel.getActionZone().getResetButton())) {

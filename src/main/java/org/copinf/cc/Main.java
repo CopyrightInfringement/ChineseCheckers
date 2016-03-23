@@ -2,7 +2,6 @@ package org.copinf.cc;
 
 import org.copinf.cc.controller.AbstractController;
 import org.copinf.cc.controller.GameController;
-import org.copinf.cc.controller.HomeController;
 import org.copinf.cc.model.DefaultBoard;
 import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Player;
@@ -47,14 +46,14 @@ public final class Main {
 				Team team2 = new Team();
 				team2.addPlayer(new Player("Mathieu"));
 				game.addTeam(team2);
-				//Team team3 = new Team();
-				//team3.addPlayer(new Player("Paul"));
-				//game.addTeam(team3);
+//				Team team3 = new Team();
+//				team3.addPlayer(new Player("Paul"));
+//				game.addTeam(team3);
 				game.setNumberOfZones(2);
 				game.nextTurn();
 
 				Window window = new Window();
-				AbstractController gameController = new GameController(game, player1, window);
+				AbstractController gameController = new GameController(game, game.getCurrentPlayer(), window);
 				gameController.start();
 				window.setVisible(true);
 			}

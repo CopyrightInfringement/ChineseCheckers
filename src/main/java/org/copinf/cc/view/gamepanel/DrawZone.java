@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 /**
- * DrawZone is where the board, the players' icons and the chat is displayed.
+ * DrawZone is where the board, the players' icons and the chat are displayed.
  */
 @SuppressWarnings("serial")
 public class DrawZone extends JPanel implements MouseMotionListener {

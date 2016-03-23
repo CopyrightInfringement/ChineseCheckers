@@ -3,12 +3,10 @@ package org.copinf.cc.view.gamepanel;
 import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Player;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
@@ -60,7 +58,7 @@ public class GamePanel extends JPanel {
 		actionZone.setPreferredSize(new Dimension(800, 50));
 		add(actionZone);
 	}
-
+	
 	public InfoBar getInfoBar() {
 		return infoBar;
 	}

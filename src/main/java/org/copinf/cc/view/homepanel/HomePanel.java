@@ -1,11 +1,8 @@
 package org.copinf.cc.view.homepanel;
 
-import java.awt.Component;
 
-import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
