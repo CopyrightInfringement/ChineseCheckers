@@ -1,15 +1,22 @@
 package org.copinf.cc.controller;
 
+import org.copinf.cc.model.AbstractBoard;
 import org.copinf.cc.model.Coordinates;
 import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Movement;
+import org.copinf.cc.model.Pawn;
 import org.copinf.cc.model.Player;
+import org.copinf.cc.net.Request;
+import org.copinf.cc.net.client.Client;
+import org.copinf.cc.view.gamepanel.DisplayManager;
 import org.copinf.cc.view.gamepanel.GamePanel;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JPanel;
@@ -24,6 +31,10 @@ public class GameController extends AbstractController implements ActionListener
 	private final Game game;
 	private Movement currentMovement;
 	private final GamePanel gamePanel;
+	private final DisplayManager displayManager;
+	private final Player player;
+	private Client client;
+	private boolean waitingForAnswer;
 
 	/**
 	 * Constructs a new GameController.
@@ -31,11 +42,15 @@ public class GameController extends AbstractController implements ActionListener
 	 * @param player the playing player
 	 * @param window the window to display the game on
 	 */
-	public GameController(final MainController mainController, final Game game, final Player player) {
+	public GameController(final MainController mainController, final Game game, final Player player, final Client client) {
 		super(mainController);
 		this.game = game;
 		this.gamePanel = new GamePanel(game, player);
-
+		this.displayManager = gamePanel.getDrawZone().getBoardView().getDisplayManager();
+		this.player = player;
+		this.client = client;
+		this.waitingForAnswer = false;
+		
 		gamePanel.addMouseListener(this);
 		gamePanel.getDrawZone().addMouseListener(this);
 		gamePanel.getActionZone().addMouseListener(this);
@@ -52,91 +67,93 @@ public class GameController extends AbstractController implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		LOGGER.entering("GameController", "actionPerformed");
-		LOGGER.exiting("GameController", "actionPerformed");
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		LOGGER.entering("GameController", "mouseClicked");
-
-		if (e.getSource().equals(gamePanel)) {
-			LOGGER.info("gamePanel");
-
-		} else if (e.getSource().equals(gamePanel.getDrawZone())) {
-			LOGGER.info("drawZone");
-
-			Coordinates hovered = gamePanel.getDrawZone().getBoardView().getDisplayManager().screenToSquare(e.getPoint());
-			LOGGER.info("clicked " + hovered);
-			if (hovered != null) {
-				if (currentMovement.size() == 1) {
-					Movement mvt = new Movement(hovered);
-					if (game.getBoard().checkMove(mvt, game.getCurrentPlayer())) {
-						currentMovement = mvt;
-					}
-				} else if (currentMovement.size() > 1) {
-					game.getBoard().move(currentMovement.getReversedCondensed());
-				}
-				currentMovement.push(hovered);
-				if (game.getBoard().checkMove(currentMovement, game.getCurrentPlayer())) {
-					game.getBoard().move(currentMovement);
-					gamePanel.getDrawZone().repaint();
-				} else {
-					currentMovement.pop();
-					if (currentMovement.size() > 1) {
-						game.getBoard().move(currentMovement);
-					}
-				}
-			}
-			LOGGER.info(currentMovement.toString());
-
-		} else if (e.getSource().equals(gamePanel.getActionZone().getNextButton())) {
-			LOGGER.info("nextButton");
-			if (currentMovement.isEmpty() || currentMovement.size() == 1) {
-				LOGGER.info("No movement");
-			} else {
-
-				currentMovement = new Movement();
-				game.nextTurn();
-				gamePanel.getDrawZone().getBoardView().movePlayerToBottom(game.getCurrentPlayer(), 500, gamePanel);
-			}
-
-		} else if (e.getSource().equals(gamePanel.getActionZone().getResetButton())) {
-			LOGGER.info("resetButton");
-			if (currentMovement.isEmpty()) {
-				LOGGER.info("No movement");
-			} else {
-
-				game.getBoard().move(currentMovement.getReversedCondensed());
-				currentMovement = new Movement();
-				gamePanel.repaint();
+		if (e.getSource() == gamePanel.getActionZone().getNextButton())
+			nextButtonClicked();
+		else if(e.getSource() == gamePanel.getActionZone().getResetButton())
+			resetButtonClicked();
+		else{
+			Coordinates coordinates = displayManager.screenToSquare(e.getX(), e.getY());
+			if (coordinates != null){
+				squareClicked(coordinates);
+				return;
 			}
 		}
-
-		LOGGER.exiting("GameController", "mouseClicked");
+	}
+	
+	private void squareClicked(Coordinates coordinates){
+		if(game.getCurrentPlayer() != player || waitingForAnswer)
+			return;
+		AbstractBoard board = game.getBoard();
+		board.move(currentMovement.getReversedCondensed());
+		currentMovement.push(coordinates);
+		if (!board.checkMove(currentMovement, player)){
+			Pawn pawn = board.getPawn(coordinates);
+			String errorMsg;
+			if(pawn == null)
+				errorMsg = "You can't move this way !";
+			else if(pawn.getOwner() != player)
+				errorMsg = "This isn't your pawn goddemmit !";
+			else
+				errorMsg = "This is not a legal movement !";
+			gamePanel.getDrawZone().addMessage(errorMsg, Color.RED);
+			currentMovement.pop();
+		}
+		
+		board.move(currentMovement);
+	}
+	
+	private void nextButtonClicked(){
+		if(game.getCurrentPlayer() != player || waitingForAnswer)
+			return;
+		client.send(new Request("client.game.move.request", currentMovement));
+		waitingForAnswer = true;
 	}
 
+	private void resetButtonClicked(){
+		currentMovement.empty();
+	}
+	
+	public void processRequest(final Request request){
+		String requestID = request.getSubRequest(2);
+		if (requestID.equals("next"))
+			game.nextTurn();
+		else if(requestID.equals("move"))
+			processMoveRequest(request);
+		waitingForAnswer = false;	//	If we were waiting for answer, now we're not !
+	}
+
+	private void processMoveRequest(Request request){
+		//	If it's an answer we were waiting for
+		if (request.getSubRequestSize() != 3 && waitingForAnswer){
+			//	If the server has disagreed to the move request
+			if (!(Boolean)request.getContent()){
+				LOGGER.log(Level.ALL, "Server refused movement");
+				currentMovement.empty();
+			//	If the server has agreed
+			}else
+				client.send(new Request("client.game.next"));
+		//	If it's a move notification
+		}else
+			game.getBoard().move((Movement)request.getContent());
+	}
+	
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		LOGGER.entering("GameController", "mouseEntered");
-		LOGGER.exiting("GameController", "mouseEntered");
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		LOGGER.entering("GameController", "mouseExited");
-		LOGGER.exiting("GameController", "mouseExited");
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		LOGGER.entering("GameController", "mousePressed");
-		LOGGER.exiting("GameController", "mousePressed");
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		LOGGER.entering("GameController", "mouseReleased");
-		LOGGER.exiting("GameController", "mouseReleased");
 	}
 }

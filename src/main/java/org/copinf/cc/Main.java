@@ -1,12 +1,5 @@
 package org.copinf.cc;
 
-import org.copinf.cc.controller.AbstractController;
-import org.copinf.cc.controller.GameController;
-import org.copinf.cc.model.DefaultBoard;
-import org.copinf.cc.model.Game;
-import org.copinf.cc.model.Player;
-import org.copinf.cc.model.Team;
-import org.copinf.cc.view.Window;
 import org.copinf.cc.controller.MainController;
 
 import java.util.logging.Level;

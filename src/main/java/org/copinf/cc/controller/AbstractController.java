@@ -1,7 +1,5 @@
 package org.copinf.cc.controller;
 
-import org.copinf.cc.view.Window;
-
 import javax.swing.JPanel;
 
 /**

@@ -36,4 +36,16 @@ public class ActionZone extends JPanel {
 	public JButton getResetButton() {
 		return resetButton;
 	}
+
+	public void setTime(int time){
+		if (time == 0){
+			nextButton.setText(Integer.toString(time));
+			toggle(false);
+		}
+	}
+
+	public void toggle(boolean b){
+		nextButton.setVisible(b);
+		resetButton.setVisible(b);
+	}
 }
