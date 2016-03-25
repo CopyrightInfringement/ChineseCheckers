@@ -88,4 +88,4 @@ class Request {
   Envoie un message.
 
 - `server.game.message`, `String`
-  Fait passer le message.
+  Fait passer le message sous le format [\<Nom du joueur\>]\<Contenu du message\>.

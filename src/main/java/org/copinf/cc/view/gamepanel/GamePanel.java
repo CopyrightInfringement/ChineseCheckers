@@ -70,4 +70,8 @@ public class GamePanel extends JPanel {
 	public ActionZone getActionZone() {
 		return actionZone;
 	}
+	
+	public Map<Player, PlayerView> getPlayerViews() {
+		return this.playerViews;
+	}
 }

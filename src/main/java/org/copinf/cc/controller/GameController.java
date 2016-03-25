@@ -10,14 +10,19 @@ import org.copinf.cc.net.Request;
 import org.copinf.cc.net.client.Client;
 import org.copinf.cc.view.gamepanel.DisplayManager;
 import org.copinf.cc.view.gamepanel.GamePanel;
+import org.copinf.cc.view.gamepanel.PlayerView;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JPanel;
 
@@ -33,8 +38,9 @@ public class GameController extends AbstractController implements ActionListener
 	private final GamePanel gamePanel;
 	private final DisplayManager displayManager;
 	private final Player player;
-	private Client client;
 	private boolean waitingForAnswer;
+	private static final Pattern pattern = Pattern.compile("^[(.+)](.+)$");
+	private Map<String, Player> players;
 
 	/**
 	 * Constructs a new GameController.
@@ -42,15 +48,16 @@ public class GameController extends AbstractController implements ActionListener
 	 * @param player the playing player
 	 * @param window the window to display the game on
 	 */
-	public GameController(final MainController mainController, final Game game, final Player player, final Client client) {
+	public GameController(final MainController mainController, final Game game, final Player player) {
 		super(mainController, "game");
 		this.game = game;
 		this.gamePanel = new GamePanel(game, player);
 		this.displayManager = gamePanel.getDrawZone().getBoardView().getDisplayManager();
 		this.player = player;
-		this.client = client;
 		this.waitingForAnswer = false;
-
+		this.players = new HashMap<String, Player>();
+		this.players.put(this.player.getName(), this.player);
+		
 		gamePanel.addMouseListener(this);
 		gamePanel.getDrawZone().addMouseListener(this);
 		gamePanel.getActionZone().addMouseListener(this);
@@ -71,31 +78,30 @@ public class GameController extends AbstractController implements ActionListener
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (e.getSource() == gamePanel.getActionZone().getNextButton())
+		if (e.getSource() == gamePanel.getActionZone().getNextButton()) {
 			nextButtonClicked();
-		else if(e.getSource() == gamePanel.getActionZone().getResetButton())
+		} else if (e.getSource() == gamePanel.getActionZone().getResetButton()) {
 			resetButtonClicked();
-		else{
+		} else {
 			Coordinates coordinates = displayManager.screenToSquare(e.getX(), e.getY());
-			if (coordinates != null){
+			if (coordinates != null) {
 				squareClicked(coordinates);
-				return;
 			}
 		}
 	}
-
-	private void squareClicked(Coordinates coordinates){
-		if(game.getCurrentPlayer() != player || waitingForAnswer)
+	
+	private void squareClicked(Coordinates coordinates) {
+		if (game.getCurrentPlayer() != player || waitingForAnswer)
 			return;
 		AbstractBoard board = game.getBoard();
 		board.move(currentMovement.getReversedCondensed());
 		currentMovement.push(coordinates);
-		if (!board.checkMove(currentMovement, player)){
+		if (!board.checkMove(currentMovement, player)) {
 			Pawn pawn = board.getPawn(coordinates);
 			String errorMsg;
-			if(pawn == null)
+			if (pawn == null)
 				errorMsg = "You can't move this way !";
-			else if(pawn.getOwner() != player)
+			else if (pawn.getOwner() != player)
 				errorMsg = "This isn't your pawn goddemmit !";
 			else
 				errorMsg = "This is not a legal movement !";
@@ -106,40 +112,52 @@ public class GameController extends AbstractController implements ActionListener
 		board.move(currentMovement);
 	}
 
-	private void nextButtonClicked(){
+	private void nextButtonClicked() {
 		if(game.getCurrentPlayer() != player || waitingForAnswer)
 			return;
-		client.send(new Request("client.game.move.request", currentMovement));
+		sendRequest(new Request("client.game.move.request", currentMovement));
 		waitingForAnswer = true;
 	}
 
-	private void resetButtonClicked(){
+	private void resetButtonClicked() {
 		currentMovement.empty();
 	}
 
 	@Override
-	public void processRequest(final Request request){
+	public void processRequest(final Request request) {
 		String requestID = request.getSubRequest(2);
-		if (requestID.equals("next"))
+		if (requestID.equals("next")) {
 			game.nextTurn();
-		else if(requestID.equals("move"))
+			waitingForAnswer = false;
+		} else if(requestID.equals("move")) {
 			processMoveRequest(request);
-		waitingForAnswer = false;	//	If we were waiting for answer, now we're not !
+			waitingForAnswer = false;
+		} else if(requestID.equals("message")) {
+			Matcher m = pattern.matcher((String) request.getContent());
+			String name = m.group(1);
+			String message = m.group(2);
+			Player p = players.get(name);
+			PlayerView pv = gamePanel.getPlayerViews().get(p);
+			Color c = pv.color;
+			gamePanel.getDrawZone().addMessage(message, c);
+		}
 	}
-
-	private void processMoveRequest(Request request){
+	
+	private void processMoveRequest(Request request) {
 		//	If it's an answer we were waiting for
-		if (request.getSubRequestSize() != 3 && waitingForAnswer){
+		if (request.getSubRequestSize() != 3 && waitingForAnswer) {
 			//	If the server has disagreed to the move request
-			if (!(Boolean)request.getContent()){
+			if (!(Boolean)request.getContent()) {
 				LOGGER.log(Level.ALL, "Server refused movement");
 				currentMovement.empty();
 			//	If the server has agreed
-			}else
-				client.send(new Request("client.game.next"));
+			} else {
+				sendRequest(new Request("client.game.next"));
+			}
 		//	If it's a move notification
-		}else
+		} else {
 			game.getBoard().move((Movement)request.getContent());
+		}
 	}
 
 	@Override

@@ -160,7 +160,7 @@ public class BoardView {
 				g.setColor(Color.WHITE);
 				g.fill(hexagon);
 			} else {
-				color = playerViews.get(square.getPawn().getOwner()).getColor();
+				color = playerViews.get(square.getPawn().getOwner()).color;
 				g.setColor(color);
 				g.fill(hexagon);
 			}
@@ -175,7 +175,7 @@ public class BoardView {
 		BasicStroke stroke = new BasicStroke(2.0f);
 		g.setStroke(stroke);
 		for (final Map.Entry<Player, PlayerView> entry : playerViews.entrySet()) {
-			color = entry.getValue().getColor();
+			color = entry.getValue().color;
 			g.setColor(color.darker());
 			for (final BoardZone zone : entry.getKey().getInitialZones()) {
 				for (final Coordinates coord : zone.coordinates()) {
