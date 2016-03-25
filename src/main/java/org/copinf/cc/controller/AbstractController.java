@@ -1,5 +1,7 @@
 package org.copinf.cc.controller;
 
+import org.copinf.cc.net.Request;
+
 import javax.swing.JPanel;
 
 /**
@@ -7,14 +9,16 @@ import javax.swing.JPanel;
  */
 public abstract class AbstractController {
 
-	private final MainController mainController;
+	public final String identifier;
+	protected final MainController mainController;
 
 	/**
 	 * Constructs a new controller.
 	 * @param mainController the main controller
 	 */
-	public AbstractController(final MainController mainController) {
+	public AbstractController(final MainController mainController, final String identifier) {
 		this.mainController = mainController;
+		this.identifier = identifier;
 	}
 
 	/**
@@ -25,11 +29,19 @@ public abstract class AbstractController {
 	 */
 	public abstract JPanel start();
 
+	public void end() {}
+
 	/**
 	 * Switch to another controller.
 	 * @param controller a controller
 	 */
 	public void switchController(final AbstractController controller) {
-		mainController.setController(controller);
+		mainController.push(controller);
+	}
+
+	public abstract void processRequest(final Request request);
+
+	public void sendRequest(final Request request) {
+		mainController.getClient().send(request);
 	}
 }

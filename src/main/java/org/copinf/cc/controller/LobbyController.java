@@ -1,5 +1,6 @@
 package org.copinf.cc.controller;
 
+import org.copinf.cc.net.Request;
 import org.copinf.cc.view.lobbypanel.LobbyPanel;
 
 import javax.swing.JPanel;
@@ -15,7 +16,7 @@ public class LobbyController extends AbstractController {
 	 * Constructs a new LobbyController.
 	 */
 	public LobbyController(final MainController mainController) {
-		super(mainController);
+		super(mainController, "lobby");
 		this.lobbyPanel = new LobbyPanel();
 	}
 
@@ -23,4 +24,7 @@ public class LobbyController extends AbstractController {
 	public JPanel start() {
 		return lobbyPanel;
 	}
+
+	@Override
+	public void processRequest(final Request request) {}
 }

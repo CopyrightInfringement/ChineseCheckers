@@ -1,6 +1,7 @@
 package org.copinf.cc.net.client;
 
 import org.copinf.cc.net.Request;
+import org.copinf.cc.controller.AbstractController;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,6 +15,8 @@ public class Client extends Thread {
 
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
+
+	private AbstractController controller;
 
 	public Client(final String host, final int port) {
 		super();
@@ -34,7 +37,9 @@ public class Client extends Thread {
 			this.out = out;
 			Request req;
 			while ((req = receive()) != null) {
-				// do something
+				if (req.getSubRequest(1).equals(controller.identifier)) {
+					controller.processRequest(req);
+				}
 			}
 		} catch (IOException e) {
 			System.err.println(e.getMessage());

@@ -43,14 +43,14 @@ public class GameController extends AbstractController implements ActionListener
 	 * @param window the window to display the game on
 	 */
 	public GameController(final MainController mainController, final Game game, final Player player, final Client client) {
-		super(mainController);
+		super(mainController, "game");
 		this.game = game;
 		this.gamePanel = new GamePanel(game, player);
 		this.displayManager = gamePanel.getDrawZone().getBoardView().getDisplayManager();
 		this.player = player;
 		this.client = client;
 		this.waitingForAnswer = false;
-		
+
 		gamePanel.addMouseListener(this);
 		gamePanel.getDrawZone().addMouseListener(this);
 		gamePanel.getActionZone().addMouseListener(this);
@@ -83,7 +83,7 @@ public class GameController extends AbstractController implements ActionListener
 			}
 		}
 	}
-	
+
 	private void squareClicked(Coordinates coordinates){
 		if(game.getCurrentPlayer() != player || waitingForAnswer)
 			return;
@@ -102,10 +102,10 @@ public class GameController extends AbstractController implements ActionListener
 			gamePanel.getDrawZone().addMessage(errorMsg, Color.RED);
 			currentMovement.pop();
 		}
-		
+
 		board.move(currentMovement);
 	}
-	
+
 	private void nextButtonClicked(){
 		if(game.getCurrentPlayer() != player || waitingForAnswer)
 			return;
@@ -116,7 +116,8 @@ public class GameController extends AbstractController implements ActionListener
 	private void resetButtonClicked(){
 		currentMovement.empty();
 	}
-	
+
+	@Override
 	public void processRequest(final Request request){
 		String requestID = request.getSubRequest(2);
 		if (requestID.equals("next"))
@@ -140,7 +141,7 @@ public class GameController extends AbstractController implements ActionListener
 		}else
 			game.getBoard().move((Movement)request.getContent());
 	}
-	
+
 	@Override
 	public void mouseEntered(MouseEvent e) {
 	}
