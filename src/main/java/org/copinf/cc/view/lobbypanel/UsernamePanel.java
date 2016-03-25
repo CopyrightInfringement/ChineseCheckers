@@ -18,6 +18,7 @@ public class UsernamePanel extends JPanel {
 		add(infoLabel);
 
 		JTextField usernameTextField = new JTextField();
+		usernameTextField.setColumns(15);
 		add(usernameTextField);
 
 		JButton submitBtn = new JButton("Submit");
