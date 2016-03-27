@@ -22,18 +22,15 @@ public class LobbyPanel extends JPanel {
 	private final int OFFSET_X = 10;
 	private final int OFFSET_Y = 10;
 
+	private final JList<GameInfo> gamesList;
+	private final JButton refreshGameInfoListBtn;
+
 	public LobbyPanel() {
 		super();
 		SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
 
-		// GamesInfo list
-		final Vector<GameInfo> gamesVector = new Vector<>();
-		gamesVector.add(new GameInfo("Game1", 6, 1, true));
-		gamesVector.add(new GameInfo("Game2", 2, 3, false, 60));
-		gamesVector.add(new GameInfo("Game3", 4, 1, true));
-
-		final JList<GameInfo> gamesList = new JList<>(gamesVector);
+		gamesList = new JList<>();
 		gamesList.setCellRenderer(new GameInfoRenderer());
 
 		final JScrollPane gameScrollPane = new JScrollPane(gamesList);
@@ -42,7 +39,7 @@ public class LobbyPanel extends JPanel {
 		add(gameScrollPane);
 		gameScrollPane.setPreferredSize(new Dimension(300, 200));
 
-		final JButton refreshGameInfoListBtn = new JButton(
+		refreshGameInfoListBtn = new JButton(
 			new ImageIcon(LobbyPanel.class.getResource("/fa-refresh-16.png")));
 		springLayout.putConstraint(SpringLayout.NORTH, refreshGameInfoListBtn, OFFSET_Y, SpringLayout.SOUTH, gameScrollPane);
 		springLayout.putConstraint(SpringLayout.EAST, refreshGameInfoListBtn, -OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER, gameScrollPane);
@@ -65,5 +62,13 @@ public class LobbyPanel extends JPanel {
 
 		springLayout.putConstraint(SpringLayout.EAST, this, OFFSET_X, SpringLayout.EAST, gameCreationPanel);
 		springLayout.putConstraint(SpringLayout.SOUTH, this, OFFSET_Y, SpringLayout.SOUTH, refreshGameInfoListBtn);
+	}
+
+	public JList<GameInfo> getGamesList() {
+		return gamesList;
+	}
+
+	public JButton getRefreshGameInfoListBtn() {
+		return refreshGameInfoListBtn;
 	}
 }

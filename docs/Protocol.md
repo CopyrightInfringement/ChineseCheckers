@@ -21,7 +21,7 @@ class Request {
 - `client.lobby.refresh`, `null`  
   Demande la liste des parties du serveur.
 
-- `server.lobby.refresh`, `List<GameInfo>`  
+- `server.lobby.refresh`, `Set<GameInfo>`  
   Renvoie la liste des parties du serveur.
 
 - `client.lobby.quit`, `null`  

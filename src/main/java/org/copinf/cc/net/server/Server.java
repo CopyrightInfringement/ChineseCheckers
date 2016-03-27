@@ -4,6 +4,7 @@ import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.net.Request;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Collections;
@@ -46,7 +47,12 @@ public class Server implements Runnable {
 
 	//	If the request is about a game, this method transmits it to
 	//	the corresponding GameThread gt through gt.processRequest(client, r)
-	public void processRequest(final ClientThread client, final Request req) {}
+	public void processRequest(final ClientThread client, final Request req) {
+		final String identifier = req.getIdentifier();
+		if (identifier.equals("client.lobby.refresh")) {
+			client.send(new Request("server.lobby.refresh", (Serializable) waitingGames));
+		}
+	}
 
 	public static void main(final String[] args) {
 		if (args.length != 1) {
