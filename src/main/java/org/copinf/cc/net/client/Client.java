@@ -65,4 +65,8 @@ public class Client extends Thread {
 			return null;
 		}
 	}
+
+	public void setController(final AbstractController controller) {
+		this.controller = controller;
+	}
 }

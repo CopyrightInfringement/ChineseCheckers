@@ -32,6 +32,9 @@ public class MainController {
 		controllers.peek().end();
 		controllers.push(controller);
 		setContentPane(controller.start());
+		if (client != null) {
+			client.setController(controller);
+		}
 	}
 
 	private void setContentPane(final JPanel panel) {
@@ -47,7 +50,8 @@ public class MainController {
 	}
 
 	public void startClient(final String host, final int port) {
-		new Client(host, port).start();
+		client = new Client(host, port);
+		client.start();
 	}
 
 	public Server getServer() {
