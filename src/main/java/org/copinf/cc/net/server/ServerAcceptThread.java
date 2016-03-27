@@ -21,8 +21,8 @@ public class ServerAcceptThread extends Thread {
 			while (listening) {
 				server.addClient(serverSocket.accept());
 			}
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
+		} catch (IOException ex) {
+			System.err.println(ex.getMessage());
 			System.exit(-1);
 		}
 	}

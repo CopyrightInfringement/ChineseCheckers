@@ -42,8 +42,7 @@ public abstract class AbstractBoard {
 	/**
 	 * Moves a pawn from a square to another square, referenced by their coordinates.
 	 * This method does not perform any checks on the movement validity.
-	 * @param orig the origin coordinates
-	 * @param dest the destination coordinates
+	 * @param movement a movement
 	 */
 	public void move(final Movement movement) {
 		getSquare(movement.getDestination()).setPawn(getSquare(movement.getOrigin()).popPawn());

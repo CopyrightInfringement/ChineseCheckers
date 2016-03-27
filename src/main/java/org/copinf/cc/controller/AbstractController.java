@@ -15,6 +15,7 @@ public abstract class AbstractController {
 	/**
 	 * Constructs a new controller.
 	 * @param mainController the main controller
+	 * @param identifier Controller's identifer to be used when receiving a request
 	 */
 	public AbstractController(final MainController mainController, final String identifier) {
 		this.mainController = mainController;

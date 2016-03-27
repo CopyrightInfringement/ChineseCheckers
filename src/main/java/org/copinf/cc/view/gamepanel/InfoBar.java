@@ -14,11 +14,11 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class InfoBar extends JPanel {
 
-	private Game game;
-	private Player player;
+	private final Game game;
+	private final Player player;
 
-	private JLabel turnCountLabel;
-	private JLabel playerNameLabel;
+	private final JLabel turnCountLabel;
+	private final JLabel playerNameLabel;
 
 	/**
 	 * Constructs a new InfoBar.

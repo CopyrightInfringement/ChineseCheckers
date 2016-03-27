@@ -34,17 +34,18 @@ public class ServerTest {
 
 		Socket socket = serverSocket.accept();
 		System.out.println(socket.toString() + " just connected !");
-		
+
 		out = new ObjectOutputStream(socket.getOutputStream());
 		in  = new ObjectInputStream(socket.getInputStream());
-		
+
 		ClientWindowTest win = new ClientWindowTest();
 		win.setVisible(true);
-		
+
 		socket.close();
 		serverSocket.close();
 	}
-	
+
+	@SuppressWarnings("serial")
 	static class ClientWindowTest extends JFrame{
 		JTextField identifierField;
 		JTextField contentField;
@@ -54,7 +55,7 @@ public class ServerTest {
 		public ClientWindowTest(){
 			Container pane = this.getContentPane();
 			pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
-			
+
 			identifierField = new JTextField();
 			contentField = new JTextField();
 			typeBox = new JComboBox<String>();
@@ -63,19 +64,19 @@ public class ServerTest {
 			typeBox.addItem("Boolean");
 			typeBox.addItem("null");
 			typeBox.addItem("Integer");
-			
+
 			pane.add(identifierField);
 			pane.add(typeBox);
 			pane.add(contentField);
 			pane.add(sendButton);
-			
+
 			sendButton.addActionListener(new Controller());
-			
+
 			setPreferredSize(new Dimension(800,500));
-			
+
 			pack();
 		}
-		
+
 		class Controller implements ActionListener{
 
 			@Override

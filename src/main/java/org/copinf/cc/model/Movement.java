@@ -1,9 +1,8 @@
 package org.copinf.cc.model;
 
-import java.io.Serializable;
 import java.util.Stack;
 
-public class Movement extends Stack<Coordinates> implements Serializable {
+public class Movement extends Stack<Coordinates> {
 
 	private static final long serialVersionUID = 42L;
 
@@ -24,7 +23,7 @@ public class Movement extends Stack<Coordinates> implements Serializable {
 
 	@Override
 	public Coordinates push(final Coordinates item) {
-		int index = search(item);
+		final int index = search(item);
 		if (index != -1) {
 			removeRange(index - 1, size());
 		}

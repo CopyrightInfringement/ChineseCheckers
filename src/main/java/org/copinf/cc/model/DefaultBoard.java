@@ -52,8 +52,8 @@ public class DefaultBoard extends AbstractBoard {
 		for (int i = 0; i < playerOrigin.length; i++) {
 			zone = new BoardZone();
 			zones.add(zone);
-			int ox = playerOrigin[i].x;
-			int oy = playerOrigin[i].y;
+			final int ox = playerOrigin[i].x;
+			final int oy = playerOrigin[i].y;
 			if (i % 2 == 0) {
 				for (int q = 0; q < radius; q++) {
 					for (int r = -q; r <= 0; r++) {

@@ -1,9 +1,9 @@
 package org.copinf.cc.view.lobbypanel;
 
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class UsernamePanel extends JPanel {
@@ -14,14 +14,14 @@ public class UsernamePanel extends JPanel {
 	public UsernamePanel() {
 		super();
 
-		JLabel infoLabel = new JLabel("Username: ");
+		final JLabel infoLabel = new JLabel("Username: ");
 		add(infoLabel);
 
-		JTextField usernameTextField = new JTextField();
+		final JTextField usernameTextField = new JTextField();
 		usernameTextField.setColumns(15);
 		add(usernameTextField);
 
-		JButton submitBtn = new JButton("Submit");
+		final JButton submitBtn = new JButton("Submit");
 		add(submitBtn);
 	}
 }

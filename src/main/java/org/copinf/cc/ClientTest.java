@@ -28,9 +28,9 @@ public class ClientTest {
 		game.nextTurn();
 		MainController mainController = new MainController();
 		mainController.startClient("localhost", 25565);
-		
+
 		GameController gameController = new GameController(mainController, game, player);
-		
+
 		mainController.debug_push(gameController);
 	}
 

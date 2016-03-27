@@ -3,12 +3,11 @@ package org.copinf.cc.view.lobbypanel;
 import org.copinf.cc.net.GameInfo;
 
 import java.awt.Component;
-import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
 
 @SuppressWarnings("serial")
 public class GameInfoRenderer extends JPanel implements ListCellRenderer<GameInfo> {
@@ -19,8 +18,8 @@ public class GameInfoRenderer extends JPanel implements ListCellRenderer<GameInf
 	}
 
 	@Override
-	public Component getListCellRendererComponent(JList<? extends GameInfo> list, GameInfo value,
-			int index, boolean isSelected, boolean cellHasFocus) {
+	public Component getListCellRendererComponent(final JList<? extends GameInfo> list,
+			final GameInfo value, final int index, final boolean isSelected, final boolean cellHasFocus) {
 
 		removeAll();
 		add(new JLabel(value.name));

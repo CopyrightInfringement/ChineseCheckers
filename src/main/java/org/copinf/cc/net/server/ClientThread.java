@@ -4,9 +4,9 @@ import org.copinf.cc.model.Player;
 import org.copinf.cc.net.Request;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
 public class ClientThread extends Thread {
@@ -29,7 +29,7 @@ public class ClientThread extends Thread {
 
 	private static ObjectOutputStream getObjectOutputStream(final OutputStream os)
 			throws IOException {
-		ObjectOutputStream out = new ObjectOutputStream(os);
+		final ObjectOutputStream out = new ObjectOutputStream(os);
 		out.flush();
 		return out;
 	}
@@ -46,8 +46,8 @@ public class ClientThread extends Thread {
 			while ((req = receive()) != null) {
 				server.processRequest(this, req);
 			}
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
+		} catch (IOException ex) {
+			System.err.println(ex.getMessage());
 			System.exit(1);
 		}
 	}
@@ -55,8 +55,8 @@ public class ClientThread extends Thread {
 	public void send(final Request req) {
 		try {
 			out.writeObject(req);
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
+		} catch (IOException ex) {
+			System.err.println(ex.getMessage());
 			System.exit(1);
 		}
 	}
@@ -64,8 +64,8 @@ public class ClientThread extends Thread {
 	private Request receive() {
 		try {
 			return (Request) in.readObject();
-		} catch (IOException | ClassNotFoundException e) {
-			System.err.println(e.getMessage());
+		} catch (IOException | ClassNotFoundException ex) {
+			System.err.println(ex.getMessage());
 			System.exit(1);
 			return null;
 		}
