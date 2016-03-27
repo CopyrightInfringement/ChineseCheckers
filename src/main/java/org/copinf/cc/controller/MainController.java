@@ -34,6 +34,10 @@ public class MainController {
 		setContentPane(controller.start());
 	}
 
+	public void debug_push(final AbstractController controller){
+		setContentPane(controller.start());		
+	}
+	
 	private void setContentPane(final JPanel panel) {
 		window.setContentPane(panel);
 		window.pack();
@@ -47,7 +51,8 @@ public class MainController {
 	}
 
 	public void startClient(final String host, final int port) {
-		new Client(host, port).start();
+		client = new Client(host, port);
+		client.start();
 	}
 
 	public Server getServer() {

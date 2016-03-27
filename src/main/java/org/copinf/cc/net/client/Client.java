@@ -12,7 +12,8 @@ public class Client extends Thread {
 
 	private final String host;
 	private final int port;
-
+	private Socket clientSocket;
+	
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 
@@ -29,21 +30,26 @@ public class Client extends Thread {
 	@Override
 	public void run() {
 		try (
-			Socket client = new Socket(host, port);
-			ObjectInputStream  in  = new ObjectInputStream(client.getInputStream());
-			ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream())
+			Socket socket = new Socket(host, port);
+			ObjectInputStream  in  = new ObjectInputStream(socket.getInputStream());
+			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream())
 		) {
+			clientSocket = socket;
 			this.in = in;
 			this.out = out;
 			Request req;
 			while ((req = receive()) != null) {
+				System.out.println("Received : " + req);
 				if (req.getSubRequest(1).equals(controller.identifier)) {
 					controller.processRequest(req);
 				}
 			}
+			System.out.println("Received null");
 		} catch (IOException e) {
-			System.err.println(e.getMessage());
+			System.err.println("Exception while receiving : " + e);
 			System.exit(1);
+		} catch (Exception e){
+			System.out.println("Caught another exception : " + e);
 		}
 	}
 
@@ -51,7 +57,7 @@ public class Client extends Thread {
 		try {
 			out.writeObject(req);
 		} catch (IOException e) {
-			System.err.println(e.getMessage());
+			System.err.println("Exception while sending : " + e);
 			System.exit(1);
 		}
 	}
@@ -60,7 +66,8 @@ public class Client extends Thread {
 		try {
 			return (Request) in.readObject();
 		} catch (IOException | ClassNotFoundException e) {
-			System.err.println(e.getMessage());
+			System.err.println("Exception while receiving : " + e);
+			System.err.println("Socket : " + clientSocket);
 			System.exit(1);
 			return null;
 		}

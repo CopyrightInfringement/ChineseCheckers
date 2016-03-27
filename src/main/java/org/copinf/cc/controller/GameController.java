@@ -13,6 +13,8 @@ import org.copinf.cc.view.gamepanel.GamePanel;
 import org.copinf.cc.view.gamepanel.PlayerView;
 
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -24,6 +26,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -94,7 +97,8 @@ public class GameController extends AbstractController implements ActionListener
 		if (game.getCurrentPlayer() != player || waitingForAnswer)
 			return;
 		AbstractBoard board = game.getBoard();
-		board.move(currentMovement.getReversedCondensed());
+		if(currentMovement.size() != 0)
+			board.move(currentMovement.getReversedCondensed());
 		currentMovement.push(coordinates);
 		if (!board.checkMove(currentMovement, player)) {
 			Pawn pawn = board.getPawn(coordinates);
@@ -109,7 +113,8 @@ public class GameController extends AbstractController implements ActionListener
 			currentMovement.pop();
 		}
 
-		board.move(currentMovement);
+		if(currentMovement.size() != 0)
+			board.move(currentMovement);
 	}
 
 	private void nextButtonClicked() {
