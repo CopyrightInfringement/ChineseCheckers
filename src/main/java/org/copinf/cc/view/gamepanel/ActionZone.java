@@ -3,7 +3,6 @@ package org.copinf.cc.view.gamepanel;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 /**
  * The ActionZone at the bottom of the window, providing widgets such as a text field for the chat,
@@ -12,17 +11,15 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class ActionZone extends JPanel {
 
-	private JTextField messageBox;
-	private JButton resetButton;
-	private JButton nextButton;
+	private final JButton resetButton;
+	private final JButton nextButton;
 
 	/**
 	 * Constructs a new ActionZone.
 	*/
 	public ActionZone() {
 		super();
-		BoxLayout layout = new BoxLayout(this, BoxLayout.LINE_AXIS);
-		setLayout(layout);
+		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		resetButton = new JButton("Reset");
 		add(resetButton);
 		nextButton = new JButton("Next turn");
@@ -37,15 +34,15 @@ public class ActionZone extends JPanel {
 		return resetButton;
 	}
 
-	public void setTime(int time){
-		if (time == 0){
+	public void setTime(final int time) {
+		if (time == 0) {
 			nextButton.setText(Integer.toString(time));
 			toggle(false);
 		}
 	}
 
-	public void toggle(boolean b){
-		nextButton.setVisible(b);
-		resetButton.setVisible(b);
+	public void toggle(final boolean visible) {
+		nextButton.setVisible(visible);
+		resetButton.setVisible(visible);
 	}
 }

@@ -19,6 +19,7 @@ public class LobbyController extends AbstractController implements ActionListene
 
 	/**
 	 * Constructs a new LobbyController.
+	 * @param mainController the main controller
 	 */
 	public LobbyController(final MainController mainController) {
 		super(mainController, "lobby");
@@ -43,11 +44,11 @@ public class LobbyController extends AbstractController implements ActionListene
 	public void actionPerformed(final ActionEvent ev) {
 		final Object source = ev.getSource();
 		if (source.equals(lobbyPanel.getRefreshGameInfoListBtn())) {
-			actionRefreshGameInfoList(ev);
+			actionRefreshGameInfoList();
 		}
 	}
 
-	private void actionRefreshGameInfoList(final ActionEvent ev) {
+	private void actionRefreshGameInfoList() {
 		sendRequest(new Request("client.lobby.refresh"));
 	}
 

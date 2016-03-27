@@ -90,7 +90,7 @@ public class Coordinates implements Serializable {
 	public Coordinates getMiddleCoordinates(final Coordinates coord) {
 		Coordinates result = null;
 		for (int i = 0; i < DIRECTIONS.length; i++) {
-			Coordinates middle = add(this, DIRECTIONS[i]);
+			final Coordinates middle = add(this, DIRECTIONS[i]);
 			if (middle.isAdjacentTo(coord)) {
 				if (result == null) {
 					result = middle;

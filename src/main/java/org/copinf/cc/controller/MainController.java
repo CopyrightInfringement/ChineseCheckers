@@ -15,7 +15,7 @@ public class MainController {
 	private Server server;
 	private Client client;
 
-	private Stack<AbstractController> controllers;
+	private final Stack<AbstractController> controllers;
 
 	public MainController() {
 		window = new Window();
@@ -23,7 +23,7 @@ public class MainController {
 	}
 
 	public void start() {
-		HomeController controller = new HomeController(this);
+		final HomeController controller = new HomeController(this);
 		controllers.push(controller);
 		setContentPane(controller.start());
 	}

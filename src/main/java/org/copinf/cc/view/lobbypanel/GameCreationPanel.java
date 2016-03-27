@@ -10,8 +10,8 @@ import javax.swing.SpringLayout;
 @SuppressWarnings("serial")
 public class GameCreationPanel extends JPanel {
 
-	private final int OFFSET_X = 10;
-	private final int OFFSET_Y = 10;
+	private static final int OFFSET_X = 10;
+	private static final int OFFSET_Y = 10;
 
 	public GameCreationPanel() {
 		super();

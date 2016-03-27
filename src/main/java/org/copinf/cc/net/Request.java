@@ -33,7 +33,7 @@ public class Request implements Serializable {
 		return splitted[level];
 	}
 
-	public int getSubRequestSize(){
+	public int getSubRequestSize() {
 		return splitted.length;
 	}
 

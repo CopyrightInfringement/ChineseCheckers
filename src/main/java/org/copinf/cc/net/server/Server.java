@@ -34,13 +34,15 @@ public class Server implements Runnable {
 	@Override
 	public void run() {
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
-			ServerAcceptThread acceptThread = new ServerAcceptThread(serverSocket, this);
+			final ServerAcceptThread acceptThread = new ServerAcceptThread(serverSocket, this);
 			acceptThread.start();
 
 			// Prevent the socket from closing. Do something later.
-			synchronized(this) { wait(); }
-		} catch (IOException | InterruptedException e) {
-			System.err.println(e.getMessage());
+			synchronized (this) {
+				wait();
+			}
+		} catch (IOException | InterruptedException ex) {
+			System.err.println(ex.getMessage());
 			System.exit(-1);
 		}
 	}
@@ -49,7 +51,7 @@ public class Server implements Runnable {
 	//	the corresponding GameThread gt through gt.processRequest(client, r)
 	public void processRequest(final ClientThread client, final Request req) {
 		final String identifier = req.getIdentifier();
-		if (identifier.equals("client.lobby.refresh")) {
+		if ("client.lobby.refresh".equals(identifier)) {
 			client.send(new Request("server.lobby.refresh", (Serializable) waitingGames));
 		}
 	}

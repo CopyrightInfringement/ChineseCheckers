@@ -3,9 +3,7 @@ package org.copinf.cc.view.lobbypanel;
 import org.copinf.cc.net.GameInfo;
 
 import java.awt.Dimension;
-import java.util.Vector;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -19,15 +17,15 @@ import javax.swing.SpringLayout;
 @SuppressWarnings("serial")
 public class LobbyPanel extends JPanel {
 
-	private final int OFFSET_X = 10;
-	private final int OFFSET_Y = 10;
+	private static final int OFFSET_X = 10;
+	private static final int OFFSET_Y = 10;
 
 	private final JList<GameInfo> gamesList;
 	private final JButton refreshGameInfoListBtn;
 
 	public LobbyPanel() {
 		super();
-		SpringLayout springLayout = new SpringLayout();
+		final SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
 
 		gamesList = new JList<>();

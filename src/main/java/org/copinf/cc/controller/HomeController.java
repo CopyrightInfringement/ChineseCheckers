@@ -1,9 +1,7 @@
 package org.copinf.cc.controller;
 
-import org.copinf.cc.view.homepanel.HomePanel;
 import org.copinf.cc.net.Request;
-import org.copinf.cc.net.client.Client;
-import org.copinf.cc.net.server.Server;
+import org.copinf.cc.view.homepanel.HomePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,12 +14,13 @@ import javax.swing.JPanel;
  */
 public class HomeController extends AbstractController implements ActionListener {
 
-	private final static Logger LOGGER = Logger.getLogger(HomeController.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(HomeController.class.getName());
 
 	private final HomePanel panel;
 
 	/**
 	 * Constructs a new HomeController.
+	 * @param mainController the main controller
 	 */
 	public HomeController(final MainController mainController) {
 		super(mainController, "home");
@@ -36,14 +35,14 @@ public class HomeController extends AbstractController implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(final ActionEvent ev) {
 		LOGGER.entering("HomeController", "actionPerformed");
-		if (e.getSource().equals(panel.getHostButton())) {
+		if (ev.getSource().equals(panel.getHostButton())) {
 			LOGGER.info("Host button clicked");
 			mainController.startServer(panel.getPort());
 			mainController.startClient(panel.getHost(), panel.getPort());
 			switchController(new LobbyController(mainController));
-		} else if (e.getSource().equals(panel.getJoinButton())) {
+		} else if (ev.getSource().equals(panel.getJoinButton())) {
 			LOGGER.info("Join button clicked");
 			panel.resetErrorMessage();
 			mainController.startClient(panel.getHost(), panel.getPort());

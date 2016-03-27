@@ -1,7 +1,7 @@
 package org.copinf.cc.net.client;
 
-import org.copinf.cc.net.Request;
 import org.copinf.cc.controller.AbstractController;
+import org.copinf.cc.net.Request;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -24,6 +24,7 @@ public class Client extends Thread {
 		this.port = port;
 		in = null;
 		out = null;
+		controller = null;
 	}
 
 	@Override
@@ -41,8 +42,8 @@ public class Client extends Thread {
 					controller.processRequest(req);
 				}
 			}
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
+		} catch (IOException ex) {
+			System.err.println(ex.getMessage());
 			System.exit(1);
 		}
 	}
@@ -50,8 +51,8 @@ public class Client extends Thread {
 	public void send(final Request req) {
 		try {
 			out.writeObject(req);
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
+		} catch (IOException ex) {
+			System.err.println(ex.getMessage());
 			System.exit(1);
 		}
 	}
@@ -59,8 +60,8 @@ public class Client extends Thread {
 	private Request receive() {
 		try {
 			return (Request) in.readObject();
-		} catch (IOException | ClassNotFoundException e) {
-			System.err.println(e.getMessage());
+		} catch (IOException | ClassNotFoundException ex) {
+			System.err.println(ex.getMessage());
 			System.exit(1);
 			return null;
 		}

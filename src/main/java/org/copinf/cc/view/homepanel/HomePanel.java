@@ -1,38 +1,37 @@
 package org.copinf.cc.view.homepanel;
 
-
-import javax.swing.JPanel;
-import javax.swing.SpringLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 
 @SuppressWarnings("serial")
 public class HomePanel extends JPanel {
 
-	private JButton btnJoin;
-	private JButton btnHost;
-	private JTextField hostTextField;
-	private JTextField portTextField;
-	private JLabel lblErrors;
+	private final JButton btnJoin;
+	private final JButton btnHost;
+	private final JTextField hostTextField;
+	private final JTextField portTextField;
+	private final JLabel lblErrors;
 
-	private final int OFFSET_X = 10;
-	private final int OFFSET_Y = 10;
+	private static final int OFFSET_X = 10;
+	private static final int OFFSET_Y = 10;
 
-	private final String DEBUG_HOST = "localhost";
-	private final String DEBUG_PORT = "25565";
+	private static final String DEBUG_HOST = "localhost";
+	private static final String DEBUG_PORT = "25565";
 
 	public HomePanel() {
 		super();
-		SpringLayout springLayout = new SpringLayout();
+		final SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
 
-		JLabel lblTitle = new JLabel("<html><p style='font-size:20px;text-align:center;'>Chinese Checkers</p></html>");
+		final JLabel lblTitle = new JLabel("<html><p style='font-size:20px;text-align:center;'>Chinese Checkers</p></html>");
 		springLayout.putConstraint(SpringLayout.NORTH, lblTitle, OFFSET_Y, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, lblTitle, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		add(lblTitle);
 
-		JLabel lblHost = new JLabel("Host");
+		final JLabel lblHost = new JLabel("Host");
 		springLayout.putConstraint(SpringLayout.NORTH, lblHost, OFFSET_Y, SpringLayout.SOUTH, lblTitle);
 		springLayout.putConstraint(SpringLayout.WEST, lblHost, OFFSET_X, SpringLayout.WEST, this);
 		add(lblHost);
@@ -44,7 +43,7 @@ public class HomePanel extends JPanel {
 		hostTextField.setColumns(20);
 		hostTextField.setText(DEBUG_HOST);
 
-		JLabel lblPort = new JLabel("Port");
+		final JLabel lblPort = new JLabel("Port");
 		springLayout.putConstraint(SpringLayout.NORTH, lblPort, OFFSET_Y, SpringLayout.SOUTH, lblHost);
 		springLayout.putConstraint(SpringLayout.WEST, lblPort, OFFSET_X, SpringLayout.WEST, this);
 		add(lblPort);
@@ -74,7 +73,7 @@ public class HomePanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, lblErrors, OFFSET_X, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.EAST, lblErrors, -OFFSET_X, SpringLayout.EAST, this);
 
-		JLabel lblCredits = new JLabel("<html><p style='text-align: center;'>Louis Bal dit Sollier<br>Clara Bringer<br>Antonin Décimo<br>Pierre Gervais</p></html>");
+		final JLabel lblCredits = new JLabel("<html><p style='text-align: center;'>Louis Bal dit Sollier<br>Clara Bringer<br>Antonin Décimo<br>Pierre Gervais</p></html>");
 		springLayout.putConstraint(SpringLayout.NORTH, lblCredits, OFFSET_Y, SpringLayout.SOUTH, lblErrors);
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, lblCredits, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		add(lblCredits);
@@ -99,7 +98,7 @@ public class HomePanel extends JPanel {
 		return Integer.parseInt(portTextField.getText());
 	}
 
-	public void displayErrorMessage(String msg) {
+	public void displayErrorMessage(final String msg) {
 		lblErrors.setText("<html><p style='color:red;'>" + msg + "</p></html>");
 	}
 

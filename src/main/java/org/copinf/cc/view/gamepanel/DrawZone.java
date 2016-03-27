@@ -9,8 +9,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.swing.JPanel;
@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class DrawZone extends JPanel implements MouseMotionListener {
 
-	private final static Logger LOGGER = Logger.getLogger(DrawZone.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(DrawZone.class.getName());
 
 	private final Game game;
 	private final Player player;
@@ -33,6 +33,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	 * Constructs a new DrawZone.
 	 * @param game the current game
 	 * @param player the playing player
+	 * @param playerViews PlayerView of each Player
 	 */
 	public DrawZone(final Game game, final Player player, final Map<Player, PlayerView> playerViews) {
 		super();
@@ -46,51 +47,53 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	}
 
 	@Override
-	public void paintComponent(Graphics g) {
+	public void paintComponent(final Graphics g) {
 		super.paintComponent(g);
 		final Graphics2D g2d = (Graphics2D) g;
 		boardView.paint(g2d, mouse);
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent e) {
+	public void mouseMoved(final MouseEvent ev) {
 		LOGGER.entering("DrawZone", "mouseMoved");
-		mouse = e.getPoint();
+		mouse = ev.getPoint();
 		LOGGER.info(mouse.toString());
 		repaint();
 		LOGGER.exiting("DrawZone", "mouseMoved");
 	}
 
 	@Override
-	public void mouseDragged(MouseEvent e) {
+	public void mouseDragged(final MouseEvent ev) {
 
 	}
 
 	public BoardView getBoardView() {
 		return boardView;
 	}
-	
-	public void addMessage(String message, Color color){
+
+	public void addMessage(final String message, final Color color) {
 		messages.add(new Message(message, color));
-		if(messages.size() > 10)
+		if (messages.size() > 10) {
 			messages.remove(messages.size() - 1);
+		}
 	}
-	
-	public void drawMessages(Graphics2D g2d){
+
+	public void drawMessages(final Graphics2D g2d) {
 		int x = 0;
 		int y = 0;
-		for (Message message : messages){
+		for (final Message message : messages) {
 			g2d.setColor(message.color);
 			g2d.drawString(message.message, x, y);
-			y+= 20;
+			y += 20;
 		}
 		g2d.setColor(Color.BLACK);
 	}
-	
-	private class Message{
-		String message;
-		Color color;
-		Message(String message, Color color){
+
+	private static class Message {
+		public final String message;
+		public final Color color;
+
+		public Message(final String message, final Color color) {
 			this.message = message;
 			this.color = color;
 		}
