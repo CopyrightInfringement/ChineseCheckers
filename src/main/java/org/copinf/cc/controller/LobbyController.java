@@ -17,6 +17,8 @@ public class LobbyController extends AbstractController implements ActionListene
 
 	private final LobbyPanel lobbyPanel;
 
+	private String username;
+
 	/**
 	 * Constructs a new LobbyController.
 	 * @param mainController the main controller
@@ -26,6 +28,7 @@ public class LobbyController extends AbstractController implements ActionListene
 		this.lobbyPanel = new LobbyPanel();
 
 		lobbyPanel.getRefreshGameInfoListBtn().addActionListener(this);
+		lobbyPanel.getUsernamePanel().getSubmitBtn().addActionListener(this);
 	}
 
 	@Override
@@ -35,8 +38,10 @@ public class LobbyController extends AbstractController implements ActionListene
 
 	@Override
 	public void processRequest(final Request request) {
-		if (request.getSubRequest(2).equals("refresh")) {
+		if ("refresh".equals(request.getSubRequest(2))) {
 			processRefreshGameInfoList(request);
+		} else if ("username".equals(request.getSubRequest(2))) {
+			processSubmitUsername(request);
 		}
 	}
 
@@ -45,6 +50,8 @@ public class LobbyController extends AbstractController implements ActionListene
 		final Object source = ev.getSource();
 		if (source.equals(lobbyPanel.getRefreshGameInfoListBtn())) {
 			actionRefreshGameInfoList();
+		} else if (source.equals(lobbyPanel.getUsernamePanel().getSubmitBtn())) {
+			actionSubmitUsername();
 		}
 	}
 
@@ -56,5 +63,23 @@ public class LobbyController extends AbstractController implements ActionListene
 	private void processRefreshGameInfoList(final Request request) {
 		lobbyPanel.getGamesList().setListData(
 			((Set<GameInfo>) request.getContent()).toArray(new GameInfo[]{}));
+	}
+
+	private void actionSubmitUsername() {
+		username = lobbyPanel.getUsernamePanel().getUsername();
+		if (username.length() > 15) {
+			username = username.substring(0, 15);
+		}
+		lobbyPanel.getUsernamePanel().getSubmitBtn().setEnabled(false);
+		sendRequest(new Request("client.lobby.username", username));
+	}
+
+	private void processSubmitUsername(final Request request) {
+		if ((Boolean) request.getContent()) {
+			lobbyPanel.getUsernamePanel().switchToUsernamePanel(username);
+		} else {
+			lobbyPanel.getUsernamePanel().setUsername("");
+			lobbyPanel.getUsernamePanel().getSubmitBtn().setEnabled(true);
+		}
 	}
 }

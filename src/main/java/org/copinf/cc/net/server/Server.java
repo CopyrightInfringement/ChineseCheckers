@@ -53,6 +53,20 @@ public class Server implements Runnable {
 		final String identifier = req.getIdentifier();
 		if ("client.lobby.refresh".equals(identifier)) {
 			client.send(new Request("server.lobby.refresh", (Serializable) waitingGames));
+		} else if ("client.lobby.username".equals(identifier)) {
+			final String username = (String) req.getContent();
+			boolean validUsername = username.length() <= 15;
+			if (validUsername) {
+				for (final ClientThread ct : clients) {
+					if (username.equals(ct.getUsername())) {
+						validUsername = false;
+					}
+				}
+				if (validUsername) {
+					client.setUsername(username);
+				}
+			}
+			client.send(new Request("server.lobby.username", validUsername));
 		}
 	}
 

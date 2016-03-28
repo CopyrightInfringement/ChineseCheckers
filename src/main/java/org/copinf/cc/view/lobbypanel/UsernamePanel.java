@@ -1,5 +1,9 @@
 package org.copinf.cc.view.lobbypanel;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.CardLayout;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -8,20 +12,54 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class UsernamePanel extends JPanel {
 
+	private final JTextField usernameTextField;
+	private final JButton submitBtn;
+
+	private final JLabel usernameLbl;
+
 	/**
 	 * Create the panel.
 	 */
 	public UsernamePanel() {
-		super();
+		super(new CardLayout());
+
+		// formPanel
+		final JPanel formPanel = new JPanel();
+		add(formPanel, "formPanel");
 
 		final JLabel infoLabel = new JLabel("Username: ");
-		add(infoLabel);
+		formPanel.add(infoLabel);
 
-		final JTextField usernameTextField = new JTextField();
+		usernameTextField = new JTextField();
 		usernameTextField.setColumns(15);
-		add(usernameTextField);
+		formPanel.add(usernameTextField);
 
-		final JButton submitBtn = new JButton("Submit");
-		add(submitBtn);
+		submitBtn = new JButton("Submit");
+		formPanel.add(submitBtn);
+
+		// userPanel
+		final JPanel userPanel = new JPanel();
+		add(userPanel, "userPanel");
+
+		usernameLbl = new JLabel("");
+		userPanel.add(usernameLbl);
+	}
+
+	public void switchToUsernamePanel(final String username) {
+		final CardLayout cl = (CardLayout) getLayout();
+		usernameLbl.setText(username);
+		cl.show(this, "userPanel");
+	}
+
+	public String getUsername() {
+		return usernameTextField.getText();
+	}
+
+	public void setUsername(final String username) {
+		usernameTextField.setText(username);
+	}
+
+	public JButton getSubmitBtn() {
+		return submitBtn;
 	}
 }

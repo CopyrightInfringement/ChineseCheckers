@@ -23,6 +23,8 @@ public class LobbyPanel extends JPanel {
 	private final JList<GameInfo> gamesList;
 	private final JButton refreshGameInfoListBtn;
 
+	private final UsernamePanel usernamePanel;
+
 	public LobbyPanel() {
 		super();
 		final SpringLayout springLayout = new SpringLayout();
@@ -48,7 +50,7 @@ public class LobbyPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, joinGameBtn, OFFSET_X, SpringLayout.EAST, refreshGameInfoListBtn);
 		add(joinGameBtn);
 
-		final UsernamePanel usernamePanel = new UsernamePanel();
+		usernamePanel = new UsernamePanel();
 		springLayout.putConstraint(SpringLayout.NORTH, usernamePanel, OFFSET_Y, SpringLayout.NORTH, gameScrollPane);
 		springLayout.putConstraint(SpringLayout.WEST, usernamePanel, OFFSET_X, SpringLayout.EAST, gameScrollPane);
 		add(usernamePanel);
@@ -68,5 +70,9 @@ public class LobbyPanel extends JPanel {
 
 	public JButton getRefreshGameInfoListBtn() {
 		return refreshGameInfoListBtn;
+	}
+
+	public UsernamePanel getUsernamePanel() {
+		return usernamePanel;
 	}
 }

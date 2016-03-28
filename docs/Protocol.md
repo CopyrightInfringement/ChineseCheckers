@@ -13,10 +13,10 @@ class Request {
 
 ### Lobby
 
-- [ ] `client.lobby.username`, `String`
+- [x] `client.lobby.username`, `String`
   Envoie la demande de pseudonyme d'un joueur.
 
-- [ ] `server.lobby.username`, `Boolean`
+- [x] `server.lobby.username`, `Boolean`
   Réponse à la demande de pseudonyme.
 
 - [x] `client.lobby.refresh`, `null`

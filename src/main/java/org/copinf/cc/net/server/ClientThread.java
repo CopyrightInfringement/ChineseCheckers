@@ -70,4 +70,12 @@ public class ClientThread extends Thread {
 			return null;
 		}
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(final String username) {
+		this.username = username;
+	}
 }
