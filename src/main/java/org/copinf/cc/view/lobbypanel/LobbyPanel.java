@@ -50,6 +50,8 @@ public class LobbyPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, joinGameBtn, OFFSET_X, SpringLayout.EAST, refreshGameInfoListBtn);
 		add(joinGameBtn);
 
+		refreshGameInfoListBtn.setPreferredSize(joinGameBtn.getPreferredSize());
+
 		usernamePanel = new UsernamePanel();
 		springLayout.putConstraint(SpringLayout.NORTH, usernamePanel, OFFSET_Y, SpringLayout.NORTH, gameScrollPane);
 		springLayout.putConstraint(SpringLayout.WEST, usernamePanel, OFFSET_X, SpringLayout.EAST, gameScrollPane);
@@ -57,11 +59,12 @@ public class LobbyPanel extends JPanel {
 
 		final GameCreationPanel gameCreationPanel = new GameCreationPanel();
 		springLayout.putConstraint(SpringLayout.NORTH, gameCreationPanel, OFFSET_Y, SpringLayout.SOUTH, usernamePanel);
+		springLayout.putConstraint(SpringLayout.SOUTH, gameCreationPanel, OFFSET_Y, SpringLayout.SOUTH, joinGameBtn);
 		springLayout.putConstraint(SpringLayout.WEST, gameCreationPanel, 0, SpringLayout.WEST, usernamePanel);
 		add(gameCreationPanel);
 
 		springLayout.putConstraint(SpringLayout.EAST, this, OFFSET_X, SpringLayout.EAST, gameCreationPanel);
-		springLayout.putConstraint(SpringLayout.SOUTH, this, OFFSET_Y, SpringLayout.SOUTH, refreshGameInfoListBtn);
+		springLayout.putConstraint(SpringLayout.SOUTH, this, OFFSET_Y, SpringLayout.SOUTH, gameCreationPanel);
 	}
 
 	public JList<GameInfo> getGamesList() {

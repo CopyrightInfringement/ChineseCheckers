@@ -31,40 +31,40 @@ public class HomePanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, lblTitle, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		add(lblTitle);
 
-		final JLabel lblHost = new JLabel("Host");
-		springLayout.putConstraint(SpringLayout.NORTH, lblHost, OFFSET_Y, SpringLayout.SOUTH, lblTitle);
+		final JLabel lblHost = new JLabel("Host :");
+		springLayout.putConstraint(SpringLayout.NORTH, lblHost, OFFSET_Y * 2, SpringLayout.SOUTH, lblTitle);
 		springLayout.putConstraint(SpringLayout.WEST, lblHost, OFFSET_X, SpringLayout.WEST, this);
 		add(lblHost);
-
 		hostTextField = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, hostTextField, 0, SpringLayout.NORTH, lblHost);
+		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, hostTextField, 0, SpringLayout.VERTICAL_CENTER, lblHost);
 		springLayout.putConstraint(SpringLayout.WEST, hostTextField, OFFSET_X, SpringLayout.EAST, lblHost);
 		add(hostTextField);
 		hostTextField.setColumns(20);
 		hostTextField.setText(DEBUG_HOST);
 
-		final JLabel lblPort = new JLabel("Port");
-		springLayout.putConstraint(SpringLayout.NORTH, lblPort, OFFSET_Y, SpringLayout.SOUTH, lblHost);
-		springLayout.putConstraint(SpringLayout.WEST, lblPort, OFFSET_X, SpringLayout.WEST, this);
-		add(lblPort);
-
 		portTextField = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, portTextField, 0, SpringLayout.NORTH, lblPort);
+		springLayout.putConstraint(SpringLayout.NORTH, portTextField, OFFSET_Y, SpringLayout.SOUTH, hostTextField);
 		springLayout.putConstraint(SpringLayout.WEST, portTextField, 0, SpringLayout.WEST, hostTextField);
 		springLayout.putConstraint(SpringLayout.EAST, portTextField, 0, SpringLayout.EAST, hostTextField);
 		add(portTextField);
 		portTextField.setColumns(20);
 		portTextField.setText(DEBUG_PORT);
+		final JLabel lblPort = new JLabel("Port :");
+		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, lblPort, 0, SpringLayout.VERTICAL_CENTER, portTextField);
+		springLayout.putConstraint(SpringLayout.WEST, lblPort, OFFSET_X, SpringLayout.WEST, this);
+		add(lblPort);
 
 		btnJoin = new JButton("Join");
 		springLayout.putConstraint(SpringLayout.NORTH, btnJoin, OFFSET_Y, SpringLayout.SOUTH, lblPort);
-		springLayout.putConstraint(SpringLayout.EAST, btnJoin, -OFFSET_X, SpringLayout.HORIZONTAL_CENTER, this);
+		springLayout.putConstraint(SpringLayout.EAST, btnJoin, -OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER, this);
 		add(btnJoin);
 
 		btnHost = new JButton("Host");
 		springLayout.putConstraint(SpringLayout.NORTH, btnHost, 0, SpringLayout.NORTH, btnJoin);
-		springLayout.putConstraint(SpringLayout.WEST, btnHost, OFFSET_X, SpringLayout.HORIZONTAL_CENTER, this);
+		springLayout.putConstraint(SpringLayout.WEST, btnHost, OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER, this);
 		add(btnHost);
+
+		btnJoin.setPreferredSize(btnHost.getPreferredSize());
 
 		lblErrors = new JLabel();
 		springLayout.putConstraint(SpringLayout.NORTH, lblErrors, OFFSET_Y, SpringLayout.SOUTH, btnJoin);

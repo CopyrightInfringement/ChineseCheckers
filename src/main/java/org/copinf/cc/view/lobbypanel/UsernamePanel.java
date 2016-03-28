@@ -27,7 +27,7 @@ public class UsernamePanel extends JPanel {
 		final JPanel formPanel = new JPanel();
 		add(formPanel, "formPanel");
 
-		final JLabel infoLabel = new JLabel("Username: ");
+		final JLabel infoLabel = new JLabel("Username :");
 		formPanel.add(infoLabel);
 
 		usernameTextField = new JTextField();
