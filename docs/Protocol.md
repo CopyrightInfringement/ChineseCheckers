@@ -31,10 +31,10 @@ class Request {
 - [ ] `client.lobby.disconnect`, `null`
   Déconnexion.
 
-- [ ] `client.lobby.create`, `GameInfo`
+- [x] `client.lobby.create`, `GameInfo`
   Crée une partie.
 
-- [ ] `server.lobby.create`, `Boolean`
+- [x] `server.lobby.create`, `Boolean`
   Renvoie `true` si la partie a bien été créée, sinon `false`.
 
 - [ ] *`client.lobby.message`*, `String`

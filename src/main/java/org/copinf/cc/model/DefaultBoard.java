@@ -173,4 +173,14 @@ public class DefaultBoard extends AbstractBoard {
 		}
 		return set;
 	}
+
+	@Override
+	public boolean getPossibleTeam(final int playerNumber) {
+		return playerNumber == 6 || playerNumber == 4;
+	}
+
+	@Override
+	public int getDefaultSize(final int playerNumber) {
+		return playerNumber == 2 ? 5 : 4;
+	}
 }

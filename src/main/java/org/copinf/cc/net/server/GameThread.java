@@ -25,4 +25,8 @@ public class GameThread extends Thread {
 	public void run() {}
 
 	public void processRequest(final ClientThread client, final Request req) {}
+
+	public GameInfo getGameInfo() {
+		return gameInfo;
+	}
 }

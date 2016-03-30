@@ -1,5 +1,6 @@
 package org.copinf.cc.controller;
 
+import org.copinf.cc.model.DefaultBoard;
 import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.net.Request;
 import org.copinf.cc.view.lobbypanel.LobbyPanel;
@@ -29,6 +30,8 @@ public class LobbyController extends AbstractController implements ActionListene
 
 		lobbyPanel.getRefreshGameInfoListBtn().addActionListener(this);
 		lobbyPanel.getUsernamePanel().getSubmitBtn().addActionListener(this);
+		lobbyPanel.getGameCreationPanel().addBoard(new DefaultBoard(0));
+		lobbyPanel.getGameCreationPanel().getCreateGameBtn().addActionListener(this);
 	}
 
 	@Override
@@ -38,10 +41,13 @@ public class LobbyController extends AbstractController implements ActionListene
 
 	@Override
 	public void processRequest(final Request request) {
-		if ("refresh".equals(request.getSubRequest(2))) {
+		final String sub2 = request.getSubRequest(2);
+		if ("refresh".equals(sub2)) {
 			processRefreshGameInfoList(request);
-		} else if ("username".equals(request.getSubRequest(2))) {
+		} else if ("username".equals(sub2)) {
 			processSubmitUsername(request);
+		} else if ("create".equals(sub2)) {
+			processCreateGame(request);
 		}
 	}
 
@@ -52,6 +58,8 @@ public class LobbyController extends AbstractController implements ActionListene
 			actionRefreshGameInfoList();
 		} else if (source.equals(lobbyPanel.getUsernamePanel().getSubmitBtn())) {
 			actionSubmitUsername();
+		} else if (source.equals(lobbyPanel.getGameCreationPanel().getCreateGameBtn())) {
+			actionCreateGame();
 		}
 	}
 
@@ -61,8 +69,12 @@ public class LobbyController extends AbstractController implements ActionListene
 
 	@SuppressWarnings("unchecked")
 	private void processRefreshGameInfoList(final Request request) {
-		lobbyPanel.getGamesList().setListData(
-			((Set<GameInfo>) request.getContent()).toArray(new GameInfo[]{}));
+		Set<GameInfo> waitingGames = (Set<GameInfo>) request.getContent();
+		System.out.println(waitingGames.size());
+		lobbyPanel.getGamesList().setListData(waitingGames.toArray(new GameInfo[waitingGames.size()]));
+		for (final GameInfo gi : waitingGames) {
+			System.out.println("CLIENT " + gi.name);
+		}
 	}
 
 	private void actionSubmitUsername() {
@@ -80,6 +92,19 @@ public class LobbyController extends AbstractController implements ActionListene
 		} else {
 			lobbyPanel.getUsernamePanel().setUsername("");
 			lobbyPanel.getUsernamePanel().getSubmitBtn().setEnabled(true);
+		}
+	}
+
+	private void actionCreateGame() {
+		final GameInfo gameInfo = lobbyPanel.getGameCreationPanel().makeGameInfo();
+		if (gameInfo != null) {
+			sendRequest(new Request("client.lobby.create", gameInfo));
+		}
+	}
+
+	private void processCreateGame(final Request request) {
+		if (!(Boolean) request.getContent()) {
+			lobbyPanel.getGameCreationPanel().resetGameName();
 		}
 	}
 }

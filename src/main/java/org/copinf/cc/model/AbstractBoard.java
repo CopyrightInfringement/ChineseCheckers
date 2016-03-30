@@ -134,4 +134,19 @@ public abstract class AbstractBoard {
 	 * @return an ascending sorted set of the possible zones numbers per player.
 	 */
 	public abstract SortedSet<Integer> getPossibleZoneNumbers(final int playerNumber);
+
+	/**
+	 * Checks players can have teams with a certain player number.
+	 * Teams are composed of 2 players.
+	 * @param playerNumber The number of players.
+	 * @param true if player can play in teams
+	 */
+	public abstract boolean getPossibleTeam(final int playerNumber);
+
+	/**
+	 * Gets the default size of this board.
+	 * @param playerNumber The number of players.
+	 * @return default size.
+	 */
+	public abstract int getDefaultSize(final int playerNumber);
 }

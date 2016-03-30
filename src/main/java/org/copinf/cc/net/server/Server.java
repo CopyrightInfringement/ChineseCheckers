@@ -52,7 +52,7 @@ public class Server implements Runnable {
 	public void processRequest(final ClientThread client, final Request req) {
 		final String identifier = req.getIdentifier();
 		if ("client.lobby.refresh".equals(identifier)) {
-			client.send(new Request("server.lobby.refresh", (Serializable) waitingGames));
+			client.send(new Request("server.lobby.refresh", new HashSet<>(waitingGames)));
 		} else if ("client.lobby.username".equals(identifier)) {
 			final String username = (String) req.getContent();
 			boolean validUsername = username.length() <= 15;
@@ -67,6 +67,36 @@ public class Server implements Runnable {
 				}
 			}
 			client.send(new Request("server.lobby.username", validUsername));
+		} else if ("client.lobby.create".equals(identifier)) {
+			final GameInfo gameInfo = (GameInfo) req.getContent();
+			final String gameName = gameInfo.name;
+			System.out.println("SERVER: create " + gameName);
+			boolean validName = true;
+			for (final GameInfo game : waitingGames) {
+				if (game.name.equals(gameName)) {
+					validName = false;
+					break;
+				}
+			}
+			if (validName) {
+				for (final GameThread game : playingGames) {
+					if (game.getGameInfo().name.equals(gameName)) {
+						validName = false;
+						break;
+					}
+				}
+			}
+			if (validName) {
+				waitingGames.add(gameInfo);
+			}
+			client.send(new Request("server.lobby.create", validName));
+			broadcast(new Request("server.lobby.refresh", new HashSet<>(waitingGames)));
+		}
+	}
+
+	public void broadcast(final Request req) {
+		for (final ClientThread client : clients) {
+			client.send(req);
 		}
 	}
 

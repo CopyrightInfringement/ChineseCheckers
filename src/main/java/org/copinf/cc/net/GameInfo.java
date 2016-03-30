@@ -11,7 +11,7 @@ public class GameInfo implements Serializable {
 	public int nbPlayersCurrent;
 	public final int nbZones;
 	public final boolean teams;
-	public final int timer;	// -1 if no timer
+	public final double timer;	// -1 if no timer, in minutes
 
 	public GameInfo(final String name, final int nbPlayersMax, final int nbZones,
 			final boolean teams) {
@@ -19,7 +19,7 @@ public class GameInfo implements Serializable {
 	}
 
 	public GameInfo(final String name, final int nbPlayersMax, final int nbZones, final boolean teams,
-			final int timer) {
+			final double timer) {
 		this.name = name;
 		this.nbPlayersMax = nbPlayersMax;
 		this.nbPlayersCurrent = 0;

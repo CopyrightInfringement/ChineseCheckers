@@ -42,6 +42,7 @@ public class MainController {
 		window.pack();
 		window.setVisible(true);
 		window.setResizable(false);
+		window.setLocationRelativeTo(null);
 	}
 
 	public void startServer(final int port) {
