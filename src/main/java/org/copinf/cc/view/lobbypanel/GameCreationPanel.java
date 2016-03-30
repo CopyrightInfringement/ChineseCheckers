@@ -173,6 +173,7 @@ public class GameCreationPanel extends JPanel {
 				(Integer) playerNumberChooser.getSelectedItem(),
 				(Integer) playerZonesChooser.getSelectedItem(),
 				teamsCheckBox.isSelected(),
+				(Integer) boardSizeChooser.getValue(),
 				timerCheckBox.isSelected() ? (Double) timerSpinner.getValue() : -1);
 		}
 		return null;

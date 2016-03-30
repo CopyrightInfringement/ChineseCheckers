@@ -40,10 +40,10 @@ class Request {
 - [ ] *`client.lobby.message`*, `String`
   Envoie un message sur le chat principal.
 
-- [ ] `client.lobby.join`, `GameInfo`
+- [x] `client.lobby.join`, `GameInfo`
   Rejoindre une partie.
 
-- [ ] `server.lobby.join`, `Boolean`
+- [x] `server.lobby.join`, `Boolean`
   Contient `true` si la partie a bien été rejointe, sinon `false`.
 
 ### Game

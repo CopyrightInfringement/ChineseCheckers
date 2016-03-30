@@ -12,19 +12,26 @@ public class GameInfo implements Serializable {
 	public final int nbZones;
 	public final boolean teams;
 	public final double timer;	// -1 if no timer, in minutes
+	public final int size;
 
 	public GameInfo(final String name, final int nbPlayersMax, final int nbZones,
-			final boolean teams) {
-		this(name, nbPlayersMax, nbZones, teams, -1);
+			final boolean teams, final int size) {
+		this(name, nbPlayersMax, nbZones, teams, size, -1);
 	}
 
 	public GameInfo(final String name, final int nbPlayersMax, final int nbZones, final boolean teams,
-			final double timer) {
+			final int size, final double timer) {
 		this.name = name;
 		this.nbPlayersMax = nbPlayersMax;
 		this.nbPlayersCurrent = 0;
 		this.nbZones = nbZones;
 		this.teams = teams;
+		this.size = size;
 		this.timer = timer;
+	}
+
+	@Override
+	public int hashCode() {
+		return name.hashCode();
 	}
 }

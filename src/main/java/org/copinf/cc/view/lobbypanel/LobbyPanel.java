@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
 
 /**
@@ -22,6 +23,7 @@ public class LobbyPanel extends JPanel {
 
 	private final JList<GameInfo> gamesList;
 	private final JButton refreshGameInfoListBtn;
+	private final JButton joinGameBtn;
 
 	private final UsernamePanel usernamePanel;
 	private final GameCreationPanel gameCreationPanel;
@@ -33,6 +35,7 @@ public class LobbyPanel extends JPanel {
 
 		gamesList = new JList<>();
 		gamesList.setCellRenderer(new GameInfoRenderer());
+		gamesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		final JScrollPane gameScrollPane = new JScrollPane(gamesList);
 		springLayout.putConstraint(SpringLayout.NORTH, gameScrollPane, OFFSET_Y, SpringLayout.NORTH, this);
@@ -46,7 +49,7 @@ public class LobbyPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, refreshGameInfoListBtn, -OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER, gameScrollPane);
 		add(refreshGameInfoListBtn);
 
-		final JButton joinGameBtn = new JButton("Join");
+		joinGameBtn = new JButton("Join");
 		springLayout.putConstraint(SpringLayout.NORTH, joinGameBtn, 0, SpringLayout.NORTH, refreshGameInfoListBtn);
 		springLayout.putConstraint(SpringLayout.WEST, joinGameBtn, OFFSET_X, SpringLayout.EAST, refreshGameInfoListBtn);
 		add(joinGameBtn);
@@ -74,6 +77,10 @@ public class LobbyPanel extends JPanel {
 
 	public JButton getRefreshGameInfoListBtn() {
 		return refreshGameInfoListBtn;
+	}
+
+	public JButton getJoinGameBtn() {
+		return joinGameBtn;
 	}
 
 	public UsernamePanel getUsernamePanel() {

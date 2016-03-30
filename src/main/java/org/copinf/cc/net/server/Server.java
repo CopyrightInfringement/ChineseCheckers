@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class Server implements Runnable {
 
-	private final Set<GameInfo> waitingGames;
+	private final Set<GameThread> waitingGames;
 	private final Set<GameThread> playingGames;
 	private final Set<ClientThread> clients;
 	private final int port;
@@ -57,6 +57,8 @@ public class Server implements Runnable {
 			processLobbyUsername(client, req);
 		} else if ("client.lobby.create".equals(identifier)) {
 			processLobbyCreate(client, req);
+		} else if ("client.lobby.join".equals(identifier)) {
+			processJoinGame(client, req);
 		}
 	}
 
@@ -66,8 +68,16 @@ public class Server implements Runnable {
 		}
 	}
 
+	private HashSet<GameInfo> getWaitingGameInfos() {
+		final HashSet<GameInfo> gameInfos = new HashSet<>();
+		for (final GameThread game : waitingGames) {
+			gameInfos.add(game.getGameInfo());
+		}
+		return gameInfos;
+	}
+
 	private void processLobbyRefresh(final ClientThread client, final Request req) {
-		client.send(new Request("server.lobby.refresh", new HashSet<>(waitingGames)));
+		client.send(new Request("server.lobby.refresh", getWaitingGameInfos()));
 	}
 
 	private void processLobbyUsername(final ClientThread client, final Request req) {
@@ -89,10 +99,9 @@ public class Server implements Runnable {
 	private void processLobbyCreate(final ClientThread client, final Request req) {
 		final GameInfo gameInfo = (GameInfo) req.getContent();
 		final String gameName = gameInfo.name;
-		System.out.println("SERVER: create " + gameName);
 		boolean validName = true;
-		for (final GameInfo game : waitingGames) {
-			if (game.name.equals(gameName)) {
+		for (final GameThread game : waitingGames) {
+			if (game.getGameInfo().name.equals(gameName)) {
 				validName = false;
 				break;
 			}
@@ -106,10 +115,29 @@ public class Server implements Runnable {
 			}
 		}
 		if (validName) {
-			waitingGames.add(gameInfo);
+			final GameThread game = new GameThread(gameInfo);
+			waitingGames.add(game);
+			client.send(new Request("server.lobby.create", true));
+			game.addClient(client);
+			client.send(new Request("server.lobby.join", true));
+		} else {
+			client.send(new Request("server.lobby.create", false));
 		}
-		client.send(new Request("server.lobby.create", validName));
-		broadcast(new Request("server.lobby.refresh", new HashSet<>(waitingGames)));
+		broadcast(new Request("server.lobby.refresh", getWaitingGameInfos()));
+	}
+
+	private void processJoinGame(final ClientThread client, final Request req) {
+		final GameInfo gameInfo = (GameInfo) req.getContent();
+		boolean joined = false;
+		for (final GameThread game : waitingGames) {
+			if (game.hashCode() == gameInfo.hashCode()) {
+				game.addClient(client);
+				joined = true;
+				break;
+			}
+		}
+		client.send(new Request("server.lobby.join", joined));
+		broadcast(new Request("server.lobby.refresh", getWaitingGameInfos()));
 	}
 
 	public static void main(final String[] args) {

@@ -26,7 +26,16 @@ public class GameThread extends Thread {
 
 	public void processRequest(final ClientThread client, final Request req) {}
 
+	public void addClient(final ClientThread client) {
+		clients.add(client);
+	}
+
 	public GameInfo getGameInfo() {
 		return gameInfo;
+	}
+
+	@Override
+	public int hashCode() {
+		return gameInfo.name.hashCode();
 	}
 }

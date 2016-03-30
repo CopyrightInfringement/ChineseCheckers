@@ -2,11 +2,14 @@ package org.copinf.cc.controller;
 
 import org.copinf.cc.model.AbstractBoard;
 import org.copinf.cc.model.Coordinates;
+import org.copinf.cc.model.DefaultBoard;
 import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Movement;
 import org.copinf.cc.model.Pawn;
 import org.copinf.cc.model.Player;
+import org.copinf.cc.model.Team;
 import org.copinf.cc.net.Request;
+import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.view.gamepanel.DisplayManager;
 import org.copinf.cc.view.gamepanel.GamePanel;
 import org.copinf.cc.view.gamepanel.PlayerView;
@@ -60,12 +63,15 @@ public class GameController extends AbstractController implements ActionListener
 	/**
 	 * Constructs a new GameController.
 	 * @param mainController the main controller
-	 * @param game the current game
+	 * @param gameInfo the current game
 	 * @param player the playing player
 	 */
-	public GameController(final MainController mainController, final Game game, final Player player) {
+	public GameController(final MainController mainController, final GameInfo gameInfo,
+			final Player player) {
 		super(mainController, "game");
-		this.game = game;
+
+		this.game = new Game(new DefaultBoard(gameInfo.size));
+
 		this.gamePanel = new GamePanel(game, player);
 		this.displayManager = gamePanel.getDrawZone().getBoardView().getDisplayManager();
 		this.player = player;

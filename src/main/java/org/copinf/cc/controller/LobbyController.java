@@ -1,6 +1,7 @@
 package org.copinf.cc.controller;
 
 import org.copinf.cc.model.DefaultBoard;
+import org.copinf.cc.model.Player;
 import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.net.Request;
 import org.copinf.cc.view.lobbypanel.LobbyPanel;
@@ -19,6 +20,7 @@ public class LobbyController extends AbstractController implements ActionListene
 	private final LobbyPanel lobbyPanel;
 
 	private String username;
+	private GameInfo selectedGame;
 
 	/**
 	 * Constructs a new LobbyController.
@@ -29,6 +31,7 @@ public class LobbyController extends AbstractController implements ActionListene
 		this.lobbyPanel = new LobbyPanel();
 
 		lobbyPanel.getRefreshGameInfoListBtn().addActionListener(this);
+		lobbyPanel.getJoinGameBtn().addActionListener(this);
 		lobbyPanel.getUsernamePanel().getSubmitBtn().addActionListener(this);
 		lobbyPanel.getGameCreationPanel().addBoard(new DefaultBoard(0));
 		lobbyPanel.getGameCreationPanel().getCreateGameBtn().addActionListener(this);
@@ -36,6 +39,7 @@ public class LobbyController extends AbstractController implements ActionListene
 
 	@Override
 	public JPanel start() {
+		actionRefreshGameInfoList();
 		return lobbyPanel;
 	}
 
@@ -48,6 +52,8 @@ public class LobbyController extends AbstractController implements ActionListene
 			processSubmitUsername(request);
 		} else if ("create".equals(sub2)) {
 			processCreateGame(request);
+		} else if ("join".equals(sub2)) {
+			processJoinGame(request);
 		}
 	}
 
@@ -56,6 +62,8 @@ public class LobbyController extends AbstractController implements ActionListene
 		final Object source = ev.getSource();
 		if (source.equals(lobbyPanel.getRefreshGameInfoListBtn())) {
 			actionRefreshGameInfoList();
+		} else if (source.equals(lobbyPanel.getJoinGameBtn())) {
+			actionJoinGame();
 		} else if (source.equals(lobbyPanel.getUsernamePanel().getSubmitBtn())) {
 			actionSubmitUsername();
 		} else if (source.equals(lobbyPanel.getGameCreationPanel().getCreateGameBtn())) {
@@ -69,12 +77,8 @@ public class LobbyController extends AbstractController implements ActionListene
 
 	@SuppressWarnings("unchecked")
 	private void processRefreshGameInfoList(final Request request) {
-		Set<GameInfo> waitingGames = (Set<GameInfo>) request.getContent();
-		System.out.println(waitingGames.size());
+		final Set<GameInfo> waitingGames = (Set<GameInfo>) request.getContent();
 		lobbyPanel.getGamesList().setListData(waitingGames.toArray(new GameInfo[waitingGames.size()]));
-		for (final GameInfo gi : waitingGames) {
-			System.out.println("CLIENT " + gi.name);
-		}
 	}
 
 	private void actionSubmitUsername() {
@@ -98,13 +102,28 @@ public class LobbyController extends AbstractController implements ActionListene
 	private void actionCreateGame() {
 		final GameInfo gameInfo = lobbyPanel.getGameCreationPanel().makeGameInfo();
 		if (gameInfo != null) {
+			selectedGame = gameInfo;
 			sendRequest(new Request("client.lobby.create", gameInfo));
 		}
 	}
 
 	private void processCreateGame(final Request request) {
 		if (!(Boolean) request.getContent()) {
+			selectedGame = null;
 			lobbyPanel.getGameCreationPanel().resetGameName();
+		}
+	}
+
+	public void actionJoinGame() {
+		selectedGame = lobbyPanel.getGamesList().getSelectedValue();
+		sendRequest(new Request("client.lobby.join", selectedGame));
+	}
+
+	private void processJoinGame(final Request request) {
+		if ((Boolean) request.getContent()) {
+			switchController(new GameController(mainController, selectedGame, new Player(username)));
+		} else {
+			selectedGame = null;
 		}
 	}
 }
