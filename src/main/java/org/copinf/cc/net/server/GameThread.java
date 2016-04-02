@@ -30,6 +30,10 @@ public class GameThread extends Thread {
 		clients.add(client);
 	}
 
+	public void removeClient(final ClientThread client) {
+		clients.remove(client);
+	}
+
 	public GameInfo getGameInfo() {
 		return gameInfo;
 	}

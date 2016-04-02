@@ -44,20 +44,31 @@ public class ClientThread extends Thread {
 			this.out = out;
 			Request req;
 			while ((req = receive()) != null) {
-				server.processRequest(this, req);
+				if ("lobby".equals(req.getSubRequest(1))) {
+					server.processRequest(this, req);
+				} else if (game != null && "game".equals(req.getSubRequest(1))) {
+					game.processRequest(this, req);
+				}
 			}
+			if (game != null) {
+				game.removeClient(this);
+			}
+			server.removeClient(this);
 		} catch (IOException ex) {
+			System.out.println("ClientThread.run");
 			System.err.println(ex.getMessage());
 			System.exit(1);
 		}
 	}
 
-	public void send(final Request req) {
+	public boolean send(final Request req) {
 		try {
 			out.writeObject(req);
+			return true;
 		} catch (IOException ex) {
+			System.out.println("ClientThread.send");
 			System.err.println(ex.getMessage());
-			System.exit(1);
+			return false;
 		}
 	}
 
@@ -65,8 +76,6 @@ public class ClientThread extends Thread {
 		try {
 			return (Request) in.readObject();
 		} catch (IOException | ClassNotFoundException ex) {
-			System.err.println(ex.getMessage());
-			System.exit(1);
 			return null;
 		}
 	}

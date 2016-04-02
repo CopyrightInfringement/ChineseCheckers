@@ -31,6 +31,10 @@ public class Server implements Runnable {
 		clientThread.start();
 	}
 
+	public void removeClient(final ClientThread client) {
+		clients.remove(client);
+	}
+
 	@Override
 	public void run() {
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
@@ -42,13 +46,12 @@ public class Server implements Runnable {
 				wait();
 			}
 		} catch (IOException | InterruptedException ex) {
+			System.out.println("Server.run");
 			System.err.println(ex.getMessage());
 			System.exit(-1);
 		}
 	}
 
-	//	If the request is about a game, this method transmits it to
-	//	the corresponding GameThread gt through gt.processRequest(client, r)
 	public void processRequest(final ClientThread client, final Request req) {
 		final String identifier = req.getIdentifier();
 		if ("client.lobby.refresh".equals(identifier)) {
