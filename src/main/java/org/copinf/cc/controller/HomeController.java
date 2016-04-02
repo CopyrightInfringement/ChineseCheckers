@@ -30,7 +30,7 @@ public class HomeController extends AbstractController implements ActionListener
 	}
 
 	@Override
-	public JPanel start() {
+	public JPanel getContentPane() {
 		return panel;
 	}
 

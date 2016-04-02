@@ -23,14 +23,22 @@ public abstract class AbstractController {
 	}
 
 	/**
-	 * Starts this controller. A controller returns a JPanel that will be used for the contentPane of
+	 * Starts this controller.
+	 */
+	public void start() {}
+
+	/**
+	 * Ends this controller.
+	 */
+	public void end() {}
+
+	/**
+	 * A controller returns a JPanel that will be used for the contentPane of
 	 * the main window. Before returning, a controller should link itself to the panels components if
 	 * it needs to listen for events.
 	 * @return the contentPane
 	 */
-	public abstract JPanel start();
-
-	public void end() {}
+	public abstract JPanel getContentPane();
 
 	/**
 	 * Switch to another controller.

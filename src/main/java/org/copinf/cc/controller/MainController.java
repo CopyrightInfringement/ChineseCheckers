@@ -25,16 +25,18 @@ public class MainController {
 	public void start() {
 		final HomeController controller = new HomeController(this);
 		controllers.push(controller);
-		setContentPane(controller.start());
+		setContentPane(controller.getContentPane());
+		controller.start();
 	}
 
 	public void push(final AbstractController controller) {
 		controllers.peek().end();
 		controllers.push(controller);
-		setContentPane(controller.start());
+		setContentPane(controller.getContentPane());
 		if (client != null) {
 			client.setController(controller);
 		}
+		controller.start();
 	}
 
 	private void setContentPane(final JPanel panel) {

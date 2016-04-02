@@ -89,7 +89,7 @@ public class GameController extends AbstractController implements ActionListener
 	}
 
 	@Override
-	public JPanel start() {
+	public JPanel getContentPane() {
 		return gamePanel;
 	}
 

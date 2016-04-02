@@ -38,8 +38,12 @@ public class LobbyController extends AbstractController implements ActionListene
 	}
 
 	@Override
-	public JPanel start() {
+	public void start() {
 		actionRefreshGameInfoList();
+	}
+
+	@Override
+	public JPanel getContentPane() {
 		return lobbyPanel;
 	}
 
