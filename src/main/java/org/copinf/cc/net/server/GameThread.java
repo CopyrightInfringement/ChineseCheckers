@@ -27,11 +27,15 @@ public class GameThread extends Thread {
 	public void processRequest(final ClientThread client, final Request req) {}
 
 	public void addClient(final ClientThread client) {
-		clients.add(client);
+		if (clients.add(client)) {
+			gameInfo.nbPlayersCurrent++;
+		}
 	}
 
 	public void removeClient(final ClientThread client) {
-		clients.remove(client);
+		if (clients.remove(client)) {
+			gameInfo.nbPlayersCurrent--;
+		}
 	}
 
 	public GameInfo getGameInfo() {

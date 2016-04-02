@@ -120,6 +120,7 @@ public class Server implements Runnable {
 		if (validName) {
 			final GameThread game = new GameThread(gameInfo);
 			waitingGames.add(game);
+			game.start();
 			client.send(new Request("server.lobby.create", true));
 			game.addClient(client);
 			client.send(new Request("server.lobby.join", true));
@@ -135,6 +136,7 @@ public class Server implements Runnable {
 		for (final GameThread game : waitingGames) {
 			if (game.hashCode() == gameInfo.hashCode()) {
 				game.addClient(client);
+				client.play(game);
 				joined = true;
 				break;
 			}

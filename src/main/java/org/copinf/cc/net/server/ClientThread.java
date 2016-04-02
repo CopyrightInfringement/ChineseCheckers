@@ -87,4 +87,8 @@ public class ClientThread extends Thread {
 	public void setUsername(final String username) {
 		this.username = username;
 	}
+
+	public void play(final GameThread game) {
+		this.game = game;
+	}
 }
