@@ -2,7 +2,7 @@
 import java.util.Map;
 
 public class PathFinding{
-	
+/**	
 	//Il faut vérifier les mouvements
 	//Il faut finir la méthode getAdjacentSquare()
 	
@@ -18,6 +18,7 @@ public class PathFinding{
 	
 	public Map<Coordinates,Square> getAdjacentSquare(Coordinates c){
 		Map<Coordinates,Square> adjacentSquare = new HashMap<>();
+		
 		//A terminer
 		
 		
@@ -43,7 +44,7 @@ public class PathFinding{
 		Map<Coordinates,Square> adjacentSquare1 = getAdjacentSquare(c);
 		for(Coordinates c1 : adjacentSquare1){
 			Map<Coordinates,Square> adjacentSquare2 = getAdjacentSquare(c1);
-			for(Coordinates c2 : adjacentSquare2) = getAdjacentSquare(c2){
+			for(Coordinates c2 : adjacentSquare2){
 				if(adjacentSquare2.get(c2).isFree)
 					this.longReachableSquare.put(c2,adjacentSquare2.get(c2));			
 			}		
@@ -52,5 +53,5 @@ public class PathFinding{
 		
 		
 	}
-	
+**/	
 }
