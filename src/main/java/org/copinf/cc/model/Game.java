@@ -149,6 +149,9 @@ public class Game {
 	 * added so far.
 	 */
 	public boolean setNumberOfZones(final int numberOfZones) {
+		System.out.println(board);
+		System.out.println(board.getPossibleZoneNumbers(2));
+		System.out.println(players);
 		if (!this.board.getPossibleZoneNumbers(this.players.size()).contains(numberOfZones)) {
 			return false;
 		}

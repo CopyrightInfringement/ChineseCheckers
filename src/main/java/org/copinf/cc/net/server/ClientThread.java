@@ -7,9 +7,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.logging.Logger;
 import java.net.Socket;
 
 public class ClientThread extends Thread {
+
+	private static final Logger LOGGER = Logger.getLogger(ClientThread.class.getName());
+
 	private String username;
 	private final Socket client;
 	private Player player;
@@ -44,6 +48,10 @@ public class ClientThread extends Thread {
 			this.out = out;
 			Request req;
 			while ((req = receive()) != null) {
+				System.out.println("CT: receive " + req);
+				if ("client.game.players.refresh".equals(req.getIdentifier())) {
+					System.out.println("CT: game " + game);
+				}
 				if ("lobby".equals(req.getSubRequest(1))) {
 					server.processRequest(this, req);
 				} else if (game != null && "game".equals(req.getSubRequest(1))) {

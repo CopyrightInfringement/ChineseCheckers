@@ -48,10 +48,10 @@ class Request {
 
 ### Game
 #### Préparation de la partie
-- [ ] `client.game.players.refresh`, `null`
+- [x] `client.game.players.refresh`, `null`
   Demande une mise à jour de la liste de joueurs.
 
-- [ ] `server.game.players.refresh`, `List<String>`
+- [x] `server.game.players.refresh`, `List<String>`
   Envoie une mise à jour de la liste de joueurs.
 
 - [ ] `server.game.teams.refresh`, `List<List<String>>`
@@ -63,7 +63,7 @@ class Request {
 - [ ] `client.game.teams.lock`, `null`
   Confirmer son appartenance à une équipe.
 
-- [ ] `server.game.start`, `null`
+- [x] `server.game.start`, `null`
   Débuter la partie.
 
 #### Partie

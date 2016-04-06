@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,32 +53,38 @@ public class GameController extends AbstractController implements ActionListener
 	private static final Logger LOGGER = Logger.getLogger(GameController.class.getName());
 
 	private final Game game;
+	private final GameInfo gameInfo;
 	private final Movement currentMovement;
 	private final GamePanel gamePanel;
 	private final DisplayManager displayManager;
-	private final Player player;
-	private boolean waitingForAnswer;
+	private final Player mainPlayer;
 	private static final Pattern MESSAGE_PATTERN = Pattern.compile("^[(.+)](.+)$");
 	private final Map<String, Player> players;
+
+	private boolean waitingForAnswer;
+	private boolean waitingForPlayerList;
 
 	/**
 	 * Constructs a new GameController.
 	 * @param mainController the main controller
 	 * @param gameInfo the current game
-	 * @param player the playing player
+	 * @param mainPlayer the main player
 	 */
 	public GameController(final MainController mainController, final GameInfo gameInfo,
-			final Player player) {
+			final Player mainPlayer) {
 		super(mainController, "game");
 
 		this.game = new Game(new DefaultBoard(gameInfo.size));
+		this.gameInfo = gameInfo;
 
-		this.gamePanel = new GamePanel(game, player);
+		this.gamePanel = new GamePanel(game, mainPlayer);
 		this.displayManager = gamePanel.getDrawZone().getBoardView().getDisplayManager();
-		this.player = player;
-		this.waitingForAnswer = false;
+		this.mainPlayer = mainPlayer;
 		this.players = new HashMap<String, Player>();
-		this.players.put(this.player.getName(), this.player);
+		this.players.put(mainPlayer.getName(), mainPlayer);
+
+		this.waitingForAnswer = false;
+		this.waitingForPlayerList = false;
 
 		gamePanel.addMouseListener(this);
 		gamePanel.getDrawZone().addMouseListener(this);
@@ -112,18 +119,18 @@ public class GameController extends AbstractController implements ActionListener
 	}
 
 	private void squareClicked(final Coordinates coordinates) {
-		if (game.getCurrentPlayer() != player || waitingForAnswer) {
+		if (game.getCurrentPlayer() != mainPlayer || waitingForAnswer) {
 			return;
 		}
 		final AbstractBoard board = game.getBoard();
 		board.move(currentMovement.getReversedCondensed());
 		currentMovement.push(coordinates);
-		if (!board.checkMove(currentMovement, player)) {
+		if (!board.checkMove(currentMovement, mainPlayer)) {
 			final Pawn pawn = board.getPawn(coordinates);
 			final ErrorMsg errorMsg;
 			if (pawn == null) {
 				errorMsg = ErrorMsg.WRONG_MOVE;
-			} else if (pawn.getOwner() != player) {
+			} else if (pawn.getOwner() != mainPlayer) {
 				errorMsg = ErrorMsg.WRONG_PLAYER;
 			} else {
 				errorMsg = ErrorMsg.NOT_LEGAL;
@@ -136,7 +143,7 @@ public class GameController extends AbstractController implements ActionListener
 	}
 
 	private void nextButtonClicked() {
-		if (game.getCurrentPlayer() != player || waitingForAnswer) {
+		if (game.getCurrentPlayer() != mainPlayer || waitingForAnswer) {
 			return;
 		}
 		sendRequest(new Request("client.game.move.request", currentMovement));
@@ -149,19 +156,48 @@ public class GameController extends AbstractController implements ActionListener
 
 	@Override
 	public void processRequest(final Request request) {
-		final String requestId = request.getSubRequest(2);
-		if ("next".equals(requestId)) {
+		final String sub2 = request.getSubRequest(2);
+		if ("players".equals(sub2)) {
+			if ("refresh".equals(request.getSubRequest(3))) {
+				processPlayersRefresh(request);
+				if (waitingForPlayerList) {
+					processGameStart(request);
+				}
+			}
+		} else if ("next".equals(sub2)) {
 			game.nextTurn();
 			waitingForAnswer = false;
-		} else if ("move".equals(requestId)) {
+		} else if ("move".equals(sub2)) {
 			processMoveRequest(request);
 			waitingForAnswer = false;
-		} else if ("message".equals(requestId)) {
+		} else if ("message".equals(sub2)) {
 			final Matcher matcher = MESSAGE_PATTERN.matcher((String) request.getContent());
 			final String name = matcher.group(1);
 			final String message = matcher.group(2);
 			final PlayerView pv = gamePanel.getPlayerViews().get(players.get(name));
 			gamePanel.getDrawZone().addMessage(message, pv.color);
+		} else if ("start".equals(sub2)) {
+			processGameStart(request);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void processPlayersRefresh(final Request request) {
+		final List<String> playersName = (List<String>) request.getContent();
+		for (final String name : playersName) {
+			boolean isNewPlayer = true;
+			for (final Player player : game.getPlayers()) {
+				if (name.equals(player.getName())) {
+					isNewPlayer = false;
+					break;
+				}
+			}
+			if (isNewPlayer) {
+				final Player player = new Player(name);
+				final Team team = new Team();
+				team.addPlayer(player);
+				game.addTeam(team);
+			}
 		}
 	}
 
@@ -179,6 +215,18 @@ public class GameController extends AbstractController implements ActionListener
 		//	If it's a move notification
 		} else {
 			game.getBoard().move((Movement) request.getContent());
+		}
+	}
+
+	private void processGameStart(final Request request) {
+		if (waitingForPlayerList) {
+			waitingForPlayerList = false;
+			game.setNumberOfZones(gameInfo.nbZones);
+			game.nextTurn();
+			gamePanel.getDrawZone().repaint();
+		} else {
+			waitingForPlayerList = true;
+			sendRequest(new Request("client.game.players.refresh"));
 		}
 	}
 
