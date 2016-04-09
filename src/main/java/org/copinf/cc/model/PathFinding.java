@@ -1,3 +1,4 @@
+package org.copinf.cc.model;
 
 import java.util.Map;
 

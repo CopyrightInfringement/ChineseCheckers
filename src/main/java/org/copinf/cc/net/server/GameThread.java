@@ -1,5 +1,6 @@
 package org.copinf.cc.net.server;
 
+import org.copinf.cc.model.DefaultBoard;
 import org.copinf.cc.model.Game;
 import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.net.Request;
@@ -33,7 +34,6 @@ public class GameThread extends Thread {
 	}
 
 	public void processRequest(final ClientThread client, final Request req) {
-		System.out.println("GAMETHREAD: received " + req);
 		final String sub2 = req.getSubRequest(2);
 		final String sub3 = req.getSubRequest(3);
 		if ("players".equals(sub2)) {

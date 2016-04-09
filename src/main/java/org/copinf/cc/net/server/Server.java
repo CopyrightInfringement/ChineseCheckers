@@ -132,16 +132,14 @@ public class Server implements Runnable {
 
 	private void processJoinGame(final ClientThread client, final Request req) {
 		final GameInfo gameInfo = (GameInfo) req.getContent();
-		boolean joined = false;
 		for (final GameThread game : waitingGames) {
 			if (game.hashCode() == gameInfo.hashCode()) {
+				client.send(new Request("server.lobby.join", true));
 				game.addClient(client);
 				client.play(game);
-				joined = true;
 				break;
 			}
 		}
-		client.send(new Request("server.lobby.join", joined));
 		broadcast(new Request("server.lobby.refresh", getWaitingGameInfos()));
 	}
 

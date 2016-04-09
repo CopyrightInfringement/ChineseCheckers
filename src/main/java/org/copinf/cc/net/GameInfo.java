@@ -34,4 +34,9 @@ public class GameInfo implements Serializable {
 	public int hashCode() {
 		return name.hashCode();
 	}
+	
+	@Override
+	public String toString(){
+		return name + " [" + nbPlayersCurrent + "/" + nbPlayersMax + "]" + (teams ? " teams " : "") + (timer >= 0 ? " " + timer + "s " : "");
+	}
 }

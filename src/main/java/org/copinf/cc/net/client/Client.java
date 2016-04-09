@@ -50,6 +50,8 @@ public class Client extends Thread {
 
 	public void send(final Request req) {
 		try {
+			out.reset();
+			System.out.println("Client : sending to server " + req);
 			out.writeObject(req);
 		} catch (IOException ex) {
 			System.err.println(ex.getMessage());
@@ -59,7 +61,9 @@ public class Client extends Thread {
 
 	private Request receive() {
 		try {
-			return (Request) in.readObject();
+			Request req = (Request) in.readObject();
+			System.out.println("Client : receiving from server " + req);
+			return req;
 		} catch (IOException | ClassNotFoundException ex) {
 			System.err.println(ex.getMessage());
 			System.exit(1);

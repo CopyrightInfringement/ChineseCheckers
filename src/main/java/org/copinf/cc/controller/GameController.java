@@ -93,6 +93,8 @@ public class GameController extends AbstractController implements ActionListener
 		gamePanel.getActionZone().getResetButton().addMouseListener(this);
 
 		this.currentMovement = new Movement();
+		
+		gamePanel.getDrawZone().setVisible(false);
 	}
 
 	@Override

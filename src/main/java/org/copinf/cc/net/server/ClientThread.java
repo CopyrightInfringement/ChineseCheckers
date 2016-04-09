@@ -48,10 +48,6 @@ public class ClientThread extends Thread {
 			this.out = out;
 			Request req;
 			while ((req = receive()) != null) {
-				System.out.println("CT: receive " + req);
-				if ("client.game.players.refresh".equals(req.getIdentifier())) {
-					System.out.println("CT: game " + game);
-				}
 				if ("lobby".equals(req.getSubRequest(1))) {
 					server.processRequest(this, req);
 				} else if (game != null && "game".equals(req.getSubRequest(1))) {
@@ -71,6 +67,8 @@ public class ClientThread extends Thread {
 
 	public boolean send(final Request req) {
 		try {
+			out.reset();
+			System.out.println("Server : sending to " + username + " " + req);
 			out.writeObject(req);
 			return true;
 		} catch (IOException ex) {
@@ -82,7 +80,9 @@ public class ClientThread extends Thread {
 
 	private Request receive() {
 		try {
-			return (Request) in.readObject();
+			Request req = (Request) in.readObject();
+			System.out.println("Server : receciving from " + username + " " + req);
+			return req;
 		} catch (IOException | ClassNotFoundException ex) {
 			return null;
 		}

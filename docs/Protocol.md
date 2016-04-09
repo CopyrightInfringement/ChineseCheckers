@@ -46,6 +46,9 @@ class Request {
 - [x] `server.lobby.join`, `Boolean`
   Contient `true` si la partie a bien été rejointe, sinon `false`.
 
+- [x] `server.game.start`, `null`
+  Débuter la partie (lancement du processus de répartition).
+
 ### Game
 #### Préparation de la partie
 - [x] `client.game.players.refresh`, `null`
@@ -54,16 +57,19 @@ class Request {
 - [x] `server.game.players.refresh`, `List<String>`
   Envoie une mise à jour de la liste de joueurs.
 
+- [ ] `client.game.teams.refresh`, `null`
+  Demande une mise à jour de la liste des équipes.
+
 - [ ] `server.game.teams.refresh`, `List<List<String>>`
-  Envoie une mise à jour de la liste d'équipes.
+  Envoie une mise à jour de la liste des équipes.
 
-- [ ] `client.game.teams.join`, `Integer`
-  Rejoindre une équipe.
+- [ ] `server.game.teams.leader`, `null`
+  Indique au client qu'il est chef d'équipe et qu'il doit choisir ses équipiers.
 
-- [ ] `client.game.teams.lock`, `null`
-  Confirmer son appartenance à une équipe.
+- [ ] `client.game.teams.leader`, `List<String>`
+  Communique au serveur ses équipiers.
 
-- [x] `server.game.start`, `null`
+- [ ] `server.game.begin`, `null`
   Débuter la partie.
 
 #### Partie
