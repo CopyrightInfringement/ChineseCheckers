@@ -36,11 +36,6 @@ public class GamePanel extends JPanel {
 		this.player = player;
 
 		this.playerViews = new HashMap<>();
-		int i = 0;
-		for (final Player p : game.getPlayers()) {
-			playerViews.put(p, new PlayerView(p, i));
-			i++;
-		}
 
 		// UI
 		setPreferredSize(new Dimension(800, 600));
@@ -57,6 +52,14 @@ public class GamePanel extends JPanel {
 		actionZone = new ActionZone();
 		actionZone.setPreferredSize(new Dimension(800, 50));
 		add(actionZone);
+	}
+	
+	public void initPlayerViews(){
+		int i = 0;
+		for (final Player p : game.getPlayers()) {
+			playerViews.put(p, new PlayerView(p, i));
+			i++;
+		}
 	}
 	
 	public InfoBar getInfoBar() {

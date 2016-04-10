@@ -47,7 +47,7 @@ class Request {
   Contient `true` si la partie a bien été rejointe, sinon `false`.
 
 - [x] `server.game.start`, `null`
-  Débuter la partie (lancement du processus de répartition).
+  Déclenche la formation des équipes.
 
 ### Game
 #### Préparation de la partie
@@ -68,9 +68,6 @@ class Request {
 
 - [ ] `client.game.teams.leader`, `List<String>`
   Communique au serveur ses équipiers.
-
-- [ ] `server.game.begin`, `null`
-  Débuter la partie.
 
 #### Partie
 - [ ] `client.game.move.request`, `Movement`

@@ -125,7 +125,10 @@ public class LobbyController extends AbstractController implements ActionListene
 
 	private void processJoinGame(final Request request) {
 		if ((Boolean) request.getContent()) {
-			switchController(new GameController(mainController, selectedGame, new Player(username)));
+			if(selectedGame.teams)
+				switchController(new TeamBuilderController(mainController, selectedGame, new Player(username)));
+			else
+				switchController(new GameController(mainController, selectedGame, new Player(username)));
 		} else {
 			selectedGame = null;
 		}

@@ -60,9 +60,8 @@ public class BoardView {
 		final double size = Math.min(optimalSizeWidth, optimalSizeHeight);
 
 		this.displayManager = new DisplayManager(size, 1.0, 1.0, 0.0, width / 2.0, height / 2.0, board);
-		displayManager.setAngle(getPlayerAngle(player, width / 2.0, height));
 	}
-
+	
 	public DisplayManager getDisplayManager() {
 		return displayManager;
 	}
@@ -164,13 +163,17 @@ public class BoardView {
 		for (final Coordinates coord : board.coordinates()) {
 			hexagon = displayManager.hexagon(coord);
 			square = board.getSquare(coord);
-			if (square.isFree()) {
-				g.setColor(Color.WHITE);
-				g.fill(hexagon);
-			} else {
-				color = playerViews.get(square.getPawn().getOwner()).color;
-				g.setColor(color);
-				g.fill(hexagon);
+			g.setColor(Color.WHITE);
+			g.fill(hexagon);
+
+			if(!square.isFree()){
+				Player owner = square.getPawn().getOwner();
+				if(playerViews.containsKey(owner)){
+					color = playerViews.get(owner).color;
+					
+					g.setColor(color);
+					g.fill(hexagon);
+				}
 			}
 			g.setColor(Color.BLACK);
 			g.draw(hexagon);

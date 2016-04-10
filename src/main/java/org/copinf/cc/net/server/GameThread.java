@@ -2,9 +2,12 @@ package org.copinf.cc.net.server;
 
 import org.copinf.cc.model.DefaultBoard;
 import org.copinf.cc.model.Game;
+import org.copinf.cc.model.Player;
+import org.copinf.cc.model.Team;
 import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.net.Request;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,12 +19,13 @@ public class GameThread extends Thread {
 	private final GameInfo gameInfo;
 	private final Game game;
 	private final Set<ClientThread> clients;
-
+	private List<List<String>> teams;
+	
 	public GameThread(final GameInfo gameInfo) {
 		super();
 		this.gameInfo = gameInfo;
 		this.clients = Collections.synchronizedSet(new HashSet<>());
-		game = null;
+		game = new Game(new DefaultBoard(gameInfo.size));
 	}
 
 	@Override
@@ -33,6 +37,7 @@ public class GameThread extends Thread {
 		} catch (InterruptedException ex) {}
 	}
 
+	@SuppressWarnings("unchecked")
 	public void processRequest(final ClientThread client, final Request req) {
 		final String sub2 = req.getSubRequest(2);
 		final String sub3 = req.getSubRequest(3);
@@ -40,9 +45,33 @@ public class GameThread extends Thread {
 			if ("refresh".equals(sub3)) {
 				processPlayersRefresh(client);
 			}
+		}else if("teams".equals(sub2)){
+			if("refresh".equals(sub3)){
+				broadcast(new Request("server.game.teams.refresh", (Serializable) teams));
+			}else if("leader".equals(sub3)){
+				teams.add((List<String>) req.getContent());
+				broadcast(new Request("server.game.teams.refresh", (Serializable) teams));
+				if(teams.size() * 2 == gameInfo.nbPlayersMax){
+					broadcast(new Request("server.game.next"));
+					addTeams();
+					game.setNumberOfZones(gameInfo.nbZones);
+					game.nextTurn();
+				}
+			}
 		}
 	}
 
+	private void addTeams(){
+		for(List<String> teamMates : teams){
+			Team team = new Team();
+			for(String name : teamMates){
+				Player player = new Player(name);
+				team.addPlayer(player);
+			}
+			game.addTeam(team);
+		}
+	}
+	
 	public void processPlayersRefresh(final ClientThread client) {
 		client.send(new Request("server.game.players.refresh", getPlayersName()));
 	}
@@ -64,12 +93,49 @@ public class GameThread extends Thread {
 	public void addClient(final ClientThread client) {
 		if (clients.add(client)) {
 			gameInfo.nbPlayersCurrent++;
+			sendPlayersRefresh();
 		}
 		if (gameInfo.nbPlayersCurrent == gameInfo.nbPlayersMax) {
-			broadcast(new Request("server.game.start"));
+			onPlayersFull();
 		}
 	}
-
+	
+	private void sendPlayersRefresh(){
+		List<String> playerList = new ArrayList<String>();
+		for(ClientThread ct : clients){
+			playerList.add(ct.getUsername());
+		}
+		for(ClientThread ct : clients){
+			ct.send(new Request("server.game.players.refresh", (Serializable) playerList));
+		}
+	}
+	
+	private void onPlayersFull(){
+		broadcast(new Request("server.game.start"));
+		if(gameInfo.teams){
+			for(ClientThread ct : clients){
+				if(!isInTeam(ct.getUsername())){
+					ct.send(new Request("server.game.teams.leader"));
+				}
+			}
+		}else{
+			for(ClientThread ct : clients){
+				Team team = new Team();
+				team.addPlayer(new Player(ct.getUsername()));
+				game.addTeam(team);
+			}
+			broadcast(new Request("server.game.next"));
+			game.nextTurn();
+		}
+	}
+	
+	private boolean isInTeam(String name){
+		for(List<String> team : teams)
+			if(team.contains(name))
+				return true;
+		return false;
+	}
+	
 	public void removeClient(final ClientThread client) {
 		if (clients.remove(client)) {
 			gameInfo.nbPlayersCurrent--;
