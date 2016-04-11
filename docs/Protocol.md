@@ -46,17 +46,18 @@ class Request {
 - [x] `server.lobby.join`, `Boolean`
   Contient `true` si la partie a bien été rejointe, sinon `false`.
 
-- [x] `server.game.start`, `null`
-  Déclenche la formation des équipes.
-
 ### Game
 #### Préparation de la partie
-- [x] `client.game.players.refresh`, `null`
+- [ ] `client.game.players.refresh`, `null`
   Demande une mise à jour de la liste de joueurs.
 
-- [x] `server.game.players.refresh`, `List<String>`
+- [ ] `server.game.players.refresh`, `List<String>`
   Envoie une mise à jour de la liste de joueurs.
 
+- [ ] `server.game.start`, `List<List<String>>`
+  Indique aux joueurs que la partie commence en communiquant la liste des équipes.
+
+#### Formation des équipes
 - [ ] `client.game.teams.refresh`, `null`
   Demande une mise à jour de la liste des équipes.
 

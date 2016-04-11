@@ -70,17 +70,31 @@ public class GameController extends AbstractController implements ActionListener
 	 * @param mainPlayer the main player
 	 */
 	public GameController(final MainController mainController, final GameInfo gameInfo,
-			final Player mainPlayer) {
+			final String mainPlayerName, final List<List<String>> teamList) {
 		super(mainController, "game");
 
-		this.game = new Game(new DefaultBoard(gameInfo.size));
 		this.gameInfo = gameInfo;
-
-		this.gamePanel = new GamePanel(game, mainPlayer);
-		this.displayManager = gamePanel.getDrawZone().getBoardView().getDisplayManager();
-		this.mainPlayer = mainPlayer;
+		this.game = new Game(new DefaultBoard(gameInfo.size));
 		this.players = new HashMap<String, Player>();
-		this.players.put(mainPlayer.getName(), mainPlayer);
+		
+		for(List<String> teamMates : teamList){
+			Team team = new Team();
+			for(String username : teamMates){
+				Player player = new Player(username);
+				team.addPlayer(player);
+				players.put(username, player);
+			}
+			this.game.addTeam(team);
+		}
+
+		this.game.setNumberOfZones(gameInfo.nbZones);
+		
+		this.game.nextTurn();
+		
+		this.mainPlayer = players.get(mainPlayerName);
+		
+		this.gamePanel = new GamePanel(game, this.mainPlayer);
+		this.displayManager = gamePanel.getDrawZone().getBoardView().getDisplayManager();
 
 		this.waitingForAnswer = false;
 
@@ -89,21 +103,8 @@ public class GameController extends AbstractController implements ActionListener
 		gamePanel.getActionZone().addMouseListener(this);
 		gamePanel.getActionZone().getNextButton().addMouseListener(this);
 		gamePanel.getActionZone().getResetButton().addMouseListener(this);
-
+		
 		this.currentMovement = new Movement();
-	}
-	
-	public GameController(final MainController mainController, final GameInfo gameInfo,
-			final Player mainPlayer, final List<List<String>> teams) {
-		this(mainController, gameInfo, mainPlayer);
-		for(List<String> teamMates : teams){
-			Team team = new Team();
-			for(String name : teamMates){
-				Player player = new Player(name);
-				team.addPlayer(player);
-			}
-			game.addTeam(team);
-		}
 	}
 
 	@Override
@@ -168,11 +169,7 @@ public class GameController extends AbstractController implements ActionListener
 	@Override
 	public void processRequest(final Request request) {
 		final String sub2 = request.getSubRequest(2);
-		if ("players".equals(sub2)) {
-			if ("refresh".equals(request.getSubRequest(3))) {
-				processPlayersRefresh(request);
-			}
-		} else if ("next".equals(sub2)) {
+		if ("next".equals(sub2)) {
 			processGameNext();
 			waitingForAnswer = false;
 		} else if ("move".equals(sub2)) {
@@ -188,25 +185,7 @@ public class GameController extends AbstractController implements ActionListener
 	}
 	
 	private void processGameNext(){
-		if(!gameInfo.teams){
-			for(Player player : players.values()){
-				Team team = new Team();
-				team.addPlayer(player);
-				game.addTeam(team);
-			}
-		}
-		game.setNumberOfZones(gameInfo.nbZones);
 		game.nextTurn();
-		gamePanel.initPlayerViews();
-	}
-
-	@SuppressWarnings("unchecked")
-	private void processPlayersRefresh(final Request request) {
-		final List<String> playersName = (List<String>) request.getContent();
-		for(String name : playersName){
-			if(!players.containsKey(name))
-				players.put(name, new Player(name));
-		}
 	}
 
 	private void processMoveRequest(final Request request) {

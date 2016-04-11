@@ -9,6 +9,7 @@ import org.copinf.cc.net.Request;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +26,7 @@ public class GameThread extends Thread {
 		super();
 		this.gameInfo = gameInfo;
 		this.clients = Collections.synchronizedSet(new HashSet<>());
+		teams = new ArrayList<>();
 		game = new Game(new DefaultBoard(gameInfo.size));
 	}
 
@@ -51,27 +53,11 @@ public class GameThread extends Thread {
 			}else if("leader".equals(sub3)){
 				teams.add((List<String>) req.getContent());
 				broadcast(new Request("server.game.teams.refresh", (Serializable) teams));
-				if(teams.size() * 2 == gameInfo.nbPlayersMax){
-					broadcast(new Request("server.game.next"));
-					addTeams();
-					game.setNumberOfZones(gameInfo.nbZones);
-					game.nextTurn();
-				}
 			}
+			onPlayersFull();
 		}
 	}
 
-	private void addTeams(){
-		for(List<String> teamMates : teams){
-			Team team = new Team();
-			for(String name : teamMates){
-				Player player = new Player(name);
-				team.addPlayer(player);
-			}
-			game.addTeam(team);
-		}
-	}
-	
 	public void processPlayersRefresh(final ClientThread client) {
 		client.send(new Request("server.game.players.refresh", getPlayersName()));
 	}
@@ -94,6 +80,9 @@ public class GameThread extends Thread {
 		if (clients.add(client)) {
 			gameInfo.nbPlayersCurrent++;
 			sendPlayersRefresh();
+			if(!gameInfo.teams){
+				teams.add(Arrays.asList(client.getUsername()));
+			}
 		}
 		if (gameInfo.nbPlayersCurrent == gameInfo.nbPlayersMax) {
 			onPlayersFull();
@@ -105,27 +94,32 @@ public class GameThread extends Thread {
 		for(ClientThread ct : clients){
 			playerList.add(ct.getUsername());
 		}
-		for(ClientThread ct : clients){
+		for(ClientThread ct : clients) {
 			ct.send(new Request("server.game.players.refresh", (Serializable) playerList));
 		}
 	}
 	
-	private void onPlayersFull(){
-		broadcast(new Request("server.game.start"));
-		if(gameInfo.teams){
-			for(ClientThread ct : clients){
-				if(!isInTeam(ct.getUsername())){
+	private void onPlayersFull() {
+		if(gameInfo.teams && 2 * teams.size() != gameInfo.nbPlayersMax) {
+			for(ClientThread ct : clients) {
+				if(!isInTeam(ct.getUsername())) {
 					ct.send(new Request("server.game.teams.leader"));
+					break;
 				}
 			}
 		}else{
-			for(ClientThread ct : clients){
-				Team team = new Team();
-				team.addPlayer(new Player(ct.getUsername()));
-				game.addTeam(team);
+			broadcast(new Request("server.game.start", (Serializable) teams));
+			initTeams();
+		}
+	}
+	
+	private void initTeams(){
+		for(List<String> teamMates : teams){
+			Team team = new Team();
+			for(String username : teamMates){
+				team.addPlayer(new Player(username));
 			}
-			broadcast(new Request("server.game.next"));
-			game.nextTurn();
+			game.addTeam(team);
 		}
 	}
 	
