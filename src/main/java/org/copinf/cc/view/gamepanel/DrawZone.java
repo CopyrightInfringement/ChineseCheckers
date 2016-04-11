@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -41,6 +42,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		this.player = player;
 		boardView = new BoardView(game.getBoard(), player, playerViews, 800, 500);
 
+		messages = new ArrayList<>();
 		this.mouse = new Point(0, 0);
 		addMouseMotionListener(this);
 		LOGGER.setLevel(java.util.logging.Level.OFF);

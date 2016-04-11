@@ -58,4 +58,8 @@ public class Player {
 	public Set<BoardZone> getInitialZones() {
 		return initialZones;
 	}
+	
+	public String toString(){
+		return name;
+	}
 }

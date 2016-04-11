@@ -1,9 +1,7 @@
 package org.copinf.cc.model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Provides a representation of a game, with its teams, players and functions.
@@ -17,7 +15,7 @@ public class Game {
 	private final List<Player> players;
 
 	/** Different teams in which the players are. */
-	private final Set<Team> teams;
+	private final List<Team> teams;
 
 	/** Current turn count (-1 before the game starts, and the first turn is the 0-th). */
 	private int turnCount;
@@ -34,7 +32,7 @@ public class Game {
 	 */
 	public Game(final AbstractBoard board) {
 		players = new ArrayList<>();
-		teams = new HashSet<>();
+		teams = new ArrayList<>();
 		turnCount = -1;
 		this.board = board;
 		this.numberOfZones = 0;
@@ -120,7 +118,7 @@ public class Game {
 	 * Returns the teams in which the players are.
 	 * @return the teams
 	 */
-	public Set<Team> getTeams() {
+	public List<Team> getTeams() {
 		return teams;
 	}
 

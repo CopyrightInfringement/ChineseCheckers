@@ -45,7 +45,8 @@ public abstract class AbstractBoard {
 	 * @param movement a movement
 	 */
 	public void move(final Movement movement) {
-		getSquare(movement.getDestination()).setPawn(getSquare(movement.getOrigin()).popPawn());
+		if(movement.size() >= 2)
+			getSquare(movement.getDestination()).setPawn(getSquare(movement.getOrigin()).popPawn());
 	}
 
 	/**
@@ -117,10 +118,10 @@ public abstract class AbstractBoard {
 
 	/**
 	 * Assigns to each player a zone on the board, taking in account the teams.
-	 * @param teams the set of teams.
+	 * @param teams the list of teams.
 	 * @param numberOfZones the number of zones per player
 	 */
-	public abstract void dispatchZones(final Set<Team> teams, final int numberOfZones);
+	public abstract void dispatchZones(final List<Team> teams, final int numberOfZones);
 
 	/**
 	 * Gets the possible number of players on the board.

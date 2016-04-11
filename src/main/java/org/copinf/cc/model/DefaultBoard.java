@@ -104,13 +104,14 @@ public class DefaultBoard extends AbstractBoard {
 	}
 
 	@Override
-	public void dispatchZones(final Set<Team> teams, final int nbOfZones) {
+	public void dispatchZones(final List<Team> teams, final int nbOfZones) {
 		final List<Player> players = new ArrayList<>();
 		for (final Team team : teams) {
 			for (int i = 0; i < team.size(); i++) {
 				players.add(team.get(i));
 			}
 		}
+		
 		final int nbOfPlayers = players.size();
 		BoardZone zone;
 		Player player;
@@ -140,6 +141,11 @@ public class DefaultBoard extends AbstractBoard {
 			}
 		} else {
 			throw new UnsupportedOperationException();
+		}
+		
+		System.out.println(Thread.currentThread().getName() + " squares : ");
+		for(BoardZone z: zones){
+			System.out.println(z.getSquares().keySet());
 		}
 	}
 

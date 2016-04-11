@@ -2,6 +2,7 @@ package org.copinf.cc.net.server;
 
 import org.copinf.cc.model.DefaultBoard;
 import org.copinf.cc.model.Game;
+import org.copinf.cc.model.Movement;
 import org.copinf.cc.model.Player;
 import org.copinf.cc.model.Team;
 import org.copinf.cc.net.GameInfo;
@@ -23,7 +24,7 @@ public class GameThread extends Thread {
 	private List<List<String>> teams;
 	
 	public GameThread(final GameInfo gameInfo) {
-		super();
+		super("Server GT[" + gameInfo.name + "]");
 		this.gameInfo = gameInfo;
 		this.clients = Collections.synchronizedSet(new HashSet<>());
 		teams = new ArrayList<>();
@@ -55,6 +56,27 @@ public class GameThread extends Thread {
 				broadcast(new Request("server.game.teams.refresh", (Serializable) teams));
 			}
 			onPlayersFull();
+		}else if("move".equals(sub2)){
+			processMoveRequest(client, (Movement) req.getContent());
+		}
+	}
+	
+	private Player getPlayer(String name){
+		for(Player player : game.getPlayers()){
+			if(player.getName().equals(name))
+				return player;
+		}
+		
+		return null;
+	}
+	
+	private void processMoveRequest(ClientThread ct, Movement movement){
+		boolean accepted = game.getBoard().checkMove(movement, getPlayer(ct.getUsername()));
+		ct.send(new Request("server.game.move.request", (Serializable) accepted));
+		if(accepted){
+			game.getBoard().move(movement);
+			broadcast(new Request("server.game.move", (Serializable) movement));
+			broadcast(new Request("server.game.next"));
 		}
 	}
 
@@ -78,6 +100,7 @@ public class GameThread extends Thread {
 
 	public void addClient(final ClientThread client) {
 		if (clients.add(client)) {
+			client.play(this);
 			gameInfo.nbPlayersCurrent++;
 			sendPlayersRefresh();
 			if(!gameInfo.teams){
@@ -110,6 +133,8 @@ public class GameThread extends Thread {
 		}else{
 			broadcast(new Request("server.game.start", (Serializable) teams));
 			initTeams();
+			game.setNumberOfZones(gameInfo.nbZones);
+			game.nextTurn();
 		}
 	}
 	

@@ -1,6 +1,5 @@
 package org.copinf.cc.net.server;
 
-import org.copinf.cc.model.Player;
 import org.copinf.cc.net.Request;
 
 import java.io.IOException;
@@ -16,7 +15,6 @@ public class ClientThread extends Thread {
 
 	private String username;
 	private final Socket client;
-	private Player player;
 	private final Server server;
 	private GameThread game;
 
@@ -24,7 +22,7 @@ public class ClientThread extends Thread {
 	private ObjectOutputStream out;
 
 	public ClientThread(final Socket client, final Server server) {
-		super();
+		super("Server client thread");
 		this.client = client;
 		this.server = server;
 		in = null;
@@ -68,7 +66,7 @@ public class ClientThread extends Thread {
 	public boolean send(final Request req) {
 		try {
 			out.reset();
-			System.out.println("Server : sending to " + username + " " + req);
+			LOGGER.info("Server : sending to " + username + " " + req);
 			out.writeObject(req);
 			return true;
 		} catch (IOException ex) {
@@ -81,7 +79,7 @@ public class ClientThread extends Thread {
 	private Request receive() {
 		try {
 			Request req = (Request) in.readObject();
-			System.out.println("Server : receciving from " + username + " " + req);
+			LOGGER.info("Server : receciving from " + username + " " + req);
 			return req;
 		} catch (IOException | ClassNotFoundException ex) {
 			return null;
@@ -94,6 +92,7 @@ public class ClientThread extends Thread {
 
 	public void setUsername(final String username) {
 		this.username = username;
+		setName(getName() + "[" + username + "]");
 	}
 
 	public void play(final GameThread game) {

@@ -10,7 +10,7 @@ public class ServerAcceptThread extends Thread {
 	private final boolean listening = true;
 
 	public ServerAcceptThread(final ServerSocket serverSocket, final Server server) {
-		super();
+		super("Server accept thread");
 		this.serverSocket = serverSocket;
 		this.server = server;
 	}

@@ -22,7 +22,6 @@ import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,7 +36,8 @@ public class GameController extends AbstractController implements ActionListener
 	private enum ErrorMsg {
 		WRONG_MOVE("You can't move this way !"),
 		WRONG_PLAYER("This isn't your pawn !"),
-		NOT_LEGAL("This is not a legal movement !");
+		NOT_LEGAL("This is not a legal movement !"),
+		SERVER_REFUSED("The server refused your movement !");
 
 		private final String msg;
 
@@ -89,24 +89,37 @@ public class GameController extends AbstractController implements ActionListener
 
 		this.game.setNumberOfZones(gameInfo.nbZones);
 		
-		this.game.nextTurn();
-		
 		this.mainPlayer = players.get(mainPlayerName);
+		
+		game.nextTurn();
 		
 		this.gamePanel = new GamePanel(game, this.mainPlayer);
 		this.displayManager = gamePanel.getDrawZone().getBoardView().getDisplayManager();
 
 		this.waitingForAnswer = false;
-
+		
 		gamePanel.addMouseListener(this);
 		gamePanel.getDrawZone().addMouseListener(this);
 		gamePanel.getActionZone().addMouseListener(this);
 		gamePanel.getActionZone().getNextButton().addMouseListener(this);
 		gamePanel.getActionZone().getResetButton().addMouseListener(this);
 		
+		setButtonsVisibility();
+		
 		this.currentMovement = new Movement();
 	}
 
+	private void onNextTurn(){
+		game.nextTurn();
+		setButtonsVisibility();
+	}
+	
+	private void setButtonsVisibility(){
+		boolean visibility = mainPlayer == game.getCurrentPlayer();
+		gamePanel.getActionZone().getNextButton().setVisible(visibility);
+		gamePanel.getActionZone().getResetButton().setVisible(visibility);
+	}
+	
 	@Override
 	public JPanel getContentPane() {
 		return gamePanel;
@@ -135,7 +148,8 @@ public class GameController extends AbstractController implements ActionListener
 			return;
 		}
 		final AbstractBoard board = game.getBoard();
-		board.move(currentMovement.getReversedCondensed());
+		if(currentMovement.size() >= 2)
+			board.move(currentMovement.getReversedCondensed());
 		currentMovement.push(coordinates);
 		if (!board.checkMove(currentMovement, mainPlayer)) {
 			final Pawn pawn = board.getPawn(coordinates);
@@ -151,7 +165,8 @@ public class GameController extends AbstractController implements ActionListener
 			currentMovement.pop();
 		}
 
-		board.move(currentMovement);
+		
+		movePawn(currentMovement);
 	}
 
 	private void nextButtonClicked() {
@@ -170,7 +185,7 @@ public class GameController extends AbstractController implements ActionListener
 	public void processRequest(final Request request) {
 		final String sub2 = request.getSubRequest(2);
 		if ("next".equals(sub2)) {
-			processGameNext();
+			onNextTurn();
 			waitingForAnswer = false;
 		} else if ("move".equals(sub2)) {
 			processMoveRequest(request);
@@ -183,28 +198,26 @@ public class GameController extends AbstractController implements ActionListener
 			gamePanel.getDrawZone().addMessage(message, pv.color);
 		}
 	}
-	
-	private void processGameNext(){
-		game.nextTurn();
-	}
 
 	private void processMoveRequest(final Request request) {
-		//	If it's an answer we were waiting for
-		if (request.getSubRequestSize() != 3 && waitingForAnswer) {
-			//	If the server has agreed to the move request
-			if ((Boolean) request.getContent()) {
-				sendRequest(new Request("client.game.next"));
-			//	If the server has disagreed
-			} else {
-				LOGGER.log(Level.ALL, "Server refused movement");
-				currentMovement.clear();
-			}
-		//	If it's a move notification
-		} else {
-			game.getBoard().move((Movement) request.getContent());
+		String sub = request.getSubRequest(3);
+		if(currentMovement.size() >= 2)
+			movePawn(currentMovement.getReversedCondensed());
+		currentMovement.clear();
+		if("request".equals(sub)) {
+			if(!(Boolean) request.getContent())
+				gamePanel.getDrawZone().addMessage(ErrorMsg.SERVER_REFUSED.msg, Color.RED);
+		}else if(sub == null) {
+			Movement movement = (Movement) request.getContent();
+			movePawn(movement);
 		}
 	}
 
+	private void movePawn(Movement movement){
+		game.getBoard().move(movement);
+		gamePanel.repaint();
+	}
+	
 	@Override
 	public void mouseEntered(final MouseEvent ev) {
 	}

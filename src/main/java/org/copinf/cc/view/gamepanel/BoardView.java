@@ -60,6 +60,8 @@ public class BoardView {
 		final double size = Math.min(optimalSizeWidth, optimalSizeHeight);
 
 		this.displayManager = new DisplayManager(size, 1.0, 1.0, 0.0, width / 2.0, height / 2.0, board);
+		
+		this.displayManager.setAngle(getPlayerAngle(player, width / 2, 0));
 	}
 	
 	public DisplayManager getDisplayManager() {
@@ -222,6 +224,11 @@ public class BoardView {
 		}
 		g.setFont(defaultFont);
 
+		for(Player player : playerViews.keySet()){
+			Point2D.Double center = getBoardZonesCenter(player.getInitialZones());
+			g.drawString(player.getName(), (int) center.x, (int) center.y);
+		}
+		
 		g.setStroke(defaultStroke);
 		g.setColor(defaultColor);
 	}

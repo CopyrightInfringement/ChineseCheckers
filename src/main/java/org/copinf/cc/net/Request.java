@@ -30,7 +30,10 @@ public class Request implements Serializable {
 	}
 
 	public String getSubRequest(final int level) {
-		return splitted[level];
+		if(level < splitted.length)
+			return splitted[level];
+		else
+			return null;
 	}
 
 	public int getSubRequestSize() {

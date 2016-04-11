@@ -2,24 +2,29 @@ package org.copinf.cc.net.client;
 
 import org.copinf.cc.controller.AbstractController;
 import org.copinf.cc.net.Request;
+import org.copinf.cc.net.server.ClientThread;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 public class Client extends Thread {
 
 	private final String host;
 	private final int port;
-
+	
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
-
+	
 	private AbstractController controller;
 
+	private static final Logger LOGGER = Logger.getLogger(ClientThread.class.getName());
+	
 	public Client(final String host, final int port) {
 		super();
+		setName("Client thread");
 		this.host = host;
 		this.port = port;
 		in = null;
@@ -51,7 +56,7 @@ public class Client extends Thread {
 	public void send(final Request req) {
 		try {
 			out.reset();
-			System.out.println("Client : sending to server " + req);
+			LOGGER.info("Client : sending to server " + req);
 			out.writeObject(req);
 		} catch (IOException ex) {
 			System.err.println(ex.getMessage());
@@ -62,7 +67,8 @@ public class Client extends Thread {
 	private Request receive() {
 		try {
 			Request req = (Request) in.readObject();
-			System.out.println("Client : receiving from server " + req);
+			LOGGER.info("Client : receiving from server " + req);
+			
 			return req;
 		} catch (IOException | ClassNotFoundException ex) {
 			System.err.println(ex.getMessage());
