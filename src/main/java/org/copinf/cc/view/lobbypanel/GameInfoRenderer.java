@@ -23,7 +23,7 @@ public class GameInfoRenderer extends JPanel implements ListCellRenderer<GameInf
 
 		removeAll();
 		add(new JLabel(value.name));
-		add(new JLabel(value.nbPlayersCurrent + "/" + value.nbPlayersMax + " players"));
+		add(new JLabel(value.getCurrentPlayersNumber() + "/" + value.nbPlayersMax + " players"));
 		add(new JLabel(value.nbZones + " zones"));
 		if (value.teams) {
 			add(new JLabel("teams"));
@@ -39,7 +39,9 @@ public class GameInfoRenderer extends JPanel implements ListCellRenderer<GameInf
 			setBackground(list.getBackground());
 			setForeground(list.getForeground());
 		}
-
+		
+		setToolTipText(value.currentPlayers.toString());
+		
 		return this;
 	}
 }

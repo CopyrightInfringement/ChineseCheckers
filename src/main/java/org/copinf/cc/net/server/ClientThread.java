@@ -70,7 +70,6 @@ public class ClientThread extends Thread {
 			out.writeObject(req);
 			return true;
 		} catch (IOException ex) {
-			System.out.println("ClientThread.send");
 			System.err.println(ex.getMessage());
 			return false;
 		}

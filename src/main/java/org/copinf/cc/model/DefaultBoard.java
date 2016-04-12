@@ -142,11 +142,6 @@ public class DefaultBoard extends AbstractBoard {
 		} else {
 			throw new UnsupportedOperationException();
 		}
-		
-		System.out.println(Thread.currentThread().getName() + " squares : ");
-		for(BoardZone z: zones){
-			System.out.println(z.getSquares().keySet());
-		}
 	}
 
 	/**

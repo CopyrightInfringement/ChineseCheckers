@@ -32,6 +32,11 @@ public abstract class AbstractController {
 	 */
 	public void end() {}
 
+	public void finish(){
+		end();
+		mainController.pop(this);
+	}
+	
 	/**
 	 * A controller returns a JPanel that will be used for the contentPane of
 	 * the main window. Before returning, a controller should link itself to the panels components if

@@ -21,6 +21,7 @@ public class WaitingRoomController extends AbstractController implements ActionL
 	private List<List<String>> teamList;
 	private GameInfo gameInfo;
 	private String username;
+	private boolean started;
 	
 	public WaitingRoomController(MainController mainController, GameInfo gameInfo, String username) {
 		super(mainController, "game");
@@ -28,6 +29,14 @@ public class WaitingRoomController extends AbstractController implements ActionL
 		this.gameInfo = gameInfo;
 		this.mainController = mainController;
 		this.username = username;
+		started = false;
+	}
+	
+	@Override
+	public void start(){
+		if(started)
+			finish();
+		started = true;
 	}
 
 	@Override

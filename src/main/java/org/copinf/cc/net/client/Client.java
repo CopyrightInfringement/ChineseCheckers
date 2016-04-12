@@ -47,8 +47,10 @@ public class Client extends Thread {
 					controller.processRequest(req);
 				}
 			}
+			javax.swing.JOptionPane.showMessageDialog(null, "The server closed unexpectedly", "Server error", javax.swing.JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
 		} catch (IOException ex) {
-			System.err.println(ex.getMessage());
+			ex.printStackTrace();
 			System.exit(1);
 		}
 	}
@@ -59,7 +61,7 @@ public class Client extends Thread {
 			LOGGER.info("Client : sending to server " + req);
 			out.writeObject(req);
 		} catch (IOException ex) {
-			System.err.println(ex.getMessage());
+			ex.printStackTrace();
 			System.exit(1);
 		}
 	}
@@ -71,8 +73,7 @@ public class Client extends Thread {
 			
 			return req;
 		} catch (IOException | ClassNotFoundException ex) {
-			System.err.println(ex.getMessage());
-			System.exit(1);
+			ex.printStackTrace();
 			return null;
 		}
 	}

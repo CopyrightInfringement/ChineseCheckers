@@ -22,9 +22,11 @@ public class GameThread extends Thread {
 	private final Game game;
 	private final Set<ClientThread> clients;
 	private List<List<String>> teams;
+	private Server server;
 	
-	public GameThread(final GameInfo gameInfo) {
+	public GameThread(final GameInfo gameInfo, Server server) {
 		super("Server GT[" + gameInfo.name + "]");
+		this.server = server;
 		this.gameInfo = gameInfo;
 		this.clients = Collections.synchronizedSet(new HashSet<>());
 		teams = new ArrayList<>();
@@ -40,6 +42,10 @@ public class GameThread extends Thread {
 		} catch (InterruptedException ex) {}
 	}
 
+	public void endGame(){
+		server.gameSet.remove(this);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public void processRequest(final ClientThread client, final Request req) {
 		final String sub2 = req.getSubRequest(2);
@@ -77,6 +83,13 @@ public class GameThread extends Thread {
 			game.getBoard().move(movement);
 			broadcast(new Request("server.game.move", (Serializable) movement));
 			broadcast(new Request("server.game.next"));
+			
+			if(game.isGameOver()){
+				Team team = game.getWinner();
+				int n = game.getTeams().indexOf(team);
+				endGame();
+				broadcast(new Request("server.game.end", (Serializable) n));
+			}
 		}
 	}
 
@@ -101,13 +114,13 @@ public class GameThread extends Thread {
 	public void addClient(final ClientThread client) {
 		if (clients.add(client)) {
 			client.play(this);
-			gameInfo.nbPlayersCurrent++;
+			gameInfo.currentPlayers.add(client.getUsername());
 			sendPlayersRefresh();
 			if(!gameInfo.teams){
 				teams.add(Arrays.asList(client.getUsername()));
 			}
 		}
-		if (gameInfo.nbPlayersCurrent == gameInfo.nbPlayersMax) {
+		if (gameInfo.getCurrentPlayersNumber() == gameInfo.nbPlayersMax) {
 			onPlayersFull();
 		}
 	}
@@ -157,7 +170,9 @@ public class GameThread extends Thread {
 	
 	public void removeClient(final ClientThread client) {
 		if (clients.remove(client)) {
-			gameInfo.nbPlayersCurrent--;
+			//TODO: Replace the player with an AI : 
+			endGame();
+			broadcast(new Request("server.game.end", (Serializable) (-1)));
 		}
 	}
 

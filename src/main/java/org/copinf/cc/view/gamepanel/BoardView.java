@@ -54,9 +54,9 @@ public class BoardView {
 		this.height = height;
 
 		final double optimalSizeWidth =
-				(double) width / (Math.sqrt(3.0) * ((double) board.getWidth() + 0.5));
+				(double) (width * 80 / 100) / (Math.sqrt(3.0) * ((double) board.getWidth() + 0.5));
 		final double optimalSizeHeight =
-				((double) height * 2.0) / (3.0 * (double) board.getHeight() + 1.0);
+				((double) (height * 80 / 100) * 2.0) / (3.0 * (double) board.getHeight() + 1.0);
 		final double size = Math.min(optimalSizeWidth, optimalSizeHeight);
 
 		this.displayManager = new DisplayManager(size, 1.0, 1.0, 0.0, width / 2.0, height / 2.0, board);
@@ -94,10 +94,6 @@ public class BoardView {
 		return new Point2D.Double(x,y);
 	}
 
-	private double interpolation(final double a, final double b, final double t) {
-		return (b - a) * Math.sin(t * Math.PI / 2.0) + a;
-	}
-
 	private double getPlayerAngle(final Player player, final double x, final double y) {
 		final Point2D.Double O = displayManager.getOrigin();
 		final Point2D.Double P = getBoardZonesCenter(player.getInitialZones());
@@ -114,37 +110,6 @@ public class BoardView {
 		return (displayManager.getAngle() + angle) % (2 * Math.PI);
 	}
 
-	public void movePlayerTo(final Player player, final double x, final double y, final int duration,
-			final JPanel panel) {
-		final int interval = 33;
-
-		final double previous = displayManager.getAngle();
-		final double next = getPlayerAngle(player, x, y);
-
-		Timer timer = new Timer(interval, new ActionListener() {
-			double t;
-			@Override public void actionPerformed(final ActionEvent ev) {
-				if (t >= 1) {
-					t = 1;
-				}
-				displayManager.setAngle(interpolation(previous, next, t));
-
-				panel.repaint();
-
-				if (t >= 1) {
-					((Timer) ev.getSource()).stop();
-				} else {
-					t += (double) interval / (double) duration;
-				}
-			}
-		});
-		timer.start();
-	}
-
-	public void movePlayerToBottom(final Player player, final int duration, final JPanel panel) {
-		movePlayerTo(player, displayManager.getOrigin().getX(), height, duration, panel);
-	}
-
 	/**
 	 * Paint this BoardView.
 	 * @param g the Graphics context in which to paint
@@ -156,12 +121,21 @@ public class BoardView {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
 
-		final Stroke defaultStroke = g.getStroke();
-		final Color defaultColor = g.getColor();
+		drawHexagons(g);
+		
+		drawFilledHexagons(g, mouse);
 
+		drawNames(g);
+	}
+	
+	private void drawHexagons(final Graphics2D g){
 		Shape hexagon;
 		Square square;
 		Color color;
+
+		final Stroke defaultStroke = g.getStroke();
+		final Color defaultColor = g.getColor();
+		
 		for (final Coordinates coord : board.coordinates()) {
 			hexagon = displayManager.hexagon(coord);
 			square = board.getSquare(coord);
@@ -180,11 +154,21 @@ public class BoardView {
 			g.setColor(Color.BLACK);
 			g.draw(hexagon);
 		}
-
+		
+		g.setStroke(defaultStroke);
+		g.setColor(defaultColor);
+	}
+	
+	private void drawFilledHexagons(final Graphics2D g, final Point mouse){
 		final Stroke hoveredStroke = new BasicStroke(4.0f);
 		final Coordinates hovered = displayManager.screenToSquare(mouse.getX(), mouse.getY());
 		boolean hasHovered = false;
 
+		final Stroke defaultStroke = g.getStroke();
+		final Color defaultColor = g.getColor();
+		
+		Color color;
+		Shape hexagon;
 		final BasicStroke stroke = new BasicStroke(2.0f);
 		g.setStroke(stroke);
 		for (final Map.Entry<Player, PlayerView> entry : playerViews.entrySet()) {
@@ -210,26 +194,54 @@ public class BoardView {
 			g.setStroke(stroke);
 			g.draw(hexagon);
 		}
-		g.setStroke(defaultStroke);
-
-		final Font defaultFont = g.getFont();
-		final Font newFont = new Font(defaultFont.getName(), defaultFont.getStyle(), 8);
-		g.setFont(newFont);
-		g.setColor(Color.BLACK);
-		for (final Coordinates coord : board.coordinates()) {
-			hexagon = displayManager.hexagon(coord);
-			final Rectangle2D rect1 = hexagon.getBounds2D();
-			final Rectangle2D.Double rect = (Rectangle2D.Double) rect1;
-			g.drawString(coord.toString(), (int) (rect.x), (int) (rect.y + rect.height / 2));
-		}
-		g.setFont(defaultFont);
-
-		for(Player player : playerViews.keySet()){
-			Point2D.Double center = getBoardZonesCenter(player.getInitialZones());
-			g.drawString(player.getName(), (int) center.x, (int) center.y);
-		}
 		
 		g.setStroke(defaultStroke);
 		g.setColor(defaultColor);
+	}
+	
+	private void drawNames(Graphics2D g){
+		final Stroke defaultStroke = g.getStroke();
+		final Color defaultColor = g.getColor();
+		final Font defaultFont = g.getFont();
+		final Font newFont = new Font(defaultFont.getName(), Font.BOLD, 22);
+		g.setFont(newFont);
+		g.setColor(Color.BLACK);
+
+		for(PlayerView view : playerViews.values()){
+			Point2D.Double center = getBoardZonesCenter(view.player.getInitialZones());
+			double x = center.x - width / 2;
+			double y = center.y - height / 2;
+			
+			g.setColor(view.color);
+			String name = view.player.getName();
+			int sW =g.getFontMetrics().stringWidth(name);
+			int sH =g.getFontMetrics().getHeight();
+			Point2D.Double p = calculateNamePosition(x, y, width, height, sW, sH);
+			g.drawString(name, (int) p.x, (int) p.y);
+		}
+
+		g.setFont(defaultFont);		
+		g.setStroke(defaultStroke);
+		g.setColor(defaultColor);
+	}
+	
+	private Point2D.Double calculateNamePosition(double x, double y, double width, double height, double sW, double sH){
+		Point2D.Double p = calculateNamePositionAux(x, y, width, height, sW, sH);
+		return new Point2D.Double(Math.max(0, p.x + width/2 - sW / 2), p.y + height / 2);
+	}
+	
+	private Point2D.Double calculateNamePositionAux(double x, double y, double width, double height, double sW, double sH){
+		if(x == 0){
+			return new Point2D.Double(0, y > 0 ? height / 2 - sH : -height / 2 + sH);
+		}else if (x > 0){
+			double tanB = ((double) height) / ((double) width);
+			if(-tanB < y / x && y / x < tanB)
+				return new Point2D.Double(width / 2 - sW, y);
+			else
+				return new Point2D.Double(x, y > 0 ? height / 2 - sH : -height / 2 + sH);
+		}else{
+			Point2D.Double p = calculateNamePosition(y, -x, width, height, sW, sH);
+			return new Point2D.Double(-p.x, p.y);
+		}
 	}
 }

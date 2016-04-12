@@ -32,19 +32,33 @@ public class MainController {
 	public void push(final AbstractController controller) {
 		controllers.peek().end();
 		controllers.push(controller);
+		setController(controller);
+	}
+	
+	private void setController(final AbstractController controller){
 		setContentPane(controller.getContentPane());
 		if (client != null) {
 			client.setController(controller);
 		}
 		controller.start();
 	}
+	
+	public void pop(final AbstractController controller){
+		if(controllers.peek() !=  controller)
+			throw new RuntimeException("The top controller isn't the one that asked to end");
+		controllers.pop();
+		if(controllers.isEmpty())
+			System.exit(0);
+		else
+			setController(controllers.peek());
+	}
 
 	private void setContentPane(final JPanel panel) {
 		window.setContentPane(panel);
 		window.pack();
-		window.setVisible(true);
 		window.setResizable(false);
 		window.setLocationRelativeTo(null);
+		window.setVisible(true);
 	}
 
 	public void startServer(final int port) {

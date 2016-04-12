@@ -1,6 +1,8 @@
 package org.copinf.cc.net;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameInfo implements Serializable {
 
@@ -8,7 +10,7 @@ public class GameInfo implements Serializable {
 
 	public final String name;
 	public final int nbPlayersMax;
-	public int nbPlayersCurrent;
+	public List<String> currentPlayers;
 	public final int nbZones;
 	public final boolean teams;
 	public final double timer;	// -1 if no timer, in minutes
@@ -23,13 +25,17 @@ public class GameInfo implements Serializable {
 			final int size, final double timer) {
 		this.name = name;
 		this.nbPlayersMax = nbPlayersMax;
-		this.nbPlayersCurrent = 0;
+		this.currentPlayers = new ArrayList<>();
 		this.nbZones = nbZones;
 		this.teams = teams;
 		this.size = size;
 		this.timer = timer;
 	}
 
+	public int getCurrentPlayersNumber(){
+		return currentPlayers.size();
+	}
+	
 	@Override
 	public int hashCode() {
 		return name.hashCode();
@@ -37,6 +43,14 @@ public class GameInfo implements Serializable {
 	
 	@Override
 	public String toString(){
-		return name + " [" + nbPlayersCurrent + "/" + nbPlayersMax + "]" + (teams ? " teams " : "") + (timer >= 0 ? " " + timer + "s " : "");
+		return name + " [" + getCurrentPlayersNumber() + "/" + nbPlayersMax + "]" + (teams ? " teams " : "") + (timer >= 0 ? " " + timer + "s " : "");
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof GameInfo)
+			return ((GameInfo) o).name.equals(name);
+		else
+			return false;
 	}
 }

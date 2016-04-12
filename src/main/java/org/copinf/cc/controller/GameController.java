@@ -178,6 +178,8 @@ public class GameController extends AbstractController implements ActionListener
 	}
 
 	private void resetButtonClicked() {
+		if(currentMovement.size() >= 2)
+			movePawn(currentMovement.getReversedCondensed());
 		currentMovement.clear();
 	}
 
@@ -196,6 +198,16 @@ public class GameController extends AbstractController implements ActionListener
 			final String message = matcher.group(2);
 			final PlayerView pv = gamePanel.getPlayerViews().get(players.get(name));
 			gamePanel.getDrawZone().addMessage(message, pv.color);
+		}else if("end".equals(sub2)){
+			int teamID = (Integer) request.getContent();
+			if(teamID < 0){
+				javax.swing.JOptionPane.showMessageDialog(null, "A player has left the game", "Game over", javax.swing.JOptionPane.ERROR_MESSAGE);
+				finish();
+			}else{
+				Team team = game.getWinner();
+				javax.swing.JOptionPane.showMessageDialog(null, team.get(0).getName() + (team.size() == 2 ? "'s team" : "") + " has won" , "Game over", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+				finish();
+			}
 		}
 	}
 
