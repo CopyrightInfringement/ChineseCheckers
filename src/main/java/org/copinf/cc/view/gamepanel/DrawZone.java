@@ -2,6 +2,7 @@ package org.copinf.cc.view.gamepanel;
 
 import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Player;
+import org.copinf.cc.net.Message;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -29,6 +30,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	private final BoardView boardView;
 	private Point mouse;
 	private List<Message> messages;
+	private Map<Player, PlayerView> playerViews;
 
 	/**
 	 * Constructs a new DrawZone.
@@ -46,6 +48,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		this.mouse = new Point(0, 0);
 		addMouseMotionListener(this);
 		LOGGER.setLevel(java.util.logging.Level.OFF);
+		this.playerViews = playerViews;
 	}
 
 	@Override
@@ -53,15 +56,13 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		super.paintComponent(g);
 		final Graphics2D g2d = (Graphics2D) g;
 		boardView.paint(g2d, mouse);
+		drawMessages(g2d);
 	}
 
 	@Override
 	public void mouseMoved(final MouseEvent ev) {
-		LOGGER.entering("DrawZone", "mouseMoved");
 		mouse = ev.getPoint();
-		LOGGER.info(mouse.toString());
 		repaint();
-		LOGGER.exiting("DrawZone", "mouseMoved");
 	}
 
 	@Override
@@ -73,31 +74,42 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		return boardView;
 	}
 
-	public void addMessage(final String message, final Color color) {
-		messages.add(new Message(message, color));
+	public void addMessage(final String message, final String playerName, final boolean isChatMessage) {
+		addMessage(new Message(message, playerName, isChatMessage));
+	}
+	
+	public void addMessage(final String message, final String playerName){
+		addMessage(message, playerName, true);
+	}
+	
+	public void addMessage(final String message) {
+		addMessage(message, "", false);
+	}
+	
+	public void addMessage(final Message message) {
+		messages.add(message);
 		if (messages.size() > 10) {
-			messages.remove(messages.size() - 1);
+			messages.remove(0);
 		}
 	}
 
 	public void drawMessages(final Graphics2D g2d) {
-		int x = 0;
-		int y = 0;
-		for (final Message message : messages) {
-			g2d.setColor(message.color);
-			g2d.drawString(message.message, x, y);
+		int x = 5;
+		int y = 5;
+		for (int i = messages.size() - 1; i >= 0 ; i--) {
+			Message message = messages.get(i);
+			Color color = Color.BLACK;
+			if(message.isChatMessage){
+				for (PlayerView pv : playerViews.values()) {
+					if (pv.player.getName().equals(message.playerName)) {
+						color = pv.color;
+					}
+				}
+			}
+			g2d.setColor(color);
+			g2d.drawString(message.message, x, getHeight() - y);
 			y += 20;
 		}
 		g2d.setColor(Color.BLACK);
-	}
-
-	private static class Message {
-		public final String message;
-		public final Color color;
-
-		public Message(final String message, final Color color) {
-			this.message = message;
-			this.color = color;
-		}
 	}
 }

@@ -64,6 +64,8 @@ public class GameThread extends Thread {
 			onPlayersFull();
 		}else if("move".equals(sub2)){
 			processMoveRequest(client, (Movement) req.getContent());
+		} else if ("message".equals(sub2)) {
+			broadcast(req);
 		}
 	}
 	

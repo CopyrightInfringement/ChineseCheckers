@@ -14,15 +14,9 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.Stroke;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.util.Collection;
 import java.util.Map;
-
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  * Provides methods to draw and interact with a board.
@@ -207,41 +201,19 @@ public class BoardView {
 		g.setFont(newFont);
 		g.setColor(Color.BLACK);
 
+		int i = 1;
+		
 		for(PlayerView view : playerViews.values()){
-			Point2D.Double center = getBoardZonesCenter(view.player.getInitialZones());
-			double x = center.x - width / 2;
-			double y = center.y - height / 2;
-			
 			g.setColor(view.color);
 			String name = view.player.getName();
 			int sW =g.getFontMetrics().stringWidth(name);
-			int sH =g.getFontMetrics().getHeight();
-			Point2D.Double p = calculateNamePosition(x, y, width, height, sW, sH);
-			g.drawString(name, (int) p.x, (int) p.y);
+			g.drawString(name, width - sW - 10, i * height / (playerViews.values().size() + 1));
+			
+			i++;
 		}
 
 		g.setFont(defaultFont);		
 		g.setStroke(defaultStroke);
 		g.setColor(defaultColor);
-	}
-	
-	private Point2D.Double calculateNamePosition(double x, double y, double width, double height, double sW, double sH){
-		Point2D.Double p = calculateNamePositionAux(x, y, width, height, sW, sH);
-		return new Point2D.Double(Math.max(0, p.x + width/2 - sW / 2), p.y + height / 2);
-	}
-	
-	private Point2D.Double calculateNamePositionAux(double x, double y, double width, double height, double sW, double sH){
-		if(x == 0){
-			return new Point2D.Double(0, y > 0 ? height / 2 - sH : -height / 2 + sH);
-		}else if (x > 0){
-			double tanB = ((double) height) / ((double) width);
-			if(-tanB < y / x && y / x < tanB)
-				return new Point2D.Double(width / 2 - sW, y);
-			else
-				return new Point2D.Double(x, y > 0 ? height / 2 - sH : -height / 2 + sH);
-		}else{
-			Point2D.Double p = calculateNamePosition(y, -x, width, height, sW, sH);
-			return new Point2D.Double(-p.x, p.y);
-		}
 	}
 }
