@@ -65,7 +65,7 @@ public abstract class AbstractBoard {
 		}
 		Coordinates orig = path.getOrigin();
 		final Pawn pawn = getPawn(orig);
-		if (pawn == null || pawn.getOwner() != player) {
+		if (pawn == null || pawn.owner != player) {
 			return false;
 		}
 

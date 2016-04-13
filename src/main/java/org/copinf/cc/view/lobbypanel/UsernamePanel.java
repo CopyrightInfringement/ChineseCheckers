@@ -1,7 +1,5 @@
 package org.copinf.cc.view.lobbypanel;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.CardLayout;
 
 import javax.swing.JButton;

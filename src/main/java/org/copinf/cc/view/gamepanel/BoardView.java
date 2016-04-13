@@ -137,7 +137,7 @@ public class BoardView {
 			g.fill(hexagon);
 
 			if(!square.isFree()){
-				Player owner = square.getPawn().getOwner();
+				Player owner = square.getPawn().owner;
 				if(playerViews.containsKey(owner)){
 					color = playerViews.get(owner).color;
 					

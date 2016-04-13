@@ -71,7 +71,7 @@ public class BoardZone {
 	 */
 	public boolean isFull(final Player player) {
 		for (final Square s : squares.values()) {
-			if (s.getPawn() == null || s.getPawn().getOwner() != player) {
+			if (s.getPawn() == null || s.getPawn().owner != player) {
 				return false;
 			}
 		}

@@ -14,9 +14,6 @@ import org.copinf.cc.net.Message;
 import org.copinf.cc.view.gamepanel.ActionZone;
 import org.copinf.cc.view.gamepanel.DisplayManager;
 import org.copinf.cc.view.gamepanel.GamePanel;
-import org.copinf.cc.view.gamepanel.PlayerView;
-
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -26,7 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JPanel;
@@ -177,7 +173,7 @@ public class GameController extends AbstractController implements ActionListener
 			final ErrorMsg errorMsg;
 			if (pawn == null) {
 				errorMsg = ErrorMsg.WRONG_MOVE;
-			} else if (pawn.getOwner() != mainPlayer) {
+			} else if (pawn.owner != mainPlayer) {
 				errorMsg = ErrorMsg.WRONG_PLAYER;
 			} else {
 				errorMsg = ErrorMsg.NOT_LEGAL;
