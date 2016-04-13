@@ -88,7 +88,7 @@ public class LobbyController extends AbstractController implements ActionListene
 	 */
 	@SuppressWarnings("unchecked")
 	private void processRefreshGameInfoList(final Request request) {
-		final Set<GameInfo> waitingGames = (Set<GameInfo>) request.getContent();
+		final Set<GameInfo> waitingGames = (Set<GameInfo>) request.content;
 		lobbyPanel.getGamesList().setListData(waitingGames.toArray(new GameInfo[waitingGames.size()]));
 	}
 
@@ -109,7 +109,7 @@ public class LobbyController extends AbstractController implements ActionListene
 	 * @param request The request to process
 	 */
 	private void processSubmitUsername(final Request request) {
-		if ((Boolean) request.getContent()) {
+		if ((Boolean) request.content) {
 			lobbyPanel.getUsernamePanel().switchToUsernamePanel(username);
 		} else {
 			lobbyPanel.getUsernamePanel().setUsername("");
@@ -133,7 +133,7 @@ public class LobbyController extends AbstractController implements ActionListene
 	 * @param request The request to process
 	 */
 	private void processCreateGame(final Request request) {
-		if (!(Boolean) request.getContent()) {
+		if (!(Boolean) request.content) {
 			selectedGame = null;
 			lobbyPanel.getGameCreationPanel().resetGameName();
 		}
@@ -152,7 +152,7 @@ public class LobbyController extends AbstractController implements ActionListene
 	 * @param request The request to process
 	 */
 	private void processJoinGame(final Request request) {
-		if ((Boolean) request.getContent()) {
+		if ((Boolean) request.content) {
 			switchController(new WaitingRoomController(mainController, selectedGame, username));
 		} else {
 			selectedGame = null;

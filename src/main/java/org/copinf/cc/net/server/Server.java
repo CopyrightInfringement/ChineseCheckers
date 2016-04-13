@@ -71,7 +71,7 @@ public class Server implements Runnable {
 	 * @param req The request
 	 */
 	public void processRequest(final ClientThread client, final Request req) {
-		final String identifier = req.getIdentifier();
+		final String identifier = req.identifier;
 		if ("client.lobby.refresh".equals(identifier)) {
 			processLobbyRefresh(client);
 		} else if ("client.lobby.username".equals(identifier)) {
@@ -121,7 +121,7 @@ public class Server implements Runnable {
 	 * @param req The request
 	 */
 	private void processLobbyUsername(final ClientThread client, final Request req) {
-		final String username = (String) req.getContent();
+		final String username = (String) req.content;
 		boolean validUsername = username.length() <= 15;
 		if (validUsername) {
 			for (final ClientThread ct : clients) {
@@ -143,7 +143,7 @@ public class Server implements Runnable {
 	 * @param req The request
 	 */
 	private void processLobbyCreate(final ClientThread client, final Request req) {
-		final GameInfo gameInfo = (GameInfo) req.getContent();
+		final GameInfo gameInfo = (GameInfo) req.content;
 		final String gameName = gameInfo.name;
 		boolean validName = true;
 		for (final GameThread game : gameSet) {
@@ -172,7 +172,7 @@ public class Server implements Runnable {
 	 * @param req The request
 	 */
 	private void processJoinGame(final ClientThread client, final Request req) {
-		final GameInfo gameInfo = (GameInfo) req.getContent();
+		final GameInfo gameInfo = (GameInfo) req.content;
 		for (final GameThread game : gameSet) {
 			if (game.hashCode() == gameInfo.hashCode()) {
 				client.send(new Request("server.lobby.join", true));

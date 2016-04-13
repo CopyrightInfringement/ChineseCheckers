@@ -59,14 +59,14 @@ public class WaitingRoomController extends AbstractController implements ActionL
 		if("players".equals(sub)){
 			String subSub = request.getSubRequest(3);
 			if("refresh".equals(subSub)){
-				playerList = (List<String>) request.getContent();
+				playerList = (List<String>) request.content;
 				playerList.remove(username);
 				roomPanel.setAvailablePlayers(playerList);
 			}
 		}else if("teams".equals(sub)){
 			String subSub = request.getSubRequest(3);
 			if("refresh".equals(subSub)){
-				teamList = (List<List<String>>) request.getContent();
+				teamList = (List<List<String>>) request.content;
 				roomPanel.setAvailablePlayers(getAvailablePlayers());
 				for(List<String> team : teamList){
 					if(team.contains(username)){
@@ -77,13 +77,13 @@ public class WaitingRoomController extends AbstractController implements ActionL
 				roomPanel.enableTeamBuiding(true);
 			}
 		}else if("start".equals(sub)){
-			List<List<String>> teamList = (List<List<String>>) request.getContent();
+			List<List<String>> teamList = (List<List<String>>) request.content;
 			switchController(new GameController(mainController, gameInfo, username, teamList));
 		}
 	}
 	
 	/**
-	 * Returns a collection of the avalaible players, if teams are enabled,
+	 * Returns a collection of the available players, if teams are enabled,
 	 * or the players waiting for the game to begin.
 	 * @return The players.
 	 */

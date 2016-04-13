@@ -58,12 +58,12 @@ public class GameThread extends Thread {
 			if("refresh".equals(sub3)){
 				broadcast(new Request("server.game.teams.refresh", (Serializable) teams));
 			}else if("leader".equals(sub3)){
-				teams.add((List<String>) req.getContent());
+				teams.add((List<String>) req.content);
 				broadcast(new Request("server.game.teams.refresh", (Serializable) teams));
 			}
 			onPlayersFull();
 		}else if("move".equals(sub2)){
-			processMoveRequest(client, (Movement) req.getContent());
+			processMoveRequest(client, (Movement) req.content);
 		} else if ("message".equals(sub2)) {
 			broadcast(req);
 		}

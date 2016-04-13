@@ -216,10 +216,10 @@ public class GameController extends AbstractController implements ActionListener
 			processMoveRequest(request);
 			waitingForAnswer = false;
 		} else if ("message".equals(sub2)) {
-			gamePanel.getDrawZone().addMessage((Message) request.getContent());
+			gamePanel.getDrawZone().addMessage((Message) request.content);
 			gamePanel.repaint();
 		}else if("end".equals(sub2)){
-			int teamID = (Integer) request.getContent();
+			int teamID = (Integer) request.content;
 			if(teamID < 0){
 				javax.swing.JOptionPane.showMessageDialog(null, "A player has left the game", "Game over", javax.swing.JOptionPane.ERROR_MESSAGE);
 				finish();
@@ -241,10 +241,10 @@ public class GameController extends AbstractController implements ActionListener
 			movePawn(currentMovement.getReversedCondensed());
 		currentMovement.clear();
 		if("request".equals(sub)) {
-			if(!(Boolean) request.getContent())
+			if(!(Boolean) request.content)
 				gamePanel.getDrawZone().addMessage(ErrorMsg.SERVER_REFUSED.msg);
 		}else if(sub == null) {
-			Movement movement = (Movement) request.getContent();
+			Movement movement = (Movement) request.content;
 			movePawn(movement);
 		}
 	}
