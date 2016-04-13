@@ -48,16 +48,16 @@ public class BoardView {
 		this.height = height;
 
 		final double optimalSizeWidth =
-				(double) (width * 80 / 100) / (Math.sqrt(3.0) * ((double) board.getWidth() + 0.5));
+				(double) (width * 80.0 / 100.0) / (Math.sqrt(3.0) * ((double) board.getWidth() + 0.5));
 		final double optimalSizeHeight =
-				((double) (height * 80 / 100) * 2.0) / (3.0 * (double) board.getHeight() + 1.0);
+				((double) (height * 80.0 / 100.0) * 2.0) / (3.0 * (double) board.getHeight() + 1.0);
 		final double size = Math.min(optimalSizeWidth, optimalSizeHeight);
 
 		this.displayManager = new DisplayManager(size, 1.0, 1.0, 0.0, width / 2.0, height / 2.0, board);
-		
-		this.displayManager.setAngle(getPlayerAngle(player, width / 2, 0));
+
+		this.displayManager.setAngle(getPlayerAngle(player, width / 2.0, 0));
 	}
-	
+
 	public DisplayManager getDisplayManager() {
 		return displayManager;
 	}
@@ -116,31 +116,32 @@ public class BoardView {
 			RenderingHints.VALUE_ANTIALIAS_ON);
 
 		drawHexagons(g);
-		
+
 		drawFilledHexagons(g, mouse);
 
 		drawNames(g);
 	}
-	
-	private void drawHexagons(final Graphics2D g){
+
+	private void drawHexagons(final Graphics2D g) {
 		Shape hexagon;
 		Square square;
 		Color color;
 
 		final Stroke defaultStroke = g.getStroke();
 		final Color defaultColor = g.getColor();
-		
+
 		for (final Coordinates coord : board.coordinates()) {
 			hexagon = displayManager.hexagon(coord);
 			square = board.getSquare(coord);
 			g.setColor(Color.WHITE);
 			g.fill(hexagon);
 
-			if(!square.isFree()){
+
+			if (!square.isFree()) {
 				Player owner = square.getPawn().owner;
-				if(playerViews.containsKey(owner)){
+				if (playerViews.containsKey(owner)) {
 					color = playerViews.get(owner).color;
-					
+
 					g.setColor(color);
 					g.fill(hexagon);
 				}
@@ -148,19 +149,19 @@ public class BoardView {
 			g.setColor(Color.BLACK);
 			g.draw(hexagon);
 		}
-		
+
 		g.setStroke(defaultStroke);
 		g.setColor(defaultColor);
 	}
-	
-	private void drawFilledHexagons(final Graphics2D g, final Point mouse){
+
+	private void drawFilledHexagons(final Graphics2D g, final Point mouse) {
 		final Stroke hoveredStroke = new BasicStroke(4.0f);
 		final Coordinates hovered = displayManager.screenToSquare(mouse.getX(), mouse.getY());
 		boolean hasHovered = false;
 
 		final Stroke defaultStroke = g.getStroke();
 		final Color defaultColor = g.getColor();
-		
+
 		Color color;
 		Shape hexagon;
 		final BasicStroke stroke = new BasicStroke(2.0f);
@@ -188,12 +189,12 @@ public class BoardView {
 			g.setStroke(stroke);
 			g.draw(hexagon);
 		}
-		
+
 		g.setStroke(defaultStroke);
 		g.setColor(defaultColor);
 	}
-	
-	private void drawNames(Graphics2D g){
+
+	private void drawNames(Graphics2D g) {
 		final Stroke defaultStroke = g.getStroke();
 		final Color defaultColor = g.getColor();
 		final Font defaultFont = g.getFont();
@@ -202,17 +203,17 @@ public class BoardView {
 		g.setColor(Color.BLACK);
 
 		int i = 1;
-		
-		for(PlayerView view : playerViews.values()){
+
+		for (PlayerView view : playerViews.values()) {
 			g.setColor(view.color);
 			String name = view.player.getName();
-			int sW =g.getFontMetrics().stringWidth(name);
+			int sW = g.getFontMetrics().stringWidth(name);
 			g.drawString(name, width - sW - 10, i * height / (playerViews.values().size() + 1));
-			
+
 			i++;
 		}
 
-		g.setFont(defaultFont);		
+		g.setFont(defaultFont);
 		g.setStroke(defaultStroke);
 		g.setColor(defaultColor);
 	}

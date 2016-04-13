@@ -32,35 +32,35 @@ public abstract class AbstractController {
 	 */
 	public void end() {}
 
-	public void finish(){
+	public void finish() {
 		end();
 		mainController.pop(this);
 	}
-	
+
 	/**
-	 * A controller returns a JPanel that will be used for the contentPane of
-	 * the main window. Before returning, a controller should link itself to the panels components if
-	 * it needs to listen for events.
+	 * A controller returns a JPanel that will be used for the contentPane of the main window.
+	 * Before returning, a controller should link itself to the panels components if it needs to
+	 * listen for events.
 	 * @return the contentPane
 	 */
 	public abstract JPanel getContentPane();
 
 	/**
-	 * Switch to another controller.
+	 * Switches to another controller.
 	 * @param controller a controller
 	 */
 	public void switchController(final AbstractController controller) {
 		mainController.push(controller);
 	}
-	
+
 	/**
-	 * React to a request
+	 * Reacts to a request.
 	 * @param request The request to process
 	 */
 	public abstract void processRequest(final Request request);
 
 	/**
-	 * Send a request to the server
+	 * Sends a request to the server.
 	 * @param request The request to send
 	 */
 	public void sendRequest(final Request request) {

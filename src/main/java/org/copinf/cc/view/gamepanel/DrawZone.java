@@ -74,18 +74,19 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		return boardView;
 	}
 
-	public void addMessage(final String message, final String playerName, final boolean isChatMessage) {
+	public void addMessage(final String message, final String playerName,
+		final boolean isChatMessage) {
 		addMessage(new Message(message, playerName, isChatMessage));
 	}
-	
-	public void addMessage(final String message, final String playerName){
+
+	public void addMessage(final String message, final String playerName) {
 		addMessage(message, playerName, true);
 	}
-	
+
 	public void addMessage(final String message) {
 		addMessage(message, "", false);
 	}
-	
+
 	public void addMessage(final Message message) {
 		messages.add(message);
 		if (messages.size() > 10) {
@@ -99,7 +100,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		for (int i = messages.size() - 1; i >= 0 ; i--) {
 			Message message = messages.get(i);
 			Color color = Color.BLACK;
-			if(message.isChatMessage){
+			if (message.isChatMessage) {
 				for (PlayerView pv : playerViews.values()) {
 					if (pv.player.getName().equals(message.playerName)) {
 						color = pv.color;

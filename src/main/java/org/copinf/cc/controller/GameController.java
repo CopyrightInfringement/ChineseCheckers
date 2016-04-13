@@ -8,12 +8,13 @@ import org.copinf.cc.model.Movement;
 import org.copinf.cc.model.Pawn;
 import org.copinf.cc.model.Player;
 import org.copinf.cc.model.Team;
-import org.copinf.cc.net.Request;
 import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.net.Message;
+import org.copinf.cc.net.Request;
 import org.copinf.cc.view.gamepanel.ActionZone;
 import org.copinf.cc.view.gamepanel.DisplayManager;
 import org.copinf.cc.view.gamepanel.GamePanel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -33,7 +35,7 @@ import javax.swing.JPanel;
 public class GameController extends AbstractController implements ActionListener, MouseListener {
 
 	/**
-	 * Error messages enumeration
+	 * Error messages enumeration.
 	 */
 	private enum ErrorMsg {
 		WRONG_MOVE("You can't move this way !"),
@@ -62,14 +64,15 @@ public class GameController extends AbstractController implements ActionListener
 	private final Player mainPlayer;
 	private static final Pattern MESSAGE_PATTERN = Pattern.compile("^[(.+)](.+)$");
 	private final Map<String, Player> players;
-	
+
 	private boolean waitingForAnswer;
 
 	/**
 	 * Constructs a new GameController.
 	 * @param mainController the main controller
 	 * @param gameInfo the current game
-	 * @param mainPlayer the main player
+	 * @param mainPlayerName the main player name
+	 * @param teamList the list of teams and players usernames
 	 */
 	public GameController(final MainController mainController, final GameInfo gameInfo,
 			final String mainPlayerName, final List<List<String>> teamList) {
@@ -78,10 +81,10 @@ public class GameController extends AbstractController implements ActionListener
 		this.gameInfo = gameInfo;
 		this.game = new Game(new DefaultBoard(gameInfo.size));
 		this.players = new HashMap<String, Player>();
-		
-		for(List<String> teamMates : teamList){
+
+		for (List<String> teamMates : teamList) {
 			Team team = new Team();
-			for(String username : teamMates){
+			for (String username : teamMates) {
 				Player player = new Player(username);
 				team.addPlayer(player);
 				players.put(username, player);
@@ -90,45 +93,45 @@ public class GameController extends AbstractController implements ActionListener
 		}
 
 		this.game.setNumberOfZones(gameInfo.nbZones);
-		
+
 		this.mainPlayer = players.get(mainPlayerName);
-		
+
 		game.nextTurn();
-		
+
 		this.gamePanel = new GamePanel(game, this.mainPlayer);
 		this.displayManager = gamePanel.getDrawZone().getBoardView().getDisplayManager();
 
 		this.waitingForAnswer = false;
-		
+
 		gamePanel.addMouseListener(this);
 		gamePanel.getDrawZone().addMouseListener(this);
 		gamePanel.getActionZone().addMouseListener(this);
 		gamePanel.getActionZone().getNextButton().addMouseListener(this);
 		gamePanel.getActionZone().getResetButton().addMouseListener(this);
 		gamePanel.getActionZone().getSendButton().addMouseListener(this);
-		
+
 		setButtonsVisibility();
-		
+
 		this.currentMovement = new Movement();
 	}
 
 	/**
-	 * Method to call when a turn is over
+	 * Method to call when a turn is over.
 	 */
-	private void onNextTurn(){
+	private void onNextTurn() {
 		game.nextTurn();
 		setButtonsVisibility();
 	}
-	
+
 	/**
-	 * Method to call to sets the correct visibility to the GamePanel buttons
+	 * Method to call to set the correct visibility of the GamePanel buttons.
 	 */
-	private void setButtonsVisibility(){
+	private void setButtonsVisibility() {
 		boolean visibility = mainPlayer == game.getCurrentPlayer();
 		gamePanel.getActionZone().getNextButton().setVisible(visibility);
 		gamePanel.getActionZone().getResetButton().setVisible(visibility);
 	}
-	
+
 	@Override
 	public JPanel getContentPane() {
 		return gamePanel;
@@ -165,8 +168,9 @@ public class GameController extends AbstractController implements ActionListener
 			return;
 		}
 		final AbstractBoard board = game.getBoard();
-		if(currentMovement.size() >= 2)
+		if (currentMovement.size() >= 2) {
 			board.move(currentMovement.getReversedCondensed());
+		}
 		currentMovement.push(coordinates);
 		if (!board.checkMove(currentMovement, mainPlayer)) {
 			final Pawn pawn = board.getPawn(coordinates);
@@ -182,7 +186,6 @@ public class GameController extends AbstractController implements ActionListener
 			currentMovement.pop();
 		}
 
-		
 		movePawn(currentMovement);
 	}
 
@@ -201,8 +204,9 @@ public class GameController extends AbstractController implements ActionListener
 	 * Method to call when the "reset" button is clicked.
 	 */
 	private void resetButtonClicked() {
-		if(currentMovement.size() >= 2)
+		if (currentMovement.size() >= 2) {
 			movePawn(currentMovement.getReversedCondensed());
+		}
 		currentMovement.clear();
 	}
 
@@ -218,14 +222,18 @@ public class GameController extends AbstractController implements ActionListener
 		} else if ("message".equals(sub2)) {
 			gamePanel.getDrawZone().addMessage((Message) request.content);
 			gamePanel.repaint();
-		}else if("end".equals(sub2)){
-			int teamID = (Integer) request.content;
-			if(teamID < 0){
-				javax.swing.JOptionPane.showMessageDialog(null, "A player has left the game", "Game over", javax.swing.JOptionPane.ERROR_MESSAGE);
+		} else if ("end".equals(sub2)) {
+			int teamId = (Integer) request.content;
+			if (teamId < 0) {
+				JOptionPane.showMessageDialog(null,
+					"A player has left the game", "Game over",
+					JOptionPane.ERROR_MESSAGE);
 				finish();
-			}else{
+			} else {
 				Team team = game.getWinner();
-				javax.swing.JOptionPane.showMessageDialog(null, team.get(0).getName() + (team.size() == 2 ? "'s team" : "") + " has won" , "Game over", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null,
+					team.get(0).getName() + (team.size() == 2 ? "'s team" : "") + " has won" , "Game over",
+					JOptionPane.INFORMATION_MESSAGE);
 				finish();
 			}
 		}
@@ -237,27 +245,29 @@ public class GameController extends AbstractController implements ActionListener
 	 */
 	private void processMoveRequest(final Request request) {
 		String sub = request.getSubRequest(3);
-		if(currentMovement.size() >= 2)
+		if (currentMovement.size() >= 2) {
 			movePawn(currentMovement.getReversedCondensed());
+		}
 		currentMovement.clear();
-		if("request".equals(sub)) {
-			if(!(Boolean) request.content)
+		if ("request".equals(sub)) {
+			if (!(Boolean) request.content) {
 				gamePanel.getDrawZone().addMessage(ErrorMsg.SERVER_REFUSED.msg);
-		}else if(sub == null) {
+			}
+		} else if (sub == null) {
 			Movement movement = (Movement) request.content;
 			movePawn(movement);
 		}
 	}
 
 	/**
-	 * Moves a pawn then repaint the board
-	 * @param movement
+	 * Moves a pawn then repaint the board.
+	 * @param movement a movement
 	 */
-	private void movePawn(Movement movement){
+	private void movePawn(Movement movement) {
 		game.getBoard().move(movement);
 		gamePanel.repaint();
 	}
-	
+
 	@Override
 	public void mouseEntered(final MouseEvent ev) {
 	}

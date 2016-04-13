@@ -13,7 +13,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
 
 /**
- * RoomPanel is what is displayed when the player chooses a game on a server or creates one.
+ * LobbyPanel is what is displayed when the player chooses a game on a server or creates one.
  */
 @SuppressWarnings("serial")
 public class LobbyPanel extends JPanel {

@@ -45,8 +45,9 @@ public abstract class AbstractBoard {
 	 * @param movement a movement
 	 */
 	public void move(final Movement movement) {
-		if(movement.size() >= 2)
+		if (movement.size() >= 2) {
 			getSquare(movement.getDestination()).setPawn(getSquare(movement.getOrigin()).popPawn());
+		}
 	}
 
 	/**
@@ -140,7 +141,7 @@ public abstract class AbstractBoard {
 	 * Checks players can have teams with a certain player number.
 	 * Teams are composed of 2 players.
 	 * @param playerNumber The number of players.
-	 * @param true if player can play in teams
+	 * @return true if player can play in teams
 	 */
 	public abstract boolean getPossibleTeam(final int playerNumber);
 

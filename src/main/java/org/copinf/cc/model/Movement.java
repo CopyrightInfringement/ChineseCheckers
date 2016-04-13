@@ -61,7 +61,7 @@ public class Movement extends Stack<Coordinates> {
 	}
 
 	/**
-	 * Returns a movement composed of the two last coordinates through which this movement goes. 
+	 * Returns a movement composed of the two last coordinates through which this movement goes.
 	 * @return The last sub-movement of this movement.
 	 */
 	public Movement getLastUnit() {

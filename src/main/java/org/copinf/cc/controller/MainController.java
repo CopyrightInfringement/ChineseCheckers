@@ -23,7 +23,7 @@ public class MainController {
 	}
 
 	/**
-	 * Start this controller
+	 * Starts this controller.
 	 */
 	public void start() {
 		final HomeController controller = new HomeController(this);
@@ -31,9 +31,9 @@ public class MainController {
 		setContentPane(controller.getContentPane());
 		controller.start();
 	}
-	
+
 	/**
-	 * Put a controller on top of the other controllers.
+	 * Pushes a controller on top of the other controllers.
 	 * NOTE: By using a stack of controller we can navigate through them
 	 * in a way similar to "previous" and "next" buttons on a web browser.
 	 * @param controller The controller to put on top of the other controllers.
@@ -43,32 +43,34 @@ public class MainController {
 		controllers.push(controller);
 		setController(controller);
 	}
-	
+
 	/**
 	 * Sets a controller as the active controller and sets its corresponding JPanel
 	 * as the content pane of the window.
 	 * @param controller The controller to set.
 	 */
-	private void setController(final AbstractController controller){
+	private void setController(final AbstractController controller) {
 		setContentPane(controller.getContentPane());
 		if (client != null) {
 			client.setController(controller);
 		}
 		controller.start();
 	}
-	
+
 	/**
 	 * Go back to the previous controller.
 	 * @param controller The controller expected to be the active one.
 	 */
-	public void pop(final AbstractController controller){
-		if(controllers.peek() !=  controller)
+	public void pop(final AbstractController controller) {
+		if (controllers.peek() !=  controller) {
 			throw new RuntimeException("The top controller isn't the one that asked to end");
+		}
 		controllers.pop();
-		if(controllers.isEmpty())
+		if (controllers.isEmpty()) {
 			System.exit(0);
-		else
+		} else {
 			setController(controllers.peek());
+		}
 	}
 
 	/**
@@ -79,7 +81,6 @@ public class MainController {
 		window.setContentPane(panel);
 		window.pack();
 		window.setResizable(false);
-		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 	}
 

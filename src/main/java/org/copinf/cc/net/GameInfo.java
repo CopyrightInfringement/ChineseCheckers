@@ -55,25 +55,25 @@ public class GameInfo implements Serializable {
 	 * Get the number of players currently in-game or waiting for the game to start.
 	 * @return the current number of players in this game.
 	 */
-	public int getCurrentPlayersNumber(){
+	public int getCurrentPlayersNumber() {
 		return currentPlayers.size();
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return name.hashCode();
 	}
-	
+
 	@Override
-	public String toString(){
-		return name + " [" + getCurrentPlayersNumber() + "/" + nbPlayersMax + "]" + (teams ? " teams " : "") + (timer >= 0 ? " " + timer + "s " : "");
+	public String toString() {
+		return name
+			+ " [" + getCurrentPlayersNumber() + "/" + nbPlayersMax + "]"
+			+ (teams ? " teams " : "")
+			+ (timer >= 0 ? " " + timer + "s " : "");
 	}
-	
+
 	@Override
-	public boolean equals(Object o) {
-		if (o instanceof GameInfo)
-			return ((GameInfo) o).name.equals(name);
-		else
-			return false;
+	public boolean equals(final Object obj) {
+		return obj instanceof GameInfo && ((GameInfo) obj).name.equals(name);
 	}
 }

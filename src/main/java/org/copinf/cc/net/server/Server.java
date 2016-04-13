@@ -11,9 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The initial server class.
+ * The Server class.
  */
-
 public class Server implements Runnable {
 
 	public final Set<GameThread> gameSet;
@@ -21,7 +20,7 @@ public class Server implements Runnable {
 	private final int port;
 
 	/**
-	 * The port on which the server will be open
+	 * The port on which the server will be open.
 	 * @param port The port number on which the server will run
 	 */
 	public Server(final int port) {
@@ -31,7 +30,7 @@ public class Server implements Runnable {
 	}
 
 	/***
-	 * Adds a client connexion to the list of clients and start a thread to listen to it
+	 * Adds a client connection to the list of clients and starts a thread to listen to it.
 	 * @param client The client socket to add
 	 */
 	public void addClient(final Socket client) {
@@ -41,7 +40,7 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Removes a cliient connexion
+	 * Removes a client connection.
 	 * @param client The client socket to remove
 	 */
 	public void removeClient(final ClientThread client) {
@@ -66,7 +65,7 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Dispatches the requests amongst the different request-processing methods
+	 * Dispatches the requests amongst the different request-processing methods.
 	 * @param client The client
 	 * @param req The request
 	 */
@@ -84,7 +83,7 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Broadcast a request to the all the clients connected to this server
+	 * Broadcasts a request to all the clients connected to this server.
 	 * @param req The request to broadcast
 	 */
 	public void broadcast(final Request req) {
@@ -115,8 +114,8 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Process a "client.lobby.username" request
-	 * The server indicates the client whether the username he asked for is available / valid or not
+	 * Process a "client.lobby.username" request.
+	 * The server indicates the client whether the username he asked for is available / valid or not.
 	 * @param client The client
 	 * @param req The request
 	 */
@@ -137,9 +136,10 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Process a "client.lobby.create" request
-	 * If the game name is valid / available, it tells the client so and adds him to the list of players
-	 * @param client  The client
+	 * Process a "client.lobby.create" request.
+	 * If the game name is valid and available, it tells the client so and adds him to the list of
+	 * players.
+	 * @param client The client
 	 * @param req The request
 	 */
 	private void processLobbyCreate(final ClientThread client, final Request req) {
@@ -166,7 +166,7 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Process a "client.lobby.join" request
+	 * Process a "client.lobby.join" request.
 	 * Adds the client to the requested game then indicates the client so.
 	 * @param client The client
 	 * @param req The request

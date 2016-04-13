@@ -82,9 +82,9 @@ public class LobbyController extends AbstractController implements ActionListene
 	}
 
 	/**
-	 * Process a "server.game.refresh" request containing the list
+	 * Process a "server.game.refresh" request containing the list.
 	 * of the GameInfos associated with the games it hosts.
-	 * @param request
+	 * @param request a request
 	 */
 	@SuppressWarnings("unchecked")
 	private void processRefreshGameInfoList(final Request request) {
@@ -105,7 +105,7 @@ public class LobbyController extends AbstractController implements ActionListene
 	}
 
 	/**
-	 * Process the answer given by the server to the username request
+	 * Process the answer given by the server to the username request.
 	 * @param request The request to process
 	 */
 	private void processSubmitUsername(final Request request) {
@@ -148,7 +148,7 @@ public class LobbyController extends AbstractController implements ActionListene
 	}
 
 	/**
-	 * Goes to the waiting room if the server refused to let the client in in a game
+	 * Goes to the waiting room if the server refused to let the client in in a game.
 	 * @param request The request to process
 	 */
 	private void processJoinGame(final Request request) {

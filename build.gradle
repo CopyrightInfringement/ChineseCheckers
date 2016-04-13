@@ -22,7 +22,7 @@ jar {
 
 checkstyle {
   configFile = rootProject.file('.checkstyle.xml')
-  toolVersion = '6.16.1'
+  toolVersion = '6.17'
 }
 
 checkstyleMain {

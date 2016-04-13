@@ -6,7 +6,8 @@ import java.io.Serializable;
  * A message sent through the network, from a client to the server, or the other way around.
  * It contains an identifier string  describing the specific nature of the request,
  * and an object which may contain additional informations.
- * The identifier is under the format "A.B.C.D" describing a tree like hierarchy of requests and sub-requests.
+ * The identifier is under the format "A.B.C.D" describing a tree like hierarchy of requests and
+ * sub-requests.
  */
 
 public class Request implements Serializable {
@@ -41,10 +42,11 @@ public class Request implements Serializable {
 	 * @return The sub-request.
 	 */
 	public String getSubRequest(final int level) {
-		if(level < splitted.length)
+		if (level < splitted.length) {
 			return splitted[level];
-		else
+		} else {
 			return null;
+		}
 	}
 
 	/**
@@ -54,11 +56,11 @@ public class Request implements Serializable {
 	public int getSubRequestSize() {
 		return splitted.length;
 	}
-	
+
 	/**
 	 * Reconstructs the Request.
 	 * @return the reconstructed request.
-	 * @throws java.io.ObjectStreamException
+	 * @throws java.io.ObjectStreamException if something wrong happens
 	 */
 	private Object readResolve() throws java.io.ObjectStreamException {
 		return new Request(identifier, content);

@@ -1,5 +1,9 @@
 package org.copinf.cc.controller;
 
+import org.copinf.cc.net.GameInfo;
+import org.copinf.cc.net.Request;
+import org.copinf.cc.view.WaitingRoomPanel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
@@ -9,14 +13,10 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import org.copinf.cc.net.GameInfo;
-import org.copinf.cc.net.Request;
-import org.copinf.cc.view.WaitingRoomPanel;
-
 /**
  * The waiting room where the players wait for enough players to have joined the game.
  */
-public class WaitingRoomController extends AbstractController implements ActionListener{
+public class WaitingRoomController extends AbstractController implements ActionListener {
 
 	private MainController mainController;
 	private WaitingRoomPanel roomPanel;
@@ -25,7 +25,7 @@ public class WaitingRoomController extends AbstractController implements ActionL
 	private GameInfo gameInfo;
 	private String username;
 	private boolean started;
-	
+
 	/**
 	 * @param mainController The main controller
 	 * @param gameInfo The GameInfo associated with the game for which the user is waiting.
@@ -33,17 +33,20 @@ public class WaitingRoomController extends AbstractController implements ActionL
 	 */
 	public WaitingRoomController(MainController mainController, GameInfo gameInfo, String username) {
 		super(mainController, "game");
-		roomPanel = new WaitingRoomPanel(this, gameInfo);
-		this.gameInfo = gameInfo;
 		this.mainController = mainController;
+		this.roomPanel = new WaitingRoomPanel(this, gameInfo);
+		this.playerList = null;
+		this.teamList = null;
+		this.gameInfo = gameInfo;
 		this.username = username;
-		started = false;
+		this.started = false;
 	}
-	
+
 	@Override
-	public void start(){
-		if(started)
+	public void start() {
+		if (started) {
 			finish();
+		}
 		started = true;
 	}
 
@@ -56,51 +59,49 @@ public class WaitingRoomController extends AbstractController implements ActionL
 	@Override
 	public void processRequest(Request request) {
 		String sub = request.getSubRequest(2);
-		if("players".equals(sub)){
+		if ("players".equals(sub)) {
 			String subSub = request.getSubRequest(3);
-			if("refresh".equals(subSub)){
+			if ("refresh".equals(subSub)) {
 				playerList = (List<String>) request.content;
 				playerList.remove(username);
 				roomPanel.setAvailablePlayers(playerList);
 			}
-		}else if("teams".equals(sub)){
+		} else if ("teams".equals(sub)) {
 			String subSub = request.getSubRequest(3);
-			if("refresh".equals(subSub)){
+			if ("refresh".equals(subSub)) {
 				teamList = (List<List<String>>) request.content;
 				roomPanel.setAvailablePlayers(getAvailablePlayers());
-				for(List<String> team : teamList){
-					if(team.contains(username)){
+				for (List<String> team : teamList) {
+					if (team.contains(username)) {
 						roomPanel.hasBeenPaired(team.get(0).equals(username) ? team.get(1) : team.get(0));
 					}
 				}
-			}else if("leader".equals(subSub)){
+			} else if ("leader".equals(subSub)) {
 				roomPanel.enableTeamBuiding(true);
 			}
-		}else if("start".equals(sub)){
+		} else if ("start".equals(sub)) {
 			List<List<String>> teamList = (List<List<String>>) request.content;
 			switchController(new GameController(mainController, gameInfo, username, teamList));
 		}
 	}
-	
+
 	/**
 	 * Returns a collection of the available players, if teams are enabled,
 	 * or the players waiting for the game to begin.
 	 * @return The players.
 	 */
 	private Collection<String> getAvailablePlayers() {
-		Collection<String> c = new ArrayList<String>();
-		c.addAll(playerList);
-		
-		for(List<String> team : teamList){
-			c.removeAll(team);
+		Collection<String> coll = new ArrayList<String>();
+		coll.addAll(playerList);
+		for (List<String> team : teamList) {
+			coll.removeAll(team);
 		}
-		
-		return c;
+		return coll;
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == roomPanel.confirmButton){
+	public void actionPerformed(ActionEvent ev) {
+		if (ev.getSource() == roomPanel.confirmButton) {
 			List<String> team = new ArrayList<>();
 			team.add(username);
 			team.add(roomPanel.getTeamMate());
