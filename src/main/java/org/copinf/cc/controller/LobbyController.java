@@ -1,7 +1,6 @@
 package org.copinf.cc.controller;
 
 import org.copinf.cc.model.DefaultBoard;
-import org.copinf.cc.model.Player;
 import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.net.Request;
 import org.copinf.cc.view.lobbypanel.LobbyPanel;
@@ -75,16 +74,27 @@ public class LobbyController extends AbstractController implements ActionListene
 		}
 	}
 
+	/**
+	 * Asks the server for an updated list of the games it currently hosts.
+	 */
 	private void actionRefreshGameInfoList() {
 		sendRequest(new Request("client.lobby.refresh"));
 	}
 
+	/**
+	 * Process a "server.game.refresh" request containing the list
+	 * of the GameInfos associated with the games it hosts.
+	 * @param request
+	 */
 	@SuppressWarnings("unchecked")
 	private void processRefreshGameInfoList(final Request request) {
 		final Set<GameInfo> waitingGames = (Set<GameInfo>) request.getContent();
 		lobbyPanel.getGamesList().setListData(waitingGames.toArray(new GameInfo[waitingGames.size()]));
 	}
 
+	/**
+	 * Sets an username and asks the server if it is available and valid.
+	 */
 	private void actionSubmitUsername() {
 		username = lobbyPanel.getUsernamePanel().getUsername();
 		if (username.length() > 15) {
@@ -94,6 +104,10 @@ public class LobbyController extends AbstractController implements ActionListene
 		sendRequest(new Request("client.lobby.username", username));
 	}
 
+	/**
+	 * Process the answer given by the server to the username request
+	 * @param request The request to process
+	 */
 	private void processSubmitUsername(final Request request) {
 		if ((Boolean) request.getContent()) {
 			lobbyPanel.getUsernamePanel().switchToUsernamePanel(username);
@@ -103,6 +117,9 @@ public class LobbyController extends AbstractController implements ActionListene
 		}
 	}
 
+	/**
+	 * Create the game described in the creation panel then submit it to the server.
+	 */
 	private void actionCreateGame() {
 		final GameInfo gameInfo = lobbyPanel.getGameCreationPanel().makeGameInfo();
 		if (gameInfo != null) {
@@ -111,6 +128,10 @@ public class LobbyController extends AbstractController implements ActionListene
 		}
 	}
 
+	/**
+	 * Reset the game name in the creation panel if the submitted game wasn't accepted.
+	 * @param request The request to process
+	 */
 	private void processCreateGame(final Request request) {
 		if (!(Boolean) request.getContent()) {
 			selectedGame = null;
@@ -118,11 +139,18 @@ public class LobbyController extends AbstractController implements ActionListene
 		}
 	}
 
+	/**
+	 * Asks the server for the permission to join the selected game.
+	 */
 	public void actionJoinGame() {
 		selectedGame = lobbyPanel.getGamesList().getSelectedValue();
 		sendRequest(new Request("client.lobby.join", selectedGame));
 	}
 
+	/**
+	 * Goes to the waiting room if the server refused to let the client in in a game
+	 * @param request The request to process
+	 */
 	private void processJoinGame(final Request request) {
 		if ((Boolean) request.getContent()) {
 			switchController(new WaitingRoomController(mainController, selectedGame, username));

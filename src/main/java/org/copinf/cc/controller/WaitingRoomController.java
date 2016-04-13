@@ -13,6 +13,9 @@ import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.net.Request;
 import org.copinf.cc.view.WaitingRoomPanel;
 
+/**
+ * The waiting room where the players wait for enough players to have joined the game.
+ */
 public class WaitingRoomController extends AbstractController implements ActionListener{
 
 	private MainController mainController;
@@ -23,6 +26,11 @@ public class WaitingRoomController extends AbstractController implements ActionL
 	private String username;
 	private boolean started;
 	
+	/**
+	 * @param mainController The main controller
+	 * @param gameInfo The GameInfo associated with the game for which the user is waiting.
+	 * @param username The username of the user.
+	 */
 	public WaitingRoomController(MainController mainController, GameInfo gameInfo, String username) {
 		super(mainController, "game");
 		roomPanel = new WaitingRoomPanel(this, gameInfo);
@@ -74,6 +82,11 @@ public class WaitingRoomController extends AbstractController implements ActionL
 		}
 	}
 	
+	/**
+	 * Returns a collection of the avalaible players, if teams are enabled,
+	 * or the players waiting for the game to begin.
+	 * @return The players.
+	 */
 	private Collection<String> getAvailablePlayers() {
 		Collection<String> c = new ArrayList<String>();
 		c.addAll(playerList);

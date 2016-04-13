@@ -52,9 +52,17 @@ public abstract class AbstractController {
 	public void switchController(final AbstractController controller) {
 		mainController.push(controller);
 	}
-
+	
+	/**
+	 * React to a request
+	 * @param request The request to process
+	 */
 	public abstract void processRequest(final Request request);
 
+	/**
+	 * Send a request to the server
+	 * @param request The request to send
+	 */
 	public void sendRequest(final Request request) {
 		mainController.getClient().send(request);
 	}
