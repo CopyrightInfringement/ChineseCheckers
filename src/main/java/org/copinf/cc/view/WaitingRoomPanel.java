@@ -15,12 +15,12 @@ import javax.swing.ListSelectionModel;
 @SuppressWarnings("serial")
 public class WaitingRoomPanel extends JPanel {
 
-	private JList<String> availablePlayers;
-	private JLabel label;
+	private final JList<String> availablePlayers;
+	private final JLabel label;
 	private final GameInfo gameInfo;
 	public final JButton confirmButton;
 
-	public WaitingRoomPanel(WaitingRoomController controller, GameInfo gameInfo) {
+	public WaitingRoomPanel(final WaitingRoomController controller, final GameInfo gameInfo) {
 		super();
 		this.gameInfo = gameInfo;
 
@@ -40,7 +40,7 @@ public class WaitingRoomPanel extends JPanel {
 		label.setText("<html>Game " + gameInfo.name + "<br>" + "Please wait...</html>");
 	}
 
-	public void setAvailablePlayers(Collection<String> availablePlayers) {
+	public void setAvailablePlayers(final Collection<String> availablePlayers) {
 		this.availablePlayers.setListData(availablePlayers.toArray(new String[availablePlayers.size()]));
 		if (!availablePlayers.isEmpty()) {
 			this.availablePlayers.setSelectedIndex(0);
@@ -52,13 +52,13 @@ public class WaitingRoomPanel extends JPanel {
 		return availablePlayers.getSelectedValuesList().get(0);
 	}
 
-	public void enableTeamBuiding(boolean b) {
+	public void enableTeamBuiding(final boolean b) {
 		confirmButton.setVisible(b);
 		label.setText("<html>Game " + gameInfo.name + "<br>"
 			+ (b ? "Select your teammate." : "Please wait...") + "</html>");
 	}
 
-	public void hasBeenPaired(String teamMate) {
+	public void hasBeenPaired(final String teamMate) {
 		confirmButton.setVisible(false);
 		label.setText("<html>Game " + gameInfo.name + "<br>" + teamMate + " is your teammate.</html>");
 	}

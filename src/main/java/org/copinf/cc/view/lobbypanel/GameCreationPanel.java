@@ -35,14 +35,14 @@ public class GameCreationPanel extends JPanel {
 	private final JCheckBox timerCheckBox;
 	private final JSpinner timerSpinner;
 
-	private Map<String, AbstractBoard> boards;
+	private final Map<String, AbstractBoard> boards;
 
 	public GameCreationPanel() {
 		super();
 
 		boards = new HashMap<>();
 
-		SpringLayout springLayout = new SpringLayout();
+		final SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
 
 		final JLabel gameNameLbl = new JLabel("Game name :");

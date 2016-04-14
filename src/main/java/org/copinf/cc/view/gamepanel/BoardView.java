@@ -48,9 +48,9 @@ public class BoardView {
 		this.height = height;
 
 		final double optimalSizeWidth =
-				(double) (width * 80.0 / 100.0) / (Math.sqrt(3.0) * ((double) board.getWidth() + 0.5));
+			(width * 80.0 / 100.0) / (Math.sqrt(3.0) * ((double) board.getWidth() + 0.5));
 		final double optimalSizeHeight =
-				((double) (height * 80.0 / 100.0) * 2.0) / (3.0 * (double) board.getHeight() + 1.0);
+			((height * 80.0 / 100.0) * 2.0) / (3.0 * (double) board.getHeight() + 1.0);
 		final double size = Math.min(optimalSizeWidth, optimalSizeHeight);
 
 		this.displayManager = new DisplayManager(size, 1.0, 1.0, 0.0, width / 2.0, height / 2.0, board);
@@ -138,7 +138,7 @@ public class BoardView {
 
 
 			if (!square.isFree()) {
-				Player owner = square.getPawn().owner;
+				final Player owner = square.getPawn().owner;
 				if (playerViews.containsKey(owner)) {
 					color = playerViews.get(owner).color;
 
@@ -194,7 +194,7 @@ public class BoardView {
 		g.setColor(defaultColor);
 	}
 
-	private void drawNames(Graphics2D g) {
+	private void drawNames(final Graphics2D g) {
 		final Stroke defaultStroke = g.getStroke();
 		final Color defaultColor = g.getColor();
 		final Font defaultFont = g.getFont();
@@ -203,13 +203,11 @@ public class BoardView {
 		g.setColor(Color.BLACK);
 
 		int i = 1;
-
-		for (PlayerView view : playerViews.values()) {
+		for (final PlayerView view : playerViews.values()) {
 			g.setColor(view.color);
-			String name = view.player.getName();
-			int sW = g.getFontMetrics().stringWidth(name);
+			final String name = view.player.getName();
+			final int sW = g.getFontMetrics().stringWidth(name);
 			g.drawString(name, width - sW - 10, i * height / (playerViews.values().size() + 1));
-
 			i++;
 		}
 

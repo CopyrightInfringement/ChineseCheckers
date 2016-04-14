@@ -15,10 +15,7 @@ import javax.swing.JPanel;
 public class InfoBar extends JPanel {
 
 	private final Game game;
-	private final Player player;
-
 	private final JLabel turnCountLabel;
-	private final JLabel playerNameLabel;
 
 	/**
 	 * Constructs a new InfoBar.
@@ -28,12 +25,11 @@ public class InfoBar extends JPanel {
 	public InfoBar(final Game game, final Player player) {
 		super();
 		this.game = game;
-		this.player = player;
 
 		// UI
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
-		playerNameLabel = new JLabel();
+		final JLabel playerNameLabel = new JLabel();
 		add(playerNameLabel);
 		playerNameLabel.setText(player.getName());
 

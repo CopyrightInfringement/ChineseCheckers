@@ -16,9 +16,6 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 
-	private final Game game;
-	private final Player player;
-
 	private final InfoBar infoBar;
 	private final DrawZone drawZone;
 	private final ActionZone actionZone;
@@ -32,8 +29,6 @@ public class GamePanel extends JPanel {
 	 */
 	public GamePanel(final Game game, final Player player) {
 		super();
-		this.game = game;
-		this.player = player;
 
 		this.playerViews = new HashMap<>();
 		int i = 0;
@@ -41,7 +36,7 @@ public class GamePanel extends JPanel {
 			playerViews.put(p, new PlayerView(p, i));
 			i++;
 		}
-		
+
 		// UI
 		setPreferredSize(new Dimension(800, 600));
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -58,7 +53,7 @@ public class GamePanel extends JPanel {
 		actionZone.setPreferredSize(new Dimension(800, 50));
 		add(actionZone);
 	}
-	
+
 	public InfoBar getInfoBar() {
 		return infoBar;
 	}
@@ -70,7 +65,7 @@ public class GamePanel extends JPanel {
 	public ActionZone getActionZone() {
 		return actionZone;
 	}
-	
+
 	public Map<Player, PlayerView> getPlayerViews() {
 		return this.playerViews;
 	}
