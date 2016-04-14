@@ -9,6 +9,10 @@ public class ServerAcceptThread extends Thread {
 	private final Server server;
 	private final boolean listening = true;
 
+	/**
+	 * @param serverSocket The ServerSocket used to accept connections
+	 * @param server The server to which the clients wish to connect
+	 */
 	public ServerAcceptThread(final ServerSocket serverSocket, final Server server) {
 		super("Server accept thread");
 		this.serverSocket = serverSocket;

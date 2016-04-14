@@ -16,6 +16,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The thread handling a game.
+ */
 public class GameThread extends Thread {
 
 	private final GameInfo gameInfo;
@@ -23,7 +26,11 @@ public class GameThread extends Thread {
 	private final Set<ClientThread> clients;
 	private List<List<String>> teams;
 	private Server server;
-
+	
+	/**
+	 * @param gameInfo The information describing the game.
+	 * @param server The server hosting this game.
+	 */
 	public GameThread(final GameInfo gameInfo, Server server) {
 		super("Server GT[" + gameInfo.name + "]");
 		this.server = server;
@@ -43,10 +50,18 @@ public class GameThread extends Thread {
 		}
 	}
 
+	/**
+	 * End this game.
+	 */
 	public void endGame() {
 		server.gameSet.remove(this);
 	}
-
+	
+	/**
+	 * Process a request relayed by a ClientThread.
+	 * @param client The thread handling the connection with the client.
+	 * @param req The request relayed.
+	 */
 	@SuppressWarnings("unchecked")
 	public void processRequest(final ClientThread client, final Request req) {
 		final String sub2 = req.getSubRequest(2);
@@ -70,7 +85,12 @@ public class GameThread extends Thread {
 			broadcast(req);
 		}
 	}
-
+	
+	/**
+	 * Get the player from its username.
+	 * @param name The name of the player.
+	 * @return The player.
+	 */
 	private Player getPlayer(String name) {
 		for (Player player : game.getPlayers()) {
 			if (player.getName().equals(name)) {
@@ -79,7 +99,12 @@ public class GameThread extends Thread {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Process a move request.
+	 * @param ct The thread handling the connection with client who has move his pawn
+	 * @param movement The movement submitted.
+	 */
 	private void processMoveRequest(ClientThread ct, Movement movement) {
 		boolean accepted = game.getBoard().checkMove(movement, getPlayer(ct.getUsername()));
 		ct.send(new Request("server.game.move.request", (Serializable) accepted));
@@ -97,10 +122,18 @@ public class GameThread extends Thread {
 		}
 	}
 
+	/**
+	 * Process a refresh request of the list of the players in this game.
+	 * @param client The client thread.
+	 */
 	public void processPlayersRefresh(final ClientThread client) {
 		client.send(new Request("server.game.players.refresh", getPlayersName()));
 	}
 
+	/**
+	 * Get a list of the players in this game.
+	 * @return the list of players.
+	 */
 	private ArrayList<String> getPlayersName() {
 		final ArrayList<String> players = new ArrayList<>();
 		for (final ClientThread cl : clients) {
@@ -109,12 +142,20 @@ public class GameThread extends Thread {
 		return players;
 	}
 
+	/**
+	 * Send a request to all the players in this game.
+	 * @param req The request to send.
+	 */
 	public void broadcast(final Request req) {
 		for (final ClientThread client : clients) {
 			client.send(req);
 		}
 	}
 
+	/**
+	 * Add a player to this game.
+	 * @param client The client thread handling the connection with the playeer to add.
+	 */
 	public void addClient(final ClientThread client) {
 		if (clients.add(client)) {
 			client.play(this);
@@ -129,6 +170,9 @@ public class GameThread extends Thread {
 		}
 	}
 
+	/**
+	 * Send everyone a list of the registered teams.
+	 */
 	private void sendPlayersRefresh() {
 		List<String> playerList = new ArrayList<String>();
 		for (ClientThread ct : clients) {
@@ -138,7 +182,10 @@ public class GameThread extends Thread {
 			ct.send(new Request("server.game.players.refresh", (Serializable) playerList));
 		}
 	}
-
+	
+	/**
+	 * Call when enough players has joined the game.
+	 */
 	private void onPlayersFull() {
 		if (gameInfo.teams && 2 * teams.size() != gameInfo.nbPlayersMax) {
 			for (ClientThread ct : clients) {
@@ -154,7 +201,10 @@ public class GameThread extends Thread {
 			game.nextTurn();
 		}
 	}
-
+	
+	/**
+	 * Initialize the team list and create the Players object.
+	 */
 	private void initTeams() {
 		for (List<String> teamMates : teams) {
 			Team team = new Team();
@@ -164,7 +214,12 @@ public class GameThread extends Thread {
 			game.addTeam(team);
 		}
 	}
-
+	
+	/**
+	 * Indicates whether or not a player has been registered in a team.
+	 * @param name The player
+	 * @return true if this player is in a team.
+	 */
 	private boolean isInTeam(String name) {
 		for (List<String> team : teams) {
 			if (team.contains(name)) {
@@ -174,14 +229,22 @@ public class GameThread extends Thread {
 		return false;
 	}
 
+	/**
+	 * Remove this client from the game.
+	 * @param client The client to remove
+	 */
 	public void removeClient(final ClientThread client) {
 		if (clients.remove(client)) {
 			//TODO: Replace the player with an AI :
 			endGame();
-			broadcast(new Request("server.game.end", (Serializable) (-1)));
+			broadcast(new Request("server.game.end", -1));
 		}
 	}
 
+	/**
+	 * Returns the game information of this game.
+	 * @return the GameInfo
+	 */
 	public GameInfo getGameInfo() {
 		return gameInfo;
 	}

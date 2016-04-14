@@ -9,6 +9,9 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.logging.Logger;
 
+/**
+ * A thread reading from and writing to a client.
+ */
 public class ClientThread extends Thread {
 
 	private static final Logger LOGGER = Logger.getLogger(ClientThread.class.getName());
@@ -21,6 +24,10 @@ public class ClientThread extends Thread {
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 
+	/**
+	 * @param client The socket allowing to communicate with the client.
+	 * @param server The server.
+	 */
 	public ClientThread(final Socket client, final Server server) {
 		super("Server client thread");
 		this.client = client;
@@ -29,6 +36,12 @@ public class ClientThread extends Thread {
 		out = null;
 	}
 
+	/**
+	 * Create a new ObjectOutputStream from an OutputStream.
+	 * @param os The output stream
+	 * @return The ObjectOutPutSTream.
+	 * @throws IOException
+	 */
 	private static ObjectOutputStream getObjectOutputStream(final OutputStream os)
 			throws IOException {
 		final ObjectOutputStream out = new ObjectOutputStream(os);
@@ -63,18 +76,24 @@ public class ClientThread extends Thread {
 		}
 	}
 
-	public boolean send(final Request req) {
+	/**
+	 * Send a request to the client.
+	 * @param req The request to send.
+	 */
+	public void send(final Request req) {
 		try {
 			out.reset();
 			LOGGER.info("Server : sending to " + username + " " + req);
 			out.writeObject(req);
-			return true;
 		} catch (IOException ex) {
 			System.err.println(ex.getMessage());
-			return false;
 		}
 	}
 
+	/**
+	 * Read the next message received from this client.
+	 * @return The request.
+	 */
 	private Request receive() {
 		try {
 			Request req = (Request) in.readObject();
@@ -85,15 +104,27 @@ public class ClientThread extends Thread {
 		}
 	}
 
+	/**
+	 * Get the username chose by the client.
+	 * @return the username.
+	 */
 	public String getUsername() {
 		return username;
 	}
 
+	/**
+	 * Set the username chose by the client.
+	 * @param username The username of the client.
+	 */
 	public void setUsername(final String username) {
 		this.username = username;
 		setName(getName() + "[" + username + "]");
 	}
 
+	/**
+	 * Set the game played by this client.
+	 * @param game The game.
+	 */
 	public void play(final GameThread game) {
 		this.game = game;
 	}

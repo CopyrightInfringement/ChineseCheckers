@@ -26,7 +26,7 @@ public class Client extends Thread {
 
 	/**
 	 * Constructs a new Client. Call run() to connect it to a server.
-	 * @param host the host ip address / domain name
+	 * @param host the host IP address / domain name
 	 * @param port the host port
 	 */
 	public Client(final String host, final int port) {
@@ -64,6 +64,10 @@ public class Client extends Thread {
 		}
 	}
 
+	/**
+	 * Send a request to the server.
+	 * @param req The request to send.
+	 */
 	public void send(final Request req) {
 		try {
 			out.reset();
@@ -75,6 +79,10 @@ public class Client extends Thread {
 		}
 	}
 
+	/**
+	 * Read the next request received from the server.
+	 * @return the next request, or null if an error occurred or the connection ended.
+	 */
 	private Request receive() {
 		try {
 			Request req = (Request) in.readObject();
@@ -86,6 +94,10 @@ public class Client extends Thread {
 		}
 	}
 
+	/***
+	 * Set a controller as the active controller.
+	 * @param controller the controller.
+	 */
 	public void setController(final AbstractController controller) {
 		this.controller = controller;
 	}
