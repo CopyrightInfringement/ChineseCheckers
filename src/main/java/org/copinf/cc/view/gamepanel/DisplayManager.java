@@ -6,6 +6,9 @@ import org.copinf.cc.model.Coordinates;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 
+/**
+ * Handles the display of the board.
+ */
 public class DisplayManager {
 
 	/* Radius of a hexagon. */
@@ -20,6 +23,15 @@ public class DisplayManager {
 	private Point2D.Double origin;
 	private final AbstractBoard board;
 
+	/**
+	 * @param radius The radius of an hexagon
+	 * @param horizontalScaling The horizontal scaling factor
+	 * @param verticalScaling The vertical scaling factor
+	 * @param angle The rotation angle
+	 * @param centerX The abscissa of the center of the board on the screen
+	 * @param centerY The ordinates of the center of the board on the screen
+	 * @param board The board to display
+	 */
 	public DisplayManager(
 			final double radius,
 			final double horizontalScaling, final double verticalScaling,
@@ -34,46 +46,73 @@ public class DisplayManager {
 		this.board = board;
 	}
 
-
+	/**
+	 * Set the size of an hexagon.
+	 * @param size The size of an hexagon
+	 */
 	public void setSize(final Point2D.Double size) {
 		this.size = size;
 	}
 
+	/**
+	 * Returns the size of an hexagon.
+	 * @return the size of an hexagon
+	 */
 	public Point2D.Double getSize() {
 		return this.size;
 	}
 
+	/**
+	 * Sets the scaling factor of the board.
+	 * @param scale the scaling factor.
+	 */
 	public void setScale(final Point2D.Double scale) {
 		this.scale = scale;
 	}
 
+	/**
+	 * Returns the scaling factor of he board.
+	 * @return the scaling factor
+	 */
 	public Point2D.Double getScale() {
 		return this.scale;
 	}
 
+	/**
+	 * Sets the rotation angle of the board.
+	 * @param angle the rotation angle.
+	 */
 	public void setAngle(final double angle) {
 		this.angle = angle;
 	}
 
+	/**
+	 * Returns the rotation angle of the board.
+	 * @return the rotation angle of the board
+	 */
 	public double getAngle() {
 		return this.angle;
 	}
 
+	/**
+	 * Sets the position of the center of the board on the screen.
+	 * @param origin where the center of the board is displayed on the screen
+	 */
 	public void setOrigin(final Point2D.Double origin) {
 		this.origin = origin;
 	}
 
+	/**
+	 * Returns the position of the center of the board on the screen.
+	 * @return the position of the center of the board on the screen
+	 */
 	public Point2D.Double getOrigin() {
 		return this.origin;
 	}
 
-
 	/**
 	 * Gives the screen coordinates given the board coordinates.
 	 * NOTE: The origin is (0,0)
-	 * @param x
-	 * @param y
-	 * @param z
 	 * @return The screen coordinates
 	 */
 	private Point2D.Double _boardToScreen(final double x, final double y, final double z) {
@@ -83,10 +122,7 @@ public class DisplayManager {
 	/**
 	 * Gives the screen coordinates given the board coordinates and the tilt angle of the board.
 	 * NOTE: The origin is (0,0)
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @param theta
+	 * @param theta the angle
 	 * @return The screen coordinates
 	 */
 	private Point2D.Double _boardToScreen(final double x, final double y, final double z,
@@ -101,12 +137,6 @@ public class DisplayManager {
 	 * Gives the screen coordinates given the board coordinates,
 	 * the tilt angle of the board and the scaling factors.
 	 * NOTE: The origin is (0,0)
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @param theta
-	 * @param horizontalScale
-	 * @param verticalScale
 	 * @return The screen coordinates
 	 */
 	private Point2D.Double _boardToScreen(final double x, final double y, final double z,
@@ -117,9 +147,6 @@ public class DisplayManager {
 
 	/**
 	 * Gives the screen coordinates given the board coordinates.
-	 * @param x
-	 * @param y
-	 * @param z
 	 * @return The screen coordinates
 	 */
 	public Point2D.Double boardToScreen(final double x, final double y, final double z) {
@@ -129,7 +156,6 @@ public class DisplayManager {
 
 	/**
 	 * Gives the screen coordinates given the square coordinates.
-	 * @param coordinates
 	 * @return The screen coordinates
 	 */
 	public Point2D.Double squareToScreen(final Coordinates coordinates) {
@@ -138,10 +164,8 @@ public class DisplayManager {
 
 
 	/**
-	 * Gives the board coordinates given the screen coordinates.
+	 * Gives the board coordinates given the screen coordinates (u,v).
 	 * NOTE: The origin is (0,0)
-	 * @param u
-	 * @param v
 	 * @return The board coordinates
 	 */
 	private double[] _screenToBoard(final double u, final double v) {
@@ -154,8 +178,6 @@ public class DisplayManager {
 	/**
 	 * Gives the board coordinates given the screen coordinates given the rotation angle.
 	 * NOTE: The origin is (0,0)
-	 * @param u
-	 * @param v
 	 * @param theta The rotation angle applied to the board
 	 * @return The screen coordinates
 	 */
@@ -168,11 +190,7 @@ public class DisplayManager {
 	/**
 	 * Gives the board coordinates given the screen coordinates given
 	 * the rotation angle and the scale factors.
-	 * @param u
-	 * @param v
 	 * @param theta The rotation angle applied to the board
-	 * @param su
-	 * @param sv
 	 * @return The screen coordinates
 	 */
 	private double[] _screenToBoard(final double u, final double v, final double theta,
@@ -183,8 +201,6 @@ public class DisplayManager {
 	/**
 	 * Gives the board coordinates given the screen coordinates, the rotation angle,
 	 * the scale factors and the screen origin.
-	 * @param u
-	 * @param v
 	 * @return The board coordinates
 	 */
 	public double[] screenToBoard(final double u, final double v) {
@@ -193,8 +209,6 @@ public class DisplayManager {
 
 	/**
 	 * Gives the exact board coordinates given the screen coordinates.
-	 * @param u
-	 * @param v
 	 * @return The screen coordinates
 	 */
 	public Coordinates screenToSquare(final double u, final double v) {
@@ -204,7 +218,6 @@ public class DisplayManager {
 
 	/**
 	 * Gives the exact board coordinates given the screen coordinates.
-	 * @param point
 	 * @return The screen coordinates
 	 */
 	public Coordinates screenToSquare(final Point2D point) {
@@ -213,9 +226,6 @@ public class DisplayManager {
 
 	/**
 	 * Returns the coordinates of the square in which (x,y,z) is located.
-	 * @param x
-	 * @param y
-	 * @param z
 	 * @return The square coordinates
 	 */
 	public Coordinates nearestSquare(final double x, final double y, final double z) {
@@ -238,6 +248,10 @@ public class DisplayManager {
 		return board.coordinates().contains(result) ? result : null;
 	}
 
+	/**
+	 * Creates an hexagon.
+	 * @return the hexagon
+	 */
 	public Path2D.Double hexagon(final Coordinates h) {
 		final Path2D.Double path = new Path2D.Double();
 		final Point2D.Double center = boardToScreen(h.x, h.y, h.z);
