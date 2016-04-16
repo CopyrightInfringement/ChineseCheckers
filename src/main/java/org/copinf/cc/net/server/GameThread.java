@@ -24,14 +24,14 @@ public class GameThread extends Thread {
 	private final GameInfo gameInfo;
 	private final Game game;
 	private final Set<ClientThread> clients;
-	private final List<List<String>> teams;
-	private final Server server;
-
+	private List<List<String>> teams;
+	private Server server;
+	
 	/**
 	 * @param gameInfo The information describing the game.
 	 * @param server The server hosting this game.
 	 */
-	public GameThread(final GameInfo gameInfo, final Server server) {
+	public GameThread(final GameInfo gameInfo, Server server) {
 		super("Server GT[" + gameInfo.name + "]");
 		this.server = server;
 		this.gameInfo = gameInfo;
@@ -56,7 +56,7 @@ public class GameThread extends Thread {
 	public void endGame() {
 		server.gameSet.remove(this);
 	}
-
+	
 	/**
 	 * Process a request relayed by a ClientThread.
 	 * @param client The thread handling the connection with the client.
@@ -85,39 +85,39 @@ public class GameThread extends Thread {
 			broadcast(req);
 		}
 	}
-
+	
 	/**
 	 * Get the player from its username.
 	 * @param name The name of the player.
 	 * @return The player.
 	 */
-	private Player getPlayer(final String name) {
-		for (final Player player : game.getPlayers()) {
+	private Player getPlayer(String name) {
+		for (Player player : game.getPlayers()) {
 			if (player.getName().equals(name)) {
 				return player;
 			}
 		}
 		return null;
 	}
-
+	
 	/**
 	 * Process a move request.
 	 * @param ct The thread handling the connection with client who has move his pawn
 	 * @param movement The movement submitted.
 	 */
-	private void processMoveRequest(final ClientThread ct, final Movement movement) {
-		final boolean accepted = game.getBoard().checkMove(movement, getPlayer(ct.getUsername()));
-		ct.send(new Request("server.game.move.request", accepted));
+	private void processMoveRequest(ClientThread ct, Movement movement) {
+		boolean accepted = game.getBoard().checkMove(movement, getPlayer(ct.getUsername()));
+		ct.send(new Request("server.game.move.request", (Serializable) accepted));
 		if (accepted) {
 			game.getBoard().move(movement);
-			broadcast(new Request("server.game.move", movement));
+			broadcast(new Request("server.game.move", (Serializable) movement));
 			broadcast(new Request("server.game.next"));
 
 			if (game.isGameOver()) {
-				final Team team = game.getWinner();
-				final int n = game.getTeams().indexOf(team);
+				Team team = game.getWinner();
+				int n = game.getTeams().indexOf(team);
 				endGame();
-				broadcast(new Request("server.game.end", n));
+				broadcast(new Request("server.game.end", (Serializable) n));
 			}
 		}
 	}
@@ -174,21 +174,21 @@ public class GameThread extends Thread {
 	 * Send everyone a list of the registered teams.
 	 */
 	private void sendPlayersRefresh() {
-		final List<String> playerList = new ArrayList<String>();
-		for (final ClientThread ct : clients) {
+		List<String> playerList = new ArrayList<String>();
+		for (ClientThread ct : clients) {
 			playerList.add(ct.getUsername());
 		}
-		for (final ClientThread ct : clients) {
+		for (ClientThread ct : clients) {
 			ct.send(new Request("server.game.players.refresh", (Serializable) playerList));
 		}
 	}
-
+	
 	/**
 	 * Call when enough players has joined the game.
 	 */
 	private void onPlayersFull() {
 		if (gameInfo.teams && 2 * teams.size() != gameInfo.nbPlayersMax) {
-			for (final ClientThread ct : clients) {
+			for (ClientThread ct : clients) {
 				if (!isInTeam(ct.getUsername())) {
 					ct.send(new Request("server.game.teams.leader"));
 					break;
@@ -201,27 +201,27 @@ public class GameThread extends Thread {
 			game.nextTurn();
 		}
 	}
-
+	
 	/**
 	 * Initialize the team list and create the Players object.
 	 */
 	private void initTeams() {
-		for (final List<String> teamMates : teams) {
-			final Team team = new Team();
-			for (final String username : teamMates) {
+		for (List<String> teamMates : teams) {
+			Team team = new Team();
+			for (String username : teamMates) {
 				team.addPlayer(new Player(username));
 			}
 			game.addTeam(team);
 		}
 	}
-
+	
 	/**
 	 * Indicates whether or not a player has been registered in a team.
 	 * @param name The player
 	 * @return true if this player is in a team.
 	 */
-	private boolean isInTeam(final String name) {
-		for (final List<String> team : teams) {
+	private boolean isInTeam(String name) {
+		for (List<String> team : teams) {
 			if (team.contains(name)) {
 				return true;
 			}

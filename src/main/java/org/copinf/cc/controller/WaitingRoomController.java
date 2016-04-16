@@ -18,11 +18,12 @@ import javax.swing.JPanel;
  */
 public class WaitingRoomController extends AbstractController implements ActionListener {
 
-	private final WaitingRoomPanel roomPanel;
+	private MainController mainController;
+	private WaitingRoomPanel roomPanel;
 	private List<String> playerList;
 	private List<List<String>> teamList;
-	private final GameInfo gameInfo;
-	private final String username;
+	private GameInfo gameInfo;
+	private String username;
 	private boolean started;
 
 	/**
@@ -30,9 +31,9 @@ public class WaitingRoomController extends AbstractController implements ActionL
 	 * @param gameInfo The GameInfo associated with the game for which the user is waiting.
 	 * @param username The username of the user.
 	 */
-	public WaitingRoomController(final MainController mainController, final GameInfo gameInfo,
-			final String username) {
+	public WaitingRoomController(MainController mainController, GameInfo gameInfo, String username) {
 		super(mainController, "game");
+		this.mainController = mainController;
 		this.roomPanel = new WaitingRoomPanel(this, gameInfo);
 		this.playerList = null;
 		this.teamList = null;
@@ -56,30 +57,30 @@ public class WaitingRoomController extends AbstractController implements ActionL
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void processRequest(final Request request) {
-		final String sub2 = request.getSubRequest(2);
-		if ("players".equals(sub2)) {
-			final String sub3 = request.getSubRequest(3);
-			if ("refresh".equals(sub3)) {
+	public void processRequest(Request request) {
+		String sub = request.getSubRequest(2);
+		if ("players".equals(sub)) {
+			String subSub = request.getSubRequest(3);
+			if ("refresh".equals(subSub)) {
 				playerList = (List<String>) request.content;
 				playerList.remove(username);
 				roomPanel.setAvailablePlayers(playerList);
 			}
-		} else if ("teams".equals(sub2)) {
-			final String sub3 = request.getSubRequest(3);
-			if ("refresh".equals(sub3)) {
+		} else if ("teams".equals(sub)) {
+			String subSub = request.getSubRequest(3);
+			if ("refresh".equals(subSub)) {
 				teamList = (List<List<String>>) request.content;
 				roomPanel.setAvailablePlayers(getAvailablePlayers());
-				for (final List<String> team : teamList) {
+				for (List<String> team : teamList) {
 					if (team.contains(username)) {
 						roomPanel.hasBeenPaired(team.get(0).equals(username) ? team.get(1) : team.get(0));
 					}
 				}
-			} else if ("leader".equals(sub3)) {
+			} else if ("leader".equals(subSub)) {
 				roomPanel.enableTeamBuiding(true);
 			}
-		} else if ("start".equals(sub2)) {
-			final List<List<String>> teamList = (List<List<String>>) request.content;
+		} else if ("start".equals(sub)) {
+			List<List<String>> teamList = (List<List<String>>) request.content;
 			switchController(new GameController(mainController, gameInfo, username, teamList));
 		}
 	}
@@ -90,18 +91,18 @@ public class WaitingRoomController extends AbstractController implements ActionL
 	 * @return The players.
 	 */
 	private Collection<String> getAvailablePlayers() {
-		final Collection<String> coll = new ArrayList<String>();
+		Collection<String> coll = new ArrayList<String>();
 		coll.addAll(playerList);
-		for (final List<String> team : teamList) {
+		for (List<String> team : teamList) {
 			coll.removeAll(team);
 		}
 		return coll;
 	}
 
 	@Override
-	public void actionPerformed(final ActionEvent ev) {
+	public void actionPerformed(ActionEvent ev) {
 		if (ev.getSource() == roomPanel.confirmButton) {
-			final List<String> team = new ArrayList<>();
+			List<String> team = new ArrayList<>();
 			team.add(username);
 			team.add(roomPanel.getTeamMate());
 			sendRequest(new Request("client.game.teams.leader", (Serializable) team));

@@ -29,7 +29,7 @@ public class Server implements Runnable {
 		this.port = port;
 	}
 
-	/**
+	/***
 	 * Adds a client connection to the list of clients and starts a thread to listen to it.
 	 * @param client The client socket to add
 	 */
@@ -93,7 +93,7 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Returns a set of the GameInfos corresponding to the games hosted by this server.
+	 * Returns a set of the GameInfos corresponding to the games hosted by this server
 	 * @return The set of GameInfos
 	 */
 	private HashSet<GameInfo> getGameInfos() {

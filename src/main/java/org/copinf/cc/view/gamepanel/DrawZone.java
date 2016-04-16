@@ -25,11 +25,12 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 
 	private static final Logger LOGGER = Logger.getLogger(DrawZone.class.getName());
 
+	private final Game game;
 	private final Player player;
 	private final BoardView boardView;
 	private Point mouse;
-	private final List<Message> messages;
-	private final Map<Player, PlayerView> playerViews;
+	private List<Message> messages;
+	private Map<Player, PlayerView> playerViews;
 
 	/**
 	 * Constructs a new DrawZone.
@@ -39,6 +40,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	 */
 	public DrawZone(final Game game, final Player player, final Map<Player, PlayerView> playerViews) {
 		super();
+		this.game = game;
 		this.player = player;
 		boardView = new BoardView(game.getBoard(), player, playerViews, 800, 500);
 
@@ -93,13 +95,13 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	}
 
 	public void drawMessages(final Graphics2D g2d) {
-		final int x = 5;
+		int x = 5;
 		int y = 5;
 		for (int i = messages.size() - 1; i >= 0 ; i--) {
-			final Message message = messages.get(i);
+			Message message = messages.get(i);
 			Color color = Color.BLACK;
 			if (message.isChatMessage) {
-				for (final PlayerView pv : playerViews.values()) {
+				for (PlayerView pv : playerViews.values()) {
 					if (pv.player.getName().equals(message.playerName)) {
 						color = pv.color;
 					}
