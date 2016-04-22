@@ -62,7 +62,6 @@ public class GameController extends AbstractController implements ActionListener
 	private final GamePanel gamePanel;
 	private final DisplayManager displayManager;
 	private final Player mainPlayer;
-	private static final Pattern MESSAGE_PATTERN = Pattern.compile("^[(.+)](.+)$");
 	private final Map<String, Player> players;
 
 	private boolean waitingForAnswer;
@@ -110,6 +109,7 @@ public class GameController extends AbstractController implements ActionListener
 		gamePanel.getActionZone().getResetButton().addMouseListener(this);
 		gamePanel.getActionZone().getSendButton().addMouseListener(this);
 
+		gamePanel.getInfoBar().updateLabels();
 		setButtonsVisibility();
 
 		this.currentMovement = new Movement();
@@ -120,6 +120,7 @@ public class GameController extends AbstractController implements ActionListener
 	 */
 	private void onNextTurn() {
 		game.nextTurn();
+		gamePanel.getInfoBar().updateLabels();
 		setButtonsVisibility();
 	}
 
@@ -127,9 +128,7 @@ public class GameController extends AbstractController implements ActionListener
 	 * Method to call to set the correct visibility of the GamePanel buttons.
 	 */
 	private void setButtonsVisibility() {
-		boolean visibility = mainPlayer == game.getCurrentPlayer();
-		gamePanel.getActionZone().getNextButton().setVisible(visibility);
-		gamePanel.getActionZone().getResetButton().setVisible(visibility);
+		gamePanel.getActionZone().toggle(mainPlayer == game.getCurrentPlayer());
 	}
 
 	@Override

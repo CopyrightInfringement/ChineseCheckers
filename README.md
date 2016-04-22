@@ -1,3 +1,10 @@
+# TODO !
+- Check that a submitted username isn't empty before validating it
+- Prettier GUI
+- Chat for the waiting room
+- Implement the timer
+- Not remove a game if a player leaves the waiting room
+
 # ChineseCheckers
 [![License](http://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/CopyrightInfringement/ChineseCheckers.svg?branch=master)](https://travis-ci.org/CopyrightInfringement/ChineseCheckers)

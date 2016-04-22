@@ -2,7 +2,7 @@ package org.copinf.cc.controller;
 
 import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.net.Request;
-import org.copinf.cc.view.WaitingRoomPanel;
+import org.copinf.cc.view.waitingroompanel.WaitingRoomPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,18 +28,19 @@ public class WaitingRoomController extends AbstractController implements ActionL
 
 	/**
 	 * @param mainController The main controller
-	 * @param gameInfo The GameInfo associated with the game for which the user is waiting.
 	 * @param username The username of the user.
 	 */
 	public WaitingRoomController(MainController mainController, GameInfo gameInfo, String username) {
 		super(mainController, "game");
 		this.mainController = mainController;
-		this.roomPanel = new WaitingRoomPanel(this, gameInfo);
+		this.roomPanel = new WaitingRoomPanel(this);
 		this.playerList = null;
 		this.teamList = null;
 		this.gameInfo = gameInfo;
 		this.username = username;
 		this.started = false;
+		
+		roomPanel.teamBuildingPanel.confirmButton.addActionListener(this);
 	}
 
 	@Override
@@ -64,20 +65,20 @@ public class WaitingRoomController extends AbstractController implements ActionL
 			if ("refresh".equals(subSub)) {
 				playerList = (List<String>) request.content;
 				playerList.remove(username);
-				roomPanel.setAvailablePlayers(playerList);
+				roomPanel.teamBuildingPanel.setAvailablePlayers(playerList);
 			}
 		} else if ("teams".equals(sub)) {
 			String subSub = request.getSubRequest(3);
 			if ("refresh".equals(subSub)) {
 				teamList = (List<List<String>>) request.content;
-				roomPanel.setAvailablePlayers(getAvailablePlayers());
+				roomPanel.teamBuildingPanel.setAvailablePlayers(getAvailablePlayers());
 				for (List<String> team : teamList) {
 					if (team.contains(username)) {
-						roomPanel.hasBeenPaired(team.get(0).equals(username) ? team.get(1) : team.get(0));
+						roomPanel.teamBuildingPanel.hasBeenPaired(team.get(0).equals(username) ? team.get(1) : team.get(0));
 					}
 				}
 			} else if ("leader".equals(subSub)) {
-				roomPanel.enableTeamBuiding(true);
+				roomPanel.teamBuildingPanel.enableTeamBuiding(true);
 			}
 		} else if ("start".equals(sub)) {
 			List<List<String>> teamList = (List<List<String>>) request.content;
@@ -101,12 +102,12 @@ public class WaitingRoomController extends AbstractController implements ActionL
 
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		if (ev.getSource() == roomPanel.confirmButton) {
+		if (ev.getSource() == roomPanel.teamBuildingPanel.confirmButton) {
 			List<String> team = new ArrayList<>();
 			team.add(username);
-			team.add(roomPanel.getTeamMate());
+			team.add(roomPanel.teamBuildingPanel.getTeamMate());
 			sendRequest(new Request("client.game.teams.leader", (Serializable) team));
-			roomPanel.enableTeamBuiding(false);
+			roomPanel.teamBuildingPanel.enableTeamBuiding(false);
 		}
 	}
 }

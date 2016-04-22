@@ -6,6 +6,8 @@ import org.copinf.cc.model.Player;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 /**
  * The InfoBar at the top of the Window, providing informations such as the player's name,
@@ -19,6 +21,7 @@ public class InfoBar extends JPanel {
 
 	private final JLabel turnCountLabel;
 	private final JLabel playerNameLabel;
+	private final JLabel currentPlayerLabel;
 
 	/**
 	 * Constructs a new InfoBar.
@@ -31,14 +34,21 @@ public class InfoBar extends JPanel {
 		this.player = player;
 
 		// UI
-		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
 		playerNameLabel = new JLabel();
-		add(playerNameLabel);
-		playerNameLabel.setText(player.getName());
-
+		playerNameLabel.setText("You are " + player.getName());
+		
+		currentPlayerLabel = new JLabel();
+		
 		turnCountLabel = new JLabel();
+
+		add(playerNameLabel);
+		add(new JSeparator(SwingConstants.VERTICAL));
+		add(currentPlayerLabel);
+		add(new JSeparator(SwingConstants.VERTICAL));
 		add(turnCountLabel);
+		
+		updateLabels();
 	}
 
 	/**
@@ -46,5 +56,9 @@ public class InfoBar extends JPanel {
 	 */
 	public void updateLabels() {
 		turnCountLabel.setText("Turn: " + game.getTurnCount());
+		if(game.getCurrentPlayer() == player)
+			currentPlayerLabel.setText("You are playing !");
+		else
+			currentPlayerLabel.setText(game.getCurrentPlayer().getName() + " is playing !");
 	}
 }
