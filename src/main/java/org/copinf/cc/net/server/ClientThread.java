@@ -70,8 +70,8 @@ public class ClientThread extends Thread {
 			}
 			server.removeClient(this);
 		} catch (IOException ex) {
-			System.out.println("ClientThread.run");
 			System.err.println(ex.getMessage());
+			ex.printStackTrace();
 			System.exit(1);
 		}
 	}
@@ -87,6 +87,7 @@ public class ClientThread extends Thread {
 			out.writeObject(req);
 		} catch (IOException ex) {
 			System.err.println(ex.getMessage());
+			ex.printStackTrace();
 		}
 	}
 
@@ -100,6 +101,8 @@ public class ClientThread extends Thread {
 			LOGGER.info("Server : receciving from " + username + " " + req);
 			return req;
 		} catch (IOException | ClassNotFoundException ex) {
+			System.err.println(ex.getMessage());
+			ex.printStackTrace();
 			return null;
 		}
 	}

@@ -13,13 +13,12 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Client extends Thread {
-
-	private final String host;
-	private final int port;
-
+	
 	private ObjectInputStream in;
 	private ObjectOutputStream out;
 
+	private Socket client;
+	
 	private AbstractController controller;
 
 	private static final Logger LOGGER = Logger.getLogger(ClientThread.class.getName());
@@ -32,36 +31,32 @@ public class Client extends Thread {
 	public Client(final String host, final int port) {
 		super();
 		setName("Client thread");
-		this.host = host;
-		this.port = port;
-		in = null;
-		out = null;
+
+		try {
+			client = new Socket(host, port);
+			in  = new ObjectInputStream(client.getInputStream());
+			out = new ObjectOutputStream(client.getOutputStream());
+		} catch (IOException e) {
+			System.out.print(e.getMessage());
+			e.printStackTrace();
+			System.exit(1);
+		}
+		
 		controller = null;
 	}
 
 	@Override
 	public void run() {
-		try (
-			Socket client = new Socket(host, port);
-			ObjectInputStream  in  = new ObjectInputStream(client.getInputStream());
-			ObjectOutputStream out = new ObjectOutputStream(client.getOutputStream())
-		) {
-			this.in = in;
-			this.out = out;
-			Request req;
-			while ((req = receive()) != null) {
-				if (req.getSubRequest(1).equals(controller.identifier)) {
-					controller.processRequest(req);
-				}
+		Request req;
+		while ((req = receive()) != null) {
+			if (req.getSubRequest(1).equals(controller.identifier)) {
+				controller.processRequest(req);
 			}
-			JOptionPane.showMessageDialog(null,
-				"The server closed unexpectedly", "Server error",
-				JOptionPane.ERROR_MESSAGE);
-			System.exit(1);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			System.exit(1);
 		}
+		JOptionPane.showMessageDialog(null,
+			"The server closed unexpectedly", "Server error",
+			JOptionPane.ERROR_MESSAGE);
+		System.exit(1);
 	}
 
 	/**
@@ -89,7 +84,9 @@ public class Client extends Thread {
 			LOGGER.info("Client : receiving from server " + req);
 			return req;
 		} catch (IOException | ClassNotFoundException ex) {
+			System.out.print(ex.getMessage());
 			ex.printStackTrace();
+			System.exit(1);
 			return null;
 		}
 	}
