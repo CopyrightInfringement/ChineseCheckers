@@ -24,6 +24,7 @@ public class DisplayManager {
 	private final AbstractBoard board;
 
 	/**
+	 * Constructs a new DisplayManager.
 	 * @param radius The radius of an hexagon
 	 * @param horizontalScaling The horizontal scaling factor
 	 * @param verticalScaling The vertical scaling factor
@@ -111,25 +112,17 @@ public class DisplayManager {
 	}
 
 	/**
-	 * Gives the screen coordinates given the board coordinates.
-	 * NOTE: The origin is (0,0)
-	 * @return The screen coordinates
-	 */
-	private Point2D.Double _boardToScreen(final double x, final double y, final double z) {
-		return new Point2D.Double((x - y) * size.x / 2.0, 3.0 * (x + y) * size.y / 4.0);
-	}
-
-	/**
 	 * Gives the screen coordinates given the board coordinates and the tilt angle of the board.
 	 * NOTE: The origin is (0,0)
 	 * @param theta the angle
 	 * @return The screen coordinates
 	 */
-	private Point2D.Double _boardToScreen(final double x, final double y, final double z,
+	private Point2D.Double boardToScreen(final double x, final double y, final double z,
 			final double theta) {
 		final double cos = Math.cos(theta);
 		final double sin = Math.sin(theta);
-		final Point2D.Double point = _boardToScreen(x, y, z);
+		final Point2D.Double point = new Point2D.Double(
+			(x - y) * size.x / 2.0, 3.0 * (x + y) * size.y / 4.0);
 		return new Point2D.Double(point.x * cos - sin * point.y, point.x * sin + cos * point.y);
 	}
 
@@ -139,9 +132,9 @@ public class DisplayManager {
 	 * NOTE: The origin is (0,0)
 	 * @return The screen coordinates
 	 */
-	private Point2D.Double _boardToScreen(final double x, final double y, final double z,
+	private Point2D.Double boardToScreen(final double x, final double y, final double z,
 			final double theta, final double horizontalScale, final double verticalScale) {
-		final Point2D.Double point = _boardToScreen(x, y, z, theta);
+		final Point2D.Double point = boardToScreen(x, y, z, theta);
 		return new Point2D.Double(point.x * horizontalScale, point.y * verticalScale);
 	}
 
@@ -150,7 +143,7 @@ public class DisplayManager {
 	 * @return The screen coordinates
 	 */
 	public Point2D.Double boardToScreen(final double x, final double y, final double z) {
-		final Point2D.Double point = _boardToScreen(x, y, z, angle, scale.x, scale.y);
+		final Point2D.Double point = boardToScreen(x, y, z, angle, scale.x, scale.y);
 		return new Point2D.Double(point.x + origin.x, point.y + origin.y);
 	}
 
@@ -162,29 +155,21 @@ public class DisplayManager {
 		return boardToScreen(coordinates.x, coordinates.y, coordinates.z);
 	}
 
-
-	/**
-	 * Gives the board coordinates given the screen coordinates (u,v).
-	 * NOTE: The origin is (0,0)
-	 * @return The board coordinates
-	 */
-	private double[] _screenToBoard(final double u, final double v) {
-		return new double[]{
-			2.0 * v / (3.0 * size.y) + u / size.x,
-			2.0 * v / (3.0 * size.y) - u / size.x,
-			-4 * v / (3.0 * size.y)};
-	}
-
 	/**
 	 * Gives the board coordinates given the screen coordinates given the rotation angle.
 	 * NOTE: The origin is (0,0)
 	 * @param theta The rotation angle applied to the board
 	 * @return The screen coordinates
 	 */
-	private double[] _screenToBoard(final double u, final double v, final double theta) {
+	private double[] screenToBoard(final double u, final double v, final double theta) {
 		final double cos = Math.cos(-theta);
 		final double sin = Math.sin(-theta);
-		return _screenToBoard(cos * u - sin * v, sin * u + cos * v);
+		final double a = cos * u - sin * v;
+		final double b = sin * u + cos * v;
+		return new double[]{
+			2.0 * b / (3.0 * size.y) + a / size.x,
+			2.0 * b / (3.0 * size.y) - a / size.x,
+			-4 * b / (3.0 * size.y)};
 	}
 
 	/**
@@ -193,9 +178,9 @@ public class DisplayManager {
 	 * @param theta The rotation angle applied to the board
 	 * @return The screen coordinates
 	 */
-	private double[] _screenToBoard(final double u, final double v, final double theta,
+	private double[] screenToBoard(final double u, final double v, final double theta,
 			final double su, final double sv) {
-		return _screenToBoard(u / su, v / sv, theta);
+		return screenToBoard(u / su, v / sv, theta);
 	}
 
 	/**
@@ -204,7 +189,7 @@ public class DisplayManager {
 	 * @return The board coordinates
 	 */
 	public double[] screenToBoard(final double u, final double v) {
-		return _screenToBoard(u - origin.x, v - origin.y, angle, scale.x, scale.y);
+		return screenToBoard(u - origin.x, v - origin.y, angle, scale.x, scale.y);
 	}
 
 	/**
@@ -212,7 +197,7 @@ public class DisplayManager {
 	 * @return The screen coordinates
 	 */
 	public Coordinates screenToSquare(final double u, final double v) {
-		double[] p = screenToBoard(u, v);
+		final double[] p = screenToBoard(u, v);
 		return nearestSquare(p[0], p[1], p[2]);
 	}
 

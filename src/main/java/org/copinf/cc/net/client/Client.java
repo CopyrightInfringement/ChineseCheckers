@@ -85,7 +85,7 @@ public class Client extends Thread {
 	 */
 	private Request receive() {
 		try {
-			Request req = (Request) in.readObject();
+			final Request req = (Request) in.readObject();
 			LOGGER.info("Client : receiving from server " + req);
 			return req;
 		} catch (IOException | ClassNotFoundException ex) {
@@ -94,7 +94,7 @@ public class Client extends Thread {
 		}
 	}
 
-	/***
+	/**
 	 * Set a controller as the active controller.
 	 * @param controller the controller.
 	 */

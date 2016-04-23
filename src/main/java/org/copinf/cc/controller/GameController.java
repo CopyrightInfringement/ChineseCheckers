@@ -19,12 +19,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -57,7 +55,6 @@ public class GameController extends AbstractController implements ActionListener
 	private static final Logger LOGGER = Logger.getLogger(GameController.class.getName());
 
 	private final Game game;
-	private final GameInfo gameInfo;
 	private final Movement currentMovement;
 	private final GamePanel gamePanel;
 	private final DisplayManager displayManager;
@@ -77,23 +74,22 @@ public class GameController extends AbstractController implements ActionListener
 			final String mainPlayerName, final List<List<String>> teamList) {
 		super(mainController, "game");
 
-		this.gameInfo = gameInfo;
 		this.game = new Game(new DefaultBoard(gameInfo.size));
 		this.players = new HashMap<String, Player>();
 
-		for (List<String> teamMates : teamList) {
-			Team team = new Team();
-			for (String username : teamMates) {
-				Player player = new Player(username);
+		// players is never used
+		for (final List<String> teamMates : teamList) {
+			final Team team = new Team();
+			for (final String username : teamMates) {
+				final Player player = new Player(username);
 				team.addPlayer(player);
 				players.put(username, player);
 			}
 			this.game.addTeam(team);
 		}
+		this.mainPlayer = players.get(mainPlayerName);
 
 		this.game.setNumberOfZones(gameInfo.nbZones);
-
-		this.mainPlayer = players.get(mainPlayerName);
 
 		game.nextTurn();
 
@@ -142,14 +138,14 @@ public class GameController extends AbstractController implements ActionListener
 
 	@Override
 	public void mouseClicked(final MouseEvent ev) {
-		ActionZone az = gamePanel.getActionZone();
+		final ActionZone az = gamePanel.getActionZone();
 		if (ev.getSource() == az.getNextButton()) {
 			nextButtonClicked();
 		} else if (ev.getSource() == az.getResetButton()) {
 			resetButtonClicked();
 		} else if (ev.getSource() == az.getSendButton()) {
-			Message message = new Message(az.getMessage(), mainPlayer.getName());
-			sendRequest(new Request("client.game.message", (Serializable) message));
+			final Message message = new Message(az.getMessage(), mainPlayer.getName());
+			sendRequest(new Request("client.game.message", message));
 		} else {
 			final Coordinates coordinates = displayManager.screenToSquare(ev.getX(), ev.getY());
 			if (coordinates != null) {
@@ -222,18 +218,18 @@ public class GameController extends AbstractController implements ActionListener
 			gamePanel.getDrawZone().addMessage((Message) request.content);
 			gamePanel.repaint();
 		} else if ("end".equals(sub2)) {
-			int teamId = (Integer) request.content;
+			final int teamId = (Integer) request.content;
 			if (teamId < 0) {
 				JOptionPane.showMessageDialog(null,
 					"A player has left the game", "Game over",
 					JOptionPane.ERROR_MESSAGE);
-				finish();
+				end();
 			} else {
-				Team team = game.getWinner();
+				final Team team = game.getWinner();
 				JOptionPane.showMessageDialog(null,
 					team.get(0).getName() + (team.size() == 2 ? "'s team" : "") + " has won" , "Game over",
 					JOptionPane.INFORMATION_MESSAGE);
-				finish();
+				end();
 			}
 		}
 	}
@@ -243,7 +239,7 @@ public class GameController extends AbstractController implements ActionListener
 	 * @param request The request
 	 */
 	private void processMoveRequest(final Request request) {
-		String sub = request.getSubRequest(3);
+		final String sub = request.getSubRequest(3);
 		if (currentMovement.size() >= 2) {
 			movePawn(currentMovement.getReversedCondensed());
 		}
@@ -253,7 +249,7 @@ public class GameController extends AbstractController implements ActionListener
 				gamePanel.getDrawZone().addMessage(ErrorMsg.SERVER_REFUSED.msg);
 			}
 		} else if (sub == null) {
-			Movement movement = (Movement) request.content;
+			final Movement movement = (Movement) request.content;
 			movePawn(movement);
 		}
 	}
@@ -262,7 +258,7 @@ public class GameController extends AbstractController implements ActionListener
 	 * Moves a pawn then repaint the board.
 	 * @param movement a movement
 	 */
-	private void movePawn(Movement movement) {
+	private void movePawn(final Movement movement) {
 		game.getBoard().move(movement);
 		gamePanel.repaint();
 	}

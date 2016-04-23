@@ -8,6 +8,9 @@ import java.util.Stack;
 
 import javax.swing.JPanel;
 
+/**
+ * Holds a stack of controllers.
+ */
 public class MainController {
 
 	private final Window window;
@@ -17,6 +20,9 @@ public class MainController {
 
 	private final Stack<AbstractController> controllers;
 
+	/**
+	 * Constructs a new MainController.
+	 */
 	public MainController() {
 		window = new Window();
 		controllers = new Stack<>();
@@ -34,8 +40,6 @@ public class MainController {
 
 	/**
 	 * Pushes a controller on top of the other controllers.
-	 * NOTE: By using a stack of controller we can navigate through them
-	 * in a way similar to "previous" and "next" buttons on a web browser.
 	 * @param controller The controller to put on top of the other controllers.
 	 */
 	public void push(final AbstractController controller) {
@@ -66,9 +70,7 @@ public class MainController {
 			throw new RuntimeException("The top controller isn't the one that asked to end");
 		}
 		controllers.pop();
-		if (controllers.isEmpty()) {
-			System.exit(0);
-		} else {
+		if (!controllers.isEmpty()) {
 			setController(controllers.peek());
 		}
 	}

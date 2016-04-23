@@ -13,7 +13,7 @@ import javax.swing.JTextField;
  * and a "next" button to end a turn.
  */
 @SuppressWarnings("serial")
-public class ActionZone extends JPanel implements FocusListener{
+public class ActionZone extends JPanel implements FocusListener {
 
 	private final JButton resetButton;
 	private final JButton nextButton;
@@ -46,11 +46,11 @@ public class ActionZone extends JPanel implements FocusListener{
 	public JButton getResetButton() {
 		return resetButton;
 	}
-	
+
 	public JButton getSendButton() {
 		return sendButton;
 	}
-	
+
 	public String getMessage() {
 		return chatField.getText();
 	}
@@ -68,12 +68,13 @@ public class ActionZone extends JPanel implements FocusListener{
 	}
 
 	@Override
-	public void focusGained(FocusEvent e) {
-		if(chatField.getText().equals(DEFAULT_TEXT))
+	public void focusGained(final FocusEvent ev) {
+		if (chatField.getText().equals(DEFAULT_TEXT)) {
 			chatField.setText("");
+		}
 	}
 
 	@Override
-	public void focusLost(FocusEvent e) {
+	public void focusLost(final FocusEvent ev) {
 	}
 }

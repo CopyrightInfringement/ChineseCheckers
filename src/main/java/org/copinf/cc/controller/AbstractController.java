@@ -9,6 +9,7 @@ import javax.swing.JPanel;
  */
 public abstract class AbstractController {
 
+	/** An identifier for this controller, used to dispatch network messages. */
 	public final String identifier;
 	protected final MainController mainController;
 
@@ -23,17 +24,16 @@ public abstract class AbstractController {
 	}
 
 	/**
-	 * Starts this controller.
+	 * Starts this controller. A subclass of AbstractController redefining this method should call
+	 * the superclass start method at the beginning of the method.
 	 */
 	public void start() {}
 
 	/**
-	 * Ends this controller.
+	 * Ends this controller. A subclass of AbstractController redefining this method should call
+	 * the superclass start method at the end of the method.
 	 */
-	public void end() {}
-
-	public void finish() {
-		end();
+	public void end() {
 		mainController.pop(this);
 	}
 

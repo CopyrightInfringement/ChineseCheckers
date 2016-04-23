@@ -40,7 +40,7 @@ public class ClientThread extends Thread {
 	 * Create a new ObjectOutputStream from an OutputStream.
 	 * @param os The output stream
 	 * @return The ObjectOutPutSTream.
-	 * @throws IOException
+	 * @throws IOException If an I/O error has occurred.
 	 */
 	private static ObjectOutputStream getObjectOutputStream(final OutputStream os)
 			throws IOException {
@@ -96,7 +96,7 @@ public class ClientThread extends Thread {
 	 */
 	private Request receive() {
 		try {
-			Request req = (Request) in.readObject();
+			final Request req = (Request) in.readObject();
 			LOGGER.info("Server : receciving from " + username + " " + req);
 			return req;
 		} catch (IOException | ClassNotFoundException ex) {

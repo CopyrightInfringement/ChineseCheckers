@@ -11,6 +11,9 @@ public class Movement extends Stack<Coordinates> {
 
 	private static final long serialVersionUID = 42L;
 
+	/**
+	 * Constructs a new Movement.
+	 */
 	public Movement() {
 		super();
 	}

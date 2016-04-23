@@ -1,5 +1,8 @@
 package org.copinf.cc.model;
 
+/**
+ * Provides a model for teams of players.
+ */
 public class Team {
 
 	/** Players of the current team. */

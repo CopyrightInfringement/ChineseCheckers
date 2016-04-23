@@ -3,7 +3,6 @@ package org.copinf.cc.view.gamepanel;
 import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Player;
 
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -20,7 +19,6 @@ public class InfoBar extends JPanel {
 	private final Player player;
 
 	private final JLabel turnCountLabel;
-	private final JLabel playerNameLabel;
 	private final JLabel currentPlayerLabel;
 
 	/**
@@ -35,11 +33,11 @@ public class InfoBar extends JPanel {
 
 		// UI
 
-		playerNameLabel = new JLabel();
+		final JLabel playerNameLabel = new JLabel();
 		playerNameLabel.setText("You are " + player.getName());
-		
+
 		currentPlayerLabel = new JLabel();
-		
+
 		turnCountLabel = new JLabel();
 
 		add(playerNameLabel);
@@ -47,7 +45,7 @@ public class InfoBar extends JPanel {
 		add(currentPlayerLabel);
 		add(new JSeparator(SwingConstants.VERTICAL));
 		add(turnCountLabel);
-		
+
 		updateLabels();
 	}
 
@@ -56,9 +54,10 @@ public class InfoBar extends JPanel {
 	 */
 	public void updateLabels() {
 		turnCountLabel.setText("Turn: " + game.getTurnCount());
-		if(game.getCurrentPlayer() == player)
+		if (game.getCurrentPlayer() == player) {
 			currentPlayerLabel.setText("You are playing !");
-		else
+		} else {
 			currentPlayerLabel.setText(game.getCurrentPlayer().getName() + " is playing !");
+		}
 	}
 }

@@ -18,35 +18,37 @@ import javax.swing.JPanel;
  */
 public class WaitingRoomController extends AbstractController implements ActionListener {
 
-	private MainController mainController;
-	private WaitingRoomPanel roomPanel;
+	private final WaitingRoomPanel roomPanel;
 	private List<String> playerList;
 	private List<List<String>> teamList;
-	private GameInfo gameInfo;
-	private String username;
+	private final GameInfo gameInfo;
+	private final String username;
 	private boolean started;
 
 	/**
+	 * Constructs a new WaitingRoomController.
 	 * @param mainController The main controller
-	 * @param username The username of the user.
+	 * @param gameInfo The game info of the current game
+	 * @param username The username of the user
 	 */
-	public WaitingRoomController(MainController mainController, GameInfo gameInfo, String username) {
+	public WaitingRoomController(final MainController mainController, final GameInfo gameInfo,
+			final String username) {
 		super(mainController, "game");
-		this.mainController = mainController;
-		this.roomPanel = new WaitingRoomPanel(this);
+		this.roomPanel = new WaitingRoomPanel();
 		this.playerList = null;
 		this.teamList = null;
 		this.gameInfo = gameInfo;
 		this.username = username;
 		this.started = false;
-		
+
 		roomPanel.teamBuildingPanel.confirmButton.addActionListener(this);
 	}
 
 	@Override
 	public void start() {
+		super.start();
 		if (started) {
-			finish();
+			end();
 		}
 		started = true;
 	}
@@ -58,30 +60,30 @@ public class WaitingRoomController extends AbstractController implements ActionL
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void processRequest(Request request) {
-		String sub = request.getSubRequest(2);
-		if ("players".equals(sub)) {
-			String subSub = request.getSubRequest(3);
-			if ("refresh".equals(subSub)) {
+	public void processRequest(final Request request) {
+		final String sub2 = request.getSubRequest(2);
+		if ("players".equals(sub2)) {
+			final String sub3 = request.getSubRequest(3);
+			if ("refresh".equals(sub3)) {
 				playerList = (List<String>) request.content;
 				playerList.remove(username);
 				roomPanel.teamBuildingPanel.setAvailablePlayers(playerList);
 			}
-		} else if ("teams".equals(sub)) {
-			String subSub = request.getSubRequest(3);
-			if ("refresh".equals(subSub)) {
+		} else if ("teams".equals(sub2)) {
+			final String sub3 = request.getSubRequest(3);
+			if ("refresh".equals(sub3)) {
 				teamList = (List<List<String>>) request.content;
 				roomPanel.teamBuildingPanel.setAvailablePlayers(getAvailablePlayers());
-				for (List<String> team : teamList) {
+				for (final List<String> team : teamList) {
 					if (team.contains(username)) {
 						roomPanel.teamBuildingPanel.hasBeenPaired(team.get(0).equals(username) ? team.get(1) : team.get(0));
 					}
 				}
-			} else if ("leader".equals(subSub)) {
+			} else if ("leader".equals(sub3)) {
 				roomPanel.teamBuildingPanel.enableTeamBuiding(true);
 			}
-		} else if ("start".equals(sub)) {
-			List<List<String>> teamList = (List<List<String>>) request.content;
+		} else if ("start".equals(sub2)) {
+			final List<List<String>> teamList = (List<List<String>>) request.content;
 			switchController(new GameController(mainController, gameInfo, username, teamList));
 		}
 	}
@@ -92,18 +94,18 @@ public class WaitingRoomController extends AbstractController implements ActionL
 	 * @return The players.
 	 */
 	private Collection<String> getAvailablePlayers() {
-		Collection<String> coll = new ArrayList<String>();
+		final Collection<String> coll = new ArrayList<String>();
 		coll.addAll(playerList);
-		for (List<String> team : teamList) {
+		for (final List<String> team : teamList) {
 			coll.removeAll(team);
 		}
 		return coll;
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent ev) {
+	public void actionPerformed(final ActionEvent ev) {
 		if (ev.getSource() == roomPanel.teamBuildingPanel.confirmButton) {
-			List<String> team = new ArrayList<>();
+			final List<String> team = new ArrayList<>();
 			team.add(username);
 			team.add(roomPanel.teamBuildingPanel.getTeamMate());
 			sendRequest(new Request("client.game.teams.leader", (Serializable) team));

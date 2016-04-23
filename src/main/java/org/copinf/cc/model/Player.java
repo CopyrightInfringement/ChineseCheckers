@@ -3,6 +3,9 @@ package org.copinf.cc.model;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Provides a model for players.
+ */
 public class Player {
 
 	/** Zones where the pawns of this  player are at the beginning of the game. */
@@ -59,6 +62,7 @@ public class Player {
 		return initialZones;
 	}
 
+	@Override
 	public String toString() {
 		return name;
 	}

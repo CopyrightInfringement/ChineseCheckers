@@ -38,6 +38,7 @@ public class LobbyController extends AbstractController implements ActionListene
 
 	@Override
 	public void start() {
+		super.start();
 		actionRefreshGameInfoList();
 	}
 
