@@ -1,15 +1,28 @@
-# TODO !
-- Check that a submitted username isn't empty before validating it
-- Prettier GUI
-- Chat for the waiting room
-- Implement the timer
-- Not remove a game if a player leaves the waiting room
-
 # ChineseCheckers
 [![License](http://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/CopyrightInfringement/ChineseCheckers.svg?branch=master)](https://travis-ci.org/CopyrightInfringement/ChineseCheckers)
 
 A [Chinese checkers](https://en.wikipedia.org/wiki/Chinese_checkers) game, written in Java 8.
+
+## TODO !
+### Game panel
+- Implement the timer
+- Prettier GUI
+- Display the main player at the bottom of the screen
+- Improve the chat
+    - Clear the message bar after sending a message
+    - Send a message after pressing `Enter`
+    - Display more messages in the game Chat
+    - Add emojis
+
+### Lobby
+- Check that a submitted username isn't empty before    validating it
+- Go back to home-screen when disconnected from the server
+
+#### Waiting room
+- Chat for the waiting room
+- Not remove a game if a player leaves the waiting room
+- Disable `Reset` when currentMovement is empty
 
 ## Build & run
 This project uses [Gradle](https://gradle.org/).  
