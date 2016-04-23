@@ -39,11 +39,10 @@ public class MainController {
 	}
 
 	/**
-	 * Pushes a controller on top of the other controllers.
+	 * Pushes a controller on top of the other controllers and ends the current controller.
 	 * @param controller The controller to put on top of the other controllers.
 	 */
 	public void push(final AbstractController controller) {
-		controllers.peek().end();
 		controllers.push(controller);
 		setController(controller);
 	}
