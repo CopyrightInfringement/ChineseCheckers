@@ -4,6 +4,7 @@ import org.copinf.cc.net.client.Client;
 import org.copinf.cc.net.server.Server;
 import org.copinf.cc.view.Window;
 
+import java.io.IOException;
 import java.util.Stack;
 
 import javax.swing.JPanel;
@@ -99,9 +100,14 @@ public class MainController {
 	 * @param host The IP address of the server.
 	 * @param port The port to connect on.
 	 */
-	public void startClient(final String host, final int port) {
-		client = new Client(host, port);
-		client.start();
+	public boolean startClient(final String host, final int port) {
+		try{
+			client = new Client(host, port);
+			client.start();
+		}catch(IOException ex) {
+			return false;
+		}
+		return true;
 	}
 
 	/**

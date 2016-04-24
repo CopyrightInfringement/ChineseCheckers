@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
@@ -21,26 +22,20 @@ public class Client extends Thread {
 	
 	private AbstractController controller;
 
-	private static final Logger LOGGER = Logger.getLogger(ClientThread.class.getName());
+	private static final Logger LOGGER = Logger.getGlobal();
 
 	/**
 	 * Constructs a new Client. Call run() to connect it to a server.
 	 * @param host the host IP address / domain name
 	 * @param port the host port
 	 */
-	public Client(final String host, final int port) {
+	public Client(final String host, final int port) throws IOException{
 		super();
 		setName("Client thread");
 
-		try {
-			client = new Socket(host, port);
-			in  = new ObjectInputStream(client.getInputStream());
-			out = new ObjectOutputStream(client.getOutputStream());
-		} catch (IOException e) {
-			System.out.print(e.getMessage());
-			e.printStackTrace();
-			System.exit(1);
-		}
+		client = new Socket(host, port);
+		in  = new ObjectInputStream(client.getInputStream());
+		out = new ObjectOutputStream(client.getOutputStream());
 		
 		controller = null;
 	}
@@ -56,7 +51,7 @@ public class Client extends Thread {
 		JOptionPane.showMessageDialog(null,
 			"The server closed unexpectedly", "Server error",
 			JOptionPane.ERROR_MESSAGE);
-		System.exit(1);
+		System.exit(0);
 	}
 
 	/**
@@ -69,8 +64,16 @@ public class Client extends Thread {
 			LOGGER.info("Client : sending to server " + req);
 			out.writeObject(req);
 		} catch (IOException ex) {
-			ex.printStackTrace();
-			System.exit(1);
+			LOGGER.info("Handled exception : " + ex.getMessage());
+			if(LOGGER.isLoggable(Level.INFO)){
+				System.err.println("=========StackTrace==============");
+				ex.printStackTrace();
+				System.err.println("=================================");
+			}
+			JOptionPane.showMessageDialog(null,
+					"The server closed unexpectedly", "Server error",
+					JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
 		}
 	}
 
@@ -84,9 +87,12 @@ public class Client extends Thread {
 			LOGGER.info("Client : receiving from server " + req);
 			return req;
 		} catch (IOException | ClassNotFoundException ex) {
-			System.out.print(ex.getMessage());
-			ex.printStackTrace();
-			System.exit(1);
+			LOGGER.info("Handled exception : " + ex.getMessage());
+			if(LOGGER.isLoggable(Level.INFO)){
+				System.err.println("=========StackTrace==============");
+				ex.printStackTrace();
+				System.err.println("=================================");
+			}
 			return null;
 		}
 	}

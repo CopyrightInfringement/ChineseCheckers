@@ -17,6 +17,8 @@ import org.copinf.cc.view.gamepanel.GamePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashMap;
@@ -30,7 +32,7 @@ import javax.swing.JPanel;
 /**
  * Controls the game state.
  */
-public class GameController extends AbstractController implements ActionListener, MouseListener {
+public class GameController extends AbstractController implements ActionListener, MouseListener, KeyListener {
 
 	/**
 	 * Error messages enumeration.
@@ -53,7 +55,8 @@ public class GameController extends AbstractController implements ActionListener
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(GameController.class.getName());
-
+	private static final int MAX_MESSAGE_LENGTH = 50;
+	
 	private final Game game;
 	private final Movement currentMovement;
 	private final GamePanel gamePanel;
@@ -101,9 +104,10 @@ public class GameController extends AbstractController implements ActionListener
 		gamePanel.addMouseListener(this);
 		gamePanel.getDrawZone().addMouseListener(this);
 		gamePanel.getActionZone().addMouseListener(this);
-		gamePanel.getActionZone().getNextButton().addMouseListener(this);
-		gamePanel.getActionZone().getResetButton().addMouseListener(this);
-		gamePanel.getActionZone().getSendButton().addMouseListener(this);
+		gamePanel.getActionZone().nextButton.addMouseListener(this);
+		gamePanel.getActionZone().resetButton.addMouseListener(this);
+		gamePanel.getActionZone().sendButton.addMouseListener(this);
+		gamePanel.getActionZone().chatField.addKeyListener(this);
 
 		gamePanel.getInfoBar().updateLabels();
 		setButtonsVisibility();
@@ -139,13 +143,12 @@ public class GameController extends AbstractController implements ActionListener
 	@Override
 	public void mouseClicked(final MouseEvent ev) {
 		final ActionZone az = gamePanel.getActionZone();
-		if (ev.getSource() == az.getNextButton()) {
+		if (ev.getSource() == az.nextButton) {
 			nextButtonClicked();
-		} else if (ev.getSource() == az.getResetButton()) {
+		} else if (ev.getSource() == az.resetButton) {
 			resetButtonClicked();
-		} else if (ev.getSource() == az.getSendButton()) {
-			final Message message = new Message(az.getMessage(), mainPlayer.getName());
-			sendRequest(new Request("client.game.message", message));
+		} else if (ev.getSource() == az.sendButton) {
+			sendMessageAction();
 		} else {
 			final Coordinates coordinates = displayManager.screenToSquare(ev.getX(), ev.getY());
 			if (coordinates != null) {
@@ -181,6 +184,7 @@ public class GameController extends AbstractController implements ActionListener
 			currentMovement.pop();
 		}
 
+		gamePanel.getActionZone().resetButton.setEnabled(!currentMovement.isEmpty());
 		movePawn(currentMovement);
 	}
 
@@ -203,6 +207,7 @@ public class GameController extends AbstractController implements ActionListener
 			movePawn(currentMovement.getReversedCondensed());
 		}
 		currentMovement.clear();
+		gamePanel.getActionZone().resetButton.setEnabled(false);
 	}
 
 	@Override
@@ -232,6 +237,17 @@ public class GameController extends AbstractController implements ActionListener
 				end();
 			}
 		}
+	}
+	
+	private void sendMessageAction() {
+		String text = gamePanel.getActionZone().getMessage().trim();
+		if(text.equals(""))
+			return;
+		if(text.length() > MAX_MESSAGE_LENGTH)
+			gamePanel.getDrawZone().addMessage("Maximum message length is " + MAX_MESSAGE_LENGTH);
+		Message message = new Message(text, mainPlayer.getName());
+		sendRequest(new Request("client.game.message", message));
+		gamePanel.getActionZone().clearField();
 	}
 
 	/**
@@ -277,5 +293,24 @@ public class GameController extends AbstractController implements ActionListener
 
 	@Override
 	public void mouseReleased(final MouseEvent ev) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		if(e.getSource() == gamePanel.getActionZone().chatField && e.getKeyChar() == '\n'){
+			sendMessageAction();
+		}
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -2,6 +2,9 @@ package org.copinf.cc;
 
 import org.copinf.cc.controller.MainController;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -19,6 +22,7 @@ public final class Main {
 	 * @param args arguments
 	 */
 	public static void main(final String[] args) {
+		Logger.getGlobal().setLevel(Level.INFO);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {

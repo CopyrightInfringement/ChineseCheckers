@@ -5,25 +5,29 @@
 A [Chinese checkers](https://en.wikipedia.org/wiki/Chinese_checkers) game, written in Java 8.
 
 ## TODO !
+
+- [ ] Add a `toString()` to `Message`
 ### Game panel
-- Implement the timer
-- Prettier GUI
-- Display the main player at the bottom of the screen
+- [ ] Implement the timer
+- [ ] Prettier GUI
+- [x] Display the main player at the bottom of the screen
 - Improve the chat
-    - Clear the message bar after sending a message
-    - Send a message after pressing `Enter`
-    - Display more messages in the game Chat
-    - Add emojis
-    - Limit the length of a message
+    - [x] Clear the message bar after sending a message
+    - [x] Send a message after pressing `Enter`
+    - [x] Display more messages in the game Chat
+    - [ ] Add emojis
+- [x] Disable the `Reset` button if the movement is empty
 
 ### Lobby
-- Check that a submitted username isn't empty before    validating it
-- Go back to home-screen when disconnected from the server
+- [ ] Check that a submitted username isn't empty before validating it
+- [ ] Go back to home-screen when disconnected from the server
 
 #### Waiting room
-- Chat for the waiting room
-- Not remove a game if a player leaves the waiting room
-- Disable `Reset` when currentMovement is empty
+- Improve the chat
+    - [ ] Clear the message bar after sending a message
+    - [ ] Send a message after pressing `Enter`
+- [ ] Not remove a game if a player leaves the waiting room
+- [ ] Update the list of players when one them disconnects
 
 ## Build & run
 This project uses [Gradle](https://gradle.org/).  

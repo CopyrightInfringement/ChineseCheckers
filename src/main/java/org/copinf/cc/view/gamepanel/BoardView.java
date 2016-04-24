@@ -55,7 +55,7 @@ public class BoardView {
 
 		this.displayManager = new DisplayManager(size, 1.0, 1.0, 0.0, width / 2.0, height / 2.0, board);
 
-		this.displayManager.setAngle(getPlayerAngle(player, width / 2.0, 0));
+		this.displayManager.setAngle(getPlayerAngle(player, width / 2.0, height));
 	}
 
 	public DisplayManager getDisplayManager() {

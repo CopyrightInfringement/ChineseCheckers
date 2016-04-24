@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
  */
 public class ClientThread extends Thread {
 
-	private static final Logger LOGGER = Logger.getLogger(ClientThread.class.getName());
+	private static final Logger LOGGER = Logger.getGlobal();
 
 	private String username;
 	private final Socket client;
@@ -70,8 +71,12 @@ public class ClientThread extends Thread {
 			}
 			server.removeClient(this);
 		} catch (IOException ex) {
-			System.err.println(ex.getMessage());
-			ex.printStackTrace();
+			LOGGER.severe(ex.getMessage());
+			if(LOGGER.isLoggable(Level.SEVERE)){
+				System.err.println("=========StackTrace==============");
+				ex.printStackTrace();
+				System.err.println("=================================");
+			}
 			System.exit(1);
 		}
 	}
@@ -86,8 +91,12 @@ public class ClientThread extends Thread {
 			LOGGER.info("Server : sending to " + username + " " + req);
 			out.writeObject(req);
 		} catch (IOException ex) {
-			System.err.println(ex.getMessage());
-			ex.printStackTrace();
+			LOGGER.warning("Unabble to send the client " + req + " (" + ex.getMessage() + ")");
+			if(LOGGER.isLoggable(Level.WARNING)){
+				System.err.println("=========StackTrace==============");
+				ex.printStackTrace();
+				System.err.println("=================================");
+			}
 		}
 	}
 
@@ -101,8 +110,12 @@ public class ClientThread extends Thread {
 			LOGGER.info("Server : receciving from " + username + " " + req);
 			return req;
 		} catch (IOException | ClassNotFoundException ex) {
-			System.err.println(ex.getMessage());
-			ex.printStackTrace();
+			LOGGER.warning("Unable to receive from the client (" + ex.getMessage() + ")");
+			if(LOGGER.isLoggable(Level.WARNING)){
+				System.err.println("=========StackTrace==============");
+				ex.printStackTrace();
+				System.err.println("=================================");
+			}
 			return null;
 		}
 	}
