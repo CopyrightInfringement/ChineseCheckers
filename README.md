@@ -14,6 +14,7 @@ A [Chinese checkers](https://en.wikipedia.org/wiki/Chinese_checkers) game, writt
     - Send a message after pressing `Enter`
     - Display more messages in the game Chat
     - Add emojis
+    - Limit the length of a message
 
 ### Lobby
 - Check that a submitted username isn't empty before    validating it

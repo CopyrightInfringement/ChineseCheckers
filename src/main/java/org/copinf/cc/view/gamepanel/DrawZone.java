@@ -72,8 +72,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		return boardView;
 	}
 
-	public void addMessage(final String message, final String playerName,
-		final boolean isChatMessage) {
+	public void addMessage(final String message, final String playerName, final boolean isChatMessage) {
 		addMessage(new Message(message, playerName, isChatMessage));
 	}
 

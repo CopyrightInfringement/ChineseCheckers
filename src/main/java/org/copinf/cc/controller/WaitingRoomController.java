@@ -1,7 +1,10 @@
 package org.copinf.cc.controller;
 
 import org.copinf.cc.net.GameInfo;
+import org.copinf.cc.net.Message;
 import org.copinf.cc.net.Request;
+import org.copinf.cc.view.gamepanel.ActionZone;
+import org.copinf.cc.view.waitingroompanel.ChatPanel;
 import org.copinf.cc.view.waitingroompanel.WaitingRoomPanel;
 
 import java.awt.event.ActionEvent;
@@ -29,10 +32,9 @@ public class WaitingRoomController extends AbstractController implements ActionL
 	 * Constructs a new WaitingRoomController.
 	 * @param mainController The main controller
 	 * @param gameInfo The game info of the current game
-	 * @param username The username of the user
+	 * @param username The name of the user
 	 */
-	public WaitingRoomController(final MainController mainController, final GameInfo gameInfo,
-			final String username) {
+	public WaitingRoomController(final MainController mainController, final GameInfo gameInfo, final String username) {
 		super(mainController, "game");
 		this.roomPanel = new WaitingRoomPanel();
 		this.playerList = null;
@@ -42,6 +44,7 @@ public class WaitingRoomController extends AbstractController implements ActionL
 		this.started = false;
 
 		roomPanel.teamBuildingPanel.confirmButton.addActionListener(this);
+		roomPanel.chatPanel.sendButton.addActionListener(this);
 	}
 
 	@Override
@@ -85,6 +88,8 @@ public class WaitingRoomController extends AbstractController implements ActionL
 		} else if ("start".equals(sub2)) {
 			final List<List<String>> teamList = (List<List<String>>) request.content;
 			switchController(new GameController(mainController, gameInfo, username, teamList));
+		} else if ("message".equals(sub2)) {
+			roomPanel.chatPanel.addMessage((Message) request.content);
 		}
 	}
 
@@ -104,12 +109,16 @@ public class WaitingRoomController extends AbstractController implements ActionL
 
 	@Override
 	public void actionPerformed(final ActionEvent ev) {
+		final ChatPanel cp = roomPanel.chatPanel;
 		if (ev.getSource() == roomPanel.teamBuildingPanel.confirmButton) {
 			final List<String> team = new ArrayList<>();
 			team.add(username);
 			team.add(roomPanel.teamBuildingPanel.getTeamMate());
 			sendRequest(new Request("client.game.teams.leader", (Serializable) team));
 			roomPanel.teamBuildingPanel.enableTeamBuiding(false);
+		} else if (ev.getSource() == cp.getSendButton()) {
+			final Message message = new Message(cp.getText(), username);
+			sendRequest(new Request("client.game.message", message));
 		}
 	}
 }

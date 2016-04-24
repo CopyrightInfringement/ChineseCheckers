@@ -1,15 +1,21 @@
 package org.copinf.cc.view.waitingroompanel;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.TextField;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+
+import org.copinf.cc.net.Message;
 
 @SuppressWarnings("serial")
 public class ChatPanel extends JPanel {
@@ -19,17 +25,20 @@ public class ChatPanel extends JPanel {
 	public final JTextField messageField;
 	public final JButton sendButton;
 
+	private static final String DEFAULT_TEXT = "Write your message here";
+
 	private static final int BUTTON_WIDTH = 60;
 	private static final int FIELD_HEIGHT = 30;
 
 	public ChatPanel(final int width, final int height) {
+		
 		super();
 		setPreferredSize(new Dimension(width, height));
 
 		messages = new ArrayList<>();
 
 		messagesList = new JList<>();
-		messageField = new JTextField("Enter a message");
+		messageField = new JTextField(DEFAULT_TEXT);
 		sendButton = new JButton("Send");
 
 		final JScrollPane scrollPane = new JScrollPane(messagesList);
@@ -58,11 +67,33 @@ public class ChatPanel extends JPanel {
 		add(messageField);
 		add(sendButton);
 	}
+	
+	public JList<String> getMessagesList() {
+		return messagesList;
+	}
+	
+	public List<String> getMessages() {
+		return messages;
+	}
+	
+	public String getText() {
+		return messageField.getText();
+	}
+	
+	public JButton getSendButton() {
+		return sendButton;
+	}
 
 	/**
 	 * Update the message displayed.
 	 */
 	private void updateMessageList() {
 		messagesList.setListData(messages.toArray(new String[messages.size()]));
+	}
+	
+	public void addMessage(final Message message) {
+		messages.add(message.playerName + " : " + message.message);
+		updateMessageList();
+		repaint();
 	}
 }
