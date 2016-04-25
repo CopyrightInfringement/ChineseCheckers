@@ -72,7 +72,7 @@ public class ClientThread extends Thread {
 			server.removeClient(this);
 		} catch (IOException ex) {
 			LOGGER.severe(ex.getMessage());
-			if(LOGGER.isLoggable(Level.SEVERE)){
+			if (LOGGER.isLoggable(Level.SEVERE)) {
 				System.err.println("=========StackTrace==============");
 				ex.printStackTrace();
 				System.err.println("=================================");
@@ -92,7 +92,7 @@ public class ClientThread extends Thread {
 			out.writeObject(req);
 		} catch (IOException ex) {
 			LOGGER.warning("Unabble to send the client " + req + " (" + ex.getMessage() + ")");
-			if(LOGGER.isLoggable(Level.WARNING)){
+			if (LOGGER.isLoggable(Level.WARNING)) {
 				System.err.println("=========StackTrace==============");
 				ex.printStackTrace();
 				System.err.println("=================================");
@@ -111,7 +111,7 @@ public class ClientThread extends Thread {
 			return req;
 		} catch (IOException | ClassNotFoundException ex) {
 			LOGGER.warning("Unable to receive from the client (" + ex.getMessage() + ")");
-			if(LOGGER.isLoggable(Level.WARNING)){
+			if (LOGGER.isLoggable(Level.WARNING)) {
 				System.err.println("=========StackTrace==============");
 				ex.printStackTrace();
 				System.err.println("=================================");

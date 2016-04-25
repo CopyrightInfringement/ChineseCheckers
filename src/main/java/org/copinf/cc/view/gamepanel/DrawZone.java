@@ -30,8 +30,8 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	private Point mouse;
 	private final List<Message> messages;
 	private final Map<Player, PlayerView> playerViews;
-	private final static int MAX_MESSAGES = 20;
-	
+	private static final int MAX_MESSAGES = 20;
+
 	/**
 	 * Constructs a new DrawZone.
 	 * @param game the current game

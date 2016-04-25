@@ -56,7 +56,7 @@ public class GameController extends AbstractController implements ActionListener
 
 	private static final Logger LOGGER = Logger.getLogger(GameController.class.getName());
 	private static final int MAX_MESSAGE_LENGTH = 50;
-	
+
 	private final Game game;
 	private final Movement currentMovement;
 	private final GamePanel gamePanel;
@@ -238,14 +238,16 @@ public class GameController extends AbstractController implements ActionListener
 			}
 		}
 	}
-	
+
 	private void sendMessageAction() {
-		String text = gamePanel.getActionZone().getMessage().trim();
-		if(text.equals(""))
+		final String text = gamePanel.getActionZone().getMessage().trim();
+		if (text.equals("")) {
 			return;
-		if(text.length() > MAX_MESSAGE_LENGTH)
+		}
+		if (text.length() > MAX_MESSAGE_LENGTH) {
 			gamePanel.getDrawZone().addMessage("Maximum message length is " + MAX_MESSAGE_LENGTH);
-		Message message = new Message(text, mainPlayer.getName());
+		}
+		final Message message = new Message(text, mainPlayer.getName());
 		sendRequest(new Request("client.game.message", message));
 		gamePanel.getActionZone().clearField();
 	}
@@ -296,21 +298,19 @@ public class GameController extends AbstractController implements ActionListener
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		if(e.getSource() == gamePanel.getActionZone().chatField && e.getKeyChar() == '\n'){
+	public void keyTyped(final KeyEvent ev) {
+		if (ev.getSource() == gamePanel.getActionZone().chatField && ev.getKeyChar() == '\n') {
 			sendMessageAction();
 		}
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(final KeyEvent ev) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(final KeyEvent ev) {
 		// TODO Auto-generated method stub
-		
 	}
 }

@@ -101,10 +101,10 @@ public class MainController {
 	 * @param port The port to connect on.
 	 */
 	public boolean startClient(final String host, final int port) {
-		try{
+		try {
 			client = new Client(host, port);
 			client.start();
-		}catch(IOException ex) {
+		} catch (IOException ex) {
 			return false;
 		}
 		return true;

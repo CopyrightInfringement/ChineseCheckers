@@ -40,10 +40,10 @@ public class HomeController extends AbstractController implements ActionListener
 			switchController(new LobbyController(mainController));
 		} else if (ev.getSource().equals(panel.getJoinButton())) {
 			panel.resetErrorMessage();
-			if (!mainController.startClient(panel.getHost(), panel.getPort())){
-				panel.displayErrorMessage("Unable to connect to the server.");
-			} else {
+			if (mainController.startClient(panel.getHost(), panel.getPort())) {
 				switchController(new LobbyController(mainController));
+			} else {
+				panel.displayErrorMessage("Unable to connect to the server.");
 			}
 		}
 	}

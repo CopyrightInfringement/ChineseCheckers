@@ -2,7 +2,6 @@ package org.copinf.cc.net.client;
 
 import org.copinf.cc.controller.AbstractController;
 import org.copinf.cc.net.Request;
-import org.copinf.cc.net.server.ClientThread;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,12 +13,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Client extends Thread {
-	
-	private ObjectInputStream in;
-	private ObjectOutputStream out;
 
-	private Socket client;
-	
+	private final ObjectInputStream in;
+	private final ObjectOutputStream out;
+
 	private AbstractController controller;
 
 	private static final Logger LOGGER = Logger.getGlobal();
@@ -29,14 +26,14 @@ public class Client extends Thread {
 	 * @param host the host IP address / domain name
 	 * @param port the host port
 	 */
-	public Client(final String host, final int port) throws IOException{
+	public Client(final String host, final int port) throws IOException {
 		super();
 		setName("Client thread");
 
-		client = new Socket(host, port);
+		final Socket client = new Socket(host, port);
 		in  = new ObjectInputStream(client.getInputStream());
 		out = new ObjectOutputStream(client.getOutputStream());
-		
+
 		controller = null;
 	}
 
@@ -65,7 +62,7 @@ public class Client extends Thread {
 			out.writeObject(req);
 		} catch (IOException ex) {
 			LOGGER.info("Handled exception : " + ex.getMessage());
-			if(LOGGER.isLoggable(Level.INFO)){
+			if (LOGGER.isLoggable(Level.INFO)) {
 				System.err.println("=========StackTrace==============");
 				ex.printStackTrace();
 				System.err.println("=================================");
@@ -88,7 +85,7 @@ public class Client extends Thread {
 			return req;
 		} catch (IOException | ClassNotFoundException ex) {
 			LOGGER.info("Handled exception : " + ex.getMessage());
-			if(LOGGER.isLoggable(Level.INFO)){
+			if (LOGGER.isLoggable(Level.INFO)) {
 				System.err.println("=========StackTrace==============");
 				ex.printStackTrace();
 				System.err.println("=================================");
