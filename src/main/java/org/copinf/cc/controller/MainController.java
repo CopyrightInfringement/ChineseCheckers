@@ -52,8 +52,14 @@ public class MainController {
 	 * Go back to the home controller
 	 */
 	public void home() {
+		if(client != null) {
+			client.end();
+		}
+		if(server != null) {
+			server.end();
+		}
 		while(!(controllers.peek() instanceof HomeController))
-			controllers.pop();
+			controllers.peek().end();
 		setController(controllers.peek());
 	}
 
@@ -98,8 +104,9 @@ public class MainController {
 	/**
 	 * Starts the server on a port.
 	 * @param port The port on which to start the server.
+	 * @throws IOException 
 	 */
-	public void startServer(final int port) {
+	public void startServer(final int port) throws IOException {
 		server = new Server(port);
 		new Thread(server).start();
 	}

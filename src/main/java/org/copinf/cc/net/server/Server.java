@@ -18,15 +18,18 @@ public class Server implements Runnable {
 	public final Set<GameThread> gameSet;
 	private final Set<ClientThread> clients;
 	private final int port;
+	private final ServerSocket serverSocket;
 
 	/**
 	 * The port on which the server will be open.
 	 * @param port The port number on which the server will run
+	 * @throws IOException 
 	 */
-	public Server(final int port) {
+	public Server(final int port) throws IOException {
 		gameSet = Collections.synchronizedSet(new HashSet<>());
 		clients = Collections.synchronizedSet(new HashSet<>());
 		this.port = port;
+		this.serverSocket = new ServerSocket(port);
 	}
 
 	/**
@@ -49,19 +52,8 @@ public class Server implements Runnable {
 
 	@Override
 	public void run() {
-		try (ServerSocket serverSocket = new ServerSocket(port)) {
-			final ServerAcceptThread acceptThread = new ServerAcceptThread(serverSocket, this);
-			acceptThread.start();
-
-			// Prevent the socket from closing. Do something later.
-			synchronized (this) {
-				wait();
-			}
-		} catch (IOException | InterruptedException ex) {
-			System.out.println("Server.run");
-			System.err.println(ex.getMessage());
-			System.exit(-1);
-		}
+		final ServerAcceptThread acceptThread = new ServerAcceptThread(serverSocket, this);
+		acceptThread.start();
 	}
 
 	/**
@@ -190,5 +182,13 @@ public class Server implements Runnable {
 	public void removeGame(final GameThread game) {
 		gameSet.remove(game);
 		broadcast(new Request("server.lobby.refresh", getGameInfos()));
+	}
+	
+	public void end() {
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -5,6 +5,7 @@ import org.copinf.cc.view.homepanel.HomePanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -35,7 +36,12 @@ public class HomeController extends AbstractController implements ActionListener
 	@Override
 	public void actionPerformed(final ActionEvent ev) {
 		if (ev.getSource().equals(panel.getHostButton())) {
-			mainController.startServer(panel.getPort());
+			try {
+				mainController.startServer(panel.getPort());
+			} catch (IOException e) {
+				panel.displayErrorMessage("Unable to start a server");
+				return;
+			}
 			mainController.startClient(panel.getHost(), panel.getPort());
 			switchController(new LobbyController(mainController));
 		} else if (ev.getSource().equals(panel.getJoinButton())) {

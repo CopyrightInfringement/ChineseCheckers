@@ -18,9 +18,6 @@ public class Client extends Thread {
 	private final ObjectInputStream in;
 	private final ObjectOutputStream out;
 	private final Socket client;
-	
-	private final InetAddress localAddress;
-	
 	private AbstractController controller;
 
 	private static final Logger LOGGER = Logger.getGlobal();
@@ -39,8 +36,6 @@ public class Client extends Thread {
 		out = new ObjectOutputStream(client.getOutputStream());
 
 		controller = null;
-		
-		localAddress = InetAddress.getLocalHost();
 	}
 
 	@Override
@@ -110,7 +105,17 @@ public class Client extends Thread {
 		JOptionPane.showMessageDialog(null,
 				"The server closed unexpectedly", "Server error",
 					JOptionPane.ERROR_MESSAGE);
-		LOGGER.info(client.getInetAddress().toString() + " " + localAddress.getHostAddress());
 		controller.home();
+	}
+	
+	/**
+	 * Closes the socket
+	 */
+	public void end() {
+		try {
+			client.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

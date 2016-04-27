@@ -46,4 +46,5 @@ Use `run` to run the project. Enabling the `--daemon` option of gradlew will spe
 
 You can also use the Makefile, but it's less efficient.
 
+Run the game : `make`.
 Run the server in standalone mode : `make server` (temporary)
