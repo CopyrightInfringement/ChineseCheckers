@@ -18,6 +18,7 @@ A [Chinese checkers](https://en.wikipedia.org/wiki/Chinese_checkers) game, writt
     - [x] Display more messages in the game Chat
     - [ ] Add emojis
 - [x] Disable the `Reset` button if the movement is empty
+- [ ] Change the player colors
 - [ ] Display the movement suggestions
 
 ### Lobby
