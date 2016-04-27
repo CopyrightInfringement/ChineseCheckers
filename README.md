@@ -7,6 +7,7 @@ A [Chinese checkers](https://en.wikipedia.org/wiki/Chinese_checkers) game, writt
 ## TODO !
 
 - [ ] Add a `toString()` to `Message`
+
 ### Game panel
 - [ ] Implement the timer
 - [ ] Prettier GUI
@@ -17,17 +18,21 @@ A [Chinese checkers](https://en.wikipedia.org/wiki/Chinese_checkers) game, writt
     - [x] Display more messages in the game Chat
     - [ ] Add emojis
 - [x] Disable the `Reset` button if the movement is empty
+- [ ] Display the movement suggestions
 
 ### Lobby
 - [ ] Check that a submitted username isn't empty before validating it
 - [ ] Go back to home-screen when disconnected from the server
 
-#### Waiting room
+### Waiting room
 - Improve the chat
     - [ ] Clear the message bar after sending a message
     - [ ] Send a message after pressing `Enter`
 - [ ] Not remove a game if a player leaves the waiting room
-- [ ] Update the list of players when one them disconnects
+- [ ] Update the list of players when one of them disconnects
+
+### Bugs to fix
+- A player can join a game that is already full
 
 ## Build & run
 This project uses [Gradle](https://gradle.org/).  
