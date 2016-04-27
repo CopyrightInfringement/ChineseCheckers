@@ -226,8 +226,8 @@ public class GameController extends AbstractController implements ActionListener
 			final int teamId = (Integer) request.content;
 			if (teamId < 0) {
 				JOptionPane.showMessageDialog(null,
-					"A player has left the game", "Game over",
-					JOptionPane.ERROR_MESSAGE);
+						"A player has left the game" + (game.getTurnCount() < 0 ? "during team-making" : ""), "Game over",
+						JOptionPane.ERROR_MESSAGE);
 				end();
 			} else {
 				final Team team = game.getWinner();
@@ -241,14 +241,18 @@ public class GameController extends AbstractController implements ActionListener
 
 	private void sendMessageAction() {
 		final String text = gamePanel.getActionZone().getMessage().trim();
+		boolean valid = true;
 		if (text.equals("")) {
-			return;
+			valid = false;
 		}
 		if (text.length() > MAX_MESSAGE_LENGTH) {
 			gamePanel.getDrawZone().addMessage("Maximum message length is " + MAX_MESSAGE_LENGTH);
+			valid = false;
 		}
-		final Message message = new Message(text, mainPlayer.getName());
-		sendRequest(new Request("client.game.message", message));
+		if (valid) {
+			final Message message = new Message(text, mainPlayer.getName());
+			sendRequest(new Request("client.game.message", message));
+		}
 		gamePanel.getActionZone().clearField();
 	}
 

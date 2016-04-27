@@ -41,7 +41,7 @@ public class GamePanel extends JPanel {
 		setPreferredSize(new Dimension(800, 600));
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-		infoBar = new InfoBar(game, player);
+		infoBar = new InfoBar(game, player, playerViews.get(player).color);
 		infoBar.setPreferredSize(new Dimension(800, 50));
 		add(infoBar);
 

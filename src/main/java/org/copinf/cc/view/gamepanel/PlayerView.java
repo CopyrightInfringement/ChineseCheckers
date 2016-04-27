@@ -14,7 +14,7 @@ public class PlayerView {
 
 	// TODO any number of players
 	private static final Color[] COLORS = new Color[] {
-		Color.CYAN, Color.MAGENTA, Color.YELLOW, Color.RED, Color.GREEN, Color.BLUE
+		new Color(0, 128, 255), Color.MAGENTA, new Color(255, 180, 0), Color.RED, new Color(0, 200, 128), new Color(0, 200, 200)
 	};
 
 	/**

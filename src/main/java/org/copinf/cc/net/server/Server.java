@@ -121,7 +121,7 @@ public class Server implements Runnable {
 	 */
 	private void processLobbyUsername(final ClientThread client, final Request req) {
 		final String username = (String) req.content;
-		boolean validUsername = username.length() <= 15;
+		boolean validUsername = username.length() <= 15 && username.length() > 0;
 		if (validUsername) {
 			for (final ClientThread ct : clients) {
 				if (username.equals(ct.getUsername())) {
@@ -174,13 +174,21 @@ public class Server implements Runnable {
 	private void processJoinGame(final ClientThread client, final Request req) {
 		final GameInfo gameInfo = (GameInfo) req.content;
 		for (final GameThread game : gameSet) {
-			if (game.hashCode() == gameInfo.hashCode()) {
+			if (game.hashCode() == gameInfo.hashCode() && gameInfo.currentPlayers.size() < gameInfo.nbPlayersMax) {
 				client.send(new Request("server.lobby.join", true));
 				game.addClient(client);
 				client.play(game);
 				break;
 			}
 		}
+		broadcast(new Request("server.lobby.refresh", getGameInfos()));
+	}
+	
+	/**
+	 * Remove a game from the server.
+	 */
+	public void removeGame(final GameThread game) {
+		gameSet.remove(game);
 		broadcast(new Request("server.lobby.refresh", getGameInfos()));
 	}
 }

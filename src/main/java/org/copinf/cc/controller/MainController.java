@@ -47,6 +47,15 @@ public class MainController {
 		controllers.push(controller);
 		setController(controller);
 	}
+	
+	/**
+	 * Go back to the home controller
+	 */
+	public void home() {
+		while(!(controllers.peek() instanceof HomeController))
+			controllers.pop();
+		setController(controllers.peek());
+	}
 
 	/**
 	 * Sets a controller as the active controller and sets its corresponding JPanel

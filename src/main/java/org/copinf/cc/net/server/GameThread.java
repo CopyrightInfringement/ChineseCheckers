@@ -54,7 +54,7 @@ public class GameThread extends Thread {
 	 * End this game.
 	 */
 	public void endGame() {
-		server.gameSet.remove(this);
+		server.removeGame(this);
 	}
 
 	/**
@@ -171,16 +171,14 @@ public class GameThread extends Thread {
 	}
 
 	/**
-	 * Send everyone a list of the registered teams.
+	 * Send everyone a list of the connected players.
 	 */
 	private void sendPlayersRefresh() {
 		final List<String> playerList = new ArrayList<String>();
 		for (final ClientThread ct : clients) {
 			playerList.add(ct.getUsername());
 		}
-		for (final ClientThread ct : clients) {
-			ct.send(new Request("server.game.players.refresh", (Serializable) playerList));
-		}
+		broadcast(new Request("server.game.players.refresh", (Serializable) playerList));
 	}
 
 	/**
@@ -235,9 +233,18 @@ public class GameThread extends Thread {
 	 */
 	public void removeClient(final ClientThread client) {
 		if (clients.remove(client)) {
-			//TODO: Replace the player with an AI :
-			endGame();
-			broadcast(new Request("server.game.end", -1));
+			gameInfo.currentPlayers.remove(client.getUsername());
+			if (game.getTurnCount() >= 0){	//	If the game has already started
+				endGame();
+				broadcast(new Request("server.game.end", -1));
+			} else if(teams.size() > 0 && gameInfo.teams) {		//	If the player has left during team-making
+				endGame();
+				broadcast(new Request("server.game.end", -1));
+			} else if(gameInfo.currentPlayers.size() > 0){	//	If the player has left before team-making and there is at least one player left
+				sendPlayersRefresh();
+			} else {	//	If there is no one left :'(
+				endGame();
+			}
 		}
 	}
 

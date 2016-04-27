@@ -3,6 +3,9 @@ package org.copinf.cc.view.gamepanel;
 import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Player;
 
+import java.awt.Color;
+import java.awt.Font;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -26,7 +29,7 @@ public class InfoBar extends JPanel {
 	 * @param game the current game
 	 * @param player the playing player
 	 */
-	public InfoBar(final Game game, final Player player) {
+	public InfoBar(final Game game, final Player player, final Color color) {
 		super();
 		this.game = game;
 		this.player = player;
@@ -36,9 +39,13 @@ public class InfoBar extends JPanel {
 		final JLabel playerNameLabel = new JLabel();
 		playerNameLabel.setText("You are " + player.getName());
 
+		
 		currentPlayerLabel = new JLabel();
-
 		turnCountLabel = new JLabel();
+		
+		currentPlayerLabel.setForeground(color);
+		turnCountLabel.setForeground(color);
+		playerNameLabel.setForeground(color);
 
 		add(playerNameLabel);
 		add(new JSeparator(SwingConstants.VERTICAL));

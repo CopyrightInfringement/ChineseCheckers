@@ -36,4 +36,9 @@ public class Message implements Serializable {
 		this.playerName = playerName;
 		this.isChatMessage = isChatMessage;
 	}
+	
+	@Override
+	public String toString() {
+		return playerName + " : " + "\"" + message + "\"";
+	}
 }

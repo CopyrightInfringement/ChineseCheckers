@@ -71,13 +71,14 @@ public class ClientThread extends Thread {
 			}
 			server.removeClient(this);
 		} catch (IOException ex) {
-			LOGGER.severe(ex.getMessage());
-			if (LOGGER.isLoggable(Level.SEVERE)) {
+			LOGGER.warning("Handled exception : " + ex.getMessage());
+			if (LOGGER.isLoggable(Level.WARNING)) {
 				System.err.println("=========StackTrace==============");
 				ex.printStackTrace();
 				System.err.println("=================================");
 			}
-			System.exit(1);
+			game.removeClient(this);
+			server.removeClient(this);
 		}
 	}
 

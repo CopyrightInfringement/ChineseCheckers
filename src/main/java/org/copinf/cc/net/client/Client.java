@@ -6,6 +6,7 @@ import org.copinf.cc.net.Request;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +17,10 @@ public class Client extends Thread {
 
 	private final ObjectInputStream in;
 	private final ObjectOutputStream out;
-
+	private final Socket client;
+	
+	private final InetAddress localAddress;
+	
 	private AbstractController controller;
 
 	private static final Logger LOGGER = Logger.getGlobal();
@@ -30,11 +34,13 @@ public class Client extends Thread {
 		super();
 		setName("Client thread");
 
-		final Socket client = new Socket(host, port);
+		client = new Socket(host, port);
 		in  = new ObjectInputStream(client.getInputStream());
 		out = new ObjectOutputStream(client.getOutputStream());
 
 		controller = null;
+		
+		localAddress = InetAddress.getLocalHost();
 	}
 
 	@Override
@@ -45,10 +51,7 @@ public class Client extends Thread {
 				controller.processRequest(req);
 			}
 		}
-		JOptionPane.showMessageDialog(null,
-			"The server closed unexpectedly", "Server error",
-			JOptionPane.ERROR_MESSAGE);
-		System.exit(0);
+		onServerCrash();
 	}
 
 	/**
@@ -67,10 +70,8 @@ public class Client extends Thread {
 				ex.printStackTrace();
 				System.err.println("=================================");
 			}
-			JOptionPane.showMessageDialog(null,
-					"The server closed unexpectedly", "Server error",
-					JOptionPane.ERROR_MESSAGE);
-			System.exit(0);
+
+			onServerCrash();
 		}
 	}
 
@@ -100,5 +101,16 @@ public class Client extends Thread {
 	 */
 	public void setController(final AbstractController controller) {
 		this.controller = controller;
+	}
+	
+	/**
+	 * What to do when the server closes unexpectedly.
+	 */
+	private void onServerCrash() {
+		JOptionPane.showMessageDialog(null,
+				"The server closed unexpectedly", "Server error",
+					JOptionPane.ERROR_MESSAGE);
+		LOGGER.info(client.getInetAddress().toString() + " " + localAddress.getHostAddress());
+		controller.home();
 	}
 }
