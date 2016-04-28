@@ -26,6 +26,7 @@ public class GameThread extends Thread {
 	private final Set<ClientThread> clients;
 	private final List<List<String>> teams;
 	private final Server server;
+	private final GameTimer timer;
 
 	/**
 	 * @param gameInfo The information describing the game.
@@ -38,6 +39,11 @@ public class GameThread extends Thread {
 		this.clients = Collections.synchronizedSet(new HashSet<>());
 		teams = new ArrayList<>();
 		game = new Game(new DefaultBoard(gameInfo.size));
+		if(gameInfo.timer >= 0){
+			timer = new GameTimer((int) (gameInfo.timer * 60), this);
+		} else {
+			timer = null;
+		}
 	}
 
 	@Override
@@ -111,17 +117,30 @@ public class GameThread extends Thread {
 		if (accepted) {
 			game.getBoard().move(movement);
 			broadcast(new Request("server.game.move", movement));
-			broadcast(new Request("server.game.next"));
-
-			if (game.isGameOver()) {
-				final Team team = game.getWinner();
-				final int n = game.getTeams().indexOf(team);
-				endGame();
-				broadcast(new Request("server.game.end", n));
-			}
+			onNextTurn();
 		}
 	}
 
+	public void onNextTurn() {
+		game.nextTurn();
+		
+		if(game.getTurnCount() > 0){
+			broadcast(new Request("server.game.next"));
+		}
+
+		if (game.isGameOver()) {
+			final Team team = game.getWinner();
+			final int n = game.getTeams().indexOf(team);
+			endGame();
+			broadcast(new Request("server.game.end", n));
+			return;
+		}
+		
+		if(gameInfo.timer >= 0) {
+			timer.startTurn(getClientThread(game.getCurrentPlayer().getName()));
+		}
+	}
+	
 	/**
 	 * Process a refresh request of the list of the players in this game.
 	 * @param client The client thread.
@@ -196,7 +215,7 @@ public class GameThread extends Thread {
 			broadcast(new Request("server.game.start", (Serializable) teams));
 			initTeams();
 			game.setNumberOfZones(gameInfo.nbZones);
-			game.nextTurn();
+			onNextTurn();
 		}
 	}
 
@@ -256,6 +275,19 @@ public class GameThread extends Thread {
 		return gameInfo;
 	}
 
+	/**
+	 * Gets a client thread from the username of the player associated.
+	 */
+	private ClientThread getClientThread(String username) {
+		for(ClientThread ct : clients) {
+			if(ct.getUsername().equals(username)) {
+				return ct;
+			}
+		}
+		
+		return null;
+	}
+	
 	@Override
 	public int hashCode() {
 		return gameInfo.name.hashCode();

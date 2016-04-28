@@ -86,6 +86,9 @@ class Request {
 - [ ] `server.game.end`, `Integer`
   Indique que la partie est finie en spécifiant l'identifiant de l'équipe gagnante.
 
+- [ ] `server.game.tick`, `Integer`
+  Indique au client qu'il lui reste un certain nombre de secondes pour jouer.
+
 - [ ] `client.game.quit`
   Indique qu'un joueur a quitté la partie. Il est remplacé par une IA. *(NB : s'il ne reste plus que des IA, la partie s'arrête.)*
 

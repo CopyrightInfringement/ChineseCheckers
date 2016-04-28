@@ -114,7 +114,7 @@ public class GameCreationPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, timerCheckBox, OFFSET_Y, SpringLayout.SOUTH, teamsCheckBox);
 		springLayout.putConstraint(SpringLayout.WEST, timerCheckBox, 0, SpringLayout.WEST, teamsCheckBox);
 		add(timerCheckBox);
-		timerSpinner = new JSpinner(new SpinnerNumberModel(1.0, 0.5, 5.0, 0.5));
+		timerSpinner = new JSpinner(new SpinnerNumberModel(1.0, 0.1, 5.0, 0.1));
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, timerSpinner, 0, SpringLayout.VERTICAL_CENTER, timerCheckBox);
 		springLayout.putConstraint(SpringLayout.WEST, timerSpinner, OFFSET_X, SpringLayout.EAST, timerCheckBox);
 		add(timerSpinner);
@@ -151,8 +151,6 @@ public class GameCreationPanel extends JPanel {
 		final int playerNumber = ((Integer) playerNumberChooser.getSelectedItem()).intValue();
 		final Integer[] possibleZones = board.getPossibleZoneNumbers(playerNumber).toArray(new Integer[]{});
 		playerZonesChooser.setModel(new DefaultComboBoxModel<Integer>(possibleZones));
-		boardSizeChooser.setModel(new SpinnerNumberModel(
-			board.getDefaultSize(((Integer) playerNumberChooser.getSelectedItem()).intValue()), 0, 10, 1));
 		if (board.getPossibleTeam(playerNumber)) {
 			teamsCheckBox.setEnabled(true);
 		} else {

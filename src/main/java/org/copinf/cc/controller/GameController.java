@@ -119,6 +119,7 @@ public class GameController extends AbstractController implements ActionListener
 	 * Method to call when a turn is over.
 	 */
 	private void onNextTurn() {
+		gamePanel.getActionZone().nextButton.setText("Next turn");
 		game.nextTurn();
 		gamePanel.getInfoBar().updateLabels();
 		setButtonsVisibility();
@@ -236,6 +237,8 @@ public class GameController extends AbstractController implements ActionListener
 					JOptionPane.INFORMATION_MESSAGE);
 				end();
 			}
+		} else if ("tick".equals(sub2)) {
+			gamePanel.getActionZone().nextButton.setText(request.content.toString() + "s");
 		}
 	}
 

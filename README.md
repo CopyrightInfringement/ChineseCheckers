@@ -10,7 +10,7 @@ A [Chinese checkers](https://en.wikipedia.org/wiki/Chinese_checkers) game, writt
 - [ ] Unify code (always use/never use public final, final arguments...)
 
 ### Game panel
-- [ ] Implement the timer
+- [x] Implement the timer
 - [ ] Prettier GUI
 - [x] Display the main player at the bottom of the screen
 - Improve the chat
