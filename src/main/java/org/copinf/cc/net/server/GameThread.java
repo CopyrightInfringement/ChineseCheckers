@@ -60,7 +60,11 @@ public class GameThread extends Thread {
 	 * End this game.
 	 */
 	public void endGame() {
+		timer.timer.stop();
 		server.removeGame(this);
+		synchronized (this) {
+			notify();
+		}
 	}
 
 	/**

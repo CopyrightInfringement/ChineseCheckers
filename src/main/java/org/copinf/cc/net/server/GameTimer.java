@@ -9,11 +9,11 @@ import org.copinf.cc.net.Request;
 
 public class GameTimer implements ActionListener{
 	
-	private final int initialTime;
+	public final int initialTime;
 	private int remainingTime;
-	private final Timer timer;
+	public final Timer timer;
 	private ClientThread client;
-	private final GameThread game;
+	public final GameThread game;
 
 	/**
 	 * The maximum time in seconds for a turn

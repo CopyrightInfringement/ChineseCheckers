@@ -1,11 +1,8 @@
 package org.copinf.cc.controller;
 
-import org.copinf.cc.model.Coordinates;
 import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.net.Message;
 import org.copinf.cc.net.Request;
-import org.copinf.cc.view.gamepanel.ActionZone;
-import org.copinf.cc.view.gamepanel.DisplayManager;
 import org.copinf.cc.view.waitingroompanel.ChatPanel;
 import org.copinf.cc.view.waitingroompanel.WaitingRoomPanel;
 
