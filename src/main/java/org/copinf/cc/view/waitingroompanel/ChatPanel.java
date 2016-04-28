@@ -3,6 +3,8 @@ package org.copinf.cc.view.waitingroompanel;
 import org.copinf.cc.net.Message;
 
 import java.awt.Dimension;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import javax.swing.SpringLayout;
 
 
 @SuppressWarnings("serial")
-public class ChatPanel extends JPanel {
+public class ChatPanel extends JPanel implements FocusListener {
 
 	private final JList<String> messagesList;
 	private final List<String> messages;
@@ -36,6 +38,7 @@ public class ChatPanel extends JPanel {
 
 		messagesList = new JList<>();
 		messageField = new JTextField(DEFAULT_TEXT);
+		messageField.addFocusListener(this);
 		sendButton = new JButton("Send");
 
 		final JScrollPane scrollPane = new JScrollPane(messagesList);
@@ -73,12 +76,27 @@ public class ChatPanel extends JPanel {
 		return messages;
 	}
 
-	public String getText() {
+	public String getMessage() {
 		return messageField.getText();
 	}
 
 	public JButton getSendButton() {
 		return sendButton;
+	}
+
+	public void clearField() {
+		messageField.setText("");
+	}
+
+	@Override
+	public void focusGained(final FocusEvent ev) {
+		if (messageField.getText().equals(DEFAULT_TEXT)) {
+			clearField();
+		}
+	}
+
+	@Override
+	public void focusLost(final FocusEvent ev) {
 	}
 
 	/**

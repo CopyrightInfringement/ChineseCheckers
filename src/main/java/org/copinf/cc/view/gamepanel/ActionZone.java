@@ -47,13 +47,6 @@ public class ActionZone extends JPanel implements FocusListener {
 		return chatField.getText();
 	}
 
-	public void setTime(final int time) {
-		if (time == 0) {
-			nextButton.setText(Integer.toString(time));
-			toggle(false);
-		}
-	}
-
 	public void toggle(final boolean visible) {
 		nextButton.setEnabled(visible);
 		resetButton.setEnabled(false);
