@@ -28,8 +28,8 @@ A [Chinese checkers](https://en.wikipedia.org/wiki/Chinese_checkers) game, writt
 
 ### Waiting room
 - Improve the chat
-    - [ ] Clear the message bar after sending a message
-    - [ ] Send a message after pressing `Enter`
+    - [x] Clear the message bar after sending a message
+    - [x] Send a message after pressing `Enter`
 - [x] Not remove a game if a player leaves the waiting room
 - [x] Update the list of players when one of them disconnects
 
