@@ -97,17 +97,18 @@ public class Client extends Thread {
 	public void setController(final AbstractController controller) {
 		this.controller = controller;
 	}
-	
+
 	/**
 	 * What to do when the server closes unexpectedly.
 	 */
 	private void onServerCrash() {
+		LOGGER.info("Going back to home menu.");
 		JOptionPane.showMessageDialog(null,
 				"The server closed unexpectedly", "Server error",
 					JOptionPane.ERROR_MESSAGE);
 		controller.home();
 	}
-	
+
 	/**
 	 * Closes the socket
 	 */

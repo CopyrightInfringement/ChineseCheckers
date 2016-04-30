@@ -42,14 +42,9 @@ public class ActionZone extends JPanel implements FocusListener {
 	public void clearField() {
 		chatField.setText("");
 	}
-	
+
 	public String getMessage() {
 		return chatField.getText();
-	}
-
-	public void toggle(final boolean visible) {
-		nextButton.setEnabled(visible);
-		resetButton.setEnabled(false);
 	}
 
 	@Override

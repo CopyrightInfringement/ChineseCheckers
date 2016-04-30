@@ -1,5 +1,6 @@
 package org.copinf.cc.view.gamepanel;
 
+import org.copinf.cc.model.Coordinates;
 import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Player;
 import org.copinf.cc.net.Message;
@@ -23,9 +24,8 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class DrawZone extends JPanel implements MouseMotionListener {
 
-	private static final Logger LOGGER = Logger.getLogger(DrawZone.class.getName());
-
 	private final Player player;
+	private Coordinates selection;
 	private final BoardView boardView;
 	private Point mouse;
 	private final List<Message> messages;
@@ -43,10 +43,10 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		this.player = player;
 		boardView = new BoardView(game.getBoard(), player, playerViews, 800, 500);
 
+		selection = null;
 		messages = new ArrayList<>();
 		this.mouse = new Point(0, 0);
 		addMouseMotionListener(this);
-		LOGGER.setLevel(java.util.logging.Level.OFF);
 		this.playerViews = playerViews;
 	}
 
@@ -54,7 +54,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	public void paintComponent(final Graphics g) {
 		super.paintComponent(g);
 		final Graphics2D g2d = (Graphics2D) g;
-		boardView.paint(g2d, mouse);
+		boardView.paint(g2d, mouse, selection);
 		drawMessages(g2d);
 	}
 
@@ -110,5 +110,9 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 			y += 20;
 		}
 		g2d.setColor(Color.BLACK);
+	}
+	
+	public void setSelectedSquare(Coordinates selection) {
+		this.selection = selection;
 	}
 }

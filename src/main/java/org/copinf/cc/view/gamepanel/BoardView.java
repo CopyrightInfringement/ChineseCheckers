@@ -108,21 +108,22 @@ public class BoardView {
 	 * Paint this BoardView.
 	 * @param g the Graphics context in which to paint
 	 * @param mouse the screen coordinates of the mouse pointer
+	 * @param selection the coordinates of the selected square
 	 */
-	public void paint(final Graphics2D g, final Point mouse) {
+	public void paint(final Graphics2D g, final Point mouse, final Coordinates selection) {
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 			RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 			RenderingHints.VALUE_ANTIALIAS_ON);
 
-		drawHexagons(g);
+		drawHexagons(g, selection);
 
-		drawFilledHexagons(g, mouse);
+		drawHexagonsOutline(g, mouse);
 
 		drawNames(g);
 	}
 
-	private void drawHexagons(final Graphics2D g) {
+	private void drawHexagons(final Graphics2D g, final Coordinates selection) {
 		Shape hexagon;
 		Square square;
 		Color color;
@@ -142,7 +143,7 @@ public class BoardView {
 				if (playerViews.containsKey(owner)) {
 					color = playerViews.get(owner).color;
 
-					g.setColor(color);
+					g.setColor(coord.equals(selection) ? color.darker() : color);
 					g.fill(hexagon);
 				}
 			}
@@ -154,7 +155,7 @@ public class BoardView {
 		g.setColor(defaultColor);
 	}
 
-	private void drawFilledHexagons(final Graphics2D g, final Point mouse) {
+	private void drawHexagonsOutline(final Graphics2D g, final Point mouse) {
 		final Stroke hoveredStroke = new BasicStroke(4.0f);
 		final Coordinates hovered = displayManager.screenToSquare(mouse.getX(), mouse.getY());
 		boolean hasHovered = false;

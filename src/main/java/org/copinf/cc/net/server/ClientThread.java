@@ -66,6 +66,7 @@ public class ClientThread extends Thread {
 					game.processRequest(this, req);
 				}
 			}
+			LOGGER.info("End of connection with " + username + ".");
 			if (game != null) {
 				game.removeClient(this);
 			}
@@ -77,6 +78,7 @@ public class ClientThread extends Thread {
 				ex.printStackTrace();
 				System.err.println("=================================");
 			}
+			LOGGER.warning("Removing the client from the game.");
 			game.removeClient(this);
 			server.removeClient(this);
 		}

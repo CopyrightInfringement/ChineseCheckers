@@ -39,10 +39,10 @@ public class InfoBar extends JPanel {
 		final JLabel playerNameLabel = new JLabel();
 		playerNameLabel.setText("You are " + player.getName());
 
-		
+
 		currentPlayerLabel = new JLabel();
 		turnCountLabel = new JLabel();
-		
+
 		currentPlayerLabel.setForeground(color);
 		turnCountLabel.setForeground(color);
 		playerNameLabel.setForeground(color);

@@ -60,7 +60,9 @@ public class GameThread extends Thread {
 	 * End this game.
 	 */
 	public void endGame() {
-		timer.timer.stop();
+		if(gameInfo.timer >= 0) {
+			timer.timer.stop();
+		}
 		server.removeGame(this);
 		synchronized (this) {
 			notify();
@@ -116,7 +118,7 @@ public class GameThread extends Thread {
 	 * @param movement The movement submitted.
 	 */
 	private void processMoveRequest(final ClientThread ct, final Movement movement) {
-		final boolean accepted = game.getBoard().checkMove(movement, getPlayer(ct.getUsername()));
+		final boolean accepted = movement.size() >= 2 && game.getBoard().checkMove(movement, getPlayer(ct.getUsername()));
 		ct.send(new Request("server.game.move.request", accepted));
 		if (accepted) {
 			game.getBoard().move(movement);
@@ -127,7 +129,7 @@ public class GameThread extends Thread {
 
 	public void onNextTurn() {
 		game.nextTurn();
-		
+
 		if(game.getTurnCount() > 0){
 			broadcast(new Request("server.game.next"));
 		}
@@ -139,12 +141,12 @@ public class GameThread extends Thread {
 			broadcast(new Request("server.game.end", n));
 			return;
 		}
-		
+
 		if(gameInfo.timer >= 0) {
 			timer.startTurn(getClientThread(game.getCurrentPlayer().getName()));
 		}
 	}
-	
+
 	/**
 	 * Process a refresh request of the list of the players in this game.
 	 * @param client The client thread.
@@ -288,10 +290,10 @@ public class GameThread extends Thread {
 				return ct;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return gameInfo.name.hashCode();

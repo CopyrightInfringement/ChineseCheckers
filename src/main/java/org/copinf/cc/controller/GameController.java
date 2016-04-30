@@ -99,6 +99,7 @@ public class GameController extends AbstractController implements ActionListener
 		this.gamePanel = new GamePanel(game, this.mainPlayer);
 		this.displayManager = gamePanel.getDrawZone().getBoardView().getDisplayManager();
 
+		this.currentMovement = new Movement();
 		this.waitingForAnswer = false;
 
 		gamePanel.addMouseListener(this);
@@ -111,8 +112,6 @@ public class GameController extends AbstractController implements ActionListener
 
 		gamePanel.getInfoBar().updateLabels();
 		setButtonsVisibility();
-
-		this.currentMovement = new Movement();
 	}
 
 	/**
@@ -129,7 +128,10 @@ public class GameController extends AbstractController implements ActionListener
 	 * Method to call to set the correct visibility of the GamePanel buttons.
 	 */
 	private void setButtonsVisibility() {
-		gamePanel.getActionZone().toggle(mainPlayer == game.getCurrentPlayer());
+		gamePanel.getActionZone().nextButton.setVisible(mainPlayer == game.getCurrentPlayer());
+		gamePanel.getActionZone().resetButton.setVisible(mainPlayer == game.getCurrentPlayer());
+		gamePanel.getActionZone().nextButton.setEnabled(currentMovement.size() > 1 && mainPlayer == game.getCurrentPlayer());
+		gamePanel.getActionZone().resetButton.setEnabled(currentMovement.size() > 0);
 	}
 
 	@Override
@@ -167,36 +169,56 @@ public class GameController extends AbstractController implements ActionListener
 			return;
 		}
 		final AbstractBoard board = game.getBoard();
-		if (currentMovement.size() >= 2) {
-			board.move(currentMovement.getReversedCondensed());
-		}
-		currentMovement.push(coordinates);
-		if (!board.checkMove(currentMovement, mainPlayer)) {
-			final Pawn pawn = board.getPawn(coordinates);
-			final ErrorMsg errorMsg;
-			if (pawn == null) {
+		final Pawn pawn = board.getPawn(coordinates);
+		final ErrorMsg errorMsg;
+
+		// Si on définit quel pion déplacer
+		if (currentMovement.size() == 0) {
+			if (pawn == null || pawn.owner != mainPlayer) {
 				errorMsg = ErrorMsg.WRONG_MOVE;
-			} else if (pawn.owner != mainPlayer) {
-				errorMsg = ErrorMsg.WRONG_PLAYER;
 			} else {
-				errorMsg = ErrorMsg.NOT_LEGAL;
+				currentMovement.push(coordinates);
+				errorMsg = null;
 			}
-			gamePanel.getDrawZone().addMessage(errorMsg.getMessage());
+		//	Si on veut redéfinir le pion à déplacer
+		} else if (currentMovement.size() == 1 && pawn != null
+					&& pawn.owner == mainPlayer) {
 			currentMovement.pop();
+			currentMovement.push(coordinates);
+			errorMsg = null;
+		//	Si on veut effectuer un déplacement
+		} else {
+			board.move(currentMovement.getReversedCondensed());
+			currentMovement.push(coordinates);
+			if (!board.checkMove(currentMovement, mainPlayer)) {
+				currentMovement.pop();
+				errorMsg = ErrorMsg.WRONG_MOVE;
+			} else {
+				errorMsg = null;
+			}
+		}
+
+		if (errorMsg != null) {
+			gamePanel.getDrawZone().addMessage(errorMsg.getMessage());
 		}
 
 		gamePanel.getActionZone().resetButton.setEnabled(!currentMovement.isEmpty());
 		movePawn(currentMovement);
+
+		gamePanel.getDrawZone().setSelectedSquare(currentMovement.size() == 0 ? null : currentMovement.lastElement());
+
+		setButtonsVisibility();
 	}
 
 	/**
 	 * Method to call when the "next" button is clicked.
 	 */
 	private void nextButtonClicked() {
-		if (game.getCurrentPlayer() != mainPlayer || waitingForAnswer) {
+		if (game.getCurrentPlayer() != mainPlayer || waitingForAnswer || currentMovement.size() < 2) {
 			return;
 		}
 		sendRequest(new Request("client.game.move.request", currentMovement));
+
 		waitingForAnswer = true;
 	}
 
@@ -207,8 +229,9 @@ public class GameController extends AbstractController implements ActionListener
 		if (currentMovement.size() >= 2) {
 			movePawn(currentMovement.getReversedCondensed());
 		}
-		currentMovement.clear();
-		gamePanel.getActionZone().resetButton.setEnabled(false);
+		resetMovement();
+		gamePanel.repaint();
+		setButtonsVisibility();
 	}
 
 	@Override
@@ -265,18 +288,23 @@ public class GameController extends AbstractController implements ActionListener
 	 */
 	private void processMoveRequest(final Request request) {
 		final String sub = request.getSubRequest(3);
-		if (currentMovement.size() >= 2) {
-			movePawn(currentMovement.getReversedCondensed());
-		}
-		currentMovement.clear();
 		if ("request".equals(sub)) {
 			if (!(Boolean) request.content) {
 				gamePanel.getDrawZone().addMessage(ErrorMsg.SERVER_REFUSED.msg);
+				game.getBoard().move(currentMovement.getReversedCondensed());
 			}
+			game.getBoard().move(currentMovement.getReversedCondensed());
+			resetMovement();
+			gamePanel.repaint();
 		} else if (sub == null) {
 			final Movement movement = (Movement) request.content;
 			movePawn(movement);
 		}
+	}
+
+	private void resetMovement() {
+		currentMovement.clear();
+		gamePanel.getDrawZone().setSelectedSquare(null);
 	}
 
 	/**
