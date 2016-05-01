@@ -19,7 +19,7 @@ public class GamePanel extends JPanel {
 	private final InfoBar infoBar;
 	private final DrawZone drawZone;
 	private final ActionZone actionZone;
-
+	
 	private final Map<Player, PlayerView> playerViews;
 
 	/**
@@ -46,12 +46,12 @@ public class GamePanel extends JPanel {
 		add(infoBar);
 
 		drawZone = new DrawZone(game, player, playerViews);
-		drawZone.setPreferredSize(new Dimension(800, 500));
 		add(drawZone);
+		drawZone.setPreferredSize(new Dimension(800, 520));
 
 		actionZone = new ActionZone();
-		actionZone.setPreferredSize(new Dimension(800, 50));
 		add(actionZone);
+		actionZone.setPreferredSize(new Dimension(800, 30));
 	}
 
 	public InfoBar getInfoBar() {

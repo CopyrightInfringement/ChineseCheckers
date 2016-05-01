@@ -1,5 +1,6 @@
 package org.copinf.cc.view.waitingroompanel;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.Collection;
@@ -10,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpringLayout;
 
 @SuppressWarnings("serial")
 public class TeamBuildingPanel extends JPanel {
@@ -18,21 +20,34 @@ public class TeamBuildingPanel extends JPanel {
 	private final JLabel label;
 	public final JButton confirmButton;
 
-	public TeamBuildingPanel(final int width, final int height) {
+	public TeamBuildingPanel() {
 		super();
-		setPreferredSize(new Dimension(width, height));
-
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		SpringLayout layout = new SpringLayout();
+		
+		setLayout(layout);
 
 		label = new JLabel();
-		add(label);
 
 		availablePlayers = new JList<>();
-		add(availablePlayers, Component.LEFT_ALIGNMENT);
-
+		
 		confirmButton = new JButton("Confirm");
-		add(confirmButton, Component.LEFT_ALIGNMENT);
 
+		layout.putConstraint(SpringLayout.NORTH, label, 10, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, label, 10, SpringLayout.WEST, this);
+		
+		layout.putConstraint(SpringLayout.NORTH, availablePlayers, 10, SpringLayout.SOUTH, label);
+		layout.putConstraint(SpringLayout.WEST, availablePlayers, 0, SpringLayout.WEST, label);	
+
+		layout.putConstraint(SpringLayout.WEST, confirmButton, 0, SpringLayout.WEST, label);
+		layout.putConstraint(SpringLayout.NORTH, confirmButton, 10, SpringLayout.SOUTH, availablePlayers);
+		
+		add(label);
+		add(availablePlayers);
+		add(confirmButton);
+		
+		confirmButton.setEnabled(false);
+		
 		enableTeamBuiding(false);
 	}
 
@@ -61,7 +76,7 @@ public class TeamBuildingPanel extends JPanel {
 	 * @param b true if team building should be enabled
 	 */
 	public void enableTeamBuiding(final boolean b) {
-		confirmButton.setVisible(b);
+		confirmButton.setEnabled(b);
 		if (b) {
 			label.setText("Select your teammate.");
 		} else {

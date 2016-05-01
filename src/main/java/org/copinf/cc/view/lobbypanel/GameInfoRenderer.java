@@ -29,7 +29,7 @@ public class GameInfoRenderer extends JPanel implements ListCellRenderer<GameInf
 			add(new JLabel("teams"));
 		}
 		if (value.timer != -1) {
-			add(new JLabel("timer " + value.timer + "s"));
+			add(new JLabel("timer " + value.timer + "min"));
 		}
 
 		if (isSelected) {

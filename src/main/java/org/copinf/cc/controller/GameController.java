@@ -54,7 +54,6 @@ public class GameController extends AbstractController implements ActionListener
 		}
 	}
 
-	private static final Logger LOGGER = Logger.getLogger(GameController.class.getName());
 	private static final int MAX_MESSAGE_LENGTH = 50;
 
 	private final Game game;
@@ -128,10 +127,7 @@ public class GameController extends AbstractController implements ActionListener
 	 * Method to call to set the correct visibility of the GamePanel buttons.
 	 */
 	private void setButtonsVisibility() {
-		gamePanel.getActionZone().nextButton.setVisible(mainPlayer == game.getCurrentPlayer());
-		gamePanel.getActionZone().resetButton.setVisible(mainPlayer == game.getCurrentPlayer());
-		gamePanel.getActionZone().nextButton.setEnabled(currentMovement.size() > 1 && mainPlayer == game.getCurrentPlayer());
-		gamePanel.getActionZone().resetButton.setEnabled(currentMovement.size() > 0);
+		gamePanel.getActionZone().setVisibility(currentMovement.size(), game.getCurrentPlayer() == mainPlayer);
 	}
 
 	@Override

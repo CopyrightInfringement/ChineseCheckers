@@ -16,8 +16,9 @@ class Request {
 - [x] `client.lobby.username`, `String`
   Envoie la demande de pseudonyme d'un joueur.
 
-- [x] `server.lobby.username`, `Boolean`
+- [x] `server.lobby.username`, `String`
   RÃ©ponse Ã  la demande de pseudonyme.
+  Le contenu est la chaîne vide si la pseudonyme est accepté, dans le cas contraire il est un message d'erreur.
 
 - [x] `client.lobby.refresh`, `null`
   Demande la liste des parties du serveur.

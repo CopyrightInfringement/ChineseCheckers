@@ -130,8 +130,7 @@ public class WaitingRoomController extends AbstractController implements ActionL
 			sendRequest(new Request("client.game.teams.leader", (Serializable) team));
 			roomPanel.teamBuildingPanel.enableTeamBuiding(false);
 		} else if (ev.getSource() == cp.getSendButton()) {
-			final Message message = new Message(cp.getMessage(), username);
-			sendRequest(new Request("client.game.message", message));
+			sendMessageAction();
 		}
 	}
 

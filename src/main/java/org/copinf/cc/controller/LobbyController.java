@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -98,9 +99,7 @@ public class LobbyController extends AbstractController implements ActionListene
 	 */
 	private void actionSubmitUsername() {
 		username = lobbyPanel.getUsernamePanel().getUsername();
-		if (username.length() > 15) {
-			username = username.substring(0, 15);
-		}
+		
 		lobbyPanel.getUsernamePanel().getSubmitBtn().setEnabled(false);
 		sendRequest(new Request("client.lobby.username", username));
 	}
@@ -110,11 +109,13 @@ public class LobbyController extends AbstractController implements ActionListene
 	 * @param request The request to process
 	 */
 	private void processSubmitUsername(final Request request) {
-		if ((Boolean) request.content) {
+		String msg = (String) request.content;
+		if (msg.equals("")) {
 			lobbyPanel.getUsernamePanel().switchToUsernamePanel(username);
 		} else {
 			lobbyPanel.getUsernamePanel().setUsername("");
 			lobbyPanel.getUsernamePanel().getSubmitBtn().setEnabled(true);
+			JOptionPane.showMessageDialog(null, msg, "Username", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -137,6 +138,7 @@ public class LobbyController extends AbstractController implements ActionListene
 		if (!(Boolean) request.content) {
 			selectedGame = null;
 			lobbyPanel.getGameCreationPanel().resetGameName();
+			JOptionPane.showMessageDialog(null, "The server refused to create this game", "Game creation", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -156,6 +158,7 @@ public class LobbyController extends AbstractController implements ActionListene
 		if ((Boolean) request.content) {
 			switchController(new WaitingRoomController(mainController, selectedGame, username));
 		} else {
+			JOptionPane.showMessageDialog(null, "Impossible to join the game !", "Join a game", JOptionPane.ERROR_MESSAGE);
 			selectedGame = null;
 		}
 	}

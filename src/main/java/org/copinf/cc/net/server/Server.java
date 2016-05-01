@@ -113,18 +113,18 @@ public class Server implements Runnable {
 	 */
 	private void processLobbyUsername(final ClientThread client, final Request req) {
 		final String username = (String) req.content;
-		boolean validUsername = username.length() <= 15 && username.length() > 0;
-		if (validUsername) {
+		if (username.length() > 15 || username.length() == 0) {
+			client.send(new Request("server.lobby.username", "This username is invalid !"));
+		} else {
 			for (final ClientThread ct : clients) {
 				if (username.equals(ct.getUsername())) {
-					validUsername = false;
+					client.send(new Request("server.lobby.username", "This username is unavailable"));
+					return;
 				}
 			}
-			if (validUsername) {
-				client.setUsername(username);
-			}
+			client.setUsername(username);
+			client.send(new Request("server.lobby.username", ""));
 		}
-		client.send(new Request("server.lobby.username", validUsername));
 	}
 
 	/**
