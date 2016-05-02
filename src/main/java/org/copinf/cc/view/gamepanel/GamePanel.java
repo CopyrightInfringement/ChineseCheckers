@@ -1,14 +1,14 @@
 package org.copinf.cc.view.gamepanel;
 
-import org.copinf.cc.model.Game;
-import org.copinf.cc.model.Player;
-
 import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+
+import org.copinf.cc.model.Game;
+import org.copinf.cc.model.Player;
 
 /**
  * GamePanel is what is displayed during a game.
@@ -19,13 +19,16 @@ public class GamePanel extends JPanel {
 	private final InfoBar infoBar;
 	private final DrawZone drawZone;
 	private final ActionZone actionZone;
-	
+
 	private final Map<Player, PlayerView> playerViews;
 
 	/**
 	 * Constructs a new GamePanel.
-	 * @param game the current game
-	 * @param player the playing player
+	 *
+	 * @param game
+	 *            the current game
+	 * @param player
+	 *            the playing player
 	 */
 	public GamePanel(final Game game, final Player player) {
 		super();
@@ -47,11 +50,11 @@ public class GamePanel extends JPanel {
 
 		drawZone = new DrawZone(game, player, playerViews);
 		add(drawZone);
-		drawZone.setPreferredSize(new Dimension(800, 520));
+		drawZone.setPreferredSize(new Dimension(800, 500));
 
 		actionZone = new ActionZone();
 		add(actionZone);
-		actionZone.setPreferredSize(new Dimension(800, 30));
+		actionZone.setPreferredSize(new Dimension(800, 50));
 	}
 
 	public InfoBar getInfoBar() {
