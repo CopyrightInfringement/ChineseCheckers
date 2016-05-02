@@ -24,14 +24,14 @@ import javax.swing.JPanel;
 public class WaitingRoomController extends AbstractController implements ActionListener, KeyListener {
 
 	private static final int MAX_MESSAGE_LENGTH = 50;
-	
+
 	private final WaitingRoomPanel roomPanel;
 	private List<String> playerList;
 	private List<List<String>> teamList;
 	private final GameInfo gameInfo;
 	private final String username;
 	private boolean started;
-	
+
 	/**
 	 * Constructs a new WaitingRoomController.
 	 * @param mainController The main controller
@@ -46,7 +46,7 @@ public class WaitingRoomController extends AbstractController implements ActionL
 		this.gameInfo = gameInfo;
 		this.username = username;
 		this.started = false;
-		
+
 		roomPanel.chatPanel.messageField.addKeyListener(this);
 		roomPanel.teamBuildingPanel.confirmButton.addActionListener(this);
 		roomPanel.chatPanel.sendButton.addActionListener(this);
@@ -98,7 +98,7 @@ public class WaitingRoomController extends AbstractController implements ActionL
 			roomPanel.chatPanel.clearField();
 		}
 	}
-	
+
 	public void mouseClicked(final MouseEvent ev) {
 		final ChatPanel cp = roomPanel.chatPanel;
 		if (ev.getSource() == cp.sendButton) {
@@ -150,7 +150,7 @@ public class WaitingRoomController extends AbstractController implements ActionL
 		}
 		roomPanel.chatPanel.clearField();
 	}
-	
+
 	public void keyTyped(final KeyEvent ev) {
 		if (ev.getSource() == roomPanel.chatPanel.messageField && ev.getKeyChar() == '\n') {
 			sendMessageAction();
@@ -158,14 +158,14 @@ public class WaitingRoomController extends AbstractController implements ActionL
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(final KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(final KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

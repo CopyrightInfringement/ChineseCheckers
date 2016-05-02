@@ -14,7 +14,6 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
@@ -111,8 +110,8 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		}
 		g2d.setColor(Color.BLACK);
 	}
-	
-	public void setSelectedSquare(Coordinates selection) {
+
+	public void setSelectedSquare(final Coordinates selection) {
 		this.selection = selection;
 	}
 }

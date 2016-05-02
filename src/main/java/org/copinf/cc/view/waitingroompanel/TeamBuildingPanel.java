@@ -1,11 +1,7 @@
 package org.copinf.cc.view.waitingroompanel;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.util.Collection;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -22,32 +18,31 @@ public class TeamBuildingPanel extends JPanel {
 
 	public TeamBuildingPanel() {
 		super();
-		
-		SpringLayout layout = new SpringLayout();
-		
+
+		final SpringLayout layout = new SpringLayout();
 		setLayout(layout);
 
 		label = new JLabel();
 
 		availablePlayers = new JList<>();
-		
+
 		confirmButton = new JButton("Confirm");
 
 		layout.putConstraint(SpringLayout.NORTH, label, 10, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, label, 10, SpringLayout.WEST, this);
-		
+
 		layout.putConstraint(SpringLayout.NORTH, availablePlayers, 10, SpringLayout.SOUTH, label);
-		layout.putConstraint(SpringLayout.WEST, availablePlayers, 0, SpringLayout.WEST, label);	
+		layout.putConstraint(SpringLayout.WEST, availablePlayers, 0, SpringLayout.WEST, label);
 
 		layout.putConstraint(SpringLayout.WEST, confirmButton, 0, SpringLayout.WEST, label);
 		layout.putConstraint(SpringLayout.NORTH, confirmButton, 10, SpringLayout.SOUTH, availablePlayers);
-		
+
 		add(label);
 		add(availablePlayers);
 		add(confirmButton);
-		
+
 		confirmButton.setEnabled(false);
-		
+
 		enableTeamBuiding(false);
 	}
 

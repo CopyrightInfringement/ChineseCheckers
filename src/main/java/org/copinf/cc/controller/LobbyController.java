@@ -99,7 +99,7 @@ public class LobbyController extends AbstractController implements ActionListene
 	 */
 	private void actionSubmitUsername() {
 		username = lobbyPanel.getUsernamePanel().getUsername();
-		
+
 		lobbyPanel.getUsernamePanel().getSubmitBtn().setEnabled(false);
 		sendRequest(new Request("client.lobby.username", username));
 	}
@@ -109,8 +109,8 @@ public class LobbyController extends AbstractController implements ActionListene
 	 * @param request The request to process
 	 */
 	private void processSubmitUsername(final Request request) {
-		String msg = (String) request.content;
-		if (msg.equals("")) {
+		final String msg = (String) request.content;
+		if ("".equals(msg)) {
 			lobbyPanel.getUsernamePanel().switchToUsernamePanel(username);
 		} else {
 			lobbyPanel.getUsernamePanel().setUsername("");

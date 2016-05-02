@@ -4,7 +4,6 @@ import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Player;
 
 import java.awt.Color;
-import java.awt.Font;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;

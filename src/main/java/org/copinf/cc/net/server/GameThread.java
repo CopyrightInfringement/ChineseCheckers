@@ -39,7 +39,7 @@ public class GameThread extends Thread {
 		this.clients = Collections.synchronizedSet(new HashSet<>());
 		teams = new ArrayList<>();
 		game = new Game(new DefaultBoard(gameInfo.size));
-		if(gameInfo.timer >= 0){
+		if (gameInfo.timer >= 0) {
 			timer = new GameTimer((int) (gameInfo.timer * 60), this);
 		} else {
 			timer = null;
@@ -60,12 +60,12 @@ public class GameThread extends Thread {
 	 * End this game.
 	 */
 	public void endGame() {
-		if(gameInfo.timer >= 0) {
+		if (gameInfo.timer >= 0) {
 			timer.timer.stop();
 		}
 		server.removeGame(this);
 		synchronized (this) {
-			notify();
+			notifyAll();
 		}
 	}
 
@@ -130,7 +130,7 @@ public class GameThread extends Thread {
 	public void onNextTurn() {
 		game.nextTurn();
 
-		if(game.getTurnCount() > 0){
+		if (game.getTurnCount() > 0) {
 			broadcast(new Request("server.game.next"));
 		}
 
@@ -142,7 +142,7 @@ public class GameThread extends Thread {
 			return;
 		}
 
-		if(gameInfo.timer >= 0) {
+		if (gameInfo.timer >= 0) {
 			timer.startTurn(getClientThread(game.getCurrentPlayer().getName()));
 		}
 	}
@@ -259,15 +259,15 @@ public class GameThread extends Thread {
 	public void removeClient(final ClientThread client) {
 		if (clients.remove(client)) {
 			gameInfo.currentPlayers.remove(client.getUsername());
-			if (game.getTurnCount() >= 0){	//	If the game has already started
+			if (game.getTurnCount() >= 0) {	// If the game has already started
 				endGame();
 				broadcast(new Request("server.game.end", -1));
-			} else if(teams.size() > 0 && gameInfo.teams) {		//	If the player has left during team-making
+			} else if (teams.isEmpty() && gameInfo.teams) {	 // If the player has left during team-making
 				endGame();
 				broadcast(new Request("server.game.end", -1));
-			} else if(gameInfo.currentPlayers.size() > 0){	//	If the player has left before team-making and there is at least one player left
+			} else if (gameInfo.currentPlayers.size() > 0) {	// If the player has left before team-making and there is at least one player left
 				sendPlayersRefresh();
-			} else {	//	If there is no one left :'(
+			} else {	// If there is no one left :'(
 				endGame();
 			}
 		}
@@ -284,9 +284,9 @@ public class GameThread extends Thread {
 	/**
 	 * Gets a client thread from the username of the player associated.
 	 */
-	private ClientThread getClientThread(String username) {
-		for(ClientThread ct : clients) {
-			if(ct.getUsername().equals(username)) {
+	private ClientThread getClientThread(final String username) {
+		for (final ClientThread ct : clients) {
+			if (ct.getUsername().equals(username)) {
 				return ct;
 			}
 		}

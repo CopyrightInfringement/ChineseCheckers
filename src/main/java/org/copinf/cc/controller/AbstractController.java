@@ -38,12 +38,12 @@ public abstract class AbstractController {
 	}
 
 	/**
-	 * Go back to the home controller
+	 * Go back to the home controller.
 	 */
 	public void home() {
 		mainController.home();
 	}
-	
+
 	/**
 	 * A controller returns a JPanel that will be used for the contentPane of the main window.
 	 * Before returning, a controller should link itself to the panels components if it needs to

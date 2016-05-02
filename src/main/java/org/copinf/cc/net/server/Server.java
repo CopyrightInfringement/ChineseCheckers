@@ -17,18 +17,16 @@ public class Server implements Runnable {
 
 	public final Set<GameThread> gameSet;
 	private final Set<ClientThread> clients;
-	private final int port;
 	private final ServerSocket serverSocket;
 
 	/**
 	 * The port on which the server will be open.
 	 * @param port The port number on which the server will run
-	 * @throws IOException 
+	 * @throws IOException IO error when opening the socket.
 	 */
 	public Server(final int port) throws IOException {
 		gameSet = Collections.synchronizedSet(new HashSet<>());
 		clients = Collections.synchronizedSet(new HashSet<>());
-		this.port = port;
 		this.serverSocket = new ServerSocket(port);
 	}
 
@@ -175,7 +173,7 @@ public class Server implements Runnable {
 		}
 		broadcast(new Request("server.lobby.refresh", getGameInfos()));
 	}
-	
+
 	/**
 	 * Remove a game from the server.
 	 */
@@ -183,7 +181,7 @@ public class Server implements Runnable {
 		gameSet.remove(game);
 		broadcast(new Request("server.lobby.refresh", getGameInfos()));
 	}
-	
+
 	public void end() {
 		try {
 			serverSocket.close();

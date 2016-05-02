@@ -47,19 +47,20 @@ public class MainController {
 		controllers.push(controller);
 		setController(controller);
 	}
-	
+
 	/**
-	 * Go back to the home controller
+	 * Go back to the home controller.
 	 */
 	public void home() {
-		if(client != null) {
+		if (client != null) {
 			client.end();
 		}
-		if(server != null) {
+		if (server != null) {
 			server.end();
 		}
-		while(!(controllers.peek() instanceof HomeController))
+		while (!(controllers.peek() instanceof HomeController)) {
 			controllers.peek().end();
+		}
 		setController(controllers.peek());
 	}
 
@@ -104,7 +105,7 @@ public class MainController {
 	/**
 	 * Starts the server on a port.
 	 * @param port The port on which to start the server.
-	 * @throws IOException 
+	 * @throws IOException IO error when opening the socket.
 	 */
 	public void startServer(final int port) throws IOException {
 		server = new Server(port);

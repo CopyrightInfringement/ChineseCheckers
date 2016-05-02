@@ -71,7 +71,7 @@ public class ClientThread extends Thread {
 				game.removeClient(this);
 			}
 			server.removeClient(this);
-		} catch (Exception ex) {
+		} catch (IOException ex) {
 			LOGGER.warning("Handled exception : " + ex.getMessage());
 			if (LOGGER.isLoggable(Level.WARNING)) {
 				System.err.println("=========StackTrace==============");

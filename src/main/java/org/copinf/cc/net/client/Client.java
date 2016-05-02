@@ -6,7 +6,6 @@ import org.copinf.cc.net.Request;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,18 +104,18 @@ public class Client extends Thread {
 		LOGGER.info("Going back to home menu.");
 		JOptionPane.showMessageDialog(null,
 				"The server closed unexpectedly", "Server error",
-					JOptionPane.ERROR_MESSAGE);
+				JOptionPane.ERROR_MESSAGE);
 		controller.home();
 	}
 
 	/**
-	 * Closes the socket
+	 * Closes the socket.
 	 */
 	public void end() {
 		try {
 			client.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
 	}
 }
