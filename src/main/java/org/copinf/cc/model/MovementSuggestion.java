@@ -71,10 +71,23 @@ public class MovementSuggestion {
 	}
 
 	/**
+	 * Returns all possible extension of a movement, assuming movement is valid.
+	 */
+	public static Set<Movement> getMovements(Movement movement, AbstractBoard board) {
+		if (movement.size() == 1) {
+			return getMovements(movement.getOrigin(), board);
+		} else if ((movement.size() > 1) && !movement.getOrigin().isAdjacentTo(movement.get(1))) {//	Si le premier mouvement est un déplacement adjacent
+			return getJumpMovement(movement, new HashSet<>(movement), board);
+		} else {
+			return new HashSet<>();
+		}
+
+	}
+
+	/**
 	 * Returns all possible movement from a square.
-	 * 
-	 * @param origin
-	 *            The origin coordinates
+	 *
+	 * @param origin The origin coordinates
 	 */
 	public static Set<Movement> getMovements(Coordinates origin, AbstractBoard board) {
 		final Set<Movement> movements = new HashSet<>();
@@ -94,6 +107,15 @@ public class MovementSuggestion {
 		}
 
 		return movements;
+	}
+
+	private static void removeOccupiedCoordinates(Set<Coordinates> set, AbstractBoard board) {
+		final Iterator<Coordinates> it = set.iterator();
+		while (it.hasNext()) {
+			if (!board.getSquare(it.next()).isFree()) {
+				it.remove();
+			}
+		}
 	}
 
 	private static Movement lengthen(Movement movement, Coordinates destination) {

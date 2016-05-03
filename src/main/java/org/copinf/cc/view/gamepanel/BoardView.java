@@ -35,16 +35,11 @@ public class BoardView {
 	/**
 	 * Constructs a new BoardView.
 	 *
-	 * @param board
-	 *            a board to display
-	 * @param player
-	 *            the main player
-	 * @param playerViews
-	 *            PlayerView of each Player
-	 * @param width
-	 *            available width
-	 * @param height
-	 *            available height
+	 * @param board a board to display
+	 * @param player the main player
+	 * @param playerViews PlayerView of each Player
+	 * @param width available width
+	 * @param height available height
 	 */
 	public BoardView(final AbstractBoard board, final Player player, final Map<Player, PlayerView> playerViews,
 			final int width, final int height) {
@@ -112,12 +107,9 @@ public class BoardView {
 	/**
 	 * Paint this BoardView.
 	 *
-	 * @param g
-	 *            the Graphics context in which to paint
-	 * @param mouse
-	 *            the screen coordinates of the mouse pointer
-	 * @param selection
-	 *            the coordinates of the selected square
+	 * @param g the Graphics context in which to paint
+	 * @param mouse the screen coordinates of the mouse pointer
+	 * @param selection the coordinates of the selected square
 	 */
 	public void paint(final Graphics2D g, final Point mouse, final Coordinates selection) {
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -193,10 +185,8 @@ public class BoardView {
 
 		g.setColor(Color.ORANGE);
 
-		if (hovered != null) {
-			for (final Movement m : MovementSuggestion.getMovements(hovered, board)) {
-				g.draw(displayManager.hexagon(m.getDestination()));
-			}
+		for (final Movement m : MovementSuggestion.getMovements(currentMovement, board)) {
+			g.draw(displayManager.hexagon(m.getDestination()));
 		}
 
 		if (!hasHovered && (hovered != null)) {
@@ -208,6 +198,12 @@ public class BoardView {
 
 		g.setStroke(defaultStroke);
 		g.setColor(defaultColor);
+	}
+
+	private Movement currentMovement = new Movement();
+
+	public void setCurrentMovement(Movement movement) {
+		this.currentMovement = movement;
 	}
 
 	private void drawNames(final Graphics2D g) {

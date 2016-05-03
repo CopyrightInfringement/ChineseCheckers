@@ -1,5 +1,18 @@
 package org.copinf.cc.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import org.copinf.cc.model.AbstractBoard;
 import org.copinf.cc.model.Coordinates;
 import org.copinf.cc.model.DefaultBoard;
@@ -15,19 +28,6 @@ import org.copinf.cc.view.gamepanel.ActionZone;
 import org.copinf.cc.view.gamepanel.DisplayManager;
 import org.copinf.cc.view.gamepanel.GamePanel;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
 /**
  * Controls the game state.
  */
@@ -37,10 +37,8 @@ public class GameController extends AbstractController implements ActionListener
 	 * Error messages enumeration.
 	 */
 	private enum ErrorMsg {
-		WRONG_MOVE("You can't move this way !"),
-		WRONG_PLAYER("This isn't your pawn !"),
-		NOT_LEGAL("This is not a legal movement !"),
-		SERVER_REFUSED("The server refused your movement !");
+		WRONG_MOVE("You can't move this way !"), WRONG_PLAYER("This isn't your pawn !"), NOT_LEGAL(
+				"This is not a legal movement !"), SERVER_REFUSED("The server refused your movement !");
 
 		private final String msg;
 
@@ -66,13 +64,14 @@ public class GameController extends AbstractController implements ActionListener
 
 	/**
 	 * Constructs a new GameController.
+	 * 
 	 * @param mainController the main controller
 	 * @param gameInfo the current game
 	 * @param mainPlayerName the main player name
 	 * @param teamList the list of teams and players usernames
 	 */
-	public GameController(final MainController mainController, final GameInfo gameInfo,
-			final String mainPlayerName, final List<List<String>> teamList) {
+	public GameController(final MainController mainController, final GameInfo gameInfo, final String mainPlayerName,
+			final List<List<String>> teamList) {
 		super(mainController, "game");
 
 		this.game = new Game(new DefaultBoard(gameInfo.size));
@@ -157,10 +156,11 @@ public class GameController extends AbstractController implements ActionListener
 
 	/**
 	 * Method to call when a square is clicked.
+	 * 
 	 * @param coordinates The coordinates of the clicked square.
 	 */
 	private void squareClicked(final Coordinates coordinates) {
-		if (game.getCurrentPlayer() != mainPlayer || waitingForAnswer) {
+		if ((game.getCurrentPlayer() != mainPlayer) || waitingForAnswer) {
 			return;
 		}
 		final AbstractBoard board = game.getBoard();
@@ -169,19 +169,18 @@ public class GameController extends AbstractController implements ActionListener
 
 		// Si on définit quel pion déplacer
 		if (currentMovement.size() == 0) {
-			if (pawn == null || pawn.owner != mainPlayer) {
+			if ((pawn == null) || (pawn.owner != mainPlayer)) {
 				errorMsg = ErrorMsg.WRONG_MOVE;
 			} else {
 				currentMovement.push(coordinates);
 				errorMsg = null;
 			}
-		//	Si on veut redéfinir le pion à déplacer
-		} else if (currentMovement.size() == 1 && pawn != null
-					&& pawn.owner == mainPlayer) {
+			//	Si on veut redéfinir le pion à déplacer
+		} else if ((currentMovement.size() == 1) && (pawn != null) && (pawn.owner == mainPlayer)) {
 			currentMovement.pop();
 			currentMovement.push(coordinates);
 			errorMsg = null;
-		//	Si on veut effectuer un déplacement
+			//	Si on veut effectuer un déplacement
 		} else {
 			board.move(currentMovement.getReversedCondensed());
 			currentMovement.push(coordinates);
@@ -202,6 +201,8 @@ public class GameController extends AbstractController implements ActionListener
 
 		gamePanel.getDrawZone().setSelectedSquare(currentMovement.size() == 0 ? null : currentMovement.lastElement());
 
+		gamePanel.getDrawZone().getBoardView().setCurrentMovement(currentMovement);
+
 		setButtonsVisibility();
 	}
 
@@ -209,7 +210,7 @@ public class GameController extends AbstractController implements ActionListener
 	 * Method to call when the "next" button is clicked.
 	 */
 	private void nextButtonClicked() {
-		if (game.getCurrentPlayer() != mainPlayer || waitingForAnswer || currentMovement.size() < 2) {
+		if ((game.getCurrentPlayer() != mainPlayer) || waitingForAnswer || (currentMovement.size() < 2)) {
 			return;
 		}
 		sendRequest(new Request("client.game.move.request", currentMovement));
@@ -245,14 +246,14 @@ public class GameController extends AbstractController implements ActionListener
 			final int teamId = (Integer) request.content;
 			if (teamId < 0) {
 				JOptionPane.showMessageDialog(null,
-						"A player has left the game" + (game.getTurnCount() < 0 ? "during team-making" : ""), "Game over",
-						JOptionPane.ERROR_MESSAGE);
+						"A player has left the game" + (game.getTurnCount() < 0 ? "during team-making" : ""),
+						"Game over", JOptionPane.ERROR_MESSAGE);
 				end();
 			} else {
 				final Team team = game.getWinner();
 				JOptionPane.showMessageDialog(null,
-					team.get(0).getName() + (team.size() == 2 ? "'s team" : "") + " has won" , "Game over",
-					JOptionPane.INFORMATION_MESSAGE);
+						team.get(0).getName() + (team.size() == 2 ? "'s team" : "") + " has won", "Game over",
+						JOptionPane.INFORMATION_MESSAGE);
 				end();
 			}
 		} else if ("tick".equals(sub2)) {
@@ -279,6 +280,7 @@ public class GameController extends AbstractController implements ActionListener
 
 	/**
 	 * Process a "client.game.move" request
+	 * 
 	 * @param request The request
 	 */
 	private void processMoveRequest(final Request request) {
@@ -304,6 +306,7 @@ public class GameController extends AbstractController implements ActionListener
 
 	/**
 	 * Moves a pawn then repaint the board.
+	 * 
 	 * @param movement a movement
 	 */
 	private void movePawn(final Movement movement) {
@@ -329,7 +332,7 @@ public class GameController extends AbstractController implements ActionListener
 
 	@Override
 	public void keyTyped(final KeyEvent ev) {
-		if (ev.getSource() == gamePanel.getActionZone().chatField && ev.getKeyChar() == '\n') {
+		if ((ev.getSource() == gamePanel.getActionZone().chatField) && (ev.getKeyChar() == '\n')) {
 			sendMessageAction();
 		}
 	}
