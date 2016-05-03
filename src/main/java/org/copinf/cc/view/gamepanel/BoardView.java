@@ -1,11 +1,5 @@
 package org.copinf.cc.view.gamepanel;
 
-import org.copinf.cc.model.AbstractBoard;
-import org.copinf.cc.model.BoardZone;
-import org.copinf.cc.model.Coordinates;
-import org.copinf.cc.model.Player;
-import org.copinf.cc.model.Square;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -18,6 +12,12 @@ import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.Map;
 
+import org.copinf.cc.model.AbstractBoard;
+import org.copinf.cc.model.BoardZone;
+import org.copinf.cc.model.Coordinates;
+import org.copinf.cc.model.Player;
+import org.copinf.cc.model.Square;
+
 /**
  * Provides methods to draw and interact with a board.
  */
@@ -28,7 +28,10 @@ public class BoardView {
 	private final int width;
 	private final int height;
 
-	private final DisplayManager displayManager;
+	/**
+	 * The DisplayManager linked to this BoardView
+	 */
+	public final DisplayManager displayManager;
 
 	/**
 	 * Constructs a new BoardView.
@@ -38,8 +41,7 @@ public class BoardView {
 	 * @param width available width
 	 * @param height available height
 	 */
-	public BoardView(final AbstractBoard board, final Player player,
-			final Map<Player, PlayerView> playerViews,
+	public BoardView(final AbstractBoard board, final Player player, final Map<Player, PlayerView> playerViews,
 			final int width, final int height) {
 		this.board = board;
 		this.playerViews = playerViews;
@@ -47,19 +49,13 @@ public class BoardView {
 		this.width = width;
 		this.height = height;
 
-		final double optimalSizeWidth =
-				width * 80.0 / 100.0 / Math.sqrt(3.0) * ((double) board.getWidth() + 0.5);
-		final double optimalSizeHeight =
-				height * 80.0 / 100.0 * 2.0 / (3.0 * (double) board.getHeight() + 1.0);
+		final double optimalSizeWidth = ((width * 80.0) / 100.0 / Math.sqrt(3.0)) * (board.getWidth() + 0.5);
+		final double optimalSizeHeight = (((height * 80.0) / 100.0) * 2.0) / ((3.0 * board.getHeight()) + 1.0);
 		final double size = Math.min(optimalSizeWidth, optimalSizeHeight);
 
 		this.displayManager = new DisplayManager(size, 1.0, 1.0, 0.0, width / 2.0, height / 2.0, board);
 
 		this.displayManager.setAngle(getPlayerAngle(player, width / 2.0, height));
-	}
-
-	public DisplayManager getDisplayManager() {
-		return displayManager;
 	}
 
 	private Point2D.Double getBoardZoneCenter(final BoardZone zone) {
@@ -70,9 +66,9 @@ public class BoardView {
 			x += p.x;
 			y += p.y;
 		}
-		x /= (double) zone.coordinates().size();
-		y /= (double) zone.coordinates().size();
-		return new Point2D.Double(x,y);
+		x /= zone.coordinates().size();
+		y /= zone.coordinates().size();
+		return new Point2D.Double(x, y);
 	}
 
 	private Point2D.Double getBoardZonesCenter(final Collection<BoardZone> zones) {
@@ -83,22 +79,22 @@ public class BoardView {
 			x += p.x;
 			y += p.y;
 		}
-		x /= (double) zones.size();
-		y /= (double) zones.size();
-		return new Point2D.Double(x,y);
+		x /= zones.size();
+		y /= zones.size();
+		return new Point2D.Double(x, y);
 	}
 
 	private double getPlayerAngle(final Player player, final double x, final double y) {
 		final Point2D.Double O = displayManager.getOrigin();
 		final Point2D.Double P = getBoardZonesCenter(player.getInitialZones());
 
-		final Point2D.Double OPn = new Point2D.Double(
-			(O.getX() - P.getX()) / O.distance(P), (O.getY() - P.getY()) / O.distance(P));
-		final Point2D.Double OCn = new Point2D.Double(
-			(O.getX() - x) / O.distance(x, y), (O.getY() - y) / O.distance(x, y));
+		final Point2D.Double OPn = new Point2D.Double((O.getX() - P.getX()) / O.distance(P),
+				(O.getY() - P.getY()) / O.distance(P));
+		final Point2D.Double OCn = new Point2D.Double((O.getX() - x) / O.distance(x, y),
+				(O.getY() - y) / O.distance(x, y));
 
-		final double dot = OPn.x * OCn.x + OPn.y * OCn.y;
-		final double det = OPn.x * OCn.y - OPn.y * OCn.x;
+		final double dot = (OPn.x * OCn.x) + (OPn.y * OCn.y);
+		final double det = (OPn.x * OCn.y) - (OPn.y * OCn.x);
 
 		final double angle = Math.acos(dot) * (det < 0.0 ? -1 : 1);
 		return (displayManager.getAngle() + angle) % (2 * Math.PI);
@@ -111,10 +107,8 @@ public class BoardView {
 	 * @param selection the coordinates of the selected square
 	 */
 	public void paint(final Graphics2D g, final Point mouse, final Coordinates selection) {
-		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-			RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-			RenderingHints.VALUE_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		drawHexagons(g, selection);
 
@@ -136,7 +130,6 @@ public class BoardView {
 			square = board.getSquare(coord);
 			g.setColor(Color.WHITE);
 			g.fill(hexagon);
-
 
 			if (!square.isFree()) {
 				final Player owner = square.getPawn().owner;
@@ -184,7 +177,7 @@ public class BoardView {
 				}
 			}
 		}
-		if (!hasHovered && hovered != null) {
+		if (!hasHovered && (hovered != null)) {
 			hexagon = displayManager.hexagon(hovered);
 			g.setColor(Color.BLACK);
 			g.setStroke(stroke);
@@ -209,7 +202,7 @@ public class BoardView {
 			g.setColor(view.color);
 			final String name = view.player.getName();
 			final int sW = g.getFontMetrics().stringWidth(name);
-			g.drawString(name, width - sW - 10, i * height / (playerViews.values().size() + 1));
+			g.drawString(name, width - sW - 10, (i * height) / (playerViews.values().size() + 1));
 
 			i++;
 		}

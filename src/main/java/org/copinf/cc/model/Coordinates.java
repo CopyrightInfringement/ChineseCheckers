@@ -19,17 +19,34 @@ public class Coordinates implements Serializable {
 	/** z-axis coordinate. */
 	public final int z;
 
+	/**
+	 * The coordinates of an eastern move.
+	 */
 	public static final Coordinates EAST = new Coordinates(-1, 0, 1);
+	/**
+	 * The coordinates of a north-eastern move.
+	 */
 	public static final Coordinates NORTH_EAST = new Coordinates(0, -1, 1);
+	/**
+	 * The coordinates of a north-western move.
+	 */
 	public static final Coordinates NORTH_WEST = new Coordinates(1, -1, 0);
+	/**
+	 * The coordinates of a western move.
+	 */
 	public static final Coordinates WEST = new Coordinates(1, 0, -1);
+	/**
+	 * The coordinates of a south-eastern move.
+	 */
 	public static final Coordinates SOUTH_EAST = new Coordinates(0, 1, -1);
+	/**
+	 * The coordinates of a south-western move.
+	 */
 	public static final Coordinates SOUTH_WEST = new Coordinates(-1, 1, 0);
 
 	/** Pre-defined directions around a Coordinates. */
-	private static final Coordinates[] DIRECTIONS = new Coordinates[] {
-		EAST, NORTH_EAST, NORTH_WEST, WEST, SOUTH_WEST, SOUTH_EAST
-	};
+	private static final Coordinates[] DIRECTIONS = new Coordinates[] { EAST, NORTH_EAST, NORTH_WEST, WEST, SOUTH_WEST,
+			SOUTH_EAST };
 
 	/**
 	 * Constructs a new Coordinates. Calculates z such as x + y + z = 0.
@@ -61,7 +78,7 @@ public class Coordinates implements Serializable {
 	public boolean equals(final Object obj) {
 		if (obj instanceof Coordinates) {
 			final Coordinates coord = (Coordinates) obj;
-			return x == coord.x && y == coord.y && z == coord.z;
+			return (x == coord.x) && (y == coord.y) && (z == coord.z);
 		}
 		return false;
 	}
@@ -82,8 +99,8 @@ public class Coordinates implements Serializable {
 	}
 
 	/**
-	 * Checks if this Coordinates and a second Coordinates have Coordinates inbetween
-	 * and returns these Coordinates.
+	 * Checks if this Coordinates and a second Coordinates have Coordinates
+	 * inbetween and returns these Coordinates.
 	 * @param coord a second Coordinates
 	 * @return the Coordinates inbetween or an empty set
 	 */

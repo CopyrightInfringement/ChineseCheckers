@@ -1,10 +1,5 @@
 package org.copinf.cc.view.gamepanel;
 
-import org.copinf.cc.model.Coordinates;
-import org.copinf.cc.model.Game;
-import org.copinf.cc.model.Player;
-import org.copinf.cc.net.Message;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,15 +12,22 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
+import org.copinf.cc.model.Coordinates;
+import org.copinf.cc.model.Game;
+import org.copinf.cc.model.Player;
+import org.copinf.cc.net.Message;
+
 /**
  * DrawZone is where the board, the players' icons and the chat are displayed.
  */
 @SuppressWarnings("serial")
 public class DrawZone extends JPanel implements MouseMotionListener {
 
-	private final Player player;
 	private Coordinates selection;
-	private final BoardView boardView;
+	/**
+	 * The BoardView associated with this DrawZone.
+	 */
+	public final BoardView boardView;
 	private Point mouse;
 	private final List<Message> messages;
 	private final Map<Player, PlayerView> playerViews;
@@ -39,7 +41,6 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	 */
 	public DrawZone(final Game game, final Player player, final Map<Player, PlayerView> playerViews) {
 		super();
-		this.player = player;
 		boardView = new BoardView(game.getBoard(), player, playerViews, 800, 500);
 
 		selection = null;
@@ -68,22 +69,34 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 
 	}
 
-	public BoardView getBoardView() {
-		return boardView;
-	}
-
+	/**
+	 * Add a message to the list of message to display.
+	 * @param playerName The name of the sender
+	 * @param isChatMessage Whether this message is a a chat message or not (a
+	 *            chat message or an error message)
+	 */
 	public void addMessage(final String message, final String playerName, final boolean isChatMessage) {
 		addMessage(new Message(message, playerName, isChatMessage));
 	}
 
+	/**
+	 * Add a message to the list of message to display.
+	 * @param playerName The name of the sender
+	 */
 	public void addMessage(final String message, final String playerName) {
 		addMessage(message, playerName, true);
 	}
 
+	/**
+	 * Add a message to the list of message to display.
+	 */
 	public void addMessage(final String message) {
 		addMessage(message, "", false);
 	}
 
+	/**
+	 * Add a message to the list of message to display.
+	 */
 	public void addMessage(final Message message) {
 		messages.add(message);
 		if (messages.size() > MAX_MESSAGES) {
@@ -91,10 +104,10 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		}
 	}
 
-	public void drawMessages(final Graphics2D g2d) {
+	private void drawMessages(final Graphics2D g2d) {
 		final int x = 5;
 		int y = 5;
-		for (int i = messages.size() - 1; i >= 0 ; i--) {
+		for (int i = messages.size() - 1; i >= 0; i--) {
 			final Message message = messages.get(i);
 			Color color = Color.BLACK;
 			if (message.isChatMessage) {
@@ -111,6 +124,9 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		g2d.setColor(Color.BLACK);
 	}
 
+	/**
+	 * Set the coordinates of the selected square.
+	 */
 	public void setSelectedSquare(final Coordinates selection) {
 		this.selection = selection;
 	}

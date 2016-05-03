@@ -1,13 +1,13 @@
 package org.copinf.cc.controller;
 
-import org.copinf.cc.net.Request;
-import org.copinf.cc.view.homepanel.HomePanel;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JPanel;
+
+import org.copinf.cc.net.Request;
+import org.copinf.cc.view.homepanel.HomePanel;
 
 /**
  * Controls the home panel.
@@ -23,8 +23,8 @@ public class HomeController extends AbstractController implements ActionListener
 	public HomeController(final MainController mainController) {
 		super(mainController, "home");
 		panel = new HomePanel();
-		panel.getHostButton().addActionListener(this);
-		panel.getJoinButton().addActionListener(this);
+		panel.hostButton.addActionListener(this);
+		panel.joinButton.addActionListener(this);
 	}
 
 	@Override
@@ -34,16 +34,16 @@ public class HomeController extends AbstractController implements ActionListener
 
 	@Override
 	public void actionPerformed(final ActionEvent ev) {
-		if (ev.getSource().equals(panel.getHostButton())) {
+		if (ev.getSource().equals(panel.hostButton)) {
 			try {
 				mainController.startServer(panel.getPort());
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				panel.displayErrorMessage("Unable to start a server");
 				return;
 			}
 			mainController.startClient(panel.getHost(), panel.getPort());
 			switchController(new LobbyController(mainController));
-		} else if (ev.getSource().equals(panel.getJoinButton())) {
+		} else if (ev.getSource().equals(panel.joinButton)) {
 			panel.resetErrorMessage();
 			if (mainController.startClient(panel.getHost(), panel.getPort())) {
 				switchController(new LobbyController(mainController));
@@ -54,5 +54,6 @@ public class HomeController extends AbstractController implements ActionListener
 	}
 
 	@Override
-	public void processRequest(final Request request) {}
+	public void processRequest(final Request request) {
+	}
 }

@@ -16,9 +16,21 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class ActionZone extends JPanel implements FocusListener {
 
+	/**
+	 * The "Reset" button.
+	 */
 	public final JButton resetButton;
+	/**
+	 * The "Next" button.
+	 */
 	public final JButton nextButton;
+	/**
+	 * The chat message field.
+	 */
 	public final JTextField chatField;
+	/**
+	 * The "Send" button to send a message.
+	 */
 	public final JButton sendButton;
 
 	private static final String DEFAULT_TEXT = "Write your message here";
@@ -45,6 +57,11 @@ public class ActionZone extends JPanel implements FocusListener {
 		add(nextButton);
 	}
 
+	/**
+	 * Sets the visibility of the buttons and locks/unlocks them.
+	 * @param movementSize The size of the current movement.
+	 * @param playing Whether the current payer is playing or not.
+	 */
 	public void setVisibility(int movementSize, boolean playing) {
 		nextButton.setVisible(playing);
 		resetButton.setVisible(playing);
@@ -52,10 +69,16 @@ public class ActionZone extends JPanel implements FocusListener {
 		resetButton.setEnabled(movementSize > 0);
 	}
 
+	/**
+	 * Clears the message field.
+	 */
 	public void clearField() {
 		chatField.setText("");
 	}
 
+	/**
+	 * Gets the content of the chat message field.
+	 */
 	public String getMessage() {
 		return chatField.getText();
 	}

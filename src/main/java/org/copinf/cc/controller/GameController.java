@@ -1,5 +1,18 @@
 package org.copinf.cc.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import org.copinf.cc.model.AbstractBoard;
 import org.copinf.cc.model.Coordinates;
 import org.copinf.cc.model.DefaultBoard;
@@ -15,19 +28,6 @@ import org.copinf.cc.view.gamepanel.ActionZone;
 import org.copinf.cc.view.gamepanel.DisplayManager;
 import org.copinf.cc.view.gamepanel.GamePanel;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
 /**
  * Controls the game state.
  */
@@ -37,10 +37,8 @@ public class GameController extends AbstractController implements ActionListener
 	 * Error messages enumeration.
 	 */
 	private enum ErrorMsg {
-		WRONG_MOVE("You can't move this way !"),
-		WRONG_PLAYER("This isn't your pawn !"),
-		NOT_LEGAL("This is not a legal movement !"),
-		SERVER_REFUSED("The server refused your movement !");
+		WRONG_MOVE("You can't move this way !"), WRONG_PLAYER("This isn't your pawn !"), NOT_LEGAL(
+				"This is not a legal movement !"), SERVER_REFUSED("The server refused your movement !");
 
 		private final String msg;
 
@@ -71,8 +69,8 @@ public class GameController extends AbstractController implements ActionListener
 	 * @param mainPlayerName the main player name
 	 * @param teamList the list of teams and players usernames
 	 */
-	public GameController(final MainController mainController, final GameInfo gameInfo,
-			final String mainPlayerName, final List<List<String>> teamList) {
+	public GameController(final MainController mainController, final GameInfo gameInfo, final String mainPlayerName,
+			final List<List<String>> teamList) {
 		super(mainController, "game");
 
 		this.game = new Game(new DefaultBoard(gameInfo.size));
@@ -95,20 +93,20 @@ public class GameController extends AbstractController implements ActionListener
 		game.nextTurn();
 
 		this.gamePanel = new GamePanel(game, this.mainPlayer);
-		this.displayManager = gamePanel.getDrawZone().getBoardView().getDisplayManager();
+		this.displayManager = gamePanel.drawZone.boardView.displayManager;
 
 		this.currentMovement = new Movement();
 		this.waitingForAnswer = false;
 
 		gamePanel.addMouseListener(this);
-		gamePanel.getDrawZone().addMouseListener(this);
-		gamePanel.getActionZone().addMouseListener(this);
-		gamePanel.getActionZone().nextButton.addMouseListener(this);
-		gamePanel.getActionZone().resetButton.addMouseListener(this);
-		gamePanel.getActionZone().sendButton.addMouseListener(this);
-		gamePanel.getActionZone().chatField.addKeyListener(this);
+		gamePanel.drawZone.addMouseListener(this);
+		gamePanel.actionZone.addMouseListener(this);
+		gamePanel.actionZone.nextButton.addMouseListener(this);
+		gamePanel.actionZone.resetButton.addMouseListener(this);
+		gamePanel.actionZone.sendButton.addMouseListener(this);
+		gamePanel.actionZone.chatField.addKeyListener(this);
 
-		gamePanel.getInfoBar().updateLabels();
+		gamePanel.infoBar.updateLabels();
 		setButtonsVisibility();
 	}
 
@@ -116,9 +114,9 @@ public class GameController extends AbstractController implements ActionListener
 	 * Method to call when a turn is over.
 	 */
 	private void onNextTurn() {
-		gamePanel.getActionZone().nextButton.setText("Next turn");
+		gamePanel.actionZone.nextButton.setText("Next turn");
 		game.nextTurn();
-		gamePanel.getInfoBar().updateLabels();
+		gamePanel.infoBar.updateLabels();
 		setButtonsVisibility();
 	}
 
@@ -126,7 +124,7 @@ public class GameController extends AbstractController implements ActionListener
 	 * Method to call to set the correct visibility of the GamePanel buttons.
 	 */
 	private void setButtonsVisibility() {
-		gamePanel.getActionZone().setVisibility(currentMovement.size(), game.getCurrentPlayer() == mainPlayer);
+		gamePanel.actionZone.setVisibility(currentMovement.size(), game.getCurrentPlayer() == mainPlayer);
 	}
 
 	@Override
@@ -140,7 +138,7 @@ public class GameController extends AbstractController implements ActionListener
 
 	@Override
 	public void mouseClicked(final MouseEvent ev) {
-		final ActionZone az = gamePanel.getActionZone();
+		final ActionZone az = gamePanel.actionZone;
 		if (ev.getSource() == az.nextButton) {
 			nextButtonClicked();
 		} else if (ev.getSource() == az.resetButton) {
@@ -160,7 +158,7 @@ public class GameController extends AbstractController implements ActionListener
 	 * @param coordinates The coordinates of the clicked square.
 	 */
 	private void squareClicked(final Coordinates coordinates) {
-		if (game.getCurrentPlayer() != mainPlayer || waitingForAnswer) {
+		if ((game.getCurrentPlayer() != mainPlayer) || waitingForAnswer) {
 			return;
 		}
 		final AbstractBoard board = game.getBoard();
@@ -169,19 +167,18 @@ public class GameController extends AbstractController implements ActionListener
 
 		// Si on définit quel pion déplacer
 		if (currentMovement.size() == 0) {
-			if (pawn == null || pawn.owner != mainPlayer) {
+			if ((pawn == null) || (pawn.owner != mainPlayer)) {
 				errorMsg = ErrorMsg.WRONG_MOVE;
 			} else {
 				currentMovement.push(coordinates);
 				errorMsg = null;
 			}
-		//	Si on veut redéfinir le pion à déplacer
-		} else if (currentMovement.size() == 1 && pawn != null
-					&& pawn.owner == mainPlayer) {
+			//	Si on veut redéfinir le pion à déplacer
+		} else if ((currentMovement.size() == 1) && (pawn != null) && (pawn.owner == mainPlayer)) {
 			currentMovement.pop();
 			currentMovement.push(coordinates);
 			errorMsg = null;
-		//	Si on veut effectuer un déplacement
+			//	Si on veut effectuer un déplacement
 		} else {
 			board.move(currentMovement.getReversedCondensed());
 			currentMovement.push(coordinates);
@@ -194,13 +191,13 @@ public class GameController extends AbstractController implements ActionListener
 		}
 
 		if (errorMsg != null) {
-			gamePanel.getDrawZone().addMessage(errorMsg.getMessage());
+			gamePanel.drawZone.addMessage(errorMsg.getMessage());
 		}
 
-		gamePanel.getActionZone().resetButton.setEnabled(!currentMovement.isEmpty());
+		gamePanel.actionZone.resetButton.setEnabled(!currentMovement.isEmpty());
 		movePawn(currentMovement);
 
-		gamePanel.getDrawZone().setSelectedSquare(currentMovement.size() == 0 ? null : currentMovement.lastElement());
+		gamePanel.drawZone.setSelectedSquare(currentMovement.size() == 0 ? null : currentMovement.lastElement());
 
 		setButtonsVisibility();
 	}
@@ -209,7 +206,7 @@ public class GameController extends AbstractController implements ActionListener
 	 * Method to call when the "next" button is clicked.
 	 */
 	private void nextButtonClicked() {
-		if (game.getCurrentPlayer() != mainPlayer || waitingForAnswer || currentMovement.size() < 2) {
+		if ((game.getCurrentPlayer() != mainPlayer) || waitingForAnswer || (currentMovement.size() < 2)) {
 			return;
 		}
 		sendRequest(new Request("client.game.move.request", currentMovement));
@@ -239,42 +236,42 @@ public class GameController extends AbstractController implements ActionListener
 			processMoveRequest(request);
 			waitingForAnswer = false;
 		} else if ("message".equals(sub2)) {
-			gamePanel.getDrawZone().addMessage((Message) request.content);
+			gamePanel.drawZone.addMessage((Message) request.content);
 			gamePanel.repaint();
 		} else if ("end".equals(sub2)) {
 			final int teamId = (Integer) request.content;
 			if (teamId < 0) {
 				JOptionPane.showMessageDialog(null,
-						"A player has left the game" + (game.getTurnCount() < 0 ? "during team-making" : ""), "Game over",
-						JOptionPane.ERROR_MESSAGE);
+						"A player has left the game" + (game.getTurnCount() < 0 ? "during team-making" : ""),
+						"Game over", JOptionPane.ERROR_MESSAGE);
 				end();
 			} else {
 				final Team team = game.getWinner();
 				JOptionPane.showMessageDialog(null,
-					team.get(0).getName() + (team.size() == 2 ? "'s team" : "") + " has won" , "Game over",
-					JOptionPane.INFORMATION_MESSAGE);
+						team.get(0).getName() + (team.size() == 2 ? "'s team" : "") + " has won", "Game over",
+						JOptionPane.INFORMATION_MESSAGE);
 				end();
 			}
 		} else if ("tick".equals(sub2)) {
-			gamePanel.getActionZone().nextButton.setText(request.content.toString() + "s");
+			gamePanel.actionZone.nextButton.setText(request.content.toString() + "s");
 		}
 	}
 
 	private void sendMessageAction() {
-		final String text = gamePanel.getActionZone().getMessage().trim();
+		final String text = gamePanel.actionZone.getMessage().trim();
 		boolean valid = true;
 		if (text.equals("")) {
 			valid = false;
 		}
 		if (text.length() > MAX_MESSAGE_LENGTH) {
-			gamePanel.getDrawZone().addMessage("Maximum message length is " + MAX_MESSAGE_LENGTH);
+			gamePanel.drawZone.addMessage("Maximum message length is " + MAX_MESSAGE_LENGTH);
 			valid = false;
 		}
 		if (valid) {
 			final Message message = new Message(text, mainPlayer.getName());
 			sendRequest(new Request("client.game.message", message));
 		}
-		gamePanel.getActionZone().clearField();
+		gamePanel.actionZone.clearField();
 	}
 
 	/**
@@ -285,7 +282,7 @@ public class GameController extends AbstractController implements ActionListener
 		final String sub = request.getSubRequest(3);
 		if ("request".equals(sub)) {
 			if (!(Boolean) request.content) {
-				gamePanel.getDrawZone().addMessage(ErrorMsg.SERVER_REFUSED.msg);
+				gamePanel.drawZone.addMessage(ErrorMsg.SERVER_REFUSED.msg);
 				game.getBoard().move(currentMovement.getReversedCondensed());
 			}
 			game.getBoard().move(currentMovement.getReversedCondensed());
@@ -299,7 +296,7 @@ public class GameController extends AbstractController implements ActionListener
 
 	private void resetMovement() {
 		currentMovement.clear();
-		gamePanel.getDrawZone().setSelectedSquare(null);
+		gamePanel.drawZone.setSelectedSquare(null);
 	}
 
 	/**
@@ -329,7 +326,7 @@ public class GameController extends AbstractController implements ActionListener
 
 	@Override
 	public void keyTyped(final KeyEvent ev) {
-		if (ev.getSource() == gamePanel.getActionZone().chatField && ev.getKeyChar() == '\n') {
+		if ((ev.getSource() == gamePanel.actionZone.chatField) && (ev.getKeyChar() == '\n')) {
 			sendMessageAction();
 		}
 	}

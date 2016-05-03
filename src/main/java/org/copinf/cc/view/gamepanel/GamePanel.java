@@ -13,22 +13,28 @@ import org.copinf.cc.model.Player;
 /**
  * GamePanel is what is displayed during a game.
  */
-@SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 
-	private final InfoBar infoBar;
-	private final DrawZone drawZone;
-	private final ActionZone actionZone;
+	/**
+	 * The InfoBar of this panel
+	 */
+	public final InfoBar infoBar;
+	/**
+	 * The DrawZone of this panel
+	 */
+	public final DrawZone drawZone;
+	/**
+	 * The ActionZone of this panel
+	 */
+	public final ActionZone actionZone;
 
 	private final Map<Player, PlayerView> playerViews;
 
 	/**
 	 * Constructs a new GamePanel.
 	 *
-	 * @param game
-	 *            the current game
-	 * @param player
-	 *            the playing player
+	 * @param game the current game
+	 * @param player the playing player
 	 */
 	public GamePanel(final Game game, final Player player) {
 		super();
@@ -55,21 +61,5 @@ public class GamePanel extends JPanel {
 		actionZone = new ActionZone();
 		add(actionZone);
 		actionZone.setPreferredSize(new Dimension(800, 50));
-	}
-
-	public InfoBar getInfoBar() {
-		return infoBar;
-	}
-
-	public DrawZone getDrawZone() {
-		return drawZone;
-	}
-
-	public ActionZone getActionZone() {
-		return actionZone;
-	}
-
-	public Map<Player, PlayerView> getPlayerViews() {
-		return this.playerViews;
 	}
 }

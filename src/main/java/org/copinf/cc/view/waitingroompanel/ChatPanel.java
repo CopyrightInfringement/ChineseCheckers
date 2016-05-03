@@ -1,7 +1,5 @@
 package org.copinf.cc.view.waitingroompanel;
 
-import org.copinf.cc.net.Message;
-
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
@@ -15,13 +13,22 @@ import javax.swing.JTextField;
 import javax.swing.Spring;
 import javax.swing.SpringLayout;
 
+import org.copinf.cc.net.Message;
 
-@SuppressWarnings("serial")
+/**
+ * The panel for the chat of the waiting room
+ */
 public class ChatPanel extends JPanel implements FocusListener {
 
 	private final JList<String> messagesList;
 	private final List<String> messages;
+	/**
+	 * The text field in which the user types the message
+	 */
 	public final JTextField messageField;
+	/**
+	 * The "Send" button;
+	 */
 	public final JButton sendButton;
 
 	private static final String DEFAULT_TEXT = "Write your message here";
@@ -29,6 +36,9 @@ public class ChatPanel extends JPanel implements FocusListener {
 	private static final int FIELD_WIDTH = 250;
 	private static final int FIELD_HEIGHT = 30;
 
+	/**
+	 * Constructs a ChatPanel.
+	 */
 	public ChatPanel() {
 		super();
 
@@ -71,22 +81,16 @@ public class ChatPanel extends JPanel implements FocusListener {
 		add(sendButton);
 	}
 
-	public JList<String> getMessagesList() {
-		return messagesList;
-	}
-
-	public List<String> getMessages() {
-		return messages;
-	}
-
+	/**
+	 * Returns the content of the message text field.
+	 */
 	public String getMessage() {
 		return messageField.getText();
 	}
 
-	public JButton getSendButton() {
-		return sendButton;
-	}
-
+	/**
+	 * Clears the message text field.
+	 */
 	public void clearField() {
 		messageField.setText("");
 	}
@@ -109,6 +113,9 @@ public class ChatPanel extends JPanel implements FocusListener {
 		messagesList.setListData(messages.toArray(new String[messages.size()]));
 	}
 
+	/**
+	 * Add a message to the chat.
+	 */
 	public void addMessage(final Message message) {
 		messages.add(message.playerName + " : " + message.message);
 		updateMessageList();

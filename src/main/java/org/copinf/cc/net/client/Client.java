@@ -1,8 +1,5 @@
 package org.copinf.cc.net.client;
 
-import org.copinf.cc.controller.AbstractController;
-import org.copinf.cc.net.Request;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,6 +9,12 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
+import org.copinf.cc.controller.AbstractController;
+import org.copinf.cc.net.Request;
+
+/**
+ * The thread handling the connection with the server.
+ */
 public class Client extends Thread {
 
 	private final ObjectInputStream in;
@@ -31,7 +34,7 @@ public class Client extends Thread {
 		setName("Client thread");
 
 		client = new Socket(host, port);
-		in  = new ObjectInputStream(client.getInputStream());
+		in = new ObjectInputStream(client.getInputStream());
 		out = new ObjectOutputStream(client.getOutputStream());
 
 		controller = null;
@@ -57,7 +60,7 @@ public class Client extends Thread {
 			out.reset();
 			LOGGER.info("Client : sending to server " + req);
 			out.writeObject(req);
-		} catch (IOException ex) {
+		} catch (final IOException ex) {
 			LOGGER.info("Handled exception : " + ex.getMessage());
 			if (LOGGER.isLoggable(Level.INFO)) {
 				System.err.println("=========StackTrace==============");
@@ -71,7 +74,8 @@ public class Client extends Thread {
 
 	/**
 	 * Read the next request received from the server.
-	 * @return the next request, or null if an error occurred or the connection ended.
+	 * @return the next request, or null if an error occurred or the connection
+	 *         ended.
 	 */
 	private Request receive() {
 		try {
@@ -102,8 +106,7 @@ public class Client extends Thread {
 	 */
 	private void onServerCrash() {
 		LOGGER.info("Going back to home menu.");
-		JOptionPane.showMessageDialog(null,
-				"The server closed unexpectedly", "Server error",
+		JOptionPane.showMessageDialog(null, "The server closed unexpectedly", "Server error",
 				JOptionPane.ERROR_MESSAGE);
 		controller.home();
 	}
@@ -114,7 +117,7 @@ public class Client extends Thread {
 	public void end() {
 		try {
 			client.close();
-		} catch (IOException ex) {
+		} catch (final IOException ex) {
 			ex.printStackTrace();
 		}
 	}

@@ -1,16 +1,9 @@
 package org.copinf.cc.controller;
 
-import org.copinf.cc.net.GameInfo;
-import org.copinf.cc.net.Message;
-import org.copinf.cc.net.Request;
-import org.copinf.cc.view.waitingroompanel.ChatPanel;
-import org.copinf.cc.view.waitingroompanel.WaitingRoomPanel;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,8 +11,15 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import org.copinf.cc.net.GameInfo;
+import org.copinf.cc.net.Message;
+import org.copinf.cc.net.Request;
+import org.copinf.cc.view.waitingroompanel.ChatPanel;
+import org.copinf.cc.view.waitingroompanel.WaitingRoomPanel;
+
 /**
- * The waiting room where the players wait for enough players to have joined the game.
+ * The waiting room where the players wait for enough players to have joined the
+ * game.
  */
 public class WaitingRoomController extends AbstractController implements ActionListener, KeyListener {
 
@@ -84,7 +84,8 @@ public class WaitingRoomController extends AbstractController implements ActionL
 				roomPanel.teamBuildingPanel.setAvailablePlayers(getAvailablePlayers());
 				for (final List<String> team : teamList) {
 					if (team.contains(username)) {
-						roomPanel.teamBuildingPanel.hasBeenPaired(team.get(0).equals(username) ? team.get(1) : team.get(0));
+						roomPanel.teamBuildingPanel
+								.hasBeenPaired(team.get(0).equals(username) ? team.get(1) : team.get(0));
 					}
 				}
 			} else if ("leader".equals(sub3)) {
@@ -99,16 +100,9 @@ public class WaitingRoomController extends AbstractController implements ActionL
 		}
 	}
 
-	public void mouseClicked(final MouseEvent ev) {
-		final ChatPanel cp = roomPanel.chatPanel;
-		if (ev.getSource() == cp.sendButton) {
-			sendMessageAction();
-		}
-	}
-
 	/**
-	 * Returns a collection of the available players, if teams are enabled,
-	 * or the players waiting for the game to begin.
+	 * Returns a collection of the available players, if teams are enabled, or
+	 * the players waiting for the game to begin.
 	 * @return The players.
 	 */
 	private Collection<String> getAvailablePlayers() {
@@ -129,7 +123,7 @@ public class WaitingRoomController extends AbstractController implements ActionL
 			team.add(roomPanel.teamBuildingPanel.getTeamMate());
 			sendRequest(new Request("client.game.teams.leader", (Serializable) team));
 			roomPanel.teamBuildingPanel.enableTeamBuiding(false);
-		} else if (ev.getSource() == cp.getSendButton()) {
+		} else if (ev.getSource() == cp.sendButton) {
 			sendMessageAction();
 		}
 	}
@@ -151,8 +145,9 @@ public class WaitingRoomController extends AbstractController implements ActionL
 		roomPanel.chatPanel.clearField();
 	}
 
+	@Override
 	public void keyTyped(final KeyEvent ev) {
-		if (ev.getSource() == roomPanel.chatPanel.messageField && ev.getKeyChar() == '\n') {
+		if ((ev.getSource() == roomPanel.chatPanel.messageField) && (ev.getKeyChar() == '\n')) {
 			sendMessageAction();
 		}
 	}

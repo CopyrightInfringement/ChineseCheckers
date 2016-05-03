@@ -1,7 +1,5 @@
 package org.copinf.cc.view.lobbypanel;
 
-import org.copinf.cc.net.GameInfo;
-
 import java.awt.Component;
 
 import javax.swing.JLabel;
@@ -9,17 +7,24 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
-@SuppressWarnings("serial")
+import org.copinf.cc.net.GameInfo;
+
+/**
+ * Renders a list of GameInfos
+ */
 public class GameInfoRenderer extends JPanel implements ListCellRenderer<GameInfo> {
 
+	/**
+	 * Constructs a GameInfoRenderer
+	 */
 	public GameInfoRenderer() {
 		super();
 		setOpaque(true);
 	}
 
 	@Override
-	public Component getListCellRendererComponent(final JList<? extends GameInfo> list,
-			final GameInfo value, final int index, final boolean isSelected, final boolean cellHasFocus) {
+	public Component getListCellRendererComponent(final JList<? extends GameInfo> list, final GameInfo value,
+			final int index, final boolean isSelected, final boolean cellHasFocus) {
 
 		removeAll();
 		add(new JLabel(value.name));
@@ -39,9 +44,9 @@ public class GameInfoRenderer extends JPanel implements ListCellRenderer<GameInf
 			setBackground(list.getBackground());
 			setForeground(list.getForeground());
 		}
-		
+
 		setToolTipText(value.currentPlayers.toString());
-		
+
 		return this;
 	}
 }

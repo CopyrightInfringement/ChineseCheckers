@@ -1,13 +1,5 @@
 package org.copinf.cc.net.server;
 
-import org.copinf.cc.model.DefaultBoard;
-import org.copinf.cc.model.Game;
-import org.copinf.cc.model.Movement;
-import org.copinf.cc.model.Player;
-import org.copinf.cc.model.Team;
-import org.copinf.cc.net.GameInfo;
-import org.copinf.cc.net.Request;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +7,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.copinf.cc.model.DefaultBoard;
+import org.copinf.cc.model.Game;
+import org.copinf.cc.model.Movement;
+import org.copinf.cc.model.Player;
+import org.copinf.cc.model.Team;
+import org.copinf.cc.net.GameInfo;
+import org.copinf.cc.net.Request;
 
 /**
  * The thread handling a game.
@@ -52,7 +52,7 @@ public class GameThread extends Thread {
 			synchronized (this) {
 				wait();
 			}
-		} catch (InterruptedException expected) {
+		} catch (final InterruptedException expected) {
 		}
 	}
 
@@ -114,11 +114,13 @@ public class GameThread extends Thread {
 
 	/**
 	 * Process a move request.
-	 * @param ct The thread handling the connection with client who has move his pawn
+	 * @param ct The thread handling the connection with client who has move his
+	 *            pawn
 	 * @param movement The movement submitted.
 	 */
 	private void processMoveRequest(final ClientThread ct, final Movement movement) {
-		final boolean accepted = movement.size() >= 2 && game.getBoard().checkMove(movement, getPlayer(ct.getUsername()));
+		final boolean accepted = (movement.size() >= 2)
+				&& game.getBoard().checkMove(movement, getPlayer(ct.getUsername()));
 		ct.send(new Request("server.game.move.request", accepted));
 		if (accepted) {
 			game.getBoard().move(movement);
@@ -127,6 +129,9 @@ public class GameThread extends Thread {
 		}
 	}
 
+	/**
+	 * What to do after a turn is over.
+	 */
 	public void onNextTurn() {
 		game.nextTurn();
 
@@ -179,7 +184,8 @@ public class GameThread extends Thread {
 
 	/**
 	 * Add a player to this game.
-	 * @param client The client thread handling the connection with the playeer to add.
+	 * @param client The client thread handling the connection with the playeer
+	 *            to add.
 	 */
 	public void addClient(final ClientThread client) {
 		if (clients.add(client)) {
@@ -210,7 +216,7 @@ public class GameThread extends Thread {
 	 * Call when enough players has joined the game.
 	 */
 	private void onPlayersFull() {
-		if (gameInfo.teams && 2 * teams.size() != gameInfo.nbPlayersMax) {
+		if (gameInfo.teams && ((2 * teams.size()) != gameInfo.nbPlayersMax)) {
 			for (final ClientThread ct : clients) {
 				if (!isInTeam(ct.getUsername())) {
 					ct.send(new Request("server.game.teams.leader"));
@@ -259,15 +265,15 @@ public class GameThread extends Thread {
 	public void removeClient(final ClientThread client) {
 		if (clients.remove(client)) {
 			gameInfo.currentPlayers.remove(client.getUsername());
-			if (game.getTurnCount() >= 0) {	// If the game has already started
+			if (game.getTurnCount() >= 0) { // If the game has already started
 				endGame();
 				broadcast(new Request("server.game.end", -1));
-			} else if (teams.isEmpty() && gameInfo.teams) {	 // If the player has left during team-making
+			} else if (teams.isEmpty() && gameInfo.teams) { // If the player has left during team-making
 				endGame();
 				broadcast(new Request("server.game.end", -1));
-			} else if (gameInfo.currentPlayers.size() > 0) {	// If the player has left before team-making and there is at least one player left
+			} else if (gameInfo.currentPlayers.size() > 0) { // If the player has left before team-making and there is at least one player left
 				sendPlayersRefresh();
-			} else {	// If there is no one left :'(
+			} else { // If there is no one left :'(
 				endGame();
 			}
 		}
@@ -301,6 +307,6 @@ public class GameThread extends Thread {
 
 	@Override
 	public boolean equals(final Object obj) {
-		return obj instanceof GameThread && this.hashCode() == obj.hashCode();
+		return (obj instanceof GameThread) && (this.hashCode() == obj.hashCode());
 	}
 }

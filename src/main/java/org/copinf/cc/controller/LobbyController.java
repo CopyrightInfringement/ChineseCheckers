@@ -1,16 +1,16 @@
 package org.copinf.cc.controller;
 
-import org.copinf.cc.model.DefaultBoard;
-import org.copinf.cc.net.GameInfo;
-import org.copinf.cc.net.Request;
-import org.copinf.cc.view.lobbypanel.LobbyPanel;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import org.copinf.cc.model.DefaultBoard;
+import org.copinf.cc.net.GameInfo;
+import org.copinf.cc.net.Request;
+import org.copinf.cc.view.lobbypanel.LobbyPanel;
 
 /**
  * Controls the game creation panel.
@@ -34,7 +34,7 @@ public class LobbyController extends AbstractController implements ActionListene
 		lobbyPanel.getJoinGameBtn().addActionListener(this);
 		lobbyPanel.getUsernamePanel().getSubmitBtn().addActionListener(this);
 		lobbyPanel.getGameCreationPanel().addBoard(new DefaultBoard(0));
-		lobbyPanel.getGameCreationPanel().getCreateGameBtn().addActionListener(this);
+		lobbyPanel.getGameCreationPanel().createGameBtn.addActionListener(this);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class LobbyController extends AbstractController implements ActionListene
 			actionJoinGame();
 		} else if (source.equals(lobbyPanel.getUsernamePanel().getSubmitBtn())) {
 			actionSubmitUsername();
-		} else if (source.equals(lobbyPanel.getGameCreationPanel().getCreateGameBtn())) {
+		} else if (source.equals(lobbyPanel.getGameCreationPanel().createGameBtn)) {
 			actionCreateGame();
 		}
 	}
@@ -84,8 +84,8 @@ public class LobbyController extends AbstractController implements ActionListene
 	}
 
 	/**
-	 * Process a "server.game.refresh" request containing the list.
-	 * of the GameInfos associated with the games it hosts.
+	 * Process a "server.game.refresh" request containing the list. of the
+	 * GameInfos associated with the games it hosts.
 	 * @param request a request
 	 */
 	@SuppressWarnings("unchecked")
@@ -120,7 +120,8 @@ public class LobbyController extends AbstractController implements ActionListene
 	}
 
 	/**
-	 * Create the game described in the creation panel then submit it to the server.
+	 * Create the game described in the creation panel then submit it to the
+	 * server.
 	 */
 	private void actionCreateGame() {
 		final GameInfo gameInfo = lobbyPanel.getGameCreationPanel().makeGameInfo();
@@ -131,14 +132,16 @@ public class LobbyController extends AbstractController implements ActionListene
 	}
 
 	/**
-	 * Reset the game name in the creation panel if the submitted game wasn't accepted.
+	 * Reset the game name in the creation panel if the submitted game wasn't
+	 * accepted.
 	 * @param request The request to process
 	 */
 	private void processCreateGame(final Request request) {
 		if (!(Boolean) request.content) {
 			selectedGame = null;
 			lobbyPanel.getGameCreationPanel().resetGameName();
-			JOptionPane.showMessageDialog(null, "The server refused to create this game", "Game creation", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "The server refused to create this game", "Game creation",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -151,14 +154,16 @@ public class LobbyController extends AbstractController implements ActionListene
 	}
 
 	/**
-	 * Goes to the waiting room if the server refused to let the client in in a game.
+	 * Goes to the waiting room if the server refused to let the client in in a
+	 * game.
 	 * @param request The request to process
 	 */
 	private void processJoinGame(final Request request) {
 		if ((Boolean) request.content) {
 			switchController(new WaitingRoomController(mainController, selectedGame, username));
 		} else {
-			JOptionPane.showMessageDialog(null, "Impossible to join the game !", "Join a game", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Impossible to join the game !", "Join a game",
+					JOptionPane.ERROR_MESSAGE);
 			selectedGame = null;
 		}
 	}

@@ -1,19 +1,25 @@
 package org.copinf.cc.net.server;
 
-import org.copinf.cc.net.Request;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+import org.copinf.cc.net.Request;
+
+/**
+ * A timer for a turn
+ */
 public class GameTimer implements ActionListener {
 
-	public final int initialTime;
+	private final int initialTime;
 	private int remainingTime;
+	/**
+	 * The Timer used by this class
+	 */
 	public final Timer timer;
 	private ClientThread client;
-	public final GameThread game;
+	private final GameThread game;
 
 	/**
 	 * Constructs a new GameTimer object.
@@ -27,6 +33,10 @@ public class GameTimer implements ActionListener {
 		this.client = null;
 	}
 
+	/**
+	 * Start a new turn.
+	 * @param ct The playing client
+	 */
 	public void startTurn(final ClientThread ct) {
 		client = ct;
 		remainingTime = initialTime;
