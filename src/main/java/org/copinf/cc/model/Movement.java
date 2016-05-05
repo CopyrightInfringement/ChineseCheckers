@@ -19,7 +19,7 @@ public class Movement extends Stack<Coordinates> {
 	}
 
 	/**
-	 * Creates a movemet with only its starting point.
+	 * Creates a movement with only its starting point.
 	 * @param coord The starting point.
 	 */
 	public Movement(final Coordinates coord) {

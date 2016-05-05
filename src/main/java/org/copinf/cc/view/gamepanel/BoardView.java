@@ -10,11 +10,15 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 
 import org.copinf.cc.model.AbstractBoard;
 import org.copinf.cc.model.BoardZone;
 import org.copinf.cc.model.Coordinates;
+import org.copinf.cc.model.DefaultBoard;
+import org.copinf.cc.model.Movement;
+import org.copinf.cc.model.PathFinding;
 import org.copinf.cc.model.Player;
 import org.copinf.cc.model.Square;
 
@@ -27,6 +31,8 @@ public class BoardView {
 	private final Map<Player, PlayerView> playerViews;
 	private final int width;
 	private final int height;
+	private final PathFinding pathFinding;
+	private final Movement currentMovement;
 
 	/**
 	 * The DisplayManager linked to this BoardView
@@ -42,7 +48,7 @@ public class BoardView {
 	 * @param height available height
 	 */
 	public BoardView(final AbstractBoard board, final Player player, final Map<Player, PlayerView> playerViews,
-			final int width, final int height) {
+			final int width, final int height, final Movement currentMovement) {
 		this.board = board;
 		this.playerViews = playerViews;
 
@@ -56,6 +62,10 @@ public class BoardView {
 		this.displayManager = new DisplayManager(size, 1.0, 1.0, 0.0, width / 2.0, height / 2.0, board);
 
 		this.displayManager.setAngle(getPlayerAngle(player, width / 2.0, height));
+		
+		pathFinding = new PathFinding((DefaultBoard) board, player);
+		
+		this.currentMovement = currentMovement;
 	}
 
 	private Point2D.Double getBoardZoneCenter(final BoardZone zone) {
@@ -139,6 +149,11 @@ public class BoardView {
 					g.setColor(coord.equals(selection) ? color.darker() : color);
 					g.fill(hexagon);
 				}
+			} else {
+				if (pathFinding.getShortReachableSquares().contains(coord) || pathFinding.getLongReachableSquares().contains(coord)) {
+					g.setColor(Color.GRAY);
+					g.fill(hexagon);
+				}
 			}
 			g.setColor(Color.BLACK);
 			g.draw(hexagon);
@@ -210,5 +225,9 @@ public class BoardView {
 		g.setFont(defaultFont);
 		g.setStroke(defaultStroke);
 		g.setColor(defaultColor);
+	}
+	
+	public void updateMovement() {
+		pathFinding.setReachableSquares(currentMovement);
 	}
 }

@@ -1,7 +1,9 @@
 package org.copinf.cc.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Provides storage for coordinates in a 3D cube.
@@ -97,6 +99,14 @@ public class Coordinates implements Serializable {
 		}
 		return false;
 	}
+	
+	public Set<Coordinates> getAdjacentSquares(){
+		Set<Coordinates> adjacentSquares = new HashSet<>();
+		for (Coordinates c : DIRECTIONS) {
+			adjacentSquares.add(add(this, c));
+		}
+		return adjacentSquares;
+	}
 
 	/**
 	 * Checks if this Coordinates and a second Coordinates have Coordinates
@@ -130,13 +140,31 @@ public class Coordinates implements Serializable {
 	}
 
 	/**
-	 * Makes the substraction of two Coordinates.
+	 * Makes the addition of the current Coordinates with another one.
+	 * @param c Coordinates
+	 * @return resulting Coordinates
+	 */
+	public Coordinates add(final Coordinates c) {
+		return new Coordinates(x + c.x, y + c.y, z + c.z);
+	}
+
+	/**
+	 * Makes the subtraction of two Coordinates.
 	 * @param a first Coordinates
 	 * @param b second Coordinates
 	 * @return resulting Coordinates
 	 */
 	public static Coordinates sub(final Coordinates a, final Coordinates b) {
 		return new Coordinates(a.x - b.x, a.y - b.y, a.z - b.z);
+	}
+
+	/**
+	 * Makes the subtraction of the current Coordinates with another one.
+	 * @param c Coordinates
+	 * @return resulting Coordinates
+	 */
+	public Coordinates sub(final Coordinates c) {
+		return new Coordinates(x - c.x, y - c.y, z - c.z);
 	}
 
 	/**
@@ -147,6 +175,15 @@ public class Coordinates implements Serializable {
 	 */
 	public static Coordinates mul(final Coordinates a, final int k) {
 		return new Coordinates(a.x * k, a.y * k, a.z * k);
+	}
+
+	/**
+	 * Makes the multiplication of the current coordinates with an integer.
+	 * @param k
+	 * @return resulting Coordinates
+	 */
+	public Coordinates mul(final int k) {
+		return new Coordinates(k*x, k*y, k*z);
 	}
 
 	@Override

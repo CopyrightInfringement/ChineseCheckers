@@ -1,53 +1,70 @@
 package org.copinf.cc.model;
 
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PathFinding {
-/**
-	// TODO: Il faut vérifier les mouvements
-	// TODO: Il faut finir la méthode getAdjacentSquare()
-
-	private Map<Coordinates,Square> shortReachableSquare;
-	private Map<Coordinates,Square> longReachableSquare;
-
-	public PathFinding() {
-		this.shortReachableSquare = new HashMap<>();
-		this.longReachableSquare = new HashMap<>();
+	
+	private AbstractBoard board;
+	private Player player;
+	private Set<Coordinates> shortReachableSquares;
+	private Set<Coordinates> longReachableSquares;
+	
+	public PathFinding(DefaultBoard b, Player p){
+		this.board = b;
+		this.player = p;
+		this.shortReachableSquares = new HashSet<>();
+		this.longReachableSquares = new HashSet<>();
 	}
-
-	public Map<Coordinates,Square> getAdjacentSquare(Coordinates c) {
-		Map<Coordinates,Square> adjacentSquare = new HashMap<>();
-		// JUST DO IT !
+	
+	public Set<Coordinates> getShortReachableSquares() {
+		return shortReachableSquares;
 	}
-
-	public void getFirstReachableSquare(Coordinates c) {
-		Map<Coordinates,Square> adjacentSquare1 = getAdjacentSquare(c);
-		for (Coordinates c1 : adjacentSquare1) {
-			if (adjacentSquare1.get(c1).isFree()) {
-				this.shortReachableSquare.put(c1,adjacentSquare1.get(c1));
-			} else if (!adjacentSquare.get(c1).isFree()) {
-				Map<Coordinates,Square> adjacentSquare2 = getAdjacentSquare(c1);
-				for (Coordinates c2 : adjacentSquare2) {
-					if (adjacentSquare2.get(c2).isFree()) {
-						this.longReachableSquare.put(c2,adjacentSquare2.get(c2));
+	
+	public Set<Coordinates> getLongReachableSquares() {
+		return longReachableSquares;
+	}
+	
+	private void addShortReachableSquares(Coordinates c) {
+		if (board.getSquare(c) != null) {
+			Set<Coordinates> adjacentSquares = c.getAdjacentSquares();
+			for (Coordinates d : adjacentSquares) {
+				if (board.getSquare(d) != null && board.checkMove(new Movement(c, d), player)) {
+					shortReachableSquares.add(d);
+				}
+			}
+		}
+	}
+	
+	private void addLongReachableSquare(Coordinates c, Set<Coordinates> seenSquares) {
+		Set<Coordinates> adjacentSquares = c.getAdjacentSquares();
+		seenSquares.add(c);
+		for (Coordinates d : adjacentSquares) {
+			if (board.getSquare(d) != null && !board.getSquare(d).isFree()) {
+				//Coordinates e = d.sub(c.mul(2));
+				for (Coordinates e : d.getAdjacentSquares()) {
+					if (board.getSquare(e) != null && !seenSquares.contains(e) && board.checkMove(new Movement(c, e), player)) {
+						longReachableSquares.add(e);
+						addLongReachableSquare(e, seenSquares);
 					}
 				}
 			}
 		}
 	}
-
-	public void getLongReachableSquare(Coordinates c) {
-		// si on clear on fera case par case sinon on aura toutes les cases.
-		// this.longReachableSquare.clear();
-		Map<Coordinates,Square> adjacentSquare1 = getAdjacentSquare(c);
-		for (Coordinates c1 : adjacentSquare1) {
-			Map<Coordinates,Square> adjacentSquare2 = getAdjacentSquare(c1);
-			for (Coordinates c2 : adjacentSquare2) {
-				if (adjacentSquare2.get(c2).isFree()) {
-					this.longReachableSquare.put(c2, adjacentSquare2.get(c2));
-				}
+	
+	public void setReachableSquares(Movement m) {
+		shortReachableSquares.clear();
+		longReachableSquares.clear();
+		Set<Coordinates> seenSquares = new HashSet<Coordinates> ();
+		if (m.size() == 1) {
+			addShortReachableSquares(m.getOrigin());
+			seenSquares.add(m.getOrigin());
+			addLongReachableSquare(m.getOrigin(), seenSquares);
+		} else if (m.size() == 2) {
+			if (!m.getOrigin().isAdjacentTo(m.getDestination())) {
+				seenSquares.addAll(m);
+				addLongReachableSquare(m.getOrigin(), seenSquares);
 			}
 		}
 	}
-**/
 }

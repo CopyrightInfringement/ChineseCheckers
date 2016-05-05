@@ -66,26 +66,26 @@ public abstract class AbstractBoard {
 		}
 		Coordinates orig = path.getOrigin();
 		final Pawn pawn = getPawn(orig);
-		if (pawn == null || pawn.owner != player) {
+		if (pawn == null || pawn.owner != player || orig == null) {
 			return false;
 		}
 
 		Coordinates dest = path.getDestination();
-		if (path.size() == 2) {
+		if (path.size() == 2 && orig != null && dest != null) {
 			if (orig.isAdjacentTo(dest)) {
-				return getSquare(dest).isFree();
+				return  getSquare(dest) != null && getSquare(dest).isFree();
 			}
 			final Coordinates middle = orig.getMiddleCoordinates(dest);
-			return middle != null && !getSquare(middle).isFree() && getSquare(dest).isFree();
+			return middle != null && getSquare(middle) != null && !getSquare(middle).isFree() && getSquare(dest) != null && getSquare(dest).isFree();
 		}
 
 		for (final Iterator<Coordinates> it = path.subList(1, path.size()).iterator(); it.hasNext();) {
 			dest = it.next();
-			if (orig.isAdjacentTo(dest)) {
+			if (orig.isAdjacentTo(dest) || orig == null || dest == null) {
 				return false;
 			}
 			final Coordinates middle = orig.getMiddleCoordinates(dest);
-			if (middle == null || getSquare(middle).isFree()) {
+			if (middle == null || getSquare(middle) == null || getSquare(middle).isFree() || orig == null || dest == null) {
 				return false;
 			}
 			orig = dest;

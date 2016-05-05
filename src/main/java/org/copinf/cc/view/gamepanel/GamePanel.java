@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import org.copinf.cc.model.Game;
+import org.copinf.cc.model.Movement;
 import org.copinf.cc.model.Player;
 
 /**
@@ -29,6 +30,8 @@ public class GamePanel extends JPanel {
 	public final ActionZone actionZone;
 
 	private final Map<Player, PlayerView> playerViews;
+	
+	private final Movement currentMovement;
 
 	/**
 	 * Constructs a new GamePanel.
@@ -36,7 +39,7 @@ public class GamePanel extends JPanel {
 	 * @param game the current game
 	 * @param player the playing player
 	 */
-	public GamePanel(final Game game, final Player player) {
+	public GamePanel(final Game game, final Player player, final Movement currentMovement) {
 		super();
 
 		this.playerViews = new HashMap<>();
@@ -53,8 +56,10 @@ public class GamePanel extends JPanel {
 		infoBar = new InfoBar(game, player, playerViews.get(player).color);
 		infoBar.setPreferredSize(new Dimension(800, 50));
 		add(infoBar);
+		
+		this.currentMovement = currentMovement;
 
-		drawZone = new DrawZone(game, player, playerViews);
+		drawZone = new DrawZone(game, player, playerViews, this.currentMovement);
 		add(drawZone);
 		drawZone.setPreferredSize(new Dimension(800, 500));
 

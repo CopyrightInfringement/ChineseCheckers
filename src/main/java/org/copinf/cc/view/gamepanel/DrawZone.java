@@ -13,7 +13,10 @@ import java.util.Map;
 import javax.swing.JPanel;
 
 import org.copinf.cc.model.Coordinates;
+import org.copinf.cc.model.DefaultBoard;
 import org.copinf.cc.model.Game;
+import org.copinf.cc.model.Movement;
+import org.copinf.cc.model.PathFinding;
 import org.copinf.cc.model.Player;
 import org.copinf.cc.net.Message;
 
@@ -32,6 +35,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	private final List<Message> messages;
 	private final Map<Player, PlayerView> playerViews;
 	private static final int MAX_MESSAGES = 20;
+	private final Movement currentMovement;
 
 	/**
 	 * Constructs a new DrawZone.
@@ -39,9 +43,10 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	 * @param player the playing player
 	 * @param playerViews PlayerView of each Player
 	 */
-	public DrawZone(final Game game, final Player player, final Map<Player, PlayerView> playerViews) {
+	public DrawZone(final Game game, final Player player, final Map<Player, PlayerView> playerViews, final Movement currentMovement) {
 		super();
-		boardView = new BoardView(game.getBoard(), player, playerViews, 800, 500);
+		this.currentMovement = currentMovement;
+		boardView = new BoardView(game.getBoard(), player, playerViews, 800, 500, this.currentMovement);
 
 		selection = null;
 		messages = new ArrayList<>();

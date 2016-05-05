@@ -25,6 +25,7 @@ import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.net.Message;
 import org.copinf.cc.net.Request;
 import org.copinf.cc.view.gamepanel.ActionZone;
+import org.copinf.cc.view.gamepanel.BoardView;
 import org.copinf.cc.view.gamepanel.DisplayManager;
 import org.copinf.cc.view.gamepanel.GamePanel;
 
@@ -91,11 +92,12 @@ public class GameController extends AbstractController implements ActionListener
 		this.game.setNumberOfZones(gameInfo.nbZones);
 
 		game.nextTurn();
+		
+		this.currentMovement = new Movement();
 
-		this.gamePanel = new GamePanel(game, this.mainPlayer);
+		this.gamePanel = new GamePanel(game, this.mainPlayer, this.currentMovement);
 		this.displayManager = gamePanel.drawZone.boardView.displayManager;
 
-		this.currentMovement = new Movement();
 		this.waitingForAnswer = false;
 
 		gamePanel.addMouseListener(this);
@@ -118,6 +120,7 @@ public class GameController extends AbstractController implements ActionListener
 		game.nextTurn();
 		gamePanel.infoBar.updateLabels();
 		setButtonsVisibility();
+		gamePanel.drawZone.boardView.updateMovement();
 	}
 
 	/**
@@ -196,9 +199,11 @@ public class GameController extends AbstractController implements ActionListener
 
 		gamePanel.actionZone.resetButton.setEnabled(!currentMovement.isEmpty());
 		movePawn(currentMovement);
-
+		
 		gamePanel.drawZone.setSelectedSquare(currentMovement.size() == 0 ? null : currentMovement.lastElement());
-
+		
+		gamePanel.drawZone.boardView.updateMovement();
+		
 		setButtonsVisibility();
 	}
 
@@ -297,6 +302,7 @@ public class GameController extends AbstractController implements ActionListener
 	private void resetMovement() {
 		currentMovement.clear();
 		gamePanel.drawZone.setSelectedSquare(null);
+		gamePanel.drawZone.boardView.updateMovement();
 	}
 
 	/**
