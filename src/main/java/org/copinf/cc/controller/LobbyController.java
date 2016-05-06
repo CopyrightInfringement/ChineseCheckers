@@ -150,7 +150,9 @@ public class LobbyController extends AbstractController implements ActionListene
 	 */
 	public void actionJoinGame() {
 		selectedGame = lobbyPanel.getGamesList().getSelectedValue();
-		sendRequest(new Request("client.lobby.join", selectedGame));
+		if (selectedGame != null) {
+			sendRequest(new Request("client.lobby.join", selectedGame));
+		}
 	}
 
 	/**

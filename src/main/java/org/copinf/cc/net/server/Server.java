@@ -163,6 +163,10 @@ public class Server implements Runnable {
 	 */
 	private void processJoinGame(final ClientThread client, final Request req) {
 		final GameInfo gameInfo = (GameInfo) req.content;
+		if (gameInfo == null) {
+			client.send(new Request("server.lobby.join", false));
+			return;
+		}
 		for (final GameThread game : gameSet) {
 			if (game.hashCode() == gameInfo.hashCode() && gameInfo.currentPlayers.size() < gameInfo.nbPlayersMax) {
 				client.send(new Request("server.lobby.join", true));
