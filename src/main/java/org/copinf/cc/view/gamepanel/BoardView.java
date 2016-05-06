@@ -10,13 +10,11 @@ import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Map;
 
 import org.copinf.cc.model.AbstractBoard;
 import org.copinf.cc.model.BoardZone;
 import org.copinf.cc.model.Coordinates;
-import org.copinf.cc.model.DefaultBoard;
 import org.copinf.cc.model.Movement;
 import org.copinf.cc.model.PathFinding;
 import org.copinf.cc.model.Player;
@@ -62,9 +60,9 @@ public class BoardView {
 		this.displayManager = new DisplayManager(size, 1.0, 1.0, 0.0, width / 2.0, height / 2.0, board);
 
 		this.displayManager.setAngle(getPlayerAngle(player, width / 2.0, height));
-		
-		pathFinding = new PathFinding((DefaultBoard) board, player);
-		
+
+		pathFinding = new PathFinding(board, player);
+
 		this.currentMovement = currentMovement;
 	}
 
@@ -145,16 +143,17 @@ public class BoardView {
 				final Player owner = square.getPawn().owner;
 				if (playerViews.containsKey(owner)) {
 					color = playerViews.get(owner).color;
-
 					g.setColor(coord.equals(selection) ? color.darker() : color);
-					g.fill(hexagon);
 				}
 			} else {
-				if (pathFinding.getShortReachableSquares().contains(coord) || pathFinding.getLongReachableSquares().contains(coord)) {
-					g.setColor(Color.GRAY);
-					g.fill(hexagon);
+				if (pathFinding.getShortReachableSquares().contains(coord)) {
+					g.setColor(new Color(150, 150, 150));
+				} else if (pathFinding.getLongReachableSquares().contains(coord)) {
+					g.setColor(new Color(200, 200, 200));
 				}
 			}
+			g.fill(hexagon);
+
 			g.setColor(Color.BLACK);
 			g.draw(hexagon);
 		}
@@ -226,7 +225,7 @@ public class BoardView {
 		g.setStroke(defaultStroke);
 		g.setColor(defaultColor);
 	}
-	
+
 	public void updateMovement() {
 		pathFinding.setReachableSquares(currentMovement);
 	}

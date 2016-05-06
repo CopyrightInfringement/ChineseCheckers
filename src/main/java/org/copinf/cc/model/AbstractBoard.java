@@ -40,8 +40,9 @@ public abstract class AbstractBoard {
 	}
 
 	/**
-	 * Moves a pawn from a square to another square, referenced by their coordinates.
-	 * This method does not perform any checks on the movement validity.
+	 * Moves a pawn from a square to another square, referenced by their
+	 * coordinates. This method does not perform any checks on the movement
+	 * validity.
 	 * @param movement a movement
 	 */
 	public void move(final Movement movement) {
@@ -51,45 +52,60 @@ public abstract class AbstractBoard {
 	}
 
 	/**
-	 * Checks if a movement is valid. A movement is represented by a list of coordinates representing
-	 * the sequence of jumps performed. This method returns false if at any point in the coordinates
-	 * list a movement is invalid. It returns true if the whole movement is valid.
+	 * Checks if a movement is valid. A movement is represented by a list of
+	 * coordinates representing the sequence of jumps performed. This method
+	 * returns false if at any point in the coordinates list a movement is
+	 * invalid. It returns true if the whole movement is valid.
 	 * @param path list of movements
 	 * @param player player performing the movements
 	 * @return true if the whole movement is valid.
-	 * @throws NullPointerException if the parameters are null or if the Coordinates list contains a
-	 * 	null
+	 * @throws NullPointerException if the parameters are null or if the
+	 *             Coordinates list contains a null
 	 */
 	public boolean checkMove(final Movement path, final Player player) {
-		if (path.isEmpty()) {
-			return false;
+		if (path.size() < 2) {
+			return true;
 		}
-		Coordinates orig = path.getOrigin();
+
+		final Coordinates orig = path.getOrigin();
+
+		//	Si toutes les cases sont bien dans le plateau, existent et sont vides (à l'exception du départ)
+		for (final Coordinates c : path) {
+			if ((c == null) || (getSquare(c) == null)) {
+				return false;
+			} else if (!c.equals(orig) && !getSquare(c).isFree()) {
+				return false;
+			}
+		}
+
 		final Pawn pawn = getPawn(orig);
-		if (pawn == null || pawn.owner != player || orig == null) {
+
+		//	Si on essaye de deplacer un pion qui nous appartient pas ou qui n'existe pas
+		if ((pawn == null) || (pawn.owner != player)) {
 			return false;
 		}
 
-		Coordinates dest = path.getDestination();
-		if (path.size() == 2 && orig != null && dest != null) {
-			if (orig.isAdjacentTo(dest)) {
-				return  getSquare(dest) != null && getSquare(dest).isFree();
-			}
-			final Coordinates middle = orig.getMiddleCoordinates(dest);
-			return middle != null && getSquare(middle) != null && !getSquare(middle).isFree() && getSquare(dest) != null && getSquare(dest).isFree();
+		final Coordinates dest = path.getDestination();
+
+		//	S'il s'agit d'un mouvement adjacent
+		if ((path.size() == 2) && orig.isAdjacentTo(dest)) {
+			return true;
 		}
 
-		for (final Iterator<Coordinates> it = path.subList(1, path.size()).iterator(); it.hasNext();) {
-			dest = it.next();
-			if (orig.isAdjacentTo(dest) || orig == null || dest == null) {
+		final Iterator<Coordinates> it = path.iterator();
+		Coordinates prev = it.next();
+		while (it.hasNext()) {
+			final Coordinates cur = it.next();
+
+			final Coordinates middle = cur.getMiddleCoordinates(prev);
+			if ((middle == null) || (getSquare(middle) == null) || getSquare(middle).isFree()
+					|| !getSquare(cur).isFree()) {
 				return false;
 			}
-			final Coordinates middle = orig.getMiddleCoordinates(dest);
-			if (middle == null || getSquare(middle) == null || getSquare(middle).isFree() || orig == null || dest == null) {
-				return false;
-			}
-			orig = dest;
+
+			prev = cur;
 		}
+
 		return true;
 	}
 
@@ -138,8 +154,8 @@ public abstract class AbstractBoard {
 	public abstract SortedSet<Integer> getPossibleZoneNumbers(final int playerNumber);
 
 	/**
-	 * Checks players can have teams with a certain player number.
-	 * Teams are composed of 2 players.
+	 * Checks players can have teams with a certain player number. Teams are
+	 * composed of 2 players.
 	 * @param playerNumber The number of players.
 	 * @return true if player can play in teams
 	 */

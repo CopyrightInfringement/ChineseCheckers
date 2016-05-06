@@ -3,8 +3,8 @@ package org.copinf.cc.model;
 import java.util.Stack;
 
 /**
- * Describe a movement as a stack of coordinates. The bottom one being the starting point,
- * and the top one the destination.
+ * Describe a movement as a stack of coordinates. The bottom one being the
+ * starting point, and the top one the destination.
  */
 
 public class Movement extends Stack<Coordinates> {
@@ -40,11 +40,12 @@ public class Movement extends Stack<Coordinates> {
 
 	@Override
 	public Coordinates push(final Coordinates item) {
-		final int index = search(item);
+		final int index = indexOf(item);
 		if (index != -1) {
-			removeRange(index - 1, size());
+			removeRange(index, size());
 		}
-		return !empty() && peek().equals(item) ? null : super.push(item);
+
+		return super.push(item);
 	}
 
 	/**
@@ -64,7 +65,8 @@ public class Movement extends Stack<Coordinates> {
 	}
 
 	/**
-	 * Returns a movement composed of the two last coordinates through which this movement goes.
+	 * Returns a movement composed of the two last coordinates through which
+	 * this movement goes.
 	 * @return The last sub-movement of this movement.
 	 */
 	public Movement getLastUnit() {
@@ -75,7 +77,8 @@ public class Movement extends Stack<Coordinates> {
 	}
 
 	/**
-	 * Returns a new movement with only the origin and the destination of this movement.
+	 * Returns a new movement with only the origin and the destination of this
+	 * movement.
 	 * @return the condensed movement.
 	 */
 	public Movement getCondensed() {
@@ -83,7 +86,8 @@ public class Movement extends Stack<Coordinates> {
 	}
 
 	/**
-	 * Returns a new movement with only the destination and the origin of this movement.
+	 * Returns a new movement with only the destination and the origin of this
+	 * movement.
 	 * @return the condensed movement.
 	 */
 	public Movement getReversedCondensed() {
