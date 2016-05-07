@@ -73,7 +73,7 @@ public class GameController extends AbstractController implements ActionListener
 			final List<List<String>> teamList) {
 		super(mainController, "game");
 
-		this.game = new Game(new DefaultBoard(gameInfo.size));
+		this.game = new Game(new DefaultBoard(gameInfo.getSize()));
 		this.players = new HashMap<String, Player>();
 
 		// players is never used
@@ -88,26 +88,26 @@ public class GameController extends AbstractController implements ActionListener
 		}
 		this.mainPlayer = players.get(mainPlayerName);
 
-		this.game.setNumberOfZones(gameInfo.nbZones);
+		this.game.setNumberOfZones(gameInfo.getNbZones());
 
 		game.nextTurn();
 
 		this.currentMovement = new Movement();
 
 		this.gamePanel = new GamePanel(game, this.mainPlayer, this.currentMovement);
-		this.displayManager = gamePanel.drawZone.boardView.displayManager;
+		this.displayManager = gamePanel.getDrawZone().getBoardView().getDisplayManager();
 
 		this.waitingForAnswer = false;
 
 		gamePanel.addMouseListener(this);
-		gamePanel.drawZone.addMouseListener(this);
-		gamePanel.actionZone.addMouseListener(this);
-		gamePanel.actionZone.nextButton.addMouseListener(this);
-		gamePanel.actionZone.resetButton.addMouseListener(this);
-		gamePanel.actionZone.sendButton.addMouseListener(this);
-		gamePanel.actionZone.chatField.addKeyListener(this);
+		gamePanel.getDrawZone().addMouseListener(this);
+		gamePanel.getActionZone().addMouseListener(this);
+		gamePanel.getActionZone().getNextButton().addMouseListener(this);
+		gamePanel.getActionZone().getResetButton().addMouseListener(this);
+		gamePanel.getActionZone().getSendButton().addMouseListener(this);
+		gamePanel.getActionZone().getChatField().addKeyListener(this);
 
-		gamePanel.infoBar.updateLabels();
+		gamePanel.getInfoBar().updateLabels();
 		setButtonsVisibility();
 	}
 
@@ -115,24 +115,24 @@ public class GameController extends AbstractController implements ActionListener
 	 * Method to call when a turn is over.
 	 */
 	private void onNextTurn() {
-		gamePanel.drawZone.setSelectedSquare(null);
+		gamePanel.getDrawZone().setSelectedSquare(null);
 		if (!currentMovement.isEmpty()) {
 			game.getBoard().move(currentMovement.getReversedCondensed());
 			currentMovement.clear();
 			gamePanel.repaint();
 		}
-		gamePanel.actionZone.nextButton.setText("Next turn");
+		gamePanel.getActionZone().getNextButton().setText("Next turn");
 		game.nextTurn();
-		gamePanel.infoBar.updateLabels();
+		gamePanel.getInfoBar().updateLabels();
 		setButtonsVisibility();
-		gamePanel.drawZone.boardView.updateMovement();
+		gamePanel.getDrawZone().getBoardView().updateMovement();
 	}
 
 	/**
 	 * Method to call to set the correct visibility of the GamePanel buttons.
 	 */
 	private void setButtonsVisibility() {
-		gamePanel.actionZone.setVisibility(currentMovement.size(), game.getCurrentPlayer() == mainPlayer);
+		gamePanel.getActionZone().setVisibility(currentMovement.size(), game.getCurrentPlayer() == mainPlayer);
 	}
 
 	@Override
@@ -146,12 +146,12 @@ public class GameController extends AbstractController implements ActionListener
 
 	@Override
 	public void mouseClicked(final MouseEvent ev) {
-		final ActionZone az = gamePanel.actionZone;
-		if (ev.getSource() == az.nextButton) {
+		final ActionZone az = gamePanel.getActionZone();
+		if (ev.getSource() == az.getNextButton()) {
 			nextButtonClicked();
-		} else if (ev.getSource() == az.resetButton) {
+		} else if (ev.getSource() == az.getResetButton()) {
 			resetButtonClicked();
-		} else if (ev.getSource() == az.sendButton) {
+		} else if (ev.getSource() == az.getSendButton()) {
 			sendMessageAction();
 		} else {
 			final Coordinates coordinates = displayManager.screenToSquare(ev.getX(), ev.getY());
@@ -175,14 +175,14 @@ public class GameController extends AbstractController implements ActionListener
 
 		// Si on définit quel pion déplacer
 		if (currentMovement.size() == 0) {
-			if (pawn == null || pawn.owner != mainPlayer) {
+			if (pawn == null || pawn.getOwner() != mainPlayer) {
 				errorMsg = ErrorMsg.WRONG_MOVE;
 			} else {
 				currentMovement.push(coordinates);
 				errorMsg = null;
 			}
 			//	Si on veut redéfinir le pion à déplacer
-		} else if (currentMovement.size() == 1 && pawn != null && pawn.owner == mainPlayer) {
+		} else if (currentMovement.size() == 1 && pawn != null && pawn.getOwner() == mainPlayer) {
 			currentMovement.pop();
 			currentMovement.push(coordinates);
 			errorMsg = null;
@@ -199,15 +199,15 @@ public class GameController extends AbstractController implements ActionListener
 		}
 
 		if (errorMsg != null) {
-			gamePanel.drawZone.addMessage(errorMsg.getMessage());
+			gamePanel.getDrawZone().addMessage(errorMsg.getMessage());
 		}
 
-		gamePanel.actionZone.resetButton.setEnabled(!currentMovement.isEmpty());
+		gamePanel.getActionZone().getResetButton().setEnabled(!currentMovement.isEmpty());
 		movePawn(currentMovement);
 
-		gamePanel.drawZone.setSelectedSquare(currentMovement.size() == 0 ? null : currentMovement.lastElement());
+		gamePanel.getDrawZone().setSelectedSquare(currentMovement.size() == 0 ? null : currentMovement.lastElement());
 
-		gamePanel.drawZone.boardView.updateMovement();
+		gamePanel.getDrawZone().getBoardView().updateMovement();
 
 		setButtonsVisibility();
 	}
@@ -246,10 +246,10 @@ public class GameController extends AbstractController implements ActionListener
 			processMoveRequest(request);
 			waitingForAnswer = false;
 		} else if ("message".equals(sub2)) {
-			gamePanel.drawZone.addMessage((Message) request.content);
+			gamePanel.getDrawZone().addMessage((Message) request.getContent());
 			gamePanel.repaint();
 		} else if ("end".equals(sub2)) {
-			final int teamId = (Integer) request.content;
+			final int teamId = (Integer) request.getContent();
 			if (teamId < 0) {
 				JOptionPane.showMessageDialog(null,
 						"A player has left the game" + (game.getTurnCount() < 0 ? "during team-making" : ""),
@@ -263,25 +263,25 @@ public class GameController extends AbstractController implements ActionListener
 				end();
 			}
 		} else if ("tick".equals(sub2)) {
-			gamePanel.actionZone.nextButton.setText(request.content.toString() + "s");
+			gamePanel.getActionZone().getNextButton().setText(request.getContent().toString() + "s");
 		}
 	}
 
 	private void sendMessageAction() {
-		final String text = gamePanel.actionZone.getMessage().trim();
+		final String text = gamePanel.getActionZone().getMessage().trim();
 		boolean valid = true;
 		if (text.isEmpty()) {
 			valid = false;
 		}
 		if (text.length() > MAX_MESSAGE_LENGTH) {
-			gamePanel.drawZone.addMessage("Maximum message length is " + MAX_MESSAGE_LENGTH);
+			gamePanel.getDrawZone().addMessage("Maximum message length is " + MAX_MESSAGE_LENGTH);
 			valid = false;
 		}
 		if (valid) {
 			final Message message = new Message(text, mainPlayer.getName());
 			sendRequest(new Request("client.game.message", message));
 		}
-		gamePanel.actionZone.clearField();
+		gamePanel.getActionZone().clearField();
 	}
 
 	/**
@@ -291,23 +291,23 @@ public class GameController extends AbstractController implements ActionListener
 	private void processMoveRequest(final Request request) {
 		final String sub = request.getSubRequest(3);
 		if ("request".equals(sub)) {
-			if (!(Boolean) request.content) {
-				gamePanel.drawZone.addMessage(ErrorMsg.SERVER_REFUSED.msg);
+			if (!(Boolean) request.getContent()) {
+				gamePanel.getDrawZone().addMessage(ErrorMsg.SERVER_REFUSED.msg);
 				game.getBoard().move(currentMovement.getReversedCondensed());
 			}
 			game.getBoard().move(currentMovement.getReversedCondensed());
 			resetMovement();
 			gamePanel.repaint();
 		} else if (sub == null) {
-			final Movement movement = (Movement) request.content;
+			final Movement movement = (Movement) request.getContent();
 			movePawn(movement);
 		}
 	}
 
 	private void resetMovement() {
 		currentMovement.clear();
-		gamePanel.drawZone.setSelectedSquare(null);
-		gamePanel.drawZone.boardView.updateMovement();
+		gamePanel.getDrawZone().setSelectedSquare(null);
+		gamePanel.getDrawZone().getBoardView().updateMovement();
 	}
 
 	/**
@@ -337,7 +337,7 @@ public class GameController extends AbstractController implements ActionListener
 
 	@Override
 	public void keyTyped(final KeyEvent ev) {
-		if (ev.getSource() == gamePanel.actionZone.chatField && ev.getKeyChar() == '\n') {
+		if (ev.getSource() == gamePanel.getActionZone().getChatField() && ev.getKeyChar() == '\n') {
 			sendMessageAction();
 		}
 	}

@@ -28,14 +28,14 @@ public class GameInfoRenderer extends JPanel implements ListCellRenderer<GameInf
 			final int index, final boolean isSelected, final boolean cellHasFocus) {
 
 		removeAll();
-		add(new JLabel(value.name));
-		add(new JLabel(value.getCurrentPlayersNumber() + "/" + value.nbPlayersMax + " players"));
-		add(new JLabel(value.nbZones + " zones"));
-		if (value.teams) {
+		add(new JLabel(value.getName()));
+		add(new JLabel(value.getCurrentPlayersNumber() + "/" + value.getNbPlayersMax() + " players"));
+		add(new JLabel(value.getNbZones() + " zones"));
+		if (value.isTeams()) {
 			add(new JLabel("teams"));
 		}
-		if (value.timer != -1) {
-			add(new JLabel("timer " + value.timer + "min"));
+		if (value.getTimer() != -1) {
+			add(new JLabel("timer " + value.getTimer() + "min"));
 		}
 
 		if (isSelected) {
@@ -46,7 +46,7 @@ public class GameInfoRenderer extends JPanel implements ListCellRenderer<GameInf
 			setForeground(list.getForeground());
 		}
 
-		setToolTipText(value.currentPlayers.toString());
+		setToolTipText(value.getCurrentPlayers().toString());
 
 		return this;
 	}

@@ -17,13 +17,13 @@ import javax.swing.border.EmptyBorder;
 public class ActionZone extends JPanel implements FocusListener {
 
 	/** The "Reset" button. */
-	public final JButton resetButton;
+	private final JButton resetButton;
 	/** The "Next" button. */
-	public final JButton nextButton;
+	private final JButton nextButton;
 	/** The chat message field. */
-	public final JTextField chatField;
+	private final JTextField chatField;
 	/** The "Send" button to send a message. */
-	public final JButton sendButton;
+	private final JButton sendButton;
 
 	private static final String DEFAULT_TEXT = "Write your message here";
 
@@ -34,7 +34,7 @@ public class ActionZone extends JPanel implements FocusListener {
 		super();
 
 		chatField = new JTextField(DEFAULT_TEXT);
-		chatField.addFocusListener(this);
+		getChatField().addFocusListener(this);
 		sendButton = new JButton("Send");
 		resetButton = new JButton("Reset");
 		nextButton = new JButton("Next turn");
@@ -43,10 +43,10 @@ public class ActionZone extends JPanel implements FocusListener {
 
 		setBorder(new EmptyBorder(0, 2, 2, 2));
 
-		add(chatField);
-		add(sendButton);
-		add(resetButton);
-		add(nextButton);
+		add(getChatField());
+		add(getSendButton());
+		add(getResetButton());
+		add(getNextButton());
 	}
 
 	/**
@@ -55,17 +55,17 @@ public class ActionZone extends JPanel implements FocusListener {
 	 * @param playing Whether the current payer is playing or not.
 	 */
 	public void setVisibility(final int movementSize, final boolean playing) {
-		nextButton.setVisible(playing);
-		resetButton.setVisible(playing);
-		nextButton.setEnabled(movementSize > 1 && playing);
-		resetButton.setEnabled(movementSize > 0);
+		getNextButton().setVisible(playing);
+		getResetButton().setVisible(playing);
+		getNextButton().setEnabled(movementSize > 1 && playing);
+		getResetButton().setEnabled(movementSize > 0);
 	}
 
 	/**
 	 * Clears the message field.
 	 */
 	public void clearField() {
-		chatField.setText("");
+		getChatField().setText("");
 	}
 
 	/**
@@ -73,17 +73,33 @@ public class ActionZone extends JPanel implements FocusListener {
 	 * @return the message
 	 */
 	public String getMessage() {
-		return chatField.getText();
+		return getChatField().getText();
 	}
 
 	@Override
 	public void focusGained(final FocusEvent ev) {
-		if (chatField.getText().equals(DEFAULT_TEXT)) {
+		if (getChatField().getText().equals(DEFAULT_TEXT)) {
 			clearField();
 		}
 	}
 
 	@Override
 	public void focusLost(final FocusEvent ev) {
+	}
+
+	public JButton getResetButton() {
+		return resetButton;
+	}
+
+	public JButton getNextButton() {
+		return nextButton;
+	}
+
+	public JTextField getChatField() {
+		return chatField;
+	}
+
+	public JButton getSendButton() {
+		return sendButton;
 	}
 }

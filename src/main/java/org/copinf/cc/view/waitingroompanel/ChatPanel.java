@@ -25,9 +25,9 @@ public class ChatPanel extends JPanel implements FocusListener {
 	private final JList<String> messagesList;
 	private final List<String> messages;
 	/** The text field in which the user types the message. */
-	public final JTextField messageField;
+	private final JTextField messageField;
 	/** The "Send" button. */
-	public final JButton sendButton;
+	private final JButton sendButton;
 
 	private static final String DEFAULT_TEXT = "Write your message here";
 
@@ -44,7 +44,7 @@ public class ChatPanel extends JPanel implements FocusListener {
 
 		messagesList = new JList<>();
 		messageField = new JTextField(DEFAULT_TEXT);
-		messageField.addFocusListener(this);
+		getMessageField().addFocusListener(this);
 		sendButton = new JButton("Send");
 
 		final JScrollPane scrollPane = new JScrollPane(messagesList);
@@ -53,30 +53,30 @@ public class ChatPanel extends JPanel implements FocusListener {
 
 		final SpringLayout layout = new SpringLayout();
 
-		layout.getConstraints(messageField).setHeight(Spring.constant(FIELD_HEIGHT));
+		layout.getConstraints(getMessageField()).setHeight(Spring.constant(FIELD_HEIGHT));
 
 		layout.putConstraint(SpringLayout.EAST, this, 2, SpringLayout.EAST, scrollPane);
-		layout.putConstraint(SpringLayout.SOUTH, this, 2, SpringLayout.SOUTH, messageField);
+		layout.putConstraint(SpringLayout.SOUTH, this, 2, SpringLayout.SOUTH, getMessageField());
 
 		layout.putConstraint(SpringLayout.WEST, scrollPane, 2, SpringLayout.WEST, this);
 		layout.putConstraint(SpringLayout.NORTH, scrollPane, 2, SpringLayout.NORTH, this);
 
-		layout.getConstraints(messageField).setWidth(Spring.constant(FIELD_WIDTH));
-		layout.putConstraint(SpringLayout.NORTH, messageField, 2, SpringLayout.SOUTH, scrollPane);
-		layout.putConstraint(SpringLayout.WEST, messageField, 2, SpringLayout.WEST, this);
+		layout.getConstraints(getMessageField()).setWidth(Spring.constant(FIELD_WIDTH));
+		layout.putConstraint(SpringLayout.NORTH, getMessageField(), 2, SpringLayout.SOUTH, scrollPane);
+		layout.putConstraint(SpringLayout.WEST, getMessageField(), 2, SpringLayout.WEST, this);
 
-		layout.putConstraint(SpringLayout.WEST, sendButton, 2, SpringLayout.EAST, messageField);
-		layout.putConstraint(SpringLayout.NORTH, sendButton, 0, SpringLayout.NORTH, messageField);
-		layout.putConstraint(SpringLayout.SOUTH, sendButton, 0, SpringLayout.SOUTH, messageField);
-		layout.putConstraint(SpringLayout.EAST, sendButton, 0, SpringLayout.EAST, scrollPane);
+		layout.putConstraint(SpringLayout.WEST, getSendButton(), 2, SpringLayout.EAST, getMessageField());
+		layout.putConstraint(SpringLayout.NORTH, getSendButton(), 0, SpringLayout.NORTH, getMessageField());
+		layout.putConstraint(SpringLayout.SOUTH, getSendButton(), 0, SpringLayout.SOUTH, getMessageField());
+		layout.putConstraint(SpringLayout.EAST, getSendButton(), 0, SpringLayout.EAST, scrollPane);
 
 		setLayout(layout);
 
 		updateMessageList();
 
 		add(scrollPane);
-		add(messageField);
-		add(sendButton);
+		add(getMessageField());
+		add(getSendButton());
 	}
 
 	/**
@@ -84,19 +84,19 @@ public class ChatPanel extends JPanel implements FocusListener {
 	 * @return the message
 	 */
 	public String getMessage() {
-		return messageField.getText();
+		return getMessageField().getText();
 	}
 
 	/**
 	 * Clears the message text field.
 	 */
 	public void clearField() {
-		messageField.setText("");
+		getMessageField().setText("");
 	}
 
 	@Override
 	public void focusGained(final FocusEvent ev) {
-		if (messageField.getText().equals(DEFAULT_TEXT)) {
+		if (getMessageField().getText().equals(DEFAULT_TEXT)) {
 			clearField();
 		}
 	}
@@ -117,9 +117,17 @@ public class ChatPanel extends JPanel implements FocusListener {
 	 * @param message a message
 	 */
 	public void addMessage(final Message message) {
-		messages.add(message.playerName + " : " + message.message);
+		messages.add(message.getPlayerName() + " : " + message.getMessage());
 		updateMessageList();
 
 		repaint();
+	}
+
+	public JTextField getMessageField() {
+		return messageField;
+	}
+
+	public JButton getSendButton() {
+		return sendButton;
 	}
 }

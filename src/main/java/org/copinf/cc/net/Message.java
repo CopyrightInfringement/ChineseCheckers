@@ -10,11 +10,11 @@ public class Message implements Serializable {
 	private static final long serialVersionUID = 42L;
 
 	/** The content of this message. */
-	public final String message;
+	private final String message;
 	/** The name of the sender. */
-	public final String playerName;
+	private final String playerName;
 	/** true if this message was sent by a player or is an information message. */
-	public final boolean isChatMessage;
+	private final boolean isChatMessage;
 
 	/**
 	 * Constructs a new chat Message.
@@ -39,6 +39,18 @@ public class Message implements Serializable {
 	
 	@Override
 	public String toString() {
-		return playerName + " : " + "\"" + message + "\"";
+		return getPlayerName() + " : " + "\"" + getMessage() + "\"";
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public boolean isChatMessage() {
+		return isChatMessage;
 	}
 }

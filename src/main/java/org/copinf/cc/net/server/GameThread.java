@@ -34,14 +34,14 @@ public class GameThread extends Thread {
 	 * @param server The server hosting this game.
 	 */
 	public GameThread(final GameInfo gameInfo, final Server server) {
-		super("Server GT[" + gameInfo.name + "]");
+		super("Server GT[" + gameInfo.getName() + "]");
 		this.server = server;
 		this.gameInfo = gameInfo;
 		this.clients = Collections.synchronizedSet(new HashSet<>());
 		teams = new ArrayList<>();
-		game = new Game(new DefaultBoard(gameInfo.size));
-		if (gameInfo.timer >= 0) {
-			timer = new GameTimer((int) (gameInfo.timer * 60), this);
+		game = new Game(new DefaultBoard(gameInfo.getSize()));
+		if (gameInfo.getTimer() >= 0) {
+			timer = new GameTimer((int) (gameInfo.getTimer() * 60), this);
 		} else {
 			timer = null;
 		}
@@ -61,8 +61,8 @@ public class GameThread extends Thread {
 	 * End this game.
 	 */
 	public void endGame() {
-		if (gameInfo.timer >= 0) {
-			timer.timer.stop();
+		if (gameInfo.getTimer() >= 0) {
+			timer.getTimer().stop();
 		}
 		server.removeGame(this);
 		synchronized (this) {
@@ -88,12 +88,12 @@ public class GameThread extends Thread {
 				broadcast(new Request("server.game.teams.refresh", (Serializable) teams));
 
 			} else if ("leader".equals(sub3)) {
-				teams.add((List<String>) req.content);
+				teams.add((List<String>) req.getContent());
 				broadcast(new Request("server.game.teams.refresh", (Serializable) teams));
 			}
 			onPlayersFull();
 		} else if ("move".equals(sub2)) {
-			processMoveRequest(client, (Movement) req.content);
+			processMoveRequest(client, (Movement) req.getContent());
 		} else if ("message".equals(sub2)) {
 			broadcast(req);
 		}
@@ -148,7 +148,7 @@ public class GameThread extends Thread {
 			return;
 		}
 
-		if (gameInfo.timer >= 0) {
+		if (gameInfo.getTimer() >= 0) {
 			timer.startTurn(getClientThread(game.getCurrentPlayer().getName()));
 		}
 	}
@@ -191,13 +191,13 @@ public class GameThread extends Thread {
 	public void addClient(final ClientThread client) {
 		if (clients.add(client)) {
 			client.play(this);
-			gameInfo.currentPlayers.add(client.getUsername());
+			gameInfo.getCurrentPlayers().add(client.getUsername());
 			sendPlayersRefresh();
-			if (!gameInfo.teams) {
+			if (!gameInfo.isTeams()) {
 				teams.add(Arrays.asList(client.getUsername()));
 			}
 		}
-		if (gameInfo.getCurrentPlayersNumber() == gameInfo.nbPlayersMax) {
+		if (gameInfo.getCurrentPlayersNumber() == gameInfo.getNbPlayersMax()) {
 			onPlayersFull();
 		}
 	}
@@ -217,7 +217,7 @@ public class GameThread extends Thread {
 	 * Call when enough players has joined the game.
 	 */
 	private void onPlayersFull() {
-		if (gameInfo.teams && 2 * teams.size() != gameInfo.nbPlayersMax) {
+		if (gameInfo.isTeams() && 2 * teams.size() != gameInfo.getNbPlayersMax()) {
 			for (final ClientThread ct : clients) {
 				if (!isInTeam(ct.getUsername())) {
 					ct.send(new Request("server.game.teams.leader"));
@@ -227,7 +227,7 @@ public class GameThread extends Thread {
 		} else {
 			broadcast(new Request("server.game.start", (Serializable) teams));
 			initTeams();
-			game.setNumberOfZones(gameInfo.nbZones);
+			game.setNumberOfZones(gameInfo.getNbZones());
 			onNextTurn();
 		}
 	}
@@ -265,14 +265,14 @@ public class GameThread extends Thread {
 	 */
 	public void removeClient(final ClientThread client) {
 		if (clients.remove(client)) {
-			gameInfo.currentPlayers.remove(client.getUsername());
+			gameInfo.getCurrentPlayers().remove(client.getUsername());
 			if (game.getTurnCount() >= 0) { // If the game has already started
 				endGame();
 				broadcast(new Request("server.game.end", -1));
-			} else if (teams.isEmpty() && gameInfo.teams) { // If the player has left during team-making
+			} else if (teams.isEmpty() && gameInfo.isTeams()) { // If the player has left during team-making
 				endGame();
 				broadcast(new Request("server.game.end", -1));
-			} else if (gameInfo.currentPlayers.size() > 0) { // If the player has left before team-making and there is at least one player left
+			} else if (gameInfo.getCurrentPlayers().size() > 0) { // If the player has left before team-making and there is at least one player left
 				sendPlayersRefresh();
 			} else { // If there is no one left :'(
 				endGame();
@@ -303,7 +303,7 @@ public class GameThread extends Thread {
 
 	@Override
 	public int hashCode() {
-		return gameInfo.name.hashCode();
+		return gameInfo.getName().hashCode();
 	}
 
 	@Override

@@ -47,9 +47,9 @@ public class WaitingRoomController extends AbstractController implements ActionL
 		this.username = username;
 		this.started = false;
 
-		roomPanel.chatPanel.messageField.addKeyListener(this);
-		roomPanel.teamBuildingPanel.confirmButton.addActionListener(this);
-		roomPanel.chatPanel.sendButton.addActionListener(this);
+		roomPanel.getChatPanel().getMessageField().addKeyListener(this);
+		roomPanel.getTeamBuildingPanel().getConfirmButton().addActionListener(this);
+		roomPanel.getChatPanel().getSendButton().addActionListener(this);
 	}
 
 	@Override
@@ -73,30 +73,30 @@ public class WaitingRoomController extends AbstractController implements ActionL
 		if ("players".equals(sub2)) {
 			final String sub3 = request.getSubRequest(3);
 			if ("refresh".equals(sub3)) {
-				playerList = (List<String>) request.content;
+				playerList = (List<String>) request.getContent();
 				playerList.remove(username);
-				roomPanel.teamBuildingPanel.setAvailablePlayers(playerList);
+				roomPanel.getTeamBuildingPanel().setAvailablePlayers(playerList);
 			}
 		} else if ("teams".equals(sub2)) {
 			final String sub3 = request.getSubRequest(3);
 			if ("refresh".equals(sub3)) {
-				teamList = (List<List<String>>) request.content;
-				roomPanel.teamBuildingPanel.setAvailablePlayers(getAvailablePlayers());
+				teamList = (List<List<String>>) request.getContent();
+				roomPanel.getTeamBuildingPanel().setAvailablePlayers(getAvailablePlayers());
 				for (final List<String> team : teamList) {
 					if (team.contains(username)) {
-						roomPanel.teamBuildingPanel
+						roomPanel.getTeamBuildingPanel()
 								.hasBeenPaired(team.get(0).equals(username) ? team.get(1) : team.get(0));
 					}
 				}
 			} else if ("leader".equals(sub3)) {
-				roomPanel.teamBuildingPanel.enableTeamBuiding(true);
+				roomPanel.getTeamBuildingPanel().enableTeamBuiding(true);
 			}
 		} else if ("start".equals(sub2)) {
-			final List<List<String>> teamList = (List<List<String>>) request.content;
+			final List<List<String>> teamList = (List<List<String>>) request.getContent();
 			switchController(new GameController(mainController, gameInfo, username, teamList));
 		} else if ("message".equals(sub2)) {
-			roomPanel.chatPanel.addMessage((Message) request.content);
-			roomPanel.chatPanel.clearField();
+			roomPanel.getChatPanel().addMessage((Message) request.getContent());
+			roomPanel.getChatPanel().clearField();
 		}
 	}
 
@@ -116,38 +116,38 @@ public class WaitingRoomController extends AbstractController implements ActionL
 
 	@Override
 	public void actionPerformed(final ActionEvent ev) {
-		final ChatPanel cp = roomPanel.chatPanel;
-		if (ev.getSource() == roomPanel.teamBuildingPanel.confirmButton) {
+		final ChatPanel cp = roomPanel.getChatPanel();
+		if (ev.getSource() == roomPanel.getTeamBuildingPanel().getConfirmButton()) {
 			final List<String> team = new ArrayList<>();
 			team.add(username);
-			team.add(roomPanel.teamBuildingPanel.getTeamMate());
+			team.add(roomPanel.getTeamBuildingPanel().getTeamMate());
 			sendRequest(new Request("client.game.teams.leader", (Serializable) team));
-			roomPanel.teamBuildingPanel.enableTeamBuiding(false);
-		} else if (ev.getSource() == cp.sendButton) {
+			roomPanel.getTeamBuildingPanel().enableTeamBuiding(false);
+		} else if (ev.getSource() == cp.getSendButton()) {
 			sendMessageAction();
 		}
 	}
 
 	private void sendMessageAction() {
-		final String text = roomPanel.chatPanel.getMessage().trim();
+		final String text = roomPanel.getChatPanel().getMessage().trim();
 		boolean valid = true;
 		if (text.equals("")) {
 			valid = false;
 		}
 		if (text.length() > MAX_MESSAGE_LENGTH) {
-			roomPanel.chatPanel.addMessage(new Message("Maximum message length is " + MAX_MESSAGE_LENGTH, ""));
+			roomPanel.getChatPanel().addMessage(new Message("Maximum message length is " + MAX_MESSAGE_LENGTH, ""));
 			valid = false;
 		}
 		if (valid) {
 			final Message message = new Message(text, username);
 			sendRequest(new Request("client.game.message", message));
 		}
-		roomPanel.chatPanel.clearField();
+		roomPanel.getChatPanel().clearField();
 	}
 
 	@Override
 	public void keyTyped(final KeyEvent ev) {
-		if (ev.getSource() == roomPanel.chatPanel.messageField && ev.getKeyChar() == '\n') {
+		if (ev.getSource() == roomPanel.getChatPanel().getMessageField() && ev.getKeyChar() == '\n') {
 			sendMessageAction();
 		}
 	}

@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public abstract class AbstractController {
 
 	/** An identifier for this controller, used to dispatch network messages. */
-	public final String identifier;
+	private final String identifier;
 	/**
 	 * The controller controlling all the ther controller.
 	 */
@@ -26,6 +26,10 @@ public abstract class AbstractController {
 	public AbstractController(final MainController mainController, final String identifier) {
 		this.mainController = mainController;
 		this.identifier = identifier;
+	}
+
+	public String getIdentifier() {
+		return identifier;
 	}
 
 	/**

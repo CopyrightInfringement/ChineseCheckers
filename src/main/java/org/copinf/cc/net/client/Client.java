@@ -45,7 +45,7 @@ public class Client extends Thread {
 	public void run() {
 		Request req;
 		while ((req = receive()) != null) {
-			if (req.getSubRequest(1).equals(controller.identifier)) {
+			if (req.getSubRequest(1).equals(controller.getIdentifier())) {
 				controller.processRequest(req);
 			}
 		}

@@ -23,8 +23,8 @@ public class HomeController extends AbstractController implements ActionListener
 	public HomeController(final MainController mainController) {
 		super(mainController, "home");
 		panel = new HomePanel();
-		panel.hostButton.addActionListener(this);
-		panel.joinButton.addActionListener(this);
+		panel.getHostButton().addActionListener(this);
+		panel.getJoinButton().addActionListener(this);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class HomeController extends AbstractController implements ActionListener
 
 	@Override
 	public void actionPerformed(final ActionEvent ev) {
-		if (ev.getSource().equals(panel.hostButton)) {
+		if (ev.getSource().equals(panel.getHostButton())) {
 			try {
 				mainController.startServer(panel.getPort());
 			} catch (final IOException e) {
@@ -43,7 +43,7 @@ public class HomeController extends AbstractController implements ActionListener
 			}
 			mainController.startClient(panel.getHost(), panel.getPort());
 			switchController(new LobbyController(mainController));
-		} else if (ev.getSource().equals(panel.joinButton)) {
+		} else if (ev.getSource().equals(panel.getJoinButton())) {
 			panel.resetErrorMessage();
 			if (mainController.startClient(panel.getHost(), panel.getPort())) {
 				switchController(new LobbyController(mainController));

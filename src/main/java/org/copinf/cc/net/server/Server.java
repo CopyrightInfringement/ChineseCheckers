@@ -15,7 +15,7 @@ import java.util.Set;
  */
 public class Server implements Runnable {
 
-	public final Set<GameThread> gameSet;
+	private final Set<GameThread> gameSet;
 	private final Set<ClientThread> clients;
 	private final ServerSocket serverSocket;
 
@@ -60,7 +60,7 @@ public class Server implements Runnable {
 	 * @param req The request
 	 */
 	public void processRequest(final ClientThread client, final Request req) {
-		final String identifier = req.identifier;
+		final String identifier = req.getIdentifier();
 		if ("client.lobby.refresh".equals(identifier)) {
 			processLobbyRefresh(client);
 		} else if ("client.lobby.username".equals(identifier)) {
@@ -88,7 +88,7 @@ public class Server implements Runnable {
 	 */
 	private HashSet<GameInfo> getGameInfos() {
 		final HashSet<GameInfo> gameInfos = new HashSet<>();
-		for (final GameThread game : gameSet) {
+		for (final GameThread game : getGameSet()) {
 			gameInfos.add(game.getGameInfo());
 		}
 		return gameInfos;
@@ -110,7 +110,7 @@ public class Server implements Runnable {
 	 * @param req The request
 	 */
 	private void processLobbyUsername(final ClientThread client, final Request req) {
-		final String username = (String) req.content;
+		final String username = (String) req.getContent();
 		if (username.length() > 15 || username.length() == 0) {
 			client.send(new Request("server.lobby.username", "This username is invalid !"));
 		} else {
@@ -133,18 +133,18 @@ public class Server implements Runnable {
 	 * @param req The request
 	 */
 	private void processLobbyCreate(final ClientThread client, final Request req) {
-		final GameInfo gameInfo = (GameInfo) req.content;
-		final String gameName = gameInfo.name;
+		final GameInfo gameInfo = (GameInfo) req.getContent();
+		final String gameName = gameInfo.getName();
 		boolean validName = true;
-		for (final GameThread game : gameSet) {
-			if (game.getGameInfo().name.equals(gameName)) {
+		for (final GameThread game : getGameSet()) {
+			if (game.getGameInfo().getName().equals(gameName)) {
 				validName = false;
 				break;
 			}
 		}
 		if (validName) {
 			final GameThread game = new GameThread(gameInfo, this);
-			gameSet.add(game);
+			getGameSet().add(game);
 			game.start();
 			client.send(new Request("server.lobby.create", true));
 			game.addClient(client);
@@ -162,13 +162,13 @@ public class Server implements Runnable {
 	 * @param req The request
 	 */
 	private void processJoinGame(final ClientThread client, final Request req) {
-		final GameInfo gameInfo = (GameInfo) req.content;
+		final GameInfo gameInfo = (GameInfo) req.getContent();
 		if (gameInfo == null) {
 			client.send(new Request("server.lobby.join", false));
 			return;
 		}
-		for (final GameThread game : gameSet) {
-			if (game.hashCode() == gameInfo.hashCode() && gameInfo.currentPlayers.size() < gameInfo.nbPlayersMax) {
+		for (final GameThread game : getGameSet()) {
+			if (game.hashCode() == gameInfo.hashCode() && gameInfo.getCurrentPlayers().size() < gameInfo.getNbPlayersMax()) {
 				client.send(new Request("server.lobby.join", true));
 				game.addClient(client);
 				client.play(game);
@@ -183,7 +183,7 @@ public class Server implements Runnable {
 	 * @param game the game to remove
 	 */
 	public void removeGame(final GameThread game) {
-		gameSet.remove(game);
+		getGameSet().remove(game);
 		broadcast(new Request("server.lobby.refresh", getGameInfos()));
 	}
 
@@ -193,5 +193,9 @@ public class Server implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public Set<GameThread> getGameSet() {
+		return gameSet;
 	}
 }

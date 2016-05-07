@@ -13,9 +13,9 @@ import javax.swing.SpringLayout;
 public class HomePanel extends JPanel {
 
 	/** The "Join" button. */
-	public final JButton joinButton;
+	private final JButton joinButton;
 	/** The "Host" button. */
-	public final JButton hostButton;
+	private final JButton hostButton;
 	private final JTextField hostTextField;
 	private final JTextField portTextField;
 	private final JLabel lblErrors;
@@ -45,40 +45,40 @@ public class HomePanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, lblHost, OFFSET_X, SpringLayout.WEST, this);
 		add(lblHost);
 		hostTextField = new JTextField();
-		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, hostTextField, 0, SpringLayout.VERTICAL_CENTER,
+		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, getHostTextField(), 0, SpringLayout.VERTICAL_CENTER,
 				lblHost);
-		springLayout.putConstraint(SpringLayout.WEST, hostTextField, OFFSET_X, SpringLayout.EAST, lblHost);
-		add(hostTextField);
-		hostTextField.setColumns(20);
-		hostTextField.setText(DEBUG_HOST);
+		springLayout.putConstraint(SpringLayout.WEST, getHostTextField(), OFFSET_X, SpringLayout.EAST, lblHost);
+		add(getHostTextField());
+		getHostTextField().setColumns(20);
+		getHostTextField().setText(DEBUG_HOST);
 
 		portTextField = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, portTextField, OFFSET_Y, SpringLayout.SOUTH, hostTextField);
-		springLayout.putConstraint(SpringLayout.WEST, portTextField, 0, SpringLayout.WEST, hostTextField);
-		springLayout.putConstraint(SpringLayout.EAST, portTextField, 0, SpringLayout.EAST, hostTextField);
-		add(portTextField);
-		portTextField.setColumns(20);
-		portTextField.setText(DEBUG_PORT);
+		springLayout.putConstraint(SpringLayout.NORTH, getPortTextField(), OFFSET_Y, SpringLayout.SOUTH, getHostTextField());
+		springLayout.putConstraint(SpringLayout.WEST, getPortTextField(), 0, SpringLayout.WEST, getHostTextField());
+		springLayout.putConstraint(SpringLayout.EAST, getPortTextField(), 0, SpringLayout.EAST, getHostTextField());
+		add(getPortTextField());
+		getPortTextField().setColumns(20);
+		getPortTextField().setText(DEBUG_PORT);
 		final JLabel lblPort = new JLabel("Port :");
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, lblPort, 0, SpringLayout.VERTICAL_CENTER,
-				portTextField);
+				getPortTextField());
 		springLayout.putConstraint(SpringLayout.WEST, lblPort, OFFSET_X, SpringLayout.WEST, this);
 		add(lblPort);
 
 		joinButton = new JButton("Join");
-		springLayout.putConstraint(SpringLayout.NORTH, joinButton, OFFSET_Y, SpringLayout.SOUTH, lblPort);
-		springLayout.putConstraint(SpringLayout.EAST, joinButton, -OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER, this);
-		add(joinButton);
+		springLayout.putConstraint(SpringLayout.NORTH, getJoinButton(), OFFSET_Y, SpringLayout.SOUTH, lblPort);
+		springLayout.putConstraint(SpringLayout.EAST, getJoinButton(), -OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER, this);
+		add(getJoinButton());
 
 		hostButton = new JButton("Host");
-		springLayout.putConstraint(SpringLayout.NORTH, hostButton, 0, SpringLayout.NORTH, joinButton);
-		springLayout.putConstraint(SpringLayout.WEST, hostButton, OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER, this);
-		add(hostButton);
+		springLayout.putConstraint(SpringLayout.NORTH, getHostButton(), 0, SpringLayout.NORTH, getJoinButton());
+		springLayout.putConstraint(SpringLayout.WEST, getHostButton(), OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER, this);
+		add(getHostButton());
 
-		joinButton.setPreferredSize(hostButton.getPreferredSize());
+		getJoinButton().setPreferredSize(getHostButton().getPreferredSize());
 
 		lblErrors = new JLabel();
-		springLayout.putConstraint(SpringLayout.NORTH, lblErrors, OFFSET_Y, SpringLayout.SOUTH, joinButton);
+		springLayout.putConstraint(SpringLayout.NORTH, lblErrors, OFFSET_Y, SpringLayout.SOUTH, getJoinButton());
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, lblErrors, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		add(lblErrors);
 		springLayout.putConstraint(SpringLayout.WEST, lblErrors, OFFSET_X, SpringLayout.WEST, this);
@@ -90,7 +90,7 @@ public class HomePanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, lblCredits, 0, SpringLayout.HORIZONTAL_CENTER, this);
 		add(lblCredits);
 
-		springLayout.putConstraint(SpringLayout.EAST, this, 10, SpringLayout.EAST, hostTextField);
+		springLayout.putConstraint(SpringLayout.EAST, this, 10, SpringLayout.EAST, getHostTextField());
 		springLayout.putConstraint(SpringLayout.SOUTH, this, 10, SpringLayout.SOUTH, lblCredits);
 	}
 
@@ -99,7 +99,7 @@ public class HomePanel extends JPanel {
 	 * @return the server hostname
 	 */
 	public String getHost() {
-		return hostTextField.getText();
+		return getHostTextField().getText();
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class HomePanel extends JPanel {
 	 * @return the server port
 	 */
 	public int getPort() {
-		return Integer.parseInt(portTextField.getText());
+		return Integer.parseInt(getPortTextField().getText());
 	}
 
 	/**
@@ -123,5 +123,21 @@ public class HomePanel extends JPanel {
 	 */
 	public void resetErrorMessage() {
 		lblErrors.setText("");
+	}
+
+	public JButton getJoinButton() {
+		return joinButton;
+	}
+
+	public JButton getHostButton() {
+		return hostButton;
+	}
+
+	private JTextField getHostTextField() {
+		return hostTextField;
+	}
+
+	private JTextField getPortTextField() {
+		return portTextField;
 	}
 }

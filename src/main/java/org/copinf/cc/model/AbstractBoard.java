@@ -81,7 +81,7 @@ public abstract class AbstractBoard {
 		final Pawn pawn = getPawn(orig);
 
 		//	Si on essaye de deplacer un pion qui nous appartient pas ou qui n'existe pas
-		if (pawn == null || pawn.owner != player) {
+		if (pawn == null || pawn.getOwner() != player) {
 			return false;
 		}
 

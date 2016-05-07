@@ -14,8 +14,8 @@ public class Request implements Serializable {
 
 	private static final long serialVersionUID = 42L;
 
-	public final String identifier;
-	public final Serializable content;
+	private final String identifier;
+	private final Serializable content;
 
 	private final transient String[] splitted;
 
@@ -63,11 +63,19 @@ public class Request implements Serializable {
 	 * @throws java.io.ObjectStreamException if something wrong happens
 	 */
 	private Object readResolve() throws java.io.ObjectStreamException {
-		return new Request(identifier, content);
+		return new Request(getIdentifier(), getContent());
 	}
 
 	@Override
 	public String toString() {
-		return identifier + '\n' + content;
+		return getIdentifier() + '\n' + getContent();
+	}
+
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public Serializable getContent() {
+		return content;
 	}
 }

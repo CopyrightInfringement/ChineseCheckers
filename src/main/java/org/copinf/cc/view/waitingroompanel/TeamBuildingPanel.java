@@ -14,7 +14,7 @@ public class TeamBuildingPanel extends JPanel {
 
 	private final JList<String> availablePlayers;
 	private final JLabel label;
-	public final JButton confirmButton;
+	private final JButton confirmButton;
 
 	public TeamBuildingPanel() {
 		super();
@@ -34,14 +34,14 @@ public class TeamBuildingPanel extends JPanel {
 		layout.putConstraint(SpringLayout.NORTH, availablePlayers, 10, SpringLayout.SOUTH, label);
 		layout.putConstraint(SpringLayout.WEST, availablePlayers, 0, SpringLayout.WEST, label);
 
-		layout.putConstraint(SpringLayout.WEST, confirmButton, 0, SpringLayout.WEST, label);
-		layout.putConstraint(SpringLayout.NORTH, confirmButton, 10, SpringLayout.SOUTH, availablePlayers);
+		layout.putConstraint(SpringLayout.WEST, getConfirmButton(), 0, SpringLayout.WEST, label);
+		layout.putConstraint(SpringLayout.NORTH, getConfirmButton(), 10, SpringLayout.SOUTH, availablePlayers);
 
 		add(label);
 		add(availablePlayers);
-		add(confirmButton);
+		add(getConfirmButton());
 
-		confirmButton.setEnabled(false);
+		getConfirmButton().setEnabled(false);
 
 		enableTeamBuiding(false);
 	}
@@ -71,7 +71,7 @@ public class TeamBuildingPanel extends JPanel {
 	 * @param b true if team building should be enabled
 	 */
 	public void enableTeamBuiding(final boolean b) {
-		confirmButton.setEnabled(b);
+		getConfirmButton().setEnabled(b);
 		if (b) {
 			label.setText("Select your teammate.");
 		} else {
@@ -84,7 +84,11 @@ public class TeamBuildingPanel extends JPanel {
 	 * @param teamMate The teammate of this player
 	 */
 	public void hasBeenPaired(final String teamMate) {
-		confirmButton.setVisible(false);
+		getConfirmButton().setVisible(false);
 		label.setText(teamMate + " is your teammate.");
+	}
+
+	public JButton getConfirmButton() {
+		return confirmButton;
 	}
 }

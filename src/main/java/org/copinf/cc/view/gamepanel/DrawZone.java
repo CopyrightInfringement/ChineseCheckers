@@ -28,7 +28,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	/**
 	 * The BoardView associated with this DrawZone.
 	 */
-	public final BoardView boardView;
+	private final BoardView boardView;
 	private Point mouse;
 	private final List<Message> messages;
 	private final Map<Player, PlayerView> playerViews;
@@ -57,7 +57,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	public void paintComponent(final Graphics g) {
 		super.paintComponent(g);
 		final Graphics2D g2d = (Graphics2D) g;
-		boardView.paint(g2d, mouse, selection);
+		getBoardView().paint(g2d, mouse, selection);
 		drawMessages(g2d);
 	}
 
@@ -117,15 +117,15 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		for (int i = messages.size() - 1; i >= 0; i--) {
 			final Message message = messages.get(i);
 			Color color = Color.BLACK;
-			if (message.isChatMessage) {
+			if (message.isChatMessage()) {
 				for (final PlayerView pv : playerViews.values()) {
-					if (pv.player.getName().equals(message.playerName)) {
-						color = pv.color;
+					if (pv.getPlayer().getName().equals(message.getPlayerName())) {
+						color = pv.getColor();
 					}
 				}
 			}
 			g2d.setColor(color);
-			g2d.drawString(message.message, x, getHeight() - y);
+			g2d.drawString(message.getMessage(), x, getHeight() - y);
 			y += 20;
 		}
 		g2d.setColor(Color.BLACK);
@@ -137,5 +137,9 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	 */
 	public void setSelectedSquare(final Coordinates selection) {
 		this.selection = selection;
+	}
+
+	public BoardView getBoardView() {
+		return boardView;
 	}
 }

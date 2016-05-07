@@ -13,13 +13,13 @@ public class Coordinates implements Serializable {
 	private static final long serialVersionUID = 42L;
 
 	/** x-axis coordinate. */
-	public final int x;
+	private final int x;
 
 	/** y-axis coordinate. */
-	public final int y;
+	private final int y;
 
 	/** z-axis coordinate. */
-	public final int z;
+	private final int z;
 
 	/**
 	 * The coordinates of an eastern move.
@@ -73,14 +73,14 @@ public class Coordinates implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(x, y, z);
+		return Objects.hash(getX(), getY(), getZ());
 	}
 
 	@Override
 	public boolean equals(final Object obj) {
 		if (obj instanceof Coordinates) {
 			final Coordinates coord = (Coordinates) obj;
-			return x == coord.x && y == coord.y && z == coord.z;
+			return getX() == coord.getX() && getY() == coord.getY() && getZ() == coord.getZ();
 		}
 		return false;
 	}
@@ -136,7 +136,7 @@ public class Coordinates implements Serializable {
 	 * @return resulting Coordinates
 	 */
 	public static Coordinates add(final Coordinates a, final Coordinates b) {
-		return new Coordinates(a.x + b.x, a.y + b.y, a.z + b.z);
+		return new Coordinates(a.getX() + b.getX(), a.getY() + b.getY(), a.getZ() + b.getZ());
 	}
 
 	/**
@@ -145,7 +145,7 @@ public class Coordinates implements Serializable {
 	 * @return resulting Coordinates
 	 */
 	public Coordinates add(final Coordinates c) {
-		return new Coordinates(x + c.x, y + c.y, z + c.z);
+		return new Coordinates(getX() + c.getX(), getY() + c.getY(), getZ() + c.getZ());
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class Coordinates implements Serializable {
 	 * @return resulting Coordinates
 	 */
 	public static Coordinates sub(final Coordinates a, final Coordinates b) {
-		return new Coordinates(a.x - b.x, a.y - b.y, a.z - b.z);
+		return new Coordinates(a.getX() - b.getX(), a.getY() - b.getY(), a.getZ() - b.getZ());
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class Coordinates implements Serializable {
 	 * @return resulting Coordinates
 	 */
 	public Coordinates sub(final Coordinates c) {
-		return new Coordinates(x - c.x, y - c.y, z - c.z);
+		return new Coordinates(getX() - c.getX(), getY() - c.getY(), getZ() - c.getZ());
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class Coordinates implements Serializable {
 	 * @return resulting Coordinates
 	 */
 	public static Coordinates mul(final Coordinates a, final int k) {
-		return new Coordinates(a.x * k, a.y * k, a.z * k);
+		return new Coordinates(a.getX() * k, a.getY() * k, a.getZ() * k);
 	}
 
 	/**
@@ -183,11 +183,23 @@ public class Coordinates implements Serializable {
 	 * @return resulting Coordinates
 	 */
 	public Coordinates mul(final int k) {
-		return new Coordinates(k * x, k * y, k * z);
+		return new Coordinates(k * getX(), k * getY(), k * getZ());
 	}
 
 	@Override
 	public String toString() {
-		return x + " " + y + " " + z;
+		return getX() + " " + getY() + " " + getZ();
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getZ() {
+		return z;
 	}
 }

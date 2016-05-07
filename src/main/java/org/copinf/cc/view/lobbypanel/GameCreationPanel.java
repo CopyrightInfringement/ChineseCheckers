@@ -30,7 +30,7 @@ public class GameCreationPanel extends JPanel {
 
 	private final JTextField gameNameTextField;
 	/** The "Create" button. */
-	public final JButton createGameBtn;
+	private final JButton createGameBtn;
 	private final JComboBox<String> boardChooser;
 	private final JSpinner boardSizeChooser;
 	private final JComboBox<Integer> playerNumberChooser;
@@ -63,10 +63,10 @@ public class GameCreationPanel extends JPanel {
 		add(gameNameTextField);
 		gameNameTextField.setColumns(10);
 		createGameBtn = new JButton("Create");
-		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, createGameBtn, 0, SpringLayout.VERTICAL_CENTER,
+		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, getCreateGameBtn(), 0, SpringLayout.VERTICAL_CENTER,
 				gameNameLbl);
-		springLayout.putConstraint(SpringLayout.WEST, createGameBtn, OFFSET_X, SpringLayout.EAST, gameNameTextField);
-		add(createGameBtn);
+		springLayout.putConstraint(SpringLayout.WEST, getCreateGameBtn(), OFFSET_X, SpringLayout.EAST, gameNameTextField);
+		add(getCreateGameBtn());
 
 		boardChooser = new JComboBox<>();
 		springLayout.putConstraint(SpringLayout.NORTH, boardChooser, OFFSET_Y, SpringLayout.SOUTH, gameNameTextField);
@@ -200,5 +200,9 @@ public class GameCreationPanel extends JPanel {
 	 */
 	public void resetGameName() {
 		gameNameTextField.setText("");
+	}
+
+	public JButton getCreateGameBtn() {
+		return createGameBtn;
 	}
 }

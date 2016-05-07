@@ -15,7 +15,7 @@ public class GameTimer implements ActionListener {
 	private final int initialTime;
 	private int remainingTime;
 	/** The Timer used by this class. */
-	public final Timer timer;
+	private final Timer timer;
 	private ClientThread client;
 	private final GameThread game;
 
@@ -38,17 +38,21 @@ public class GameTimer implements ActionListener {
 	public void startTurn(final ClientThread ct) {
 		client = ct;
 		remainingTime = initialTime;
-		timer.start();
+		getTimer().start();
 	}
 
 	@Override
 	public void actionPerformed(final ActionEvent ev) {
 		if (remainingTime == 0) {
-			timer.stop();
+			getTimer().stop();
 			game.onNextTurn();
 		}
 
 		client.send(new Request("server.game.tick", remainingTime));
 		remainingTime--;
+	}
+
+	public Timer getTimer() {
+		return timer;
 	}
 }

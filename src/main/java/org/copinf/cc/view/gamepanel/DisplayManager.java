@@ -152,7 +152,7 @@ public class DisplayManager {
 	 * @return The screen coordinates
 	 */
 	public Point2D.Double squareToScreen(final Coordinates coordinates) {
-		return boardToScreen(coordinates.x, coordinates.y, coordinates.z);
+		return boardToScreen(coordinates.getX(), coordinates.getY(), coordinates.getZ());
 	}
 
 	/**
@@ -239,7 +239,7 @@ public class DisplayManager {
 	 */
 	public Path2D.Double hexagon(final Coordinates h) {
 		final Path2D.Double path = new Path2D.Double();
-		final Point2D.Double center = boardToScreen(h.x, h.y, h.z);
+		final Point2D.Double center = boardToScreen(h.getX(), h.getY(), h.getZ());
 		for (int i = 0; i <= 6; i++) {
 			final double theta = i * Math.PI / 3.0 + Math.PI / 6.0 + angle;
 			final Point2D.Double point = new Point2D.Double(

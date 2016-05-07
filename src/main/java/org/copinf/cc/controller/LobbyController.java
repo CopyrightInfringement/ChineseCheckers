@@ -34,7 +34,7 @@ public class LobbyController extends AbstractController implements ActionListene
 		lobbyPanel.getJoinGameBtn().addActionListener(this);
 		lobbyPanel.getUsernamePanel().getSubmitBtn().addActionListener(this);
 		lobbyPanel.getGameCreationPanel().addBoard(new DefaultBoard(0));
-		lobbyPanel.getGameCreationPanel().createGameBtn.addActionListener(this);
+		lobbyPanel.getGameCreationPanel().getCreateGameBtn().addActionListener(this);
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class LobbyController extends AbstractController implements ActionListene
 			actionJoinGame();
 		} else if (source.equals(lobbyPanel.getUsernamePanel().getSubmitBtn())) {
 			actionSubmitUsername();
-		} else if (source.equals(lobbyPanel.getGameCreationPanel().createGameBtn)) {
+		} else if (source.equals(lobbyPanel.getGameCreationPanel().getCreateGameBtn())) {
 			actionCreateGame();
 		}
 	}
@@ -90,7 +90,7 @@ public class LobbyController extends AbstractController implements ActionListene
 	 */
 	@SuppressWarnings("unchecked")
 	private void processRefreshGameInfoList(final Request request) {
-		final Set<GameInfo> waitingGames = (Set<GameInfo>) request.content;
+		final Set<GameInfo> waitingGames = (Set<GameInfo>) request.getContent();
 		lobbyPanel.getGamesList().setListData(waitingGames.toArray(new GameInfo[waitingGames.size()]));
 	}
 
@@ -109,7 +109,7 @@ public class LobbyController extends AbstractController implements ActionListene
 	 * @param request The request to process
 	 */
 	private void processSubmitUsername(final Request request) {
-		final String msg = (String) request.content;
+		final String msg = (String) request.getContent();
 		if ("".equals(msg)) {
 			lobbyPanel.getUsernamePanel().switchToUsernamePanel(username);
 		} else {
@@ -137,7 +137,7 @@ public class LobbyController extends AbstractController implements ActionListene
 	 * @param request The request to process
 	 */
 	private void processCreateGame(final Request request) {
-		if (!(Boolean) request.content) {
+		if (!(Boolean) request.getContent()) {
 			selectedGame = null;
 			lobbyPanel.getGameCreationPanel().resetGameName();
 			JOptionPane.showMessageDialog(null, "The server refused to create this game", "Game creation",
@@ -161,7 +161,7 @@ public class LobbyController extends AbstractController implements ActionListene
 	 * @param request The request to process
 	 */
 	private void processJoinGame(final Request request) {
-		if ((Boolean) request.content) {
+		if ((Boolean) request.getContent()) {
 			switchController(new WaitingRoomController(mainController, selectedGame, username));
 		} else {
 			JOptionPane.showMessageDialog(null, "Impossible to join the game !", "Join a game",

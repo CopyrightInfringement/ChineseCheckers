@@ -18,11 +18,11 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel {
 
 	/** The InfoBar of this panel.*/
-	public final InfoBar infoBar;
+	private final InfoBar infoBar;
 	/** The DrawZone of this panel. */
-	public final DrawZone drawZone;
+	private final DrawZone drawZone;
 	/** The ActionZone of this panel. */
-	public final ActionZone actionZone;
+	private final ActionZone actionZone;
 
 	/**
 	 * Constructs a new GamePanel.
@@ -45,16 +45,28 @@ public class GamePanel extends JPanel {
 		setPreferredSize(new Dimension(800, 600));
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-		infoBar = new InfoBar(game, player, playerViews.get(player).color);
-		infoBar.setPreferredSize(new Dimension(800, 50));
-		add(infoBar);
+		infoBar = new InfoBar(game, player, playerViews.get(player).getColor());
+		getInfoBar().setPreferredSize(new Dimension(800, 50));
+		add(getInfoBar());
 
 		drawZone = new DrawZone(game, player, playerViews, currentMovement);
-		add(drawZone);
-		drawZone.setPreferredSize(new Dimension(800, 500));
+		add(getDrawZone());
+		getDrawZone().setPreferredSize(new Dimension(800, 500));
 
 		actionZone = new ActionZone();
-		add(actionZone);
-		actionZone.setPreferredSize(new Dimension(800, 50));
+		add(getActionZone());
+		getActionZone().setPreferredSize(new Dimension(800, 50));
+	}
+
+	public InfoBar getInfoBar() {
+		return infoBar;
+	}
+
+	public DrawZone getDrawZone() {
+		return drawZone;
+	}
+
+	public ActionZone getActionZone() {
+		return actionZone;
 	}
 }

@@ -11,8 +11,8 @@ import javax.swing.SwingConstants;
 @SuppressWarnings("serial")
 public class WaitingRoomPanel extends JPanel {
 
-	public final TeamBuildingPanel teamBuildingPanel;
-	public final ChatPanel chatPanel;
+	private final TeamBuildingPanel teamBuildingPanel;
+	private final ChatPanel chatPanel;
 
 	private static final int WIDTH = 600;
 	private static final int HEIGHT = 400;
@@ -32,23 +32,31 @@ public class WaitingRoomPanel extends JPanel {
 		chatPanel = new ChatPanel();
 		teamBuildingPanel = new TeamBuildingPanel();
 
-		layout.getConstraints(chatPanel).setWidth(Spring.constant(CHAT_WIDTH));
+		layout.getConstraints(getChatPanel()).setWidth(Spring.constant(CHAT_WIDTH));
 
-		layout.putConstraint(SpringLayout.WEST, chatPanel, 0, SpringLayout.WEST, this);
-		layout.putConstraint(SpringLayout.NORTH, chatPanel, 0, SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.SOUTH, chatPanel, 0, SpringLayout.SOUTH, this);
+		layout.putConstraint(SpringLayout.WEST, getChatPanel(), 0, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.NORTH, getChatPanel(), 0, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.SOUTH, getChatPanel(), 0, SpringLayout.SOUTH, this);
 
-		layout.putConstraint(SpringLayout.WEST, separator, 0, SpringLayout.EAST, chatPanel);
+		layout.putConstraint(SpringLayout.WEST, separator, 0, SpringLayout.EAST, getChatPanel());
 		layout.putConstraint(SpringLayout.NORTH, separator, 2, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.SOUTH, this, 2, SpringLayout.SOUTH, separator);
 
-		layout.putConstraint(SpringLayout.WEST, teamBuildingPanel, 0, SpringLayout.EAST, separator);
-		layout.putConstraint(SpringLayout.EAST, teamBuildingPanel, 0, SpringLayout.EAST, this);
-		layout.putConstraint(SpringLayout.NORTH, teamBuildingPanel, 0, SpringLayout.NORTH, this);
-		layout.putConstraint(SpringLayout.SOUTH, teamBuildingPanel, 0, SpringLayout.SOUTH, this);
+		layout.putConstraint(SpringLayout.WEST, getTeamBuildingPanel(), 0, SpringLayout.EAST, separator);
+		layout.putConstraint(SpringLayout.EAST, getTeamBuildingPanel(), 0, SpringLayout.EAST, this);
+		layout.putConstraint(SpringLayout.NORTH, getTeamBuildingPanel(), 0, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.SOUTH, getTeamBuildingPanel(), 0, SpringLayout.SOUTH, this);
 
-		add(chatPanel);
+		add(getChatPanel());
 		add(separator);
-		add(teamBuildingPanel);
+		add(getTeamBuildingPanel());
+	}
+
+	public TeamBuildingPanel getTeamBuildingPanel() {
+		return teamBuildingPanel;
+	}
+
+	public ChatPanel getChatPanel() {
+		return chatPanel;
 	}
 }

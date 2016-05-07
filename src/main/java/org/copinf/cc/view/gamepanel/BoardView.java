@@ -35,7 +35,7 @@ public class BoardView {
 	/**
 	 * The DisplayManager linked to this BoardView.
 	 */
-	public final DisplayManager displayManager;
+	private final DisplayManager displayManager;
 
 	/**
 	 * Constructs a new BoardView.
@@ -60,7 +60,7 @@ public class BoardView {
 
 		this.displayManager = new DisplayManager(size, 1.0, 1.0, 0.0, width / 2.0, height / 2.0, board);
 
-		this.displayManager.setAngle(getPlayerAngle(player, width / 2.0, height));
+		this.getDisplayManager().setAngle(getPlayerAngle(player, width / 2.0, height));
 
 		pathFinding = new PathFinding(board);
 
@@ -71,7 +71,7 @@ public class BoardView {
 		double x = 0;
 		double y = 0;
 		for (final Coordinates c : zone.coordinates()) {
-			final Point2D.Double p = displayManager.squareToScreen(c);
+			final Point2D.Double p = getDisplayManager().squareToScreen(c);
 			x += p.x;
 			y += p.y;
 		}
@@ -94,7 +94,7 @@ public class BoardView {
 	}
 
 	private double getPlayerAngle(final Player player, final double x, final double y) {
-		final Point2D.Double O = displayManager.getOrigin();
+		final Point2D.Double O = getDisplayManager().getOrigin();
 		final Point2D.Double P = getBoardZonesCenter(player.getInitialZones());
 
 		final Point2D.Double OPn = new Point2D.Double((O.getX() - P.getX()) / O.distance(P),
@@ -106,7 +106,7 @@ public class BoardView {
 		final double det = OPn.x * OCn.y - OPn.y * OCn.x;
 
 		final double angle = Math.acos(dot) * (det < 0.0 ? -1 : 1);
-		return (displayManager.getAngle() + angle) % (2 * Math.PI);
+		return (getDisplayManager().getAngle() + angle) % (2 * Math.PI);
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class BoardView {
 		final Color defaultColor = g.getColor();
 
 		for (final Coordinates coord : board.coordinates()) {
-			hexagon = displayManager.hexagon(coord);
+			hexagon = getDisplayManager().hexagon(coord);
 			square = board.getSquare(coord);
 			g.setColor(Color.WHITE);
 			g.fill(hexagon);
@@ -147,9 +147,9 @@ public class BoardView {
 					g.setColor(new Color(200, 200, 200));
 				}
 			} else {
-				final Player owner = square.getPawn().owner;
+				final Player owner = square.getPawn().getOwner();
 				if (playerViews.containsKey(owner)) {
-					color = playerViews.get(owner).color;
+					color = playerViews.get(owner).getColor();
 					g.setColor(coord.equals(selection) ? color.darker() : color);
 				}
 			}
@@ -165,7 +165,7 @@ public class BoardView {
 
 	private void drawHexagonsOutline(final Graphics2D g, final Point mouse) {
 		final Stroke hoveredStroke = new BasicStroke(4.0f);
-		final Coordinates hovered = displayManager.screenToSquare(mouse.getX(), mouse.getY());
+		final Coordinates hovered = getDisplayManager().screenToSquare(mouse.getX(), mouse.getY());
 		boolean hasHovered = false;
 
 		final Stroke defaultStroke = g.getStroke();
@@ -176,11 +176,11 @@ public class BoardView {
 		final BasicStroke stroke = new BasicStroke(2.0f);
 		g.setStroke(stroke);
 		for (final Map.Entry<Player, PlayerView> entry : playerViews.entrySet()) {
-			color = entry.getValue().color;
+			color = entry.getValue().getColor();
 			g.setColor(color.darker());
 			for (final BoardZone zone : entry.getKey().getInitialZones()) {
 				for (final Coordinates coord : zone.coordinates()) {
-					hexagon = displayManager.hexagon(coord);
+					hexagon = getDisplayManager().hexagon(coord);
 					if (coord.equals(hovered)) {
 						g.setStroke(hoveredStroke);
 						g.draw(hexagon);
@@ -193,7 +193,7 @@ public class BoardView {
 			}
 		}
 		if (!hasHovered && hovered != null) {
-			hexagon = displayManager.hexagon(hovered);
+			hexagon = getDisplayManager().hexagon(hovered);
 			g.setColor(Color.BLACK);
 			g.setStroke(stroke);
 			g.draw(hexagon);
@@ -214,8 +214,8 @@ public class BoardView {
 		int i = 1;
 
 		for (final PlayerView view : playerViews.values()) {
-			g.setColor(view.color);
-			final String name = view.player.getName();
+			g.setColor(view.getColor());
+			final String name = view.getPlayer().getName();
 			final int sW = g.getFontMetrics().stringWidth(name);
 			g.drawString(name, width - sW - 10, (i * height) / (playerViews.values().size() + 1));
 
@@ -229,5 +229,9 @@ public class BoardView {
 
 	public void updateMovement() {
 		pathFinding.setReachableSquares(currentMovement);
+	}
+
+	public DisplayManager getDisplayManager() {
+		return displayManager;
 	}
 }
