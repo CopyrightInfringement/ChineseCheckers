@@ -1,13 +1,5 @@
 package org.copinf.cc.net.server;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.copinf.cc.model.DefaultBoard;
 import org.copinf.cc.model.Game;
 import org.copinf.cc.model.Movement;
@@ -15,6 +7,14 @@ import org.copinf.cc.model.Player;
 import org.copinf.cc.model.Team;
 import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.net.Request;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * The thread handling a game.
@@ -29,6 +29,7 @@ public class GameThread extends Thread {
 	private final GameTimer timer;
 
 	/**
+	 * Constructs a new GameThread
 	 * @param gameInfo The information describing the game.
 	 * @param server The server hosting this game.
 	 */
@@ -119,7 +120,7 @@ public class GameThread extends Thread {
 	 * @param movement The movement submitted.
 	 */
 	private void processMoveRequest(final ClientThread ct, final Movement movement) {
-		final boolean accepted = (movement.size() >= 2)
+		final boolean accepted = movement.size() >= 2
 				&& game.getBoard().checkMove(movement, getPlayer(ct.getUsername()));
 		ct.send(new Request("server.game.move.request", accepted));
 		if (accepted) {
@@ -216,7 +217,7 @@ public class GameThread extends Thread {
 	 * Call when enough players has joined the game.
 	 */
 	private void onPlayersFull() {
-		if (gameInfo.teams && ((2 * teams.size()) != gameInfo.nbPlayersMax)) {
+		if (gameInfo.teams && 2 * teams.size() != gameInfo.nbPlayersMax) {
 			for (final ClientThread ct : clients) {
 				if (!isInTeam(ct.getUsername())) {
 					ct.send(new Request("server.game.teams.leader"));
@@ -307,6 +308,6 @@ public class GameThread extends Thread {
 
 	@Override
 	public boolean equals(final Object obj) {
-		return (obj instanceof GameThread) && (this.hashCode() == obj.hashCode());
+		return obj instanceof GameThread && this.hashCode() == obj.hashCode();
 	}
 }

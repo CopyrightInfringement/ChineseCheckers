@@ -27,6 +27,7 @@ public class InfoBar extends JPanel {
 	 * Constructs a new InfoBar.
 	 * @param game the current game
 	 * @param player the playing player
+	 * @param color a color
 	 */
 	public InfoBar(final Game game, final Player player, final Color color) {
 		super();

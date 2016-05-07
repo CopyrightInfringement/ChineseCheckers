@@ -9,22 +9,22 @@ import java.util.Set;
 public class PathFinding {
 
 	private final AbstractBoard board;
-	private final Player player;
 	private final Set<Coordinates> shortReachableSquares;
 	private final Set<Coordinates> longReachableSquares;
 
 	/**
-	 * Constructs a PathFinding
+	 * Constructs a PathFinding object.
+	 * @param board a board
 	 */
-	public PathFinding(AbstractBoard b, Player p) {
-		this.board = b;
-		this.player = p;
+	public PathFinding(final AbstractBoard board) {
+		this.board = board;
 		this.shortReachableSquares = new HashSet<>();
 		this.longReachableSquares = new HashSet<>();
 	}
 
 	/**
 	 * Returns the adjacent and reachable squares.
+	 * @return set of adjacent and reachable squares
 	 */
 	public Set<Coordinates> getShortReachableSquares() {
 		return shortReachableSquares;
@@ -32,12 +32,13 @@ public class PathFinding {
 
 	/**
 	 * Returns the squares reachable after at least one jump.
+	 * @return set of squares reachable after at least one jump
 	 */
 	public Set<Coordinates> getLongReachableSquares() {
 		return longReachableSquares;
 	}
 
-	private void addShortReachableSquares(Coordinates c, boolean allowAdjacent) {
+	private void addShortReachableSquares(final Coordinates c, final boolean allowAdjacent) {
 		if (board.getSquare(c) != null) {
 			final Set<Coordinates> adjacentSquares = c.getAdjacentSquares();
 			for (final Coordinates d : adjacentSquares) {
@@ -48,7 +49,7 @@ public class PathFinding {
 						}
 					} else {
 						final Coordinates e = d.mul(2).sub(c);
-						if ((board.getSquare(e) != null) && board.getSquare(e).isFree()) {
+						if (board.getSquare(e) != null && board.getSquare(e).isFree()) {
 							shortReachableSquares.add(e);
 						}
 					}
@@ -57,13 +58,13 @@ public class PathFinding {
 		}
 	}
 
-	private void addLongReachableSquare(Coordinates c, Set<Coordinates> seenSquares) {
+	private void addLongReachableSquare(final Coordinates c, final Set<Coordinates> seenSquares) {
 		final Set<Coordinates> adjacentSquares = c.getAdjacentSquares();
 		seenSquares.add(c);
 		for (final Coordinates d : adjacentSquares) {
-			if ((board.getSquare(d) != null) && !board.getSquare(d).isFree()) {
+			if (board.getSquare(d) != null && !board.getSquare(d).isFree()) {
 				final Coordinates e = d.mul(2).sub(c);
-				if ((board.getSquare(e) != null) && board.getSquare(e).isFree() && !seenSquares.contains(e)) {
+				if (board.getSquare(e) != null && board.getSquare(e).isFree() && !seenSquares.contains(e)) {
 					if (!shortReachableSquares.contains(e)) {
 						longReachableSquares.add(e);
 					}
@@ -77,14 +78,12 @@ public class PathFinding {
 	 * Sets the directly and the indirectly reachable squares sets.
 	 * @param m A valid movement
 	 */
-	public void setReachableSquares(Movement m) {
+	public void setReachableSquares(final Movement m) {
 		shortReachableSquares.clear();
 		longReachableSquares.clear();
 		final Set<Coordinates> seenSquares = new HashSet<Coordinates>();
 
-		if (m.size() == 0) {
-			//	On ne fait rien : on ne peut rien proposer
-		} else if (m.size() == 1) {
+		if (m.size() == 1) {
 			addShortReachableSquares(m.getOrigin(), true);
 			seenSquares.add(m.getOrigin());
 			addLongReachableSquare(m.getOrigin(), seenSquares);
@@ -96,7 +95,7 @@ public class PathFinding {
 				seenSquares.add(m.getDestination());
 				addLongReachableSquare(m.getDestination(), seenSquares);
 			}
-		} else {
+		} else if (m .size() != 0){
 			addShortReachableSquares(m.getDestination(), false);
 			seenSquares.add(m.getDestination());
 			addLongReachableSquare(m.getDestination(), seenSquares);

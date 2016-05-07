@@ -80,7 +80,7 @@ public class Coordinates implements Serializable {
 	public boolean equals(final Object obj) {
 		if (obj instanceof Coordinates) {
 			final Coordinates coord = (Coordinates) obj;
-			return (x == coord.x) && (y == coord.y) && (z == coord.z);
+			return x == coord.x && y == coord.y && z == coord.z;
 		}
 		return false;
 	}
@@ -99,10 +99,10 @@ public class Coordinates implements Serializable {
 		}
 		return false;
 	}
-	
-	public Set<Coordinates> getAdjacentSquares(){
-		Set<Coordinates> adjacentSquares = new HashSet<>();
-		for (Coordinates c : DIRECTIONS) {
+
+	public Set<Coordinates> getAdjacentSquares() {
+		final Set<Coordinates> adjacentSquares = new HashSet<>();
+		for (final Coordinates c : DIRECTIONS) {
 			adjacentSquares.add(add(this, c));
 		}
 		return adjacentSquares;
@@ -170,7 +170,7 @@ public class Coordinates implements Serializable {
 	/**
 	 * Makes the multiplication of a Coordinates and an integer.
 	 * @param a a Coordinates
-	 * @param k and integer
+	 * @param k an integer
 	 * @return resulting Coordinates
 	 */
 	public static Coordinates mul(final Coordinates a, final int k) {
@@ -179,11 +179,11 @@ public class Coordinates implements Serializable {
 
 	/**
 	 * Makes the multiplication of the current coordinates with an integer.
-	 * @param k
+	 * @param k an integer
 	 * @return resulting Coordinates
 	 */
 	public Coordinates mul(final int k) {
-		return new Coordinates(k*x, k*y, k*z);
+		return new Coordinates(k * x, k * y, k * z);
 	}
 
 	@Override

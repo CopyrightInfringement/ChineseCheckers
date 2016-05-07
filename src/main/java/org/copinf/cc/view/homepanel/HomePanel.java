@@ -7,18 +7,14 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 /**
- * The first panel the player sees, offering him to host a server or to join
- * one.
+ * The first panel the player sees, offering him to host a server or to join one.
  */
+@SuppressWarnings("serial")
 public class HomePanel extends JPanel {
 
-	/**
-	 * The "Join" button
-	 */
+	/** The "Join" button. */
 	public final JButton joinButton;
-	/**
-	 * The "Host" button
-	 */
+	/** The "Host" button. */
 	public final JButton hostButton;
 	private final JTextField hostTextField;
 	private final JTextField portTextField;
@@ -100,6 +96,7 @@ public class HomePanel extends JPanel {
 
 	/**
 	 * Returns the host name of the server the user wants to join.
+	 * @return the server hostname
 	 */
 	public String getHost() {
 		return hostTextField.getText();
@@ -107,6 +104,7 @@ public class HomePanel extends JPanel {
 
 	/**
 	 * Returns the port of the server the user wants to join.
+	 * @return the server port
 	 */
 	public int getPort() {
 		return Integer.parseInt(portTextField.getText());
@@ -114,6 +112,7 @@ public class HomePanel extends JPanel {
 
 	/**
 	 * Display an error message.
+	 * @param msg the message
 	 */
 	public void displayErrorMessage(final String msg) {
 		lblErrors.setText("<html><p style='color:red;'>" + msg + "</p></html>");

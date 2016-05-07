@@ -1,5 +1,13 @@
 package org.copinf.cc.view.gamepanel;
 
+import org.copinf.cc.model.AbstractBoard;
+import org.copinf.cc.model.BoardZone;
+import org.copinf.cc.model.Coordinates;
+import org.copinf.cc.model.Movement;
+import org.copinf.cc.model.PathFinding;
+import org.copinf.cc.model.Player;
+import org.copinf.cc.model.Square;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -11,14 +19,6 @@ import java.awt.Stroke;
 import java.awt.geom.Point2D;
 import java.util.Collection;
 import java.util.Map;
-
-import org.copinf.cc.model.AbstractBoard;
-import org.copinf.cc.model.BoardZone;
-import org.copinf.cc.model.Coordinates;
-import org.copinf.cc.model.Movement;
-import org.copinf.cc.model.PathFinding;
-import org.copinf.cc.model.Player;
-import org.copinf.cc.model.Square;
 
 /**
  * Provides methods to draw and interact with a board.
@@ -33,7 +33,7 @@ public class BoardView {
 	private final Movement currentMovement;
 
 	/**
-	 * The DisplayManager linked to this BoardView
+	 * The DisplayManager linked to this BoardView.
 	 */
 	public final DisplayManager displayManager;
 
@@ -44,6 +44,7 @@ public class BoardView {
 	 * @param playerViews PlayerView of each Player
 	 * @param width available width
 	 * @param height available height
+	 * @param currentMovement the current movement
 	 */
 	public BoardView(final AbstractBoard board, final Player player, final Map<Player, PlayerView> playerViews,
 			final int width, final int height, final Movement currentMovement) {
@@ -53,15 +54,15 @@ public class BoardView {
 		this.width = width;
 		this.height = height;
 
-		final double optimalSizeWidth = ((width * 80.0) / 100.0 / Math.sqrt(3.0)) * (board.getWidth() + 0.5);
-		final double optimalSizeHeight = (((height * 80.0) / 100.0) * 2.0) / ((3.0 * board.getHeight()) + 1.0);
+		final double optimalSizeWidth = (width * 80.0 / 100.0 / Math.sqrt(3.0)) * (board.getWidth() + 0.5);
+		final double optimalSizeHeight = (height * 80.0 / 100.0 * 2.0) / (3.0 * board.getHeight() + 1.0);
 		final double size = Math.min(optimalSizeWidth, optimalSizeHeight);
 
 		this.displayManager = new DisplayManager(size, 1.0, 1.0, 0.0, width / 2.0, height / 2.0, board);
 
 		this.displayManager.setAngle(getPlayerAngle(player, width / 2.0, height));
 
-		pathFinding = new PathFinding(board, player);
+		pathFinding = new PathFinding(board);
 
 		this.currentMovement = currentMovement;
 	}
@@ -101,8 +102,8 @@ public class BoardView {
 		final Point2D.Double OCn = new Point2D.Double((O.getX() - x) / O.distance(x, y),
 				(O.getY() - y) / O.distance(x, y));
 
-		final double dot = (OPn.x * OCn.x) + (OPn.y * OCn.y);
-		final double det = (OPn.x * OCn.y) - (OPn.y * OCn.x);
+		final double dot = OPn.x * OCn.x + OPn.y * OCn.y;
+		final double det = OPn.x * OCn.y - OPn.y * OCn.x;
 
 		final double angle = Math.acos(dot) * (det < 0.0 ? -1 : 1);
 		return (displayManager.getAngle() + angle) % (2 * Math.PI);
@@ -139,17 +140,17 @@ public class BoardView {
 			g.setColor(Color.WHITE);
 			g.fill(hexagon);
 
-			if (!square.isFree()) {
-				final Player owner = square.getPawn().owner;
-				if (playerViews.containsKey(owner)) {
-					color = playerViews.get(owner).color;
-					g.setColor(coord.equals(selection) ? color.darker() : color);
-				}
-			} else {
+			if (square.isFree()) {
 				if (pathFinding.getShortReachableSquares().contains(coord)) {
 					g.setColor(new Color(150, 150, 150));
 				} else if (pathFinding.getLongReachableSquares().contains(coord)) {
 					g.setColor(new Color(200, 200, 200));
+				}
+			} else {
+				final Player owner = square.getPawn().owner;
+				if (playerViews.containsKey(owner)) {
+					color = playerViews.get(owner).color;
+					g.setColor(coord.equals(selection) ? color.darker() : color);
 				}
 			}
 			g.fill(hexagon);
@@ -191,7 +192,7 @@ public class BoardView {
 				}
 			}
 		}
-		if (!hasHovered && (hovered != null)) {
+		if (!hasHovered && hovered != null) {
 			hexagon = displayManager.hexagon(hovered);
 			g.setColor(Color.BLACK);
 			g.setStroke(stroke);

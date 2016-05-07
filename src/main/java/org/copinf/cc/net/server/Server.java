@@ -180,6 +180,7 @@ public class Server implements Runnable {
 
 	/**
 	 * Remove a game from the server.
+	 * @param game the game to remove
 	 */
 	public void removeGame(final GameThread game) {
 		gameSet.remove(game);

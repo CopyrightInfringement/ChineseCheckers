@@ -71,7 +71,7 @@ public abstract class AbstractBoard {
 
 		//	Si toutes les cases sont bien dans le plateau, existent et sont vides (à l'exception du départ)
 		for (final Coordinates c : path) {
-			if ((c == null) || (getSquare(c) == null)) {
+			if (c == null || getSquare(c) == null) {
 				return false;
 			} else if (!c.equals(orig) && !getSquare(c).isFree()) {
 				return false;
@@ -81,14 +81,14 @@ public abstract class AbstractBoard {
 		final Pawn pawn = getPawn(orig);
 
 		//	Si on essaye de deplacer un pion qui nous appartient pas ou qui n'existe pas
-		if ((pawn == null) || (pawn.owner != player)) {
+		if (pawn == null || pawn.owner != player) {
 			return false;
 		}
 
 		final Coordinates dest = path.getDestination();
 
 		//	S'il s'agit d'un mouvement adjacent
-		if ((path.size() == 2) && orig.isAdjacentTo(dest)) {
+		if (path.size() == 2 && orig.isAdjacentTo(dest)) {
 			return true;
 		}
 
@@ -98,7 +98,7 @@ public abstract class AbstractBoard {
 			final Coordinates cur = it.next();
 
 			final Coordinates middle = cur.getMiddleCoordinates(prev);
-			if ((middle == null) || (getSquare(middle) == null) || getSquare(middle).isFree()
+			if (middle == null || getSquare(middle) == null || getSquare(middle).isFree()
 					|| !getSquare(cur).isFree()) {
 				return false;
 			}

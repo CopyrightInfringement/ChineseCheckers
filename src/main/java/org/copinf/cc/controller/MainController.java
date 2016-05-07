@@ -116,6 +116,7 @@ public class MainController {
 	 * Start a client after connecting it to a server.
 	 * @param host The IP address of the server.
 	 * @param port The port to connect on.
+	 * @return true if the client has started.
 	 */
 	public boolean startClient(final String host, final int port) {
 		try {

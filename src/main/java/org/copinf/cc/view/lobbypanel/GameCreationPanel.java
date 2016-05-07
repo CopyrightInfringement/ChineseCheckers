@@ -1,5 +1,8 @@
 package org.copinf.cc.view.lobbypanel;
 
+import org.copinf.cc.model.AbstractBoard;
+import org.copinf.cc.net.GameInfo;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -16,21 +19,17 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SpringLayout;
 
-import org.copinf.cc.model.AbstractBoard;
-import org.copinf.cc.net.GameInfo;
-
 /**
  * The panel used to create a game.
  */
+@SuppressWarnings("serial")
 public class GameCreationPanel extends JPanel {
 
 	private static final int OFFSET_X = 10;
 	private static final int OFFSET_Y = 10;
 
 	private final JTextField gameNameTextField;
-	/**
-	 * The "Create" button.
-	 */
+	/** The "Create" button. */
 	public final JButton createGameBtn;
 	private final JComboBox<String> boardChooser;
 	private final JSpinner boardSizeChooser;
@@ -149,6 +148,7 @@ public class GameCreationPanel extends JPanel {
 
 	/**
 	 * Adds a board to the list of possible boards.
+	 * @param board a board
 	 */
 	public void addBoard(final AbstractBoard board) {
 		boardChooser.addItem(board.getClass().getSimpleName());
@@ -182,6 +182,7 @@ public class GameCreationPanel extends JPanel {
 
 	/**
 	 * Creates the GameInfo from the description made in this panel.
+	 * @return the new GameInfo
 	 */
 	public GameInfo makeGameInfo() {
 		final String gameName = gameNameTextField.getText();

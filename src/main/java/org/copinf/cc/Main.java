@@ -1,13 +1,13 @@
 package org.copinf.cc;
 
+import org.copinf.cc.controller.MainController;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
-import org.copinf.cc.controller.MainController;
 
 /**
  * Main class.

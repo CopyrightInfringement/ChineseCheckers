@@ -1,5 +1,11 @@
 package org.copinf.cc.view.gamepanel;
 
+import org.copinf.cc.model.Coordinates;
+import org.copinf.cc.model.Game;
+import org.copinf.cc.model.Movement;
+import org.copinf.cc.model.Player;
+import org.copinf.cc.net.Message;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,14 +17,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JPanel;
-
-import org.copinf.cc.model.Coordinates;
-import org.copinf.cc.model.DefaultBoard;
-import org.copinf.cc.model.Game;
-import org.copinf.cc.model.Movement;
-import org.copinf.cc.model.PathFinding;
-import org.copinf.cc.model.Player;
-import org.copinf.cc.net.Message;
 
 /**
  * DrawZone is where the board, the players' icons and the chat are displayed.
@@ -35,18 +33,18 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	private final List<Message> messages;
 	private final Map<Player, PlayerView> playerViews;
 	private static final int MAX_MESSAGES = 20;
-	private final Movement currentMovement;
 
 	/**
 	 * Constructs a new DrawZone.
 	 * @param game the current game
 	 * @param player the playing player
 	 * @param playerViews PlayerView of each Player
+	 * @param currentMovement the current movement
 	 */
-	public DrawZone(final Game game, final Player player, final Map<Player, PlayerView> playerViews, final Movement currentMovement) {
+	public DrawZone(final Game game, final Player player, final Map<Player, PlayerView> playerViews,
+			final Movement currentMovement) {
 		super();
-		this.currentMovement = currentMovement;
-		boardView = new BoardView(game.getBoard(), player, playerViews, 800, 500, this.currentMovement);
+		boardView = new BoardView(game.getBoard(), player, playerViews, 800, 500, currentMovement);
 
 		selection = null;
 		messages = new ArrayList<>();
@@ -75,7 +73,8 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	}
 
 	/**
-	 * Add a message to the list of message to display.
+	 * Adds a message to the list of message to display.
+	 * @param message the message
 	 * @param playerName The name of the sender
 	 * @param isChatMessage Whether this message is a a chat message or not (a
 	 *            chat message or an error message)
@@ -86,6 +85,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 
 	/**
 	 * Add a message to the list of message to display.
+	 * @param message the message
 	 * @param playerName The name of the sender
 	 */
 	public void addMessage(final String message, final String playerName) {
@@ -94,6 +94,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 
 	/**
 	 * Add a message to the list of message to display.
+	 * @param message the message
 	 */
 	public void addMessage(final String message) {
 		addMessage(message, "", false);
@@ -101,6 +102,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 
 	/**
 	 * Add a message to the list of message to display.
+	 * @param message the message
 	 */
 	public void addMessage(final Message message) {
 		messages.add(message);
@@ -131,6 +133,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 
 	/**
 	 * Set the coordinates of the selected square.
+	 * @param selection the selected square
 	 */
 	public void setSelectedSquare(final Coordinates selection) {
 		this.selection = selection;

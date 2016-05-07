@@ -21,7 +21,7 @@ public class PlayerView {
 	 * Constructs a new PlayerView.
 	 * @param player player to display
 	 * @param i index of this player on the board which will be used to assignate a color to this
-	 * player.
+	 *     player.
 	 */
 	public PlayerView(final Player player, final int i) {
 		this(player, COLORS[i]);

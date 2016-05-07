@@ -1,16 +1,16 @@
 package org.copinf.cc.controller;
 
+import org.copinf.cc.model.DefaultBoard;
+import org.copinf.cc.net.GameInfo;
+import org.copinf.cc.net.Request;
+import org.copinf.cc.view.lobbypanel.LobbyPanel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
-import org.copinf.cc.model.DefaultBoard;
-import org.copinf.cc.net.GameInfo;
-import org.copinf.cc.net.Request;
-import org.copinf.cc.view.lobbypanel.LobbyPanel;
 
 /**
  * Controls the game creation panel.

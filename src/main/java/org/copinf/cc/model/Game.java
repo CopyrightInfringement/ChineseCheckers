@@ -124,9 +124,9 @@ public class Game {
 
 	/**
 	 * Adds a team and its players to this game.
+	 * TODO: check that each team has the same number of players
 	 * @param team team to add.
 	 * @return true if the adding process succeeded.
-	 * TODO: check that each team has the same number of players
 	 */
 	public boolean addTeam(final Team team) {
 		if (teams.contains(team)
@@ -144,7 +144,7 @@ public class Game {
 	 * Sets the number of zones per player.
 	 * @param numberOfZones number of zones per player.
 	 * @return false if the number of zones requested is not compatible with the number of players
-	 * added so far.
+	 *     added so far.
 	 */
 	public boolean setNumberOfZones(final int numberOfZones) {
 		if (!this.board.getPossibleZoneNumbers(this.players.size()).contains(numberOfZones)) {

@@ -1,5 +1,7 @@
 package org.copinf.cc.view.lobbypanel;
 
+import org.copinf.cc.net.GameInfo;
+
 import java.awt.Component;
 
 import javax.swing.JLabel;
@@ -7,15 +9,14 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
-import org.copinf.cc.net.GameInfo;
-
 /**
- * Renders a list of GameInfos
+ * Renders a cell in a list of GameInfo.
  */
+@SuppressWarnings("serial")
 public class GameInfoRenderer extends JPanel implements ListCellRenderer<GameInfo> {
 
 	/**
-	 * Constructs a GameInfoRenderer
+	 * Constructs a GameInfoRenderer.
 	 */
 	public GameInfoRenderer() {
 		super();

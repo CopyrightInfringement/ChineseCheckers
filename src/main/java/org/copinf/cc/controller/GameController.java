@@ -1,18 +1,5 @@
 package org.copinf.cc.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
 import org.copinf.cc.model.AbstractBoard;
 import org.copinf.cc.model.Coordinates;
 import org.copinf.cc.model.DefaultBoard;
@@ -25,9 +12,21 @@ import org.copinf.cc.net.GameInfo;
 import org.copinf.cc.net.Message;
 import org.copinf.cc.net.Request;
 import org.copinf.cc.view.gamepanel.ActionZone;
-import org.copinf.cc.view.gamepanel.BoardView;
 import org.copinf.cc.view.gamepanel.DisplayManager;
 import org.copinf.cc.view.gamepanel.GamePanel;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  * Controls the game state.
@@ -92,7 +91,7 @@ public class GameController extends AbstractController implements ActionListener
 		this.game.setNumberOfZones(gameInfo.nbZones);
 
 		game.nextTurn();
-		
+
 		this.currentMovement = new Movement();
 
 		this.gamePanel = new GamePanel(game, this.mainPlayer, this.currentMovement);
@@ -161,7 +160,7 @@ public class GameController extends AbstractController implements ActionListener
 	 * @param coordinates The coordinates of the clicked square.
 	 */
 	private void squareClicked(final Coordinates coordinates) {
-		if ((game.getCurrentPlayer() != mainPlayer) || waitingForAnswer) {
+		if (game.getCurrentPlayer() != mainPlayer || waitingForAnswer) {
 			return;
 		}
 		final AbstractBoard board = game.getBoard();
@@ -170,14 +169,14 @@ public class GameController extends AbstractController implements ActionListener
 
 		// Si on définit quel pion déplacer
 		if (currentMovement.size() == 0) {
-			if ((pawn == null) || (pawn.owner != mainPlayer)) {
+			if (pawn == null || pawn.owner != mainPlayer) {
 				errorMsg = ErrorMsg.WRONG_MOVE;
 			} else {
 				currentMovement.push(coordinates);
 				errorMsg = null;
 			}
 			//	Si on veut redéfinir le pion à déplacer
-		} else if ((currentMovement.size() == 1) && (pawn != null) && (pawn.owner == mainPlayer)) {
+		} else if (currentMovement.size() == 1 && pawn != null && pawn.owner == mainPlayer) {
 			currentMovement.pop();
 			currentMovement.push(coordinates);
 			errorMsg = null;
@@ -199,11 +198,11 @@ public class GameController extends AbstractController implements ActionListener
 
 		gamePanel.actionZone.resetButton.setEnabled(!currentMovement.isEmpty());
 		movePawn(currentMovement);
-		
+
 		gamePanel.drawZone.setSelectedSquare(currentMovement.size() == 0 ? null : currentMovement.lastElement());
-		
+
 		gamePanel.drawZone.boardView.updateMovement();
-		
+
 		setButtonsVisibility();
 	}
 
@@ -211,7 +210,7 @@ public class GameController extends AbstractController implements ActionListener
 	 * Method to call when the "next" button is clicked.
 	 */
 	private void nextButtonClicked() {
-		if ((game.getCurrentPlayer() != mainPlayer) || waitingForAnswer || (currentMovement.size() < 2)) {
+		if (game.getCurrentPlayer() != mainPlayer || waitingForAnswer || currentMovement.size() < 2) {
 			return;
 		}
 		sendRequest(new Request("client.game.move.request", currentMovement));
@@ -265,7 +264,7 @@ public class GameController extends AbstractController implements ActionListener
 	private void sendMessageAction() {
 		final String text = gamePanel.actionZone.getMessage().trim();
 		boolean valid = true;
-		if (text.equals("")) {
+		if (text.isEmpty()) {
 			valid = false;
 		}
 		if (text.length() > MAX_MESSAGE_LENGTH) {
@@ -332,7 +331,7 @@ public class GameController extends AbstractController implements ActionListener
 
 	@Override
 	public void keyTyped(final KeyEvent ev) {
-		if ((ev.getSource() == gamePanel.actionZone.chatField) && (ev.getKeyChar() == '\n')) {
+		if (ev.getSource() == gamePanel.actionZone.chatField && ev.getKeyChar() == '\n') {
 			sendMessageAction();
 		}
 	}
