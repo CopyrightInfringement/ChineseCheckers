@@ -1,8 +1,5 @@
 package org.copinf.cc.view.gamepanel;
 
-import org.copinf.cc.model.Game;
-import org.copinf.cc.model.Player;
-
 import java.awt.Color;
 
 import javax.swing.JLabel;
@@ -10,11 +7,13 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
+import org.copinf.cc.model.Game;
+import org.copinf.cc.model.Player;
+
 /**
- * The InfoBar at the top of the Window, providing informations such as the player's name,
- * the number of turns...
+ * The InfoBar at the top of the Window, providing informations such as the
+ * player's name, the number of turns...
  */
-@SuppressWarnings("serial")
 public class InfoBar extends JPanel {
 
 	private final Game game;
@@ -22,6 +21,8 @@ public class InfoBar extends JPanel {
 
 	private final JLabel turnCountLabel;
 	private final JLabel currentPlayerLabel;
+
+	private final Color color;
 
 	/**
 	 * Constructs a new InfoBar.
@@ -34,18 +35,17 @@ public class InfoBar extends JPanel {
 		this.game = game;
 		this.player = player;
 
+		this.color = color;
+
 		// UI
 
 		final JLabel playerNameLabel = new JLabel();
 		playerNameLabel.setText("You are " + player.getName());
 
-
 		currentPlayerLabel = new JLabel();
 		turnCountLabel = new JLabel();
 
 		currentPlayerLabel.setForeground(color);
-		turnCountLabel.setForeground(color);
-		playerNameLabel.setForeground(color);
 
 		add(playerNameLabel);
 		add(new JSeparator(SwingConstants.VERTICAL));
@@ -62,9 +62,11 @@ public class InfoBar extends JPanel {
 	public void updateLabels() {
 		turnCountLabel.setText("Turn: " + game.getTurnCount());
 		if (game.getCurrentPlayer() == player) {
-			currentPlayerLabel.setText("You are playing !");
+			currentPlayerLabel.setForeground(color);
+			currentPlayerLabel.setText("You are playing!");
 		} else {
-			currentPlayerLabel.setText(game.getCurrentPlayer().getName() + " is playing !");
+			currentPlayerLabel.setForeground(Color.BLACK);
+			currentPlayerLabel.setText(game.getCurrentPlayer().getName() + " is playing!");
 		}
 	}
 }
