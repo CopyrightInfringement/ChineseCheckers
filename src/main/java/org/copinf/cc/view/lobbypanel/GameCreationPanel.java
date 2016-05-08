@@ -1,5 +1,8 @@
 package org.copinf.cc.view.lobbypanel;
 
+import org.copinf.cc.model.AbstractBoard;
+import org.copinf.cc.net.GameInfo;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -15,9 +18,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SpringLayout;
-
-import org.copinf.cc.model.AbstractBoard;
-import org.copinf.cc.net.GameInfo;
 
 /**
  * The panel used to create a game.

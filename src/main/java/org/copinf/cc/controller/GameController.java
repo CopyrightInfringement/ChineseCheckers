@@ -1,18 +1,5 @@
 package org.copinf.cc.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
 import org.copinf.cc.model.AbstractBoard;
 import org.copinf.cc.model.Coordinates;
 import org.copinf.cc.model.DefaultBoard;
@@ -27,6 +14,19 @@ import org.copinf.cc.net.Request;
 import org.copinf.cc.view.gamepanel.ActionZone;
 import org.copinf.cc.view.gamepanel.DisplayManager;
 import org.copinf.cc.view.gamepanel.GamePanel;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  * Controls the game state.

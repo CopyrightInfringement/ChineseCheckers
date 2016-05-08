@@ -95,7 +95,7 @@ public class PathFinding {
 				seenSquares.add(m.getDestination());
 				addLongReachableSquare(m.getDestination(), seenSquares);
 			}
-		} else if (m .size() != 0){
+		} else if (m .size() != 0) {
 			addShortReachableSquares(m.getDestination(), false);
 			seenSquares.add(m.getDestination());
 			addLongReachableSquare(m.getDestination(), seenSquares);

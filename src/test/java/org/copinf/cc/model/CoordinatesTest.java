@@ -12,19 +12,19 @@ public class CoordinatesTest {
 	@Test
 	public void testConstructorX() {
 		final Coordinates coord = new Coordinates(1, 2, 0);
-		assertEquals(coord.x, 1);
+		assertEquals(coord.getX(), 1);
 	}
 
 	@Test
 	public void testConstructorY() {
 		final Coordinates coord = new Coordinates(1, 2, 0);
-		assertEquals(coord.y, 2);
+		assertEquals(coord.getY(), 2);
 	}
 
 	@Test
 	public void testConstructorZ() {
 		final Coordinates coord = new Coordinates(1, 2, 0);
-		assertEquals(coord.z, 0);
+		assertEquals(coord.getZ(), 0);
 	}
 
 	@Test

@@ -5,8 +5,8 @@ import org.copinf.cc.model.Movement;
 import org.copinf.cc.model.Player;
 
 import java.awt.Dimension;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
