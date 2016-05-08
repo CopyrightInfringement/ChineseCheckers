@@ -23,13 +23,10 @@ public class HomePanel extends JPanel {
 	private static final int OFFSET_X = 10;
 	private static final int OFFSET_Y = 10;
 
-	private static final String DEBUG_HOST = "localhost";
-	private static final String DEBUG_PORT = "25565";
-
 	/**
 	 * Constructs a HomePanel.
 	 */
-	public HomePanel() {
+	public HomePanel(final String host, final int port) {
 		super();
 		final SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
@@ -50,7 +47,7 @@ public class HomePanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, getHostTextField(), OFFSET_X, SpringLayout.EAST, lblHost);
 		add(getHostTextField());
 		getHostTextField().setColumns(20);
-		getHostTextField().setText(DEBUG_HOST);
+		getHostTextField().setText(host);
 
 		portTextField = new JTextField();
 		springLayout.putConstraint(SpringLayout.NORTH, getPortTextField(), OFFSET_Y, SpringLayout.SOUTH, getHostTextField());
@@ -58,7 +55,7 @@ public class HomePanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, getPortTextField(), 0, SpringLayout.EAST, getHostTextField());
 		add(getPortTextField());
 		getPortTextField().setColumns(20);
-		getPortTextField().setText(DEBUG_PORT);
+		getPortTextField().setText(Integer.toString(port));
 		final JLabel lblPort = new JLabel("Port :");
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, lblPort, 0, SpringLayout.VERTICAL_CENTER,
 				getPortTextField());

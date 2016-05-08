@@ -21,6 +21,9 @@ public class MainController {
 
 	private final Stack<AbstractController> controllers;
 
+	public static final String DEFAULT_HOST = "localhost";
+	public static final int DEFAULT_PORT = 25565;
+
 	/**
 	 * Constructs a new MainController.
 	 */

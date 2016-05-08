@@ -22,7 +22,7 @@ public class HomeController extends AbstractController implements ActionListener
 	 */
 	public HomeController(final MainController mainController) {
 		super(mainController, "home");
-		panel = new HomePanel();
+		panel = new HomePanel(MainController.DEFAULT_HOST, MainController.DEFAULT_PORT);
 		panel.getHostButton().addActionListener(this);
 		panel.getJoinButton().addActionListener(this);
 	}
