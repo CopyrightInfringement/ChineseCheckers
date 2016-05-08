@@ -41,13 +41,14 @@ public class LobbyPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, gameScrollPane, OFFSET_Y, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, gameScrollPane, OFFSET_X, SpringLayout.WEST, this);
 		add(gameScrollPane);
-		gameScrollPane.setPreferredSize(new Dimension(300, 200));
 
 		refreshGameInfoListBtn = new JButton(
 			new ImageIcon(LobbyPanel.class.getResource("/fa-refresh-16.png")));
-		springLayout.putConstraint(SpringLayout.NORTH, refreshGameInfoListBtn, OFFSET_Y, SpringLayout.SOUTH, gameScrollPane);
+		springLayout.putConstraint(SpringLayout.SOUTH, refreshGameInfoListBtn, -OFFSET_Y, SpringLayout.SOUTH, this);
 		springLayout.putConstraint(SpringLayout.EAST, refreshGameInfoListBtn, -OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER, gameScrollPane);
 		add(refreshGameInfoListBtn);
+
+		springLayout.putConstraint(SpringLayout.SOUTH, gameScrollPane, -OFFSET_Y, SpringLayout.NORTH, refreshGameInfoListBtn);
 
 		joinGameBtn = new JButton("Join");
 		springLayout.putConstraint(SpringLayout.NORTH, joinGameBtn, 0, SpringLayout.NORTH, refreshGameInfoListBtn);
@@ -63,7 +64,6 @@ public class LobbyPanel extends JPanel {
 
 		gameCreationPanel = new GameCreationPanel();
 		springLayout.putConstraint(SpringLayout.NORTH, gameCreationPanel, OFFSET_Y, SpringLayout.SOUTH, usernamePanel);
-		springLayout.putConstraint(SpringLayout.SOUTH, gameCreationPanel, OFFSET_Y, SpringLayout.SOUTH, joinGameBtn);
 		springLayout.putConstraint(SpringLayout.WEST, gameCreationPanel, 0, SpringLayout.WEST, usernamePanel);
 		add(gameCreationPanel);
 

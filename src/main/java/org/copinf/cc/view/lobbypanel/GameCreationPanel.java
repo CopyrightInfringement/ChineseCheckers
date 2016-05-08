@@ -52,29 +52,25 @@ public class GameCreationPanel extends JPanel {
 		final SpringLayout springLayout = new SpringLayout();
 		setLayout(springLayout);
 
+		final JPanel gameNamePanel = new JPanel();
+		add(gameNamePanel);
+		springLayout.putConstraint(SpringLayout.NORTH, gameNamePanel, 0, SpringLayout.NORTH, this);
+		springLayout.putConstraint(SpringLayout.WEST, gameNamePanel, 0, SpringLayout.WEST, this);
 		final JLabel gameNameLbl = new JLabel("Game name :");
-		springLayout.putConstraint(SpringLayout.NORTH, gameNameLbl, OFFSET_Y, SpringLayout.NORTH, this);
-		springLayout.putConstraint(SpringLayout.WEST, gameNameLbl, OFFSET_X, SpringLayout.WEST, this);
-		add(gameNameLbl);
+		gameNamePanel.add(gameNameLbl);
 		gameNameTextField = new JTextField();
-		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, gameNameTextField, 0, SpringLayout.VERTICAL_CENTER,
-				gameNameLbl);
-		springLayout.putConstraint(SpringLayout.WEST, gameNameTextField, OFFSET_X, SpringLayout.EAST, gameNameLbl);
-		add(gameNameTextField);
+		gameNamePanel.add(gameNameTextField);
 		gameNameTextField.setColumns(10);
 		createGameBtn = new JButton("Create");
-		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, getCreateGameBtn(), 0, SpringLayout.VERTICAL_CENTER,
-				gameNameLbl);
-		springLayout.putConstraint(SpringLayout.WEST, getCreateGameBtn(), OFFSET_X, SpringLayout.EAST, gameNameTextField);
-		add(getCreateGameBtn());
+		gameNamePanel.add(getCreateGameBtn());
 
 		boardChooser = new JComboBox<>();
-		springLayout.putConstraint(SpringLayout.NORTH, boardChooser, OFFSET_Y, SpringLayout.SOUTH, gameNameTextField);
+		springLayout.putConstraint(SpringLayout.NORTH, boardChooser, OFFSET_Y, SpringLayout.SOUTH, gameNamePanel);
 		add(boardChooser);
 		final JLabel boardChooserLbl = new JLabel("Board :");
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, boardChooserLbl, 0, SpringLayout.VERTICAL_CENTER,
 				boardChooser);
-		springLayout.putConstraint(SpringLayout.WEST, boardChooserLbl, 0, SpringLayout.WEST, gameNameLbl);
+		springLayout.putConstraint(SpringLayout.WEST, boardChooserLbl, OFFSET_X, SpringLayout.WEST, gameNamePanel);
 		add(boardChooserLbl);
 		springLayout.putConstraint(SpringLayout.WEST, boardChooser, OFFSET_X, SpringLayout.EAST, boardChooserLbl);
 		boardChooser.addActionListener(new ActionListener() {
@@ -96,7 +92,7 @@ public class GameCreationPanel extends JPanel {
 		playerNumberChooser = new JComboBox<>();
 		springLayout.putConstraint(SpringLayout.NORTH, playerNumberChooser, OFFSET_Y, SpringLayout.SOUTH, boardChooser);
 		add(playerNumberChooser);
-		final JLabel playerNumberLbl = new JLabel("Player number :");
+		final JLabel playerNumberLbl = new JLabel("Players number :");
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, playerNumberLbl, 0, SpringLayout.VERTICAL_CENTER,
 				playerNumberChooser);
 		springLayout.putConstraint(SpringLayout.WEST, playerNumberLbl, 0, SpringLayout.WEST, boardChooserLbl);
@@ -117,23 +113,17 @@ public class GameCreationPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, playerZonesChooser, 0, SpringLayout.VERTICAL_CENTER,
 				playerZonesLbl);
 		springLayout.putConstraint(SpringLayout.WEST, playerZonesChooser, OFFSET_X, SpringLayout.EAST, playerZonesLbl);
-		add(playerZonesChooser);
 		springLayout.putConstraint(SpringLayout.EAST, boardSizeChooser, 0, SpringLayout.EAST, playerZonesChooser);
+		add(playerZonesChooser);
 
-		teamsCheckBox = new JCheckBox(": Teams");
-		springLayout.putConstraint(SpringLayout.NORTH, teamsCheckBox, OFFSET_Y, SpringLayout.SOUTH, playerNumberLbl);
-		springLayout.putConstraint(SpringLayout.WEST, teamsCheckBox, 0, SpringLayout.WEST, playerNumberLbl);
-		add(teamsCheckBox);
-
-		timerCheckBox = new JCheckBox(": Timer [min]");
-		springLayout.putConstraint(SpringLayout.NORTH, timerCheckBox, OFFSET_Y, SpringLayout.SOUTH, teamsCheckBox);
-		springLayout.putConstraint(SpringLayout.WEST, timerCheckBox, 0, SpringLayout.WEST, teamsCheckBox);
-		add(timerCheckBox);
 		timerSpinner = new JSpinner(new SpinnerNumberModel(1.0, 0.1, 5.0, 0.1));
-		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, timerSpinner, 0, SpringLayout.VERTICAL_CENTER,
-				timerCheckBox);
-		springLayout.putConstraint(SpringLayout.WEST, timerSpinner, OFFSET_X, SpringLayout.EAST, timerCheckBox);
+		springLayout.putConstraint(SpringLayout.NORTH, timerSpinner, OFFSET_Y, SpringLayout.SOUTH, playerZonesChooser);
+		springLayout.putConstraint(SpringLayout.EAST, timerSpinner, 0, SpringLayout.EAST, playerZonesChooser);
 		add(timerSpinner);
+		timerCheckBox = new JCheckBox(": Timer [min]");
+		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, timerCheckBox, 0, SpringLayout.VERTICAL_CENTER, timerSpinner);
+		springLayout.putConstraint(SpringLayout.EAST, timerCheckBox, -OFFSET_X, SpringLayout.WEST, timerSpinner);
+		add(timerCheckBox);
 		timerCheckBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent ev) {
@@ -141,6 +131,11 @@ public class GameCreationPanel extends JPanel {
 			}
 		});
 		timerSpinner.setEnabled(timerCheckBox.isSelected());
+
+		teamsCheckBox = new JCheckBox(": Teams");
+		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, teamsCheckBox, 0, SpringLayout.VERTICAL_CENTER, timerCheckBox);
+		springLayout.putConstraint(SpringLayout.WEST, teamsCheckBox, 0, SpringLayout.WEST, playerNumberLbl);
+		add(teamsCheckBox);
 
 		springLayout.putConstraint(SpringLayout.EAST, this, OFFSET_X, SpringLayout.EAST, playerZonesChooser);
 		springLayout.putConstraint(SpringLayout.SOUTH, this, OFFSET_Y, SpringLayout.SOUTH, timerSpinner);

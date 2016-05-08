@@ -66,7 +66,7 @@ public class HomePanel extends JPanel {
 		add(lblPort);
 
 		joinButton = new JButton("Join");
-		springLayout.putConstraint(SpringLayout.NORTH, getJoinButton(), OFFSET_Y, SpringLayout.SOUTH, lblPort);
+		springLayout.putConstraint(SpringLayout.NORTH, getJoinButton(), OFFSET_Y, SpringLayout.SOUTH, getPortTextField());
 		springLayout.putConstraint(SpringLayout.EAST, getJoinButton(), -OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER, this);
 		add(getJoinButton());
 
