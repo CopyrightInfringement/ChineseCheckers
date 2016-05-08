@@ -82,6 +82,9 @@ public class Movement extends Stack<Coordinates> {
 	 * @return the condensed movement.
 	 */
 	public Movement getCondensed() {
+		if (isEmpty()) {
+			return new Movement();
+		}
 		return new Movement(getOrigin(), getDestination());
 	}
 
@@ -91,6 +94,9 @@ public class Movement extends Stack<Coordinates> {
 	 * @return the condensed movement.
 	 */
 	public Movement getReversedCondensed() {
+		if (isEmpty()) {
+			return new Movement();
+		}
 		return new Movement(getDestination(), getOrigin());
 	}
 }
