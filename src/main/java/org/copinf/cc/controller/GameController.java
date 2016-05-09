@@ -51,8 +51,6 @@ public class GameController extends AbstractController implements ActionListener
 		}
 	}
 
-	private static final int MAX_MESSAGE_LENGTH = 50;
-
 	private final Game game;
 	private final Movement currentMovement;
 	private final GamePanel gamePanel;
@@ -266,19 +264,11 @@ public class GameController extends AbstractController implements ActionListener
 
 	private void sendMessageAction() {
 		final String text = gamePanel.getActionZone().getMessage().trim();
-		boolean valid = true;
-		if (text.isEmpty()) {
-			valid = false;
-		}
-		if (text.length() > MAX_MESSAGE_LENGTH) {
-			gamePanel.getDrawZone().addMessage("Maximum message length is " + MAX_MESSAGE_LENGTH);
-			valid = false;
-		}
-		if (valid) {
+		if (!text.isEmpty()) {
 			final Message message = new Message(text, mainPlayer.getName());
 			sendRequest(new Request("client.game.message", message));
+			gamePanel.getActionZone().clearField();
 		}
-		gamePanel.getActionZone().clearField();
 	}
 
 	/**

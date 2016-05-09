@@ -33,6 +33,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 	private final List<Message> messages;
 	private final Map<Player, PlayerView> playerViews;
 	private static final int MAX_MESSAGES = 20;
+	private static final int MAX_MESSAGE_LENGTH = 50;
 
 	/**
 	 * Constructs a new DrawZone.
@@ -111,6 +112,21 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		}
 	}
 
+	private static String[] splitStringEvery(String s, int interval) {
+		final int arrayLength = (int) Math.ceil(s.length() / (double) interval);
+		final String[] result = new String[arrayLength];
+
+		int j = 0;
+		final int lastIndex = result.length - 1;
+		for (int i = 0; i < lastIndex; i++) {
+			result[i] = s.substring(j, j + interval);
+			j += interval;
+		}
+		result[lastIndex] = s.substring(j);
+
+		return result;
+	}
+
 	private void drawMessages(final Graphics2D g2d) {
 		final int x = 5;
 		int y = 5;
@@ -125,8 +141,12 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 				}
 			}
 			g2d.setColor(color);
-			g2d.drawString(message.getMessage(), x, getHeight() - y);
-			y += 20;
+
+			final String[] splitted = splitStringEvery(message.getMessage(), MAX_MESSAGE_LENGTH);
+			for (int j = splitted.length - 1; j >= 0 ; j--) {
+				g2d.drawString(splitted[j], x, getHeight() - y);
+				y += 20;
+			}
 		}
 		g2d.setColor(Color.BLACK);
 	}
