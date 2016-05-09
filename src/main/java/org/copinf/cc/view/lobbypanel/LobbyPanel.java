@@ -28,6 +28,9 @@ public class LobbyPanel extends JPanel {
 	private final UsernamePanel usernamePanel;
 	private final GameCreationPanel gameCreationPanel;
 
+	/**
+	 * Constructs a new LobbyPanel.
+	 */
 	public LobbyPanel() {
 		super();
 		final SpringLayout springLayout = new SpringLayout();

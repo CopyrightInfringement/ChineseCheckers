@@ -25,6 +25,8 @@ public class HomePanel extends JPanel {
 
 	/**
 	 * Constructs a HomePanel.
+	 * @param host the default host server
+	 * @param port the default port
 	 */
 	public HomePanel(final String host, final int port) {
 		super();

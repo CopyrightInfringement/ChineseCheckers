@@ -179,7 +179,7 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Remove a game from the server.
+	 * Removes a game from the server.
 	 * @param game the game to remove
 	 */
 	public void removeGame(final GameThread game) {
@@ -187,6 +187,9 @@ public class Server implements Runnable {
 		broadcast(new Request("server.lobby.refresh", getGameInfos()));
 	}
 
+	/**
+	 * Ends this server.
+	 */
 	public void end() {
 		try {
 			serverSocket.close();

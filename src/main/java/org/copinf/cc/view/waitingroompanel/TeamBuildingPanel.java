@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
 
+/**
+ * The panel for the chat of the waiting room.
+ */
 @SuppressWarnings("serial")
 public class TeamBuildingPanel extends JPanel {
 
@@ -16,6 +19,9 @@ public class TeamBuildingPanel extends JPanel {
 	private final JLabel label;
 	private final JButton confirmButton;
 
+	/**
+	 * Constructs a new TeamBuildingPanel.
+	 */
 	public TeamBuildingPanel() {
 		super();
 

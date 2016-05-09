@@ -7,6 +7,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * The panel where users specify their username.
+ */
 @SuppressWarnings("serial")
 public class UsernamePanel extends JPanel {
 
@@ -43,6 +46,10 @@ public class UsernamePanel extends JPanel {
 		userPanel.add(usernameLbl);
 	}
 
+	/**
+	 * Switches to a panel with the player's username.
+	 * @param username the player's username.
+	 */
 	public void switchToUsernamePanel(final String username) {
 		final CardLayout cl = (CardLayout) getLayout();
 		usernameLbl.setText(username);

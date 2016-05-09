@@ -114,6 +114,9 @@ public class DisplayManager {
 	/**
 	 * Gives the screen coordinates given the board coordinates and the tilt angle of the board.
 	 * NOTE: The origin is (0,0)
+	 * @param x coordinate on the x-axis
+	 * @param y coordinate on the y-axis
+	 * @param z coordinate on the z-axis
 	 * @param theta the angle
 	 * @return The screen coordinates
 	 */
@@ -130,6 +133,12 @@ public class DisplayManager {
 	 * Gives the screen coordinates given the board coordinates,
 	 * the tilt angle of the board and the scaling factors.
 	 * NOTE: The origin is (0,0)
+	 * @param x coordinate on the x-axis
+	 * @param y coordinate on the y-axis
+	 * @param z coordinate on the z-axis
+	 * @param theta the angle
+	 * @param horizontalScale horizontal scale factor
+	 * @param verticalScale vertical scale factor
 	 * @return The screen coordinates
 	 */
 	private Point2D.Double boardToScreen(final double x, final double y, final double z,
@@ -140,6 +149,9 @@ public class DisplayManager {
 
 	/**
 	 * Gives the screen coordinates given the board coordinates.
+	 * @param x coordinate on the x-axis
+	 * @param y coordinate on the y-axis
+	 * @param z coordinate on the z-axis
 	 * @return The screen coordinates
 	 */
 	public Point2D.Double boardToScreen(final double x, final double y, final double z) {
@@ -149,6 +161,7 @@ public class DisplayManager {
 
 	/**
 	 * Gives the screen coordinates given the square coordinates.
+	 * @param coordinates a square coordinates
 	 * @return The screen coordinates
 	 */
 	public Point2D.Double squareToScreen(final Coordinates coordinates) {
@@ -158,6 +171,8 @@ public class DisplayManager {
 	/**
 	 * Gives the board coordinates given the screen coordinates given the rotation angle.
 	 * NOTE: The origin is (0,0)
+	 * @param u the position of the mouse cursor on the x-axis
+	 * @param v the position of the mouse cursor on the x-axis
 	 * @param theta The rotation angle applied to the board
 	 * @return The screen coordinates
 	 */
@@ -175,7 +190,11 @@ public class DisplayManager {
 	/**
 	 * Gives the board coordinates given the screen coordinates given
 	 * the rotation angle and the scale factors.
+	 * @param u the position of the mouse cursor on the x-axis
+	 * @param v the position of the mouse cursor on the x-axis
 	 * @param theta The rotation angle applied to the board
+	 * @param su a coefficient
+	 * @param sv a coefficient
 	 * @return The screen coordinates
 	 */
 	private double[] screenToBoard(final double u, final double v, final double theta,
@@ -186,6 +205,8 @@ public class DisplayManager {
 	/**
 	 * Gives the board coordinates given the screen coordinates, the rotation angle,
 	 * the scale factors and the screen origin.
+	 * @param u the position of the mouse cursor on the x-axis
+	 * @param v the position of the mouse cursor on the x-axis
 	 * @return The board coordinates
 	 */
 	public double[] screenToBoard(final double u, final double v) {
@@ -194,6 +215,8 @@ public class DisplayManager {
 
 	/**
 	 * Gives the exact board coordinates given the screen coordinates.
+	 * @param u the position of the mouse cursor on the x-axis
+	 * @param v the position of the mouse cursor on the x-axis
 	 * @return The screen coordinates
 	 */
 	public Coordinates screenToSquare(final double u, final double v) {
@@ -203,6 +226,7 @@ public class DisplayManager {
 
 	/**
 	 * Gives the exact board coordinates given the screen coordinates.
+	 * @param point the position of the mouse cursor
 	 * @return The screen coordinates
 	 */
 	public Coordinates screenToSquare(final Point2D point) {
@@ -211,6 +235,9 @@ public class DisplayManager {
 
 	/**
 	 * Returns the coordinates of the square in which (x,y,z) is located.
+	 * @param x coordinate on the x-axis
+	 * @param y coordinate on the y-axis
+	 * @param z coordinate on the z-axis
 	 * @return The square coordinates
 	 */
 	public Coordinates nearestSquare(final double x, final double y, final double z) {
@@ -235,6 +262,7 @@ public class DisplayManager {
 
 	/**
 	 * Creates an hexagon.
+	 * @param h the coordinates of the square
 	 * @return the hexagon
 	 */
 	public Path2D.Double hexagon(final Coordinates h) {

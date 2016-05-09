@@ -8,6 +8,9 @@ import javax.swing.Spring;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
+/**
+ * The waiting room panel where players go when there are not yet enough players to start a game.
+ */
 @SuppressWarnings("serial")
 public class WaitingRoomPanel extends JPanel {
 
@@ -18,6 +21,9 @@ public class WaitingRoomPanel extends JPanel {
 	private static final int HEIGHT = 400;
 	private static final int CHAT_WIDTH = 350;
 
+	/**
+	 * Constructs a new WaitingRoomPanel.
+	 */
 	public WaitingRoomPanel() {
 		super();
 

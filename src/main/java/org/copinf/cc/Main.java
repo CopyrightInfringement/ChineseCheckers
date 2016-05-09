@@ -22,6 +22,8 @@ public final class Main {
 	/**
 	 * Program entry point.
 	 * @param args arguments
+	 * @throws IOException IOException If an I/O error has occurred when starting the server in
+	 *     standalone mode.
 	 */
 	public static void main(final String[] args) throws IOException {
 		if (args.length == 0) {

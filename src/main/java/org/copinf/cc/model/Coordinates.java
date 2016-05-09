@@ -100,6 +100,10 @@ public class Coordinates implements Serializable {
 		return false;
 	}
 
+	/**
+	 * Gets the set of adjacent squares to this Coordinates.
+	 * @return set of adjacent squares
+	 */
 	public Set<Coordinates> getAdjacentSquares() {
 		final Set<Coordinates> adjacentSquares = new HashSet<>();
 		for (final Coordinates c : DIRECTIONS) {
