@@ -22,8 +22,6 @@ public class ActionZone extends JPanel implements FocusListener {
 	private final JButton nextButton;
 	/** The chat message field. */
 	private final JTextField chatField;
-	/** The "Send" button to send a message. */
-	private final JButton sendButton;
 
 	private static final String DEFAULT_TEXT = "Write your message here";
 
@@ -35,7 +33,6 @@ public class ActionZone extends JPanel implements FocusListener {
 
 		chatField = new JTextField(DEFAULT_TEXT);
 		getChatField().addFocusListener(this);
-		sendButton = new JButton("Send");
 		resetButton = new JButton("Reset");
 		nextButton = new JButton("Next turn");
 
@@ -44,7 +41,6 @@ public class ActionZone extends JPanel implements FocusListener {
 		setBorder(new EmptyBorder(0, 2, 2, 2));
 
 		add(getChatField());
-		add(getSendButton());
 		add(getResetButton());
 		add(getNextButton());
 	}
@@ -97,9 +93,5 @@ public class ActionZone extends JPanel implements FocusListener {
 
 	public JTextField getChatField() {
 		return chatField;
-	}
-
-	public JButton getSendButton() {
-		return sendButton;
 	}
 }

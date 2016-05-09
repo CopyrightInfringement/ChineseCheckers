@@ -104,7 +104,6 @@ public class GameController extends AbstractController implements ActionListener
 		gamePanel.getActionZone().addMouseListener(this);
 		gamePanel.getActionZone().getNextButton().addMouseListener(this);
 		gamePanel.getActionZone().getResetButton().addMouseListener(this);
-		gamePanel.getActionZone().getSendButton().addMouseListener(this);
 		gamePanel.getActionZone().getChatField().addKeyListener(this);
 
 		gamePanel.getInfoBar().updateLabels();
@@ -151,8 +150,6 @@ public class GameController extends AbstractController implements ActionListener
 			nextButtonClicked();
 		} else if (ev.getSource() == az.getResetButton()) {
 			resetButtonClicked();
-		} else if (ev.getSource() == az.getSendButton()) {
-			sendMessageAction();
 		} else {
 			final Coordinates coordinates = displayManager.screenToSquare(ev.getX(), ev.getY());
 			if (coordinates != null) {
