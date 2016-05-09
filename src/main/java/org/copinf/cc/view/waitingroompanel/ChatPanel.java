@@ -26,13 +26,11 @@ public class ChatPanel extends JPanel implements FocusListener {
 	private final List<String> messages;
 	/** The text field in which the user types the message. */
 	private final JTextField messageField;
-	/** The "Send" button. */
-	private final JButton sendButton;
 
 	private static final String DEFAULT_TEXT = "Write your message here";
 
-	private static final int FIELD_WIDTH = 250;
-	private static final int FIELD_HEIGHT = 30;
+	private static final int OFFSET_X = 10;
+	private static final int OFFSET_Y = 10;
 
 	/**
 	 * Constructs a ChatPanel.
@@ -45,38 +43,27 @@ public class ChatPanel extends JPanel implements FocusListener {
 		messagesList = new JList<>();
 		messageField = new JTextField(DEFAULT_TEXT);
 		getMessageField().addFocusListener(this);
-		sendButton = new JButton("Send");
 
 		final JScrollPane scrollPane = new JScrollPane(messagesList);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
 		final SpringLayout layout = new SpringLayout();
-
-		layout.getConstraints(getMessageField()).setHeight(Spring.constant(FIELD_HEIGHT));
-
-		layout.putConstraint(SpringLayout.EAST, this, 2, SpringLayout.EAST, scrollPane);
-		layout.putConstraint(SpringLayout.SOUTH, this, 2, SpringLayout.SOUTH, getMessageField());
-
-		layout.putConstraint(SpringLayout.WEST, scrollPane, 2, SpringLayout.WEST, this);
-		layout.putConstraint(SpringLayout.NORTH, scrollPane, 2, SpringLayout.NORTH, this);
-
-		layout.getConstraints(getMessageField()).setWidth(Spring.constant(FIELD_WIDTH));
-		layout.putConstraint(SpringLayout.NORTH, getMessageField(), 2, SpringLayout.SOUTH, scrollPane);
-		layout.putConstraint(SpringLayout.WEST, getMessageField(), 2, SpringLayout.WEST, this);
-
-		layout.putConstraint(SpringLayout.WEST, getSendButton(), 2, SpringLayout.EAST, getMessageField());
-		layout.putConstraint(SpringLayout.NORTH, getSendButton(), 0, SpringLayout.NORTH, getMessageField());
-		layout.putConstraint(SpringLayout.SOUTH, getSendButton(), 0, SpringLayout.SOUTH, getMessageField());
-		layout.putConstraint(SpringLayout.EAST, getSendButton(), 0, SpringLayout.EAST, scrollPane);
-
 		setLayout(layout);
+
+		layout.putConstraint(SpringLayout.NORTH, scrollPane, OFFSET_Y, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.SOUTH, scrollPane, -OFFSET_Y, SpringLayout.NORTH, messageField);
+		layout.putConstraint(SpringLayout.WEST, scrollPane, OFFSET_X, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.EAST, scrollPane, -OFFSET_X, SpringLayout.EAST, this);
+
+		layout.putConstraint(SpringLayout.SOUTH, messageField, -OFFSET_Y, SpringLayout.SOUTH, this);
+		layout.putConstraint(SpringLayout.WEST, messageField, 0, SpringLayout.WEST, scrollPane);
+		layout.putConstraint(SpringLayout.EAST, messageField, -OFFSET_X, SpringLayout.EAST, this);
 
 		updateMessageList();
 
 		add(scrollPane);
 		add(getMessageField());
-		add(getSendButton());
 	}
 
 	/**
@@ -125,9 +112,5 @@ public class ChatPanel extends JPanel implements FocusListener {
 
 	public JTextField getMessageField() {
 		return messageField;
-	}
-
-	public JButton getSendButton() {
-		return sendButton;
 	}
 }

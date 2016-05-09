@@ -49,7 +49,6 @@ public class WaitingRoomController extends AbstractController implements ActionL
 
 		roomPanel.getChatPanel().getMessageField().addKeyListener(this);
 		roomPanel.getTeamBuildingPanel().getConfirmButton().addActionListener(this);
-		roomPanel.getChatPanel().getSendButton().addActionListener(this);
 	}
 
 	@Override
@@ -123,8 +122,6 @@ public class WaitingRoomController extends AbstractController implements ActionL
 			team.add(roomPanel.getTeamBuildingPanel().getTeamMate());
 			sendRequest(new Request("client.game.teams.leader", (Serializable) team));
 			roomPanel.getTeamBuildingPanel().enableTeamBuiding(false);
-		} else if (ev.getSource() == cp.getSendButton()) {
-			sendMessageAction();
 		}
 	}
 
