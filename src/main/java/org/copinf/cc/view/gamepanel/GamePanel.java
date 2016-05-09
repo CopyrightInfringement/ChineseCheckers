@@ -42,20 +42,24 @@ public class GamePanel extends JPanel {
 		}
 
 		// UI
-		setPreferredSize(new Dimension(800, 600));
+		final Dimension preferedSize = new Dimension(800, 600);
+		setPreferredSize(preferedSize);
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
 		infoBar = new InfoBar(game, player, playerViews.get(player).getColor());
-		getInfoBar().setPreferredSize(new Dimension(800, 50));
 		add(getInfoBar());
 
 		drawZone = new DrawZone(game, player, playerViews, currentMovement);
 		add(getDrawZone());
-		getDrawZone().setPreferredSize(new Dimension(800, 500));
 
 		actionZone = new ActionZone();
+		getActionZone().setPreferredSize(new Dimension(preferedSize.width, 50));
+
+		getDrawZone().setPreferredSize(new Dimension(
+		preferedSize.width,
+		preferedSize.height - infoBar.getPreferredSize().height - actionZone.getPreferredSize().height));
+
 		add(getActionZone());
-		getActionZone().setPreferredSize(new Dimension(800, 50));
 	}
 
 	public InfoBar getInfoBar() {

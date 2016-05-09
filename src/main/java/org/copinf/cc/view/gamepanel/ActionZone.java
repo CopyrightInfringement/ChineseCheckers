@@ -3,7 +3,7 @@ package org.copinf.cc.view.gamepanel;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.BoxLayout;
+import javax.swing.SpringLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -23,6 +23,9 @@ public class ActionZone extends JPanel implements FocusListener {
 	/** The chat message field. */
 	private final JTextField chatField;
 
+	private static final int OFFSET_X = 10;
+	private static final int OFFSET_Y = 10;
+
 	private static final String DEFAULT_TEXT = "Write your message here";
 
 	/**
@@ -36,9 +39,18 @@ public class ActionZone extends JPanel implements FocusListener {
 		resetButton = new JButton("Reset");
 		nextButton = new JButton("Next turn");
 
-		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+		final SpringLayout layout = new SpringLayout();
+		setLayout(layout);
 
-		setBorder(new EmptyBorder(0, 2, 2, 2));
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, chatField, 0, SpringLayout.VERTICAL_CENTER, this);
+		layout.putConstraint(SpringLayout.WEST, chatField, OFFSET_X, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.EAST, chatField, -OFFSET_X, SpringLayout.WEST, nextButton);
+
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, nextButton, 0, SpringLayout.VERTICAL_CENTER, chatField);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, nextButton, 0, SpringLayout.HORIZONTAL_CENTER, this);
+
+		layout.putConstraint(SpringLayout.VERTICAL_CENTER, resetButton, 0, SpringLayout.VERTICAL_CENTER, nextButton);
+		layout.putConstraint(SpringLayout.WEST, resetButton, OFFSET_X, SpringLayout.EAST, nextButton);
 
 		add(getChatField());
 		add(getResetButton());
