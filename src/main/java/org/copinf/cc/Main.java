@@ -46,7 +46,7 @@ public final class Main {
 				+ "A Chinese Checkers game, made in Java 8 by the CopyrightInfringement team.\n"
 				+ "\n"
 				+ "Options:\n"
-				+ "   --version             Show love-release version and exit.\n"
+				+ "   --version             Show ChineseCheckers version and exit.\n"
 				+ "   -h, --help            Show this help message and exit.\n"
 				+ "\n"
 				+ "   -s <port>,            Launch the game in standalone server mode.\n"

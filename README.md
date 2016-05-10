@@ -1,50 +1,46 @@
-# ChineseCheckers
+# Chinese Checkers
 [![License](http://img.shields.io/badge/License-MIT-brightgreen.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/CopyrightInfringement/ChineseCheckers.svg?branch=master)](https://travis-ci.org/CopyrightInfringement/ChineseCheckers)
 
-A [Chinese checkers](https://en.wikipedia.org/wiki/Chinese_checkers) game, written in Java 8.
-
-## TODO !
-- [x] Add a `toString()` to `Message`
-- [ ] Javadoc
-- [ ] Unify code (always use/never use public final, final arguments...)
-
-### Game panel
-- [x] Implement the timer
-- [ ] Prettier GUI
-- [x] Display the main player at the bottom of the screen
-- Improve the chat
-    - [x] Clear the message bar after sending a message
-    - [x] Send a message after pressing `Enter`
-    - [x] Display more messages in the game Chat
-    - [ ] Add emojis
-- [x] Disable the `Reset` button if the movement is empty
-- [x] Change the player colors
-- [ ] Display the movement suggestions
-
-### Lobby
-- [x] Check that a submitted username isn't empty before validating it
-- [x] Go back to home-screen when disconnected from the server
-
-### Waiting room
-- Improve the chat
-    - [x] Clear the message bar after sending a message
-    - [x] Send a message after pressing `Enter`
-- [x] Not remove a game if a player leaves the waiting room
-- [x] Update the list of players when one of them disconnects
-
-### Bugs to fix
-- [x] A player can join a game that is already full
-- [x] Even though a message is too long, it can be sent
+A [Chinese checkers][wiki_cc] game, written in Java 8.
 
 ## Build & run
-This project uses [Gradle](https://gradle.org/).  
+This project uses [Gradle][gradle] as its build automation system. You can build the project with the `./gradlew` command on UN\*X or with `gradle.bat` on Windows.
 
-If you are on windows, use `gradlew.bat`. If you're on a \*nix, use `gradlew`.
-You can use theses tasks `build`, `check`, `test`, `javadoc`. Get help with `gradlew help`.
-Use `run` to run the project. Enabling the `--daemon` option of gradlew will speed up the build process.
+Gradle dependencies may take a while to be downloaded so you can simply run `make` to build & run the game.
 
-You can also use the Makefile, but it's less efficient.
+### With Gradle
 
-Run the game : `make`.
-Run the server in standalone mode : `make server` (temporary)
+```sh
+./gradlew --daemon run # builds & runs the game
+./gradlew --daemon build # builds, checks, tests and distributes the game
+./gradlew --daemon javadoc # generates the javadoc in build/docs/javadoc
+```
+
+Gradle uses the `build` directory to store the compiled classes, documentation and release archives.
+
+### Execute a release
+You can create a release with `./gradlew --daemon installDist` and the release will be available in `build/install/Chinese_checkers`.
+
+```
+Chinese_checkers
+├── bin
+│   ├── ChineseCheckers        # Bash script
+│   └── ChineseCheckers.bat    # Batch script
+└── lib
+    └── ChineseCheckers-0.0.1.jar
+```
+
+```
+Usage: ChineseCheckers [-h] [--help] [--version]
+
+Options:
+   --version             Show ChineseCheckers version and exit.
+   -h, --help            Show this help message and exit.
+
+   -s <port>,            Launch the game in standalone server mode.
+      --server <port>    Default port is 25565.
+```
+
+[wiki_cc]: https://en.wikipedia.org/wiki/Chinese_checkers
+[gradle]: https://gradle.org/
