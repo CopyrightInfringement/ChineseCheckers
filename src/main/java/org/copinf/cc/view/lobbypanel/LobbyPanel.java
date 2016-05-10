@@ -57,6 +57,7 @@ public class LobbyPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, joinGameBtn, 0, SpringLayout.NORTH, refreshGameInfoListBtn);
 		springLayout.putConstraint(SpringLayout.WEST, joinGameBtn, OFFSET_X, SpringLayout.EAST, refreshGameInfoListBtn);
 		add(joinGameBtn);
+		joinGameBtn.setVisible(false);
 
 		refreshGameInfoListBtn.setPreferredSize(joinGameBtn.getPreferredSize());
 
@@ -69,6 +70,7 @@ public class LobbyPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.NORTH, gameCreationPanel, OFFSET_Y, SpringLayout.SOUTH, usernamePanel);
 		springLayout.putConstraint(SpringLayout.WEST, gameCreationPanel, 0, SpringLayout.WEST, usernamePanel);
 		add(gameCreationPanel);
+		gameCreationPanel.setVisible(false);
 
 		springLayout.putConstraint(SpringLayout.EAST, this, OFFSET_X, SpringLayout.EAST, gameCreationPanel);
 		springLayout.putConstraint(SpringLayout.SOUTH, this, OFFSET_Y, SpringLayout.SOUTH, gameCreationPanel);

@@ -112,6 +112,8 @@ public class LobbyController extends AbstractController implements ActionListene
 		final String msg = (String) request.getContent();
 		if ("".equals(msg)) {
 			lobbyPanel.getUsernamePanel().switchToUsernamePanel(username);
+			lobbyPanel.getGameCreationPanel().setVisible(true);
+			lobbyPanel.getJoinGameBtn().setVisible(true);
 		} else {
 			lobbyPanel.getUsernamePanel().setUsername("");
 			lobbyPanel.getUsernamePanel().getSubmitBtn().setEnabled(true);
