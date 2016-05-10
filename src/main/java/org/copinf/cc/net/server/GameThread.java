@@ -27,6 +27,7 @@ public class GameThread extends Thread {
 	private final List<List<String>> teams;
 	private final Server server;
 	private final GameTimer timer;
+	private boolean started;
 
 	/**
 	 * Constructs a new GameThread
@@ -45,6 +46,7 @@ public class GameThread extends Thread {
 		} else {
 			timer = null;
 		}
+		started = false;
 	}
 
 	@Override
@@ -226,6 +228,7 @@ public class GameThread extends Thread {
 			}
 		} else {
 			broadcast(new Request("server.game.start", (Serializable) teams));
+			started = true;
 			initTeams();
 			game.setNumberOfZones(gameInfo.getNbZones());
 			onNextTurn();
@@ -286,6 +289,10 @@ public class GameThread extends Thread {
 	 */
 	public GameInfo getGameInfo() {
 		return gameInfo;
+	}
+
+	public boolean hasStarted() {
+		return started;
 	}
 
 	/**

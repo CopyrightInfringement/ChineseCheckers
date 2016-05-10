@@ -89,7 +89,9 @@ public class Server implements Runnable {
 	private HashSet<GameInfo> getGameInfos() {
 		final HashSet<GameInfo> gameInfos = new HashSet<>();
 		for (final GameThread game : getGameSet()) {
-			gameInfos.add(game.getGameInfo());
+			if (!game.hasStarted()) {
+				gameInfos.add(game.getGameInfo());
+			}
 		}
 		return gameInfos;
 	}
