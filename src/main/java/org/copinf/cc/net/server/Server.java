@@ -35,12 +35,18 @@ public class Server implements Runnable {
 		clients = Collections.synchronizedSet(new HashSet<>());
 		this.serverSocket = new ServerSocket(port);
 
-		final URL whatismyip = new URL("http://checkip.amazonaws.com");
-		final BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
+		LOGGER.info("Server started on port " + port + " on adress " + getIPAdress());
+	}
 
-		final String ip = in.readLine(); //you get the IP as a String
+	private String getIPAdress() {
+		try {
+			final URL whatismyip = new URL("http://checkip.amazonaws.com");
+			final BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
 
-		LOGGER.info("Server started on port " + port + " on adress " + ip);
+			return in.readLine(); //you get the IP as a String
+		} catch (final Exception ex) {
+			return this.serverSocket.getInetAddress().getHostAddress();
+		}
 	}
 
 	/**
