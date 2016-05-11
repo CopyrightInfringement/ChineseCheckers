@@ -1,14 +1,18 @@
 package org.copinf.cc.net.server;
 
-import org.copinf.cc.net.GameInfo;
-import org.copinf.cc.net.Request;
-
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URL;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
+
+import org.copinf.cc.net.GameInfo;
+import org.copinf.cc.net.Request;
 
 /**
  * The Server class.
@@ -19,6 +23,8 @@ public class Server implements Runnable {
 	private final Set<ClientThread> clients;
 	private final ServerSocket serverSocket;
 
+	private final static Logger LOGGER = Logger.getGlobal();
+
 	/**
 	 * The port on which the server will be open.
 	 * @param port The port number on which the server will run
@@ -28,10 +34,18 @@ public class Server implements Runnable {
 		gameSet = Collections.synchronizedSet(new HashSet<>());
 		clients = Collections.synchronizedSet(new HashSet<>());
 		this.serverSocket = new ServerSocket(port);
+
+		final URL whatismyip = new URL("http://checkip.amazonaws.com");
+		final BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
+
+		final String ip = in.readLine(); //you get the IP as a String
+
+		LOGGER.info("Server started on port " + port + " on adress " + ip);
 	}
 
 	/**
-	 * Adds a client connection to the list of clients and starts a thread to listen to it.
+	 * Adds a client connection to the list of clients and starts a thread to
+	 * listen to it.
 	 * @param client The client socket to add
 	 */
 	public void addClient(final Socket client) {
@@ -83,7 +97,8 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Returns a set of the GameInfos corresponding to the games hosted by this server.
+	 * Returns a set of the GameInfos corresponding to the games hosted by this
+	 * server.
 	 * @return The set of GameInfos
 	 */
 	private HashSet<GameInfo> getGameInfos() {
@@ -97,8 +112,8 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Process a "client.lobby.refresh" request
-	 * The server sends the client a set of the GameInfos associated with each game it hosts.
+	 * Process a "client.lobby.refresh" request The server sends the client a
+	 * set of the GameInfos associated with each game it hosts.
 	 * @param client The client to which send the GameInfos
 	 */
 	private void processLobbyRefresh(final ClientThread client) {
@@ -106,8 +121,8 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Process a "client.lobby.username" request.
-	 * The server indicates the client whether the username he asked for is available / valid or not.
+	 * Process a "client.lobby.username" request. The server indicates the
+	 * client whether the username he asked for is available / valid or not.
 	 * @param client The client
 	 * @param req The request
 	 */
@@ -128,9 +143,8 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Process a "client.lobby.create" request.
-	 * If the game name is valid and available, it tells the client so and adds him to the list of
-	 * players.
+	 * Process a "client.lobby.create" request. If the game name is valid and
+	 * available, it tells the client so and adds him to the list of players.
 	 * @param client The client
 	 * @param req The request
 	 */
@@ -158,8 +172,8 @@ public class Server implements Runnable {
 	}
 
 	/**
-	 * Process a "client.lobby.join" request.
-	 * Adds the client to the requested game then indicates the client so.
+	 * Process a "client.lobby.join" request. Adds the client to the requested
+	 * game then indicates the client so.
 	 * @param client The client
 	 * @param req The request
 	 */
@@ -170,7 +184,8 @@ public class Server implements Runnable {
 			return;
 		}
 		for (final GameThread game : getGameSet()) {
-			if (game.hashCode() == gameInfo.hashCode() && gameInfo.getCurrentPlayers().size() < gameInfo.getNbPlayersMax()) {
+			if (game.hashCode() == gameInfo.hashCode()
+					&& gameInfo.getCurrentPlayers().size() < gameInfo.getNbPlayersMax()) {
 				client.send(new Request("server.lobby.join", true));
 				game.addClient(client);
 				client.play(game);
@@ -195,7 +210,7 @@ public class Server implements Runnable {
 	public void end() {
 		try {
 			serverSocket.close();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 	}
