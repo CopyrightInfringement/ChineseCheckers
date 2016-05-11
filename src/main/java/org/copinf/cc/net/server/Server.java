@@ -43,9 +43,9 @@ public class Server implements Runnable {
 			final URL whatismyip = new URL("http://checkip.amazonaws.com");
 			final BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
 
-			return in.readLine(); //you get the IP as a String
+			return in.readLine();
 		} catch (final Exception ex) {
-			return this.serverSocket.getInetAddress().getHostAddress();
+			return "localhost";
 		}
 	}
 
