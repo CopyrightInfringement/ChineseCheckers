@@ -62,7 +62,7 @@ public class BoardView {
 
 		this.getDisplayManager().setAngle(getPlayerAngle(player, width / 2.0, height));
 
-		pathFinding = new PathFinding(board);
+		pathFinding = new PathFinding(board.getBoardMap());
 
 		this.currentMovement = currentMovement;
 	}

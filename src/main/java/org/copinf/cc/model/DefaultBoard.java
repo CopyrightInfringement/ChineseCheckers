@@ -2,6 +2,7 @@ package org.copinf.cc.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +14,7 @@ import java.util.TreeSet;
  */
 public class DefaultBoard extends AbstractBoard {
 
-	private final Map<Coordinates, Square> board;
+	private final BoardMap board;
 	private final List<BoardZone> zones;
 	private final int radius;
 
@@ -23,7 +24,7 @@ public class DefaultBoard extends AbstractBoard {
 	 */
 	public DefaultBoard(final int radius) {
 		super();
-		this.board = new HashMap<>();
+		this.board = new BoardMap();
 		this.radius = radius;
 		this.zones = new ArrayList<>();
 
@@ -104,6 +105,11 @@ public class DefaultBoard extends AbstractBoard {
 	}
 
 	@Override
+	public BoardMap getBoardMap() {
+		return board;
+	}
+
+	@Override
 	public void dispatchZones(final List<Team> teams, final int nbOfZones) {
 		final List<Player> players = new ArrayList<>();
 		for (final Team team : teams) {
@@ -111,7 +117,7 @@ public class DefaultBoard extends AbstractBoard {
 				players.add(team.get(i));
 			}
 		}
-		
+
 		final int nbOfPlayers = players.size();
 		BoardZone zone;
 		Player player;

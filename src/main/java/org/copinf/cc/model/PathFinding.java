@@ -8,7 +8,7 @@ import java.util.Set;
  */
 public class PathFinding {
 
-	private final AbstractBoard board;
+	private final BoardMap board;
 	private final Set<Coordinates> shortReachableSquares;
 	private final Set<Coordinates> longReachableSquares;
 
@@ -16,7 +16,7 @@ public class PathFinding {
 	 * Constructs a PathFinding object.
 	 * @param board a board
 	 */
-	public PathFinding(final AbstractBoard board) {
+	public PathFinding(final BoardMap board) {
 		this.board = board;
 		this.shortReachableSquares = new HashSet<>();
 		this.longReachableSquares = new HashSet<>();

@@ -109,6 +109,8 @@ public abstract class AbstractBoard {
 		return true;
 	}
 
+	public abstract BoardMap getBoardMap();
+
 	/**
 	 * Gets this board width.
 	 * @return board width
