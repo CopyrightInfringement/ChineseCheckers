@@ -190,6 +190,10 @@ public class Coordinates implements Serializable {
 		return new Coordinates(k * getX(), k * getY(), k * getZ());
 	}
 
+	public static int distance(final Coordinates start, final Coordinates end) {
+		return (Math.abs(start.x - end.x) + Math.abs(start.y - end.y) + Math.abs(start.z - end.z)) / 2;
+	}
+
 	@Override
 	public String toString() {
 		return getX() + " " + getY() + " " + getZ();
