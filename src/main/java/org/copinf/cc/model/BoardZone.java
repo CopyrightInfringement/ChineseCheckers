@@ -1,6 +1,8 @@
 package org.copinf.cc.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,9 +14,9 @@ import java.util.Set;
 public class BoardZone {
 
 	private final Map<Coordinates, Square> squares;
-
 	/** Zone which must be filled with the owner's pawns. */
 	private BoardZone opponentZone;
+	private Coordinates goal;
 
 	/**
 	 * Constructs a new empty BoardZone.
@@ -46,6 +48,25 @@ public class BoardZone {
 	 */
 	public Set<Coordinates> coordinates() {
 		return squares.keySet();
+	}
+
+	public Coordinates getGoal() {
+		return goal;
+	}
+
+	public Coordinates findGoal() {
+		final Coordinates center = new Coordinates(0, 0, 0);
+		Coordinates tmpGoal = null;
+		int distance = 0;
+		for (final Coordinates coord : squares.keySet()) {
+			final int tmpDistance = Coordinates.distance(coord, center);
+			if (tmpDistance > distance) {
+				tmpGoal = coord;
+				distance = tmpDistance;
+			}
+		}
+		this.goal = goal;
+		return tmpGoal;
 	}
 
 	/**

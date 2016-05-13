@@ -68,6 +68,7 @@ public class DefaultBoard extends AbstractBoard {
 					}
 				}
 			}
+			zone.findGoal();
 		}
 
 		BoardZone opponentZone;
