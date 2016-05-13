@@ -57,7 +57,7 @@ public final class Main {
 				+ "For more info, see https://github.com/CopyrightInfringement/ChineseCheckers\n"
 			);
 		} else if ("--version".equals(args[0])) {
-			System.out.println("ChineseCheckers v0.0.1");
+			System.out.println("ChineseCheckers v1.0.0");
 		} else if ("-s".equals(args[0]) || "--server".equals(args[0])) {
 			final int port = args.length >= 2 ? Integer.parseInt(args[1]) : MainController.DEFAULT_PORT;
 			new Thread(new Server(port)).start();

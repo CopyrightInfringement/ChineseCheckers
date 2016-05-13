@@ -10,7 +10,7 @@ apply plugin: 'checkstyle'
 apply plugin: 'jdepend'
 apply plugin: 'application'
 
-version = '0.0.1'
+version = '1.0.0'
 project.mainClassName = "org.copinf.cc.Main"
 targetCompatibility = 1.8
 
