@@ -121,7 +121,8 @@ public class GameCreationPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.EAST, timerSpinner, 0, SpringLayout.EAST, playerZonesChooser);
 		add(timerSpinner);
 		timerCheckBox = new JCheckBox(": Timer [min]");
-		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, timerCheckBox, 0, SpringLayout.VERTICAL_CENTER, timerSpinner);
+		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, timerCheckBox, 0, SpringLayout.VERTICAL_CENTER,
+				timerSpinner);
 		springLayout.putConstraint(SpringLayout.EAST, timerCheckBox, -OFFSET_X, SpringLayout.WEST, timerSpinner);
 		add(timerCheckBox);
 		timerCheckBox.addActionListener(new ActionListener() {
@@ -133,7 +134,8 @@ public class GameCreationPanel extends JPanel {
 		timerSpinner.setEnabled(timerCheckBox.isSelected());
 
 		teamsCheckBox = new JCheckBox(": Teams");
-		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, teamsCheckBox, 0, SpringLayout.VERTICAL_CENTER, timerCheckBox);
+		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, teamsCheckBox, 0, SpringLayout.VERTICAL_CENTER,
+				timerCheckBox);
 		springLayout.putConstraint(SpringLayout.WEST, teamsCheckBox, 0, SpringLayout.WEST, playerNumberLbl);
 		add(teamsCheckBox);
 
@@ -197,6 +199,9 @@ public class GameCreationPanel extends JPanel {
 		gameNameTextField.setText("");
 	}
 
+	/**
+	 * Returns the "Create" button.
+	 */
 	public JButton getCreateGameBtn() {
 		return createGameBtn;
 	}

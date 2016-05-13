@@ -112,7 +112,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		}
 	}
 
-	private static String[] splitStringEvery(String s, int interval) {
+	private static String[] splitStringEvery(final String s, final int interval) {
 		final int arrayLength = (int) Math.ceil(s.length() / (double) interval);
 		final String[] result = new String[arrayLength];
 
@@ -143,7 +143,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 			g2d.setColor(color);
 
 			final String[] splitted = splitStringEvery(message.getMessage(), MAX_MESSAGE_LENGTH);
-			for (int j = splitted.length - 1; j >= 0 ; j--) {
+			for (int j = splitted.length - 1; j >= 0; j--) {
 				g2d.drawString(splitted[j], x, getHeight() - y);
 				y += 20;
 			}
@@ -159,6 +159,9 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 		this.selection = selection;
 	}
 
+	/**
+	 * Returns the board view.
+	 */
 	public BoardView getBoardView() {
 		return boardView;
 	}

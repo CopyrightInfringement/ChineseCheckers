@@ -21,7 +21,13 @@ public class MainController {
 
 	private final Stack<AbstractController> controllers;
 
+	/**
+	 * The default host to which connect.
+	 */
 	public static final String DEFAULT_HOST = "localhost";
+	/**
+	 * The default port on which run / connect.
+	 */
 	public static final int DEFAULT_PORT = 25565;
 
 	/**
@@ -43,7 +49,8 @@ public class MainController {
 	}
 
 	/**
-	 * Pushes a controller on top of the other controllers and ends the current controller.
+	 * Pushes a controller on top of the other controllers and ends the current
+	 * controller.
 	 * @param controller The controller to put on top of the other controllers.
 	 */
 	public void push(final AbstractController controller) {
@@ -68,8 +75,8 @@ public class MainController {
 	}
 
 	/**
-	 * Sets a controller as the active controller and sets its corresponding JPanel
-	 * as the content pane of the window.
+	 * Sets a controller as the active controller and sets its corresponding
+	 * JPanel as the content pane of the window.
 	 * @param controller The controller to set.
 	 */
 	private void setController(final AbstractController controller) {
@@ -85,7 +92,7 @@ public class MainController {
 	 * @param controller The controller expected to be the active one.
 	 */
 	public void pop(final AbstractController controller) {
-		if (controllers.peek() !=  controller) {
+		if (controllers.peek() != controller) {
 			throw new RuntimeException("The top controller isn't the one that asked to end");
 		}
 		controllers.pop();
@@ -125,7 +132,7 @@ public class MainController {
 		try {
 			client = new Client(host, port);
 			client.start();
-		} catch (IOException ex) {
+		} catch (final IOException ex) {
 			return false;
 		}
 		return true;

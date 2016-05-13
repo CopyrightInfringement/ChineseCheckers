@@ -7,14 +7,11 @@ import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.Spring;
 import javax.swing.SpringLayout;
-
 
 /**
  * The panel for the chat of the waiting room.
@@ -110,6 +107,9 @@ public class ChatPanel extends JPanel implements FocusListener {
 		repaint();
 	}
 
+	/**
+	 * Returns the message field.
+	 */
 	public JTextField getMessageField() {
 		return messageField;
 	}

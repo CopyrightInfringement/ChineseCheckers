@@ -13,15 +13,14 @@ public class PlayerView {
 	private final Color color;
 
 	// TODO any number of players
-	private static final Color[] COLORS = new Color[] {
-		new Color(0, 128, 255), Color.MAGENTA, new Color(255, 180, 0), Color.RED, new Color(0, 200, 128), new Color(0, 200, 200)
-	};
+	private static final Color[] COLORS = new Color[] { new Color(0, 128, 255), Color.MAGENTA, new Color(255, 180, 0),
+			Color.RED, new Color(0, 200, 128), new Color(0, 200, 200) };
 
 	/**
 	 * Constructs a new PlayerView.
 	 * @param player player to display
-	 * @param i index of this player on the board which will be used to assignate a color to this
-	 *     player.
+	 * @param i index of this player on the board which will be used to
+	 *            assignate a color to this player.
 	 */
 	public PlayerView(final Player player, final int i) {
 		this(player, COLORS[i]);
@@ -37,10 +36,16 @@ public class PlayerView {
 		this.color = color;
 	}
 
+	/**
+	 * Returns the player.
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * returns the color associated with the player.
+	 */
 	public Color getColor() {
 		return color;
 	}

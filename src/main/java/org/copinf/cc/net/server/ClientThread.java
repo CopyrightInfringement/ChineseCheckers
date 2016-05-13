@@ -43,8 +43,7 @@ public class ClientThread extends Thread {
 	 * @return The ObjectOutPutSTream.
 	 * @throws IOException If an I/O error has occurred.
 	 */
-	private static ObjectOutputStream getObjectOutputStream(final OutputStream os)
-			throws IOException {
+	private static ObjectOutputStream getObjectOutputStream(final OutputStream os) throws IOException {
 		final ObjectOutputStream out = new ObjectOutputStream(os);
 		out.flush();
 		return out;
@@ -52,10 +51,8 @@ public class ClientThread extends Thread {
 
 	@Override
 	public void run() {
-		try (
-			ObjectOutputStream out = getObjectOutputStream(client.getOutputStream());
-			ObjectInputStream  in  = new ObjectInputStream(client.getInputStream());
-		) {
+		try (ObjectOutputStream out = getObjectOutputStream(client.getOutputStream());
+				ObjectInputStream in = new ObjectInputStream(client.getInputStream());) {
 			this.in = in;
 			this.out = out;
 			Request req;
@@ -71,7 +68,7 @@ public class ClientThread extends Thread {
 				game.removeClient(this);
 			}
 			server.removeClient(this);
-		} catch (IOException ex) {
+		} catch (final IOException ex) {
 			LOGGER.warning("Handled exception : " + ex.getMessage());
 			if (LOGGER.isLoggable(Level.WARNING)) {
 				System.err.println("=========StackTrace==============");
@@ -93,7 +90,7 @@ public class ClientThread extends Thread {
 			out.reset();
 			LOGGER.info("Server : sending to " + username + " " + req);
 			out.writeObject(req);
-		} catch (IOException ex) {
+		} catch (final IOException ex) {
 			LOGGER.warning("Unabble to send the client " + req + " (" + ex.getMessage() + ")");
 			if (LOGGER.isLoggable(Level.WARNING)) {
 				System.err.println("=========StackTrace==============");

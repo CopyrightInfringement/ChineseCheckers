@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 
-	/** The InfoBar of this panel.*/
+	/** The InfoBar of this panel. */
 	private final InfoBar infoBar;
 	/** The DrawZone of this panel. */
 	private final DrawZone drawZone;
@@ -55,21 +55,29 @@ public class GamePanel extends JPanel {
 		actionZone = new ActionZone();
 		getActionZone().setPreferredSize(new Dimension(preferedSize.width, 50));
 
-		getDrawZone().setPreferredSize(new Dimension(
-		preferedSize.width,
-		preferedSize.height - infoBar.getPreferredSize().height - actionZone.getPreferredSize().height));
+		getDrawZone().setPreferredSize(new Dimension(preferedSize.width,
+				preferedSize.height - infoBar.getPreferredSize().height - actionZone.getPreferredSize().height));
 
 		add(getActionZone());
 	}
 
+	/**
+	 * Returns the info bar.
+	 */
 	public InfoBar getInfoBar() {
 		return infoBar;
 	}
 
+	/**
+	 * returns the draw zone.
+	 */
 	public DrawZone getDrawZone() {
 		return drawZone;
 	}
 
+	/**
+	 * Returns the action zone.
+	 */
 	public ActionZone getActionZone() {
 		return actionZone;
 	}

@@ -28,6 +28,9 @@ public abstract class AbstractController {
 		this.identifier = identifier;
 	}
 
+	/**
+	 * Returns the identifier of this controller
+	 */
 	public String getIdentifier() {
 		return identifier;
 	}

@@ -195,14 +195,23 @@ public class Coordinates implements Serializable {
 		return getX() + " " + getY() + " " + getZ();
 	}
 
+	/**
+	 * Get the coordinate on the x axis
+	 */
 	public int getX() {
 		return x;
 	}
 
+	/**
+	 * Get the coordinate on the y axis
+	 */
 	public int getY() {
 		return y;
 	}
 
+	/**
+	 * Get the coordinate on the z axis
+	 */
 	public int getZ() {
 		return z;
 	}

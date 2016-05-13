@@ -2,6 +2,10 @@ package org.copinf.cc.view;
 
 import javax.swing.JFrame;
 
+/**
+ * The window in which the game is displayed.
+ */
+
 @SuppressWarnings("serial")
 public class Window extends JFrame {
 

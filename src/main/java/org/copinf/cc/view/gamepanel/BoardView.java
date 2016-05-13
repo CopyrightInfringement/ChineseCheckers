@@ -54,8 +54,8 @@ public class BoardView {
 		this.width = width;
 		this.height = height;
 
-		final double optimalSizeWidth = (width * 80.0 / 100.0 / Math.sqrt(3.0)) * (board.getWidth() + 0.5);
-		final double optimalSizeHeight = (height * 80.0 / 100.0 * 2.0) / (3.0 * board.getHeight() + 1.0);
+		final double optimalSizeWidth = width * 80.0 / 100.0 / Math.sqrt(3.0) * (board.getWidth() + 0.5);
+		final double optimalSizeHeight = height * 80.0 / 100.0 * 2.0 / (3.0 * board.getHeight() + 1.0);
 		final double size = Math.min(optimalSizeWidth, optimalSizeHeight);
 
 		this.displayManager = new DisplayManager(size, 1.0, 1.0, 0.0, width / 2.0, height / 2.0, board);
@@ -217,7 +217,7 @@ public class BoardView {
 			g.setColor(view.getColor());
 			final String name = view.getPlayer().getName();
 			final int sW = g.getFontMetrics().stringWidth(name);
-			g.drawString(name, width - sW - 10, (i * height) / (playerViews.values().size() + 1));
+			g.drawString(name, width - sW - 10, i * height / (playerViews.values().size() + 1));
 
 			i++;
 		}
@@ -227,10 +227,17 @@ public class BoardView {
 		g.setColor(defaultColor);
 	}
 
+	/**
+	 * Recalculates the next squares on which the player can move his selected
+	 * pawn.
+	 */
 	public void updateMovement() {
 		pathFinding.setReachableSquares(currentMovement);
 	}
 
+	/**
+	 * Returns the display manager.
+	 */
 	public DisplayManager getDisplayManager() {
 		return displayManager;
 	}

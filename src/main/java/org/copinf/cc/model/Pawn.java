@@ -15,6 +15,9 @@ public class Pawn {
 		this.owner = owner;
 	}
 
+	/**
+	 * Returns the owner of this pawn.
+	 */
 	public Player getOwner() {
 		return owner;
 	}

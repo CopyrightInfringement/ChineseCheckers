@@ -52,6 +52,9 @@ public class GameTimer implements ActionListener {
 		remainingTime--;
 	}
 
+	/**
+	 * returns the timer used for this GameTimer.
+	 */
 	public Timer getTimer() {
 		return timer;
 	}

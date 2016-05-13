@@ -291,6 +291,9 @@ public class GameThread extends Thread {
 		return gameInfo;
 	}
 
+	/**
+	 * Indicates whether this game has started or not.
+	 */
 	public boolean hasStarted() {
 		return started;
 	}

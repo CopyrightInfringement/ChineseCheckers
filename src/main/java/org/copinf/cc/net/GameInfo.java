@@ -79,8 +79,8 @@ public class GameInfo implements Serializable {
 
 	@Override
 	public String toString() {
-		return getName() + " [" + getCurrentPlayersNumber() + "/" + getNbPlayersMax() + "]" + (isTeams() ? " teams " : "")
-				+ (getTimer() >= 0 ? " " + getTimer() + "s " : "");
+		return getName() + " [" + getCurrentPlayersNumber() + "/" + getNbPlayersMax() + "]"
+				+ (isTeams() ? " teams " : "") + (getTimer() >= 0 ? " " + getTimer() + "s " : "");
 	}
 
 	@Override
@@ -88,30 +88,51 @@ public class GameInfo implements Serializable {
 		return obj instanceof GameInfo && ((GameInfo) obj).getName().equals(getName());
 	}
 
+	/**
+	 * Returns the name of this game.
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Returns the number of players expected for this game
+	 */
 	public int getNbPlayersMax() {
 		return nbPlayersMax;
 	}
 
+	/**
+	 * Returns the number of zones per player.
+	 */
 	public int getNbZones() {
 		return nbZones;
 	}
 
+	/**
+	 * Returns the list of players registered for this game so far.
+	 */
 	public List<String> getCurrentPlayers() {
 		return currentPlayers;
 	}
 
+	/**
+	 * Indicates whether teams are enabled or not.
+	 */
 	public boolean isTeams() {
 		return teams;
 	}
 
+	/**
+	 * Returns the maximum number of minutes for each turn.
+	 */
 	public double getTimer() {
 		return timer;
 	}
 
+	/**
+	 * Returns the radius of the center of the board.
+	 */
 	public int getSize() {
 		return size;
 	}

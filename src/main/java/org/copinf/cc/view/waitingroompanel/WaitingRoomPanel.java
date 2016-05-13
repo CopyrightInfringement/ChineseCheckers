@@ -9,7 +9,8 @@ import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
 /**
- * The waiting room panel where players go when there are not yet enough players to start a game.
+ * The waiting room panel where players go when there are not yet enough players
+ * to start a game.
  */
 @SuppressWarnings("serial")
 public class WaitingRoomPanel extends JPanel {
@@ -58,10 +59,16 @@ public class WaitingRoomPanel extends JPanel {
 		add(getTeamBuildingPanel());
 	}
 
+	/**
+	 * returns the team building panel.
+	 */
 	public TeamBuildingPanel getTeamBuildingPanel() {
 		return teamBuildingPanel;
 	}
 
+	/**
+	 * Returns the chat panel.
+	 */
 	public ChatPanel getChatPanel() {
 		return chatPanel;
 	}

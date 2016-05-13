@@ -1,5 +1,8 @@
 package org.copinf.cc.net.server;
 
+import org.copinf.cc.net.GameInfo;
+import org.copinf.cc.net.Request;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,9 +13,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
-
-import org.copinf.cc.net.GameInfo;
-import org.copinf.cc.net.Request;
 
 /**
  * The Server class.
@@ -35,10 +35,14 @@ public class Server implements Runnable {
 		clients = Collections.synchronizedSet(new HashSet<>());
 		this.serverSocket = new ServerSocket(port);
 
-		LOGGER.info("Server started on port " + port + " on adress " + getIPAdress());
+		LOGGER.info("Server started on port " + port + " on adress " + getIPAddress());
 	}
 
-	private String getIPAdress() {
+	/**
+	 * Returns the IP address on which this server is running (the public one if
+	 * possible)
+	 */
+	private static String getIPAddress() {
 		try {
 			final URL whatismyip = new URL("http://checkip.amazonaws.com");
 			final BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
@@ -221,6 +225,9 @@ public class Server implements Runnable {
 		}
 	}
 
+	/**
+	 * Returns the set of Game this server is hosting.
+	 */
 	public Set<GameThread> getGameSet() {
 		return gameSet;
 	}

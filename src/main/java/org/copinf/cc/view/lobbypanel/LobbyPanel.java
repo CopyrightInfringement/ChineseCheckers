@@ -2,8 +2,6 @@ package org.copinf.cc.view.lobbypanel;
 
 import org.copinf.cc.net.GameInfo;
 
-import java.awt.Dimension;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -13,7 +11,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
 
 /**
- * LobbyPanel is what is displayed when the player chooses a game on a server or creates one.
+ * LobbyPanel is what is displayed when the player chooses a game on a server or
+ * creates one.
  */
 @SuppressWarnings("serial")
 public class LobbyPanel extends JPanel {
@@ -45,13 +44,14 @@ public class LobbyPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, gameScrollPane, OFFSET_X, SpringLayout.WEST, this);
 		add(gameScrollPane);
 
-		refreshGameInfoListBtn = new JButton(
-			new ImageIcon(LobbyPanel.class.getResource("/fa-refresh-16.png")));
+		refreshGameInfoListBtn = new JButton(new ImageIcon(LobbyPanel.class.getResource("/fa-refresh-16.png")));
 		springLayout.putConstraint(SpringLayout.SOUTH, refreshGameInfoListBtn, -OFFSET_Y, SpringLayout.SOUTH, this);
-		springLayout.putConstraint(SpringLayout.EAST, refreshGameInfoListBtn, -OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER, gameScrollPane);
+		springLayout.putConstraint(SpringLayout.EAST, refreshGameInfoListBtn, -OFFSET_X / 2,
+				SpringLayout.HORIZONTAL_CENTER, gameScrollPane);
 		add(refreshGameInfoListBtn);
 
-		springLayout.putConstraint(SpringLayout.SOUTH, gameScrollPane, -OFFSET_Y, SpringLayout.NORTH, refreshGameInfoListBtn);
+		springLayout.putConstraint(SpringLayout.SOUTH, gameScrollPane, -OFFSET_Y, SpringLayout.NORTH,
+				refreshGameInfoListBtn);
 
 		joinGameBtn = new JButton("Join");
 		springLayout.putConstraint(SpringLayout.NORTH, joinGameBtn, 0, SpringLayout.NORTH, refreshGameInfoListBtn);
@@ -76,22 +76,37 @@ public class LobbyPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.SOUTH, this, OFFSET_Y, SpringLayout.SOUTH, gameCreationPanel);
 	}
 
+	/**
+	 * Returns the list of games hosted by the server.
+	 */
 	public JList<GameInfo> getGamesList() {
 		return gamesList;
 	}
 
+	/**
+	 * Returns the "Refresh" button.
+	 */
 	public JButton getRefreshGameInfoListBtn() {
 		return refreshGameInfoListBtn;
 	}
 
+	/**
+	 * returns the "Join" button.
+	 */
 	public JButton getJoinGameBtn() {
 		return joinGameBtn;
 	}
 
+	/**
+	 * Returns the username panel.
+	 */
 	public UsernamePanel getUsernamePanel() {
 		return usernamePanel;
 	}
 
+	/**
+	 * Returns the game creation panel.
+	 */
 	public GameCreationPanel getGameCreationPanel() {
 		return gameCreationPanel;
 	}

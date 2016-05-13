@@ -94,6 +94,9 @@ public class TeamBuildingPanel extends JPanel {
 		label.setText(teamMate + " is your teammate.");
 	}
 
+	/**
+	 * Returns the "confirm" button.
+	 */
 	public JButton getConfirmButton() {
 		return confirmButton;
 	}

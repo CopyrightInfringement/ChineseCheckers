@@ -56,14 +56,23 @@ public class UsernamePanel extends JPanel {
 		cl.show(this, "userPanel");
 	}
 
+	/**
+	 * Returns the username typed by the user.
+	 */
 	public String getUsername() {
 		return usernameTextField.getText();
 	}
 
+	/**
+	 * Sets the content of the username text field.
+	 */
 	public void setUsername(final String username) {
 		usernameTextField.setText(username);
 	}
 
+	/**
+	 * Returns the "submit" button.
+	 */
 	public JButton getSubmitBtn() {
 		return submitBtn;
 	}

@@ -7,7 +7,8 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 /**
- * The first panel the player sees, offering him to host a server or to join one.
+ * The first panel the player sees, offering him to host a server or to join
+ * one.
  */
 @SuppressWarnings("serial")
 public class HomePanel extends JPanel {
@@ -52,7 +53,8 @@ public class HomePanel extends JPanel {
 		getHostTextField().setText(host);
 
 		portTextField = new JTextField();
-		springLayout.putConstraint(SpringLayout.NORTH, getPortTextField(), OFFSET_Y, SpringLayout.SOUTH, getHostTextField());
+		springLayout.putConstraint(SpringLayout.NORTH, getPortTextField(), OFFSET_Y, SpringLayout.SOUTH,
+				getHostTextField());
 		springLayout.putConstraint(SpringLayout.WEST, getPortTextField(), 0, SpringLayout.WEST, getHostTextField());
 		springLayout.putConstraint(SpringLayout.EAST, getPortTextField(), 0, SpringLayout.EAST, getHostTextField());
 		add(getPortTextField());
@@ -65,13 +67,16 @@ public class HomePanel extends JPanel {
 		add(lblPort);
 
 		joinButton = new JButton("Join");
-		springLayout.putConstraint(SpringLayout.NORTH, getJoinButton(), OFFSET_Y, SpringLayout.SOUTH, getPortTextField());
-		springLayout.putConstraint(SpringLayout.EAST, getJoinButton(), -OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER, this);
+		springLayout.putConstraint(SpringLayout.NORTH, getJoinButton(), OFFSET_Y, SpringLayout.SOUTH,
+				getPortTextField());
+		springLayout.putConstraint(SpringLayout.EAST, getJoinButton(), -OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER,
+				this);
 		add(getJoinButton());
 
 		hostButton = new JButton("Host");
 		springLayout.putConstraint(SpringLayout.NORTH, getHostButton(), 0, SpringLayout.NORTH, getJoinButton());
-		springLayout.putConstraint(SpringLayout.WEST, getHostButton(), OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER, this);
+		springLayout.putConstraint(SpringLayout.WEST, getHostButton(), OFFSET_X / 2, SpringLayout.HORIZONTAL_CENTER,
+				this);
 		add(getHostButton());
 
 		getJoinButton().setPreferredSize(getHostButton().getPreferredSize());
@@ -124,18 +129,30 @@ public class HomePanel extends JPanel {
 		lblErrors.setText("");
 	}
 
+	/**
+	 * Returns the "join" button.
+	 */
 	public JButton getJoinButton() {
 		return joinButton;
 	}
 
+	/**
+	 * Returns the "host" button.
+	 */
 	public JButton getHostButton() {
 		return hostButton;
 	}
 
+	/**
+	 * Returns the host text field.
+	 */
 	private JTextField getHostTextField() {
 		return hostTextField;
 	}
 
+	/**
+	 * Returns the port text field.
+	 */
 	private JTextField getPortTextField() {
 		return portTextField;
 	}

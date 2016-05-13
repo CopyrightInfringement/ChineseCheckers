@@ -3,11 +3,11 @@ package org.copinf.cc.net;
 import java.io.Serializable;
 
 /**
- * A message sent through the network, from a client to the server, or the other way around.
- * It contains an identifier string  describing the specific nature of the request,
- * and an object which may contain additional informations.
- * The identifier is under the format "A.B.C.D" describing a tree like hierarchy of requests and
- * sub-requests.
+ * A message sent through the network, from a client to the server, or the other
+ * way around. It contains an identifier string describing the specific nature
+ * of the request, and an object which may contain additional informations. The
+ * identifier is under the format "A.B.C.D" describing a tree like hierarchy of
+ * requests and sub-requests.
  */
 
 public class Request implements Serializable {
@@ -71,10 +71,16 @@ public class Request implements Serializable {
 		return getIdentifier() + '\n' + getContent();
 	}
 
+	/**
+	 * Returns the identifier of the request.
+	 */
 	public String getIdentifier() {
 		return identifier;
 	}
 
+	/**
+	 * Returns the content of this request.
+	 */
 	public Serializable getContent() {
 		return content;
 	}

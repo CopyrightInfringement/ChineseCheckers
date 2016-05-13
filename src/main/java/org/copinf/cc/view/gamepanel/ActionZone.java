@@ -3,11 +3,10 @@ package org.copinf.cc.view.gamepanel;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.SpringLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
+import javax.swing.SpringLayout;
 
 /**
  * The ActionZone at the bottom of the window, providing widgets such as a text
@@ -24,7 +23,6 @@ public class ActionZone extends JPanel implements FocusListener {
 	private final JTextField chatField;
 
 	private static final int OFFSET_X = 10;
-	private static final int OFFSET_Y = 10;
 
 	private static final String DEFAULT_TEXT = "Write your message here";
 
@@ -95,14 +93,23 @@ public class ActionZone extends JPanel implements FocusListener {
 	public void focusLost(final FocusEvent ev) {
 	}
 
+	/**
+	 * Returns the "Reset" button.
+	 */
 	public JButton getResetButton() {
 		return resetButton;
 	}
 
+	/**
+	 * Returns the "Next turn" button.
+	 */
 	public JButton getNextButton() {
 		return nextButton;
 	}
 
+	/**
+	 * Returns the message field.
+	 */
 	public JTextField getChatField() {
 		return chatField;
 	}
