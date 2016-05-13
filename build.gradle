@@ -87,7 +87,7 @@ task javadocUml(dependsOn: classes) {
     ant.javadoc(classpath: "{path_to android jar}",
                 sourcepath: file('src/main/java'),
                 packagenames: '*',
-                destdir: "build/docs",
+                destdir: "build/docs/javadocUml",
                 private: 'true',
                 docletpath: configurations.umljavadoc.asPath,
                 charset: 'UTF-8',

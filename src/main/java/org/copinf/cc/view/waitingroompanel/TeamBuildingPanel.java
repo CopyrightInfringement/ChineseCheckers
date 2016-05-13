@@ -96,6 +96,7 @@ public class TeamBuildingPanel extends JPanel {
 
 	/**
 	 * Returns the "confirm" button.
+	 * @return the button
 	 */
 	public JButton getConfirmButton() {
 		return confirmButton;

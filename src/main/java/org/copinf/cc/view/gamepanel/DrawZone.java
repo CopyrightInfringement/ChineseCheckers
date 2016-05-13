@@ -161,6 +161,7 @@ public class DrawZone extends JPanel implements MouseMotionListener {
 
 	/**
 	 * Returns the board view.
+	 * @return the board view
 	 */
 	public BoardView getBoardView() {
 		return boardView;

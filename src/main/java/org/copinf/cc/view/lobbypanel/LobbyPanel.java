@@ -78,6 +78,7 @@ public class LobbyPanel extends JPanel {
 
 	/**
 	 * Returns the list of games hosted by the server.
+	 * @return the list
 	 */
 	public JList<GameInfo> getGamesList() {
 		return gamesList;
@@ -85,13 +86,15 @@ public class LobbyPanel extends JPanel {
 
 	/**
 	 * Returns the "Refresh" button.
+	 * @return the button
 	 */
 	public JButton getRefreshGameInfoListBtn() {
 		return refreshGameInfoListBtn;
 	}
 
 	/**
-	 * returns the "Join" button.
+	 * Returns the "Join" button.
+	 * @return the button
 	 */
 	public JButton getJoinGameBtn() {
 		return joinGameBtn;
@@ -99,6 +102,7 @@ public class LobbyPanel extends JPanel {
 
 	/**
 	 * Returns the username panel.
+	 * @return the panel
 	 */
 	public UsernamePanel getUsernamePanel() {
 		return usernamePanel;
@@ -106,6 +110,7 @@ public class LobbyPanel extends JPanel {
 
 	/**
 	 * Returns the game creation panel.
+	 * @return the panel
 	 */
 	public GameCreationPanel getGameCreationPanel() {
 		return gameCreationPanel;

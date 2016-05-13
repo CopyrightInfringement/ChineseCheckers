@@ -131,6 +131,7 @@ public class HomePanel extends JPanel {
 
 	/**
 	 * Returns the "join" button.
+	 * @return the button
 	 */
 	public JButton getJoinButton() {
 		return joinButton;
@@ -138,6 +139,7 @@ public class HomePanel extends JPanel {
 
 	/**
 	 * Returns the "host" button.
+	 * @return the button
 	 */
 	public JButton getHostButton() {
 		return hostButton;
@@ -145,6 +147,7 @@ public class HomePanel extends JPanel {
 
 	/**
 	 * Returns the host text field.
+	 * @return the text field
 	 */
 	private JTextField getHostTextField() {
 		return hostTextField;
@@ -152,6 +155,7 @@ public class HomePanel extends JPanel {
 
 	/**
 	 * Returns the port text field.
+	 * @return the text field
 	 */
 	private JTextField getPortTextField() {
 		return portTextField;

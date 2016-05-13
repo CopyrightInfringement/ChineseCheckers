@@ -237,6 +237,7 @@ public class BoardView {
 
 	/**
 	 * Returns the display manager.
+	 * @return the display manager
 	 */
 	public DisplayManager getDisplayManager() {
 		return displayManager;

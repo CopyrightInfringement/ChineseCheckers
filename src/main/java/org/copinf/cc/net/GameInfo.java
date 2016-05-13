@@ -90,13 +90,15 @@ public class GameInfo implements Serializable {
 
 	/**
 	 * Returns the name of this game.
+	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Returns the number of players expected for this game
+	 * Returns the number of players expected for this game.
+	 * @return the number of players
 	 */
 	public int getNbPlayersMax() {
 		return nbPlayersMax;
@@ -104,6 +106,7 @@ public class GameInfo implements Serializable {
 
 	/**
 	 * Returns the number of zones per player.
+	 * @return the number of zones
 	 */
 	public int getNbZones() {
 		return nbZones;
@@ -111,6 +114,7 @@ public class GameInfo implements Serializable {
 
 	/**
 	 * Returns the list of players registered for this game so far.
+	 * @return the list of players
 	 */
 	public List<String> getCurrentPlayers() {
 		return currentPlayers;
@@ -118,6 +122,7 @@ public class GameInfo implements Serializable {
 
 	/**
 	 * Indicates whether teams are enabled or not.
+	 * @return true if teams are enabled
 	 */
 	public boolean isTeams() {
 		return teams;
@@ -125,6 +130,7 @@ public class GameInfo implements Serializable {
 
 	/**
 	 * Returns the maximum number of minutes for each turn.
+	 * @return the maximum number of minutes
 	 */
 	public double getTimer() {
 		return timer;
@@ -132,6 +138,7 @@ public class GameInfo implements Serializable {
 
 	/**
 	 * Returns the radius of the center of the board.
+	 * @return the radius
 	 */
 	public int getSize() {
 		return size;

@@ -60,7 +60,8 @@ public class WaitingRoomPanel extends JPanel {
 	}
 
 	/**
-	 * returns the team building panel.
+	 * Returns the team building panel.
+	 * @return the panel
 	 */
 	public TeamBuildingPanel getTeamBuildingPanel() {
 		return teamBuildingPanel;
@@ -68,6 +69,7 @@ public class WaitingRoomPanel extends JPanel {
 
 	/**
 	 * Returns the chat panel.
+	 * @return the panel
 	 */
 	public ChatPanel getChatPanel() {
 		return chatPanel;

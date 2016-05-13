@@ -38,13 +38,15 @@ public class PlayerView {
 
 	/**
 	 * Returns the player.
+	 * @return the player
 	 */
 	public Player getPlayer() {
 		return player;
 	}
 
 	/**
-	 * returns the color associated with the player.
+	 * Returns the color associated with the player.
+	 * @return the color
 	 */
 	public Color getColor() {
 		return color;

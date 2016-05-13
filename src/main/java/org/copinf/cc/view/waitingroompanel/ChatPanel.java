@@ -109,6 +109,7 @@ public class ChatPanel extends JPanel implements FocusListener {
 
 	/**
 	 * Returns the message field.
+	 * @return the text field
 	 */
 	public JTextField getMessageField() {
 		return messageField;

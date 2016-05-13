@@ -63,13 +63,15 @@ public class GamePanel extends JPanel {
 
 	/**
 	 * Returns the info bar.
+	 * @return the info bar
 	 */
 	public InfoBar getInfoBar() {
 		return infoBar;
 	}
 
 	/**
-	 * returns the draw zone.
+	 * Returns the draw zone.
+	 * @return the draw zone
 	 */
 	public DrawZone getDrawZone() {
 		return drawZone;
@@ -77,6 +79,7 @@ public class GamePanel extends JPanel {
 
 	/**
 	 * Returns the action zone.
+	 * @return the action zone
 	 */
 	public ActionZone getActionZone() {
 		return actionZone;

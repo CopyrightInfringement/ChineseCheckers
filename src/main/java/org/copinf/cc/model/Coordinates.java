@@ -196,21 +196,24 @@ public class Coordinates implements Serializable {
 	}
 
 	/**
-	 * Get the coordinate on the x axis
+	 * Get the coordinate on the x axis.
+	 * @return the coordinate
 	 */
 	public int getX() {
 		return x;
 	}
 
 	/**
-	 * Get the coordinate on the y axis
+	 * Get the coordinate on the y axis.
+	 * @return the coordinate
 	 */
 	public int getY() {
 		return y;
 	}
 
 	/**
-	 * Get the coordinate on the z axis
+	 * Get the coordinate on the z axis.
+	 * @return the coordinate
 	 */
 	public int getZ() {
 		return z;

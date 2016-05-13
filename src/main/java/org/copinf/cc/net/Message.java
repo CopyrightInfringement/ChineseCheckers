@@ -47,6 +47,7 @@ public class Message implements Serializable {
 
 	/**
 	 * Returns the content of this message.
+	 * @return the content of this message
 	 */
 	public String getMessage() {
 		return message;
@@ -54,6 +55,7 @@ public class Message implements Serializable {
 
 	/**
 	 * Returns the name of the sender.
+	 * @return the name of the sender
 	 */
 	public String getPlayerName() {
 		return playerName;
@@ -61,6 +63,7 @@ public class Message implements Serializable {
 
 	/**
 	 * Indicates whether this message was sent by a player or not.
+	 * @return true if this message was sent by a player
 	 */
 	public boolean isChatMessage() {
 		return isChatMessage;

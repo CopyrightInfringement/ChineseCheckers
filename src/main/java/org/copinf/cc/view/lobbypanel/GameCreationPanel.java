@@ -201,6 +201,7 @@ public class GameCreationPanel extends JPanel {
 
 	/**
 	 * Returns the "Create" button.
+	 * @return the button
 	 */
 	public JButton getCreateGameBtn() {
 		return createGameBtn;

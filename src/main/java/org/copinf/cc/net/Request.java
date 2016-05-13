@@ -72,7 +72,8 @@ public class Request implements Serializable {
 	}
 
 	/**
-	 * Returns the identifier of the request.
+	 * Returns the identifier of this request.
+	 * @return the identifier
 	 */
 	public String getIdentifier() {
 		return identifier;
@@ -80,6 +81,7 @@ public class Request implements Serializable {
 
 	/**
 	 * Returns the content of this request.
+	 * @return the content
 	 */
 	public Serializable getContent() {
 		return content;

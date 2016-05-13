@@ -58,6 +58,7 @@ public class UsernamePanel extends JPanel {
 
 	/**
 	 * Returns the username typed by the user.
+	 * @return the username
 	 */
 	public String getUsername() {
 		return usernameTextField.getText();
@@ -65,6 +66,7 @@ public class UsernamePanel extends JPanel {
 
 	/**
 	 * Sets the content of the username text field.
+	 * @param username the username
 	 */
 	public void setUsername(final String username) {
 		usernameTextField.setText(username);
@@ -72,6 +74,7 @@ public class UsernamePanel extends JPanel {
 
 	/**
 	 * Returns the "submit" button.
+	 * @return the button
 	 */
 	public JButton getSubmitBtn() {
 		return submitBtn;

@@ -17,6 +17,7 @@ public class Pawn {
 
 	/**
 	 * Returns the owner of this pawn.
+	 * @return the owner
 	 */
 	public Player getOwner() {
 		return owner;

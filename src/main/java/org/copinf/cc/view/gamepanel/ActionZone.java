@@ -95,6 +95,7 @@ public class ActionZone extends JPanel implements FocusListener {
 
 	/**
 	 * Returns the "Reset" button.
+	 * @return the reset button
 	 */
 	public JButton getResetButton() {
 		return resetButton;
@@ -102,6 +103,7 @@ public class ActionZone extends JPanel implements FocusListener {
 
 	/**
 	 * Returns the "Next turn" button.
+	 * @return the next button
 	 */
 	public JButton getNextButton() {
 		return nextButton;
@@ -109,6 +111,7 @@ public class ActionZone extends JPanel implements FocusListener {
 
 	/**
 	 * Returns the message field.
+	 * @return the message field
 	 */
 	public JTextField getChatField() {
 		return chatField;

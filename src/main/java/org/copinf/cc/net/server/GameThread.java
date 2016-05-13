@@ -293,6 +293,7 @@ public class GameThread extends Thread {
 
 	/**
 	 * Indicates whether this game has started or not.
+	 * @return true if the game has started
 	 */
 	public boolean hasStarted() {
 		return started;
@@ -300,6 +301,8 @@ public class GameThread extends Thread {
 
 	/**
 	 * Gets a client thread from the username of the player associated.
+	 * @param username the username
+	 * @return the client thread
 	 */
 	private ClientThread getClientThread(final String username) {
 		for (final ClientThread ct : clients) {

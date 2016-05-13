@@ -1,5 +1,10 @@
 package org.copinf.cc.controller;
 
+import org.copinf.cc.net.GameInfo;
+import org.copinf.cc.net.Message;
+import org.copinf.cc.net.Request;
+import org.copinf.cc.view.waitingroompanel.WaitingRoomPanel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -10,11 +15,6 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JPanel;
-
-import org.copinf.cc.net.GameInfo;
-import org.copinf.cc.net.Message;
-import org.copinf.cc.net.Request;
-import org.copinf.cc.view.waitingroompanel.WaitingRoomPanel;
 
 /**
  * The waiting room where the players wait for enough players to have joined the

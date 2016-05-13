@@ -23,7 +23,7 @@ public class Server implements Runnable {
 	private final Set<ClientThread> clients;
 	private final ServerSocket serverSocket;
 
-	private final static Logger LOGGER = Logger.getGlobal();
+	private static final Logger LOGGER = Logger.getGlobal();
 
 	/**
 	 * The port on which the server will be open.
@@ -35,14 +35,15 @@ public class Server implements Runnable {
 		clients = Collections.synchronizedSet(new HashSet<>());
 		this.serverSocket = new ServerSocket(port);
 
-		LOGGER.info("Server started on port " + port + " on adress " + getIPAddress());
+		LOGGER.info("Server started on port " + port + " on adress " + getIpAddress());
 	}
 
 	/**
 	 * Returns the IP address on which this server is running (the public one if
-	 * possible)
+	 * possible).
+	 * @return the IP adress
 	 */
-	private static String getIPAddress() {
+	private static String getIpAddress() {
 		try {
 			final URL whatismyip = new URL("http://checkip.amazonaws.com");
 			final BufferedReader in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
@@ -227,6 +228,7 @@ public class Server implements Runnable {
 
 	/**
 	 * Returns the set of Game this server is hosting.
+	 * @return the game sed
 	 */
 	public Set<GameThread> getGameSet() {
 		return gameSet;
