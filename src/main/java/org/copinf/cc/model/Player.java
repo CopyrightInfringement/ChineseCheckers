@@ -14,13 +14,20 @@ public class Player {
 	/** Name of this player. */
 	private final String name;
 
+	private final boolean ai;
+
 	/**
 	 * Constructs a player.
 	 * @param name name of this player
 	 */
 	public Player(final String name) {
+		this(name, false);
+	}
+
+	public Player(final String name, final boolean ai) {
 		this.name = name;
 		initialZones = new HashSet<>();
+		this.ai = ai;
 	}
 
 	/**

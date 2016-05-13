@@ -38,6 +38,7 @@ public class GameCreationPanel extends JPanel {
 	private final JCheckBox teamsCheckBox;
 	private final JCheckBox timerCheckBox;
 	private final JSpinner timerSpinner;
+	private final JComboBox<Integer> aiNumberChooser;
 
 	private final Map<String, AbstractBoard> boards;
 
@@ -137,8 +138,18 @@ public class GameCreationPanel extends JPanel {
 		springLayout.putConstraint(SpringLayout.WEST, teamsCheckBox, 0, SpringLayout.WEST, playerNumberLbl);
 		add(teamsCheckBox);
 
+		aiNumberChooser = new JComboBox<>();
+		springLayout.putConstraint(SpringLayout.NORTH, aiNumberChooser, OFFSET_Y, SpringLayout.SOUTH, timerSpinner);
+		add(aiNumberChooser);
+		final JLabel aiNumberLbl = new JLabel("AI number :");
+		springLayout.putConstraint(SpringLayout.VERTICAL_CENTER, aiNumberLbl, 0, SpringLayout.VERTICAL_CENTER,
+				aiNumberChooser);
+		springLayout.putConstraint(SpringLayout.WEST, aiNumberLbl, 0, SpringLayout.WEST, boardChooserLbl);
+		add(aiNumberLbl);
+		springLayout.putConstraint(SpringLayout.EAST, aiNumberChooser, 0, SpringLayout.EAST, boardChooser);
+
 		springLayout.putConstraint(SpringLayout.EAST, this, OFFSET_X, SpringLayout.EAST, playerZonesChooser);
-		springLayout.putConstraint(SpringLayout.SOUTH, this, OFFSET_Y, SpringLayout.SOUTH, timerSpinner);
+		springLayout.putConstraint(SpringLayout.SOUTH, this, OFFSET_Y, SpringLayout.SOUTH, aiNumberChooser);
 	}
 
 	/**
@@ -173,6 +184,11 @@ public class GameCreationPanel extends JPanel {
 			teamsCheckBox.setEnabled(false);
 			teamsCheckBox.setSelected(false);
 		}
+		final Integer[] possibleAI = new Integer[playerNumber];
+		for (int i = 0; i < possibleAI.length; i++) {
+			possibleAI[i] = i;
+		}
+		aiNumberChooser.setModel(new DefaultComboBoxModel<Integer>(possibleAI));
 	}
 
 	/**
@@ -185,7 +201,8 @@ public class GameCreationPanel extends JPanel {
 			return new GameInfo(gameName, (Integer) playerNumberChooser.getSelectedItem(),
 					(Integer) playerZonesChooser.getSelectedItem(), teamsCheckBox.isSelected(),
 					(Integer) boardSizeChooser.getValue(),
-					timerCheckBox.isSelected() ? (Double) timerSpinner.getValue() : -1);
+					timerCheckBox.isSelected() ? (Double) timerSpinner.getValue() : -1,
+					(Integer) aiNumberChooser.getSelectedItem());
 		}
 		return null;
 	}

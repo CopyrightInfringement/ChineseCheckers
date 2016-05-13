@@ -31,6 +31,8 @@ public class GameInfo implements Serializable {
 	/** The size of the heart of the board. */
 	private final int size;
 
+	private int aInumber = 0;
+
 	/**
 	 * Constructs a new GameInfo.
 	 * @param name The name of the game.
@@ -61,6 +63,21 @@ public class GameInfo implements Serializable {
 		this.teams = teams;
 		this.size = size;
 		this.timer = timer;
+	}
+
+	/**
+	 * Constructs a new GameInfo.
+	 * @param name The name of the game.
+	 * @param nbPlayersMax The maximum amount of players.
+	 * @param nbZones The number of zones per player.
+	 * @param teams If teams are enabled.
+	 * @param size The radius (in squares) of the central part of the board.
+	 * @param timer The time limit in seconds for a turn
+	 */
+	public GameInfo(final String name, final int nbPlayersMax, final int nbZones, final boolean teams,
+			final int size, final double timer, final int aInumber) {
+		this(name, nbPlayersMax, nbZones, teams, size, timer);
+		this.aInumber = aInumber;
 	}
 
 	/**
@@ -114,5 +131,9 @@ public class GameInfo implements Serializable {
 
 	public int getSize() {
 		return size;
+	}
+
+	public int getAInumber() {
+		return aInumber;
 	}
 }
